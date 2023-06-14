@@ -1,24 +1,86 @@
-# Compiled class file
-*.class
+# ASP.NET
+#######################
 
-# Log file
+# Visual Studio files
+*.obj
+*.dll
+*.pdb
+*.exe
+*.suo
+*.user
+*.bak
+*.cache
+*.vs
+.vscode/
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
 *.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
 
-# BlueJ files
-*.ctxt
+# NuGet
+############
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+# except build/, which is used as an MSBuild target.
+!**/packages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/packages/repositories.config
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+# NUNIT
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+# Build Results
+[Dd]ebug/
+[Rr]elease/
+x64/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# SQL Server files
+*.mdf
+*.ldf
+
+# Resharper-specific
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# GhostDoc plugin setting file
+*.GhostDoc.xml
+
+# Visual Studio 2017 cache/options directory
+.vs/
+
+# Rider
+.idea/
+
+# End of ASP.NET
+#######################
