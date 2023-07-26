@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using App.Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
-using App.Domain.Models.Users;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.Users;
 
