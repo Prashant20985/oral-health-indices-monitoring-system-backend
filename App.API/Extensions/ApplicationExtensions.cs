@@ -1,4 +1,5 @@
-﻿using App.Persistence.Contexts;
+﻿using App.Application.AccountOperations;
+using App.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.API.Extensions;
@@ -20,6 +21,11 @@ public static class ApplicationExtension
         services.AddDbContext<UserContext>(opt =>
         {
             opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+        });
+
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssemblies(typeof(Login.Handler).Assembly);
         });
 
         return services;
