@@ -19,7 +19,7 @@ namespace App.API.Controllers
         /// <returns>An action result representing the outcome of the login operation.</returns>
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult<UserLoginResponseDto>> UserLogin([FromBody] UserCredentialsDto credentials) => 
+        public async Task<ActionResult<UserLoginResponseDto>> UserLogin([FromBody] UserCredentialsDto credentials) =>
             HandleOperationResult(await Mediator.Send(new Login.Command { Credentials = credentials }));
 
 
@@ -30,7 +30,7 @@ namespace App.API.Controllers
         /// <returns>An action result indicating the success of the password change operation.</returns>
         [Authorize]
         [HttpPut("change-password")]
-        public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordDto changePassword) => 
+        public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordDto changePassword) =>
             HandleOperationResult(await Mediator.Send(new ChangePassword.Command { ChangePassword = changePassword }));
 
 
@@ -40,7 +40,7 @@ namespace App.API.Controllers
         /// <returns>The action result containing the user information.</returns>
         [Authorize]
         [HttpGet("current-user")]
-        public async Task<ActionResult<UserLoginResponseDto>> GetCurrentUser() => 
+        public async Task<ActionResult<UserLoginResponseDto>> GetCurrentUser() =>
             HandleOperationResult(await Mediator.Send(new CurrentUser.Query { UserName = User.FindFirstValue(ClaimTypes.Name) }));
 
     }

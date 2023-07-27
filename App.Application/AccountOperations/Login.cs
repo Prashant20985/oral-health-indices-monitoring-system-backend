@@ -58,7 +58,7 @@ namespace App.Application.AccountOperations
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                var user = await _userManager.FindByNameAsync(request.Credentials.Email) 
+                var user = await _userManager.FindByNameAsync(request.Credentials.Email)
                     ?? await _userManager.FindByEmailAsync(request.Credentials.Email);
 
                 // Check user validity using the UserValidation helper

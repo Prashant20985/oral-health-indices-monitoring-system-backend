@@ -26,9 +26,9 @@ public class UserContext : IdentityDbContext<User>
     }
 
     /// <summary>
-    /// Represents the database table for the AppUser entities.
+    /// Represents the database table for the User entities.
     /// </summary>
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<User> AppUsers { get; set; }
 
     /// <summary>
     /// Represents the database table for the RefreshToken entities.
@@ -52,7 +52,7 @@ public class UserContext : IdentityDbContext<User>
         // Maps the IdentityUserRole entity to the "AppUserRoles" table.
         modelBuilder.Entity<IdentityUserRole<string>>().ToTable("AppUserRoles");
 
-        // Maps the AppUser entity to the "AppUsers" table.
+        // Maps the AppUser entity to the "Users" table.
         modelBuilder.Entity<User>().ToTable("Users");
 
         // Ignores the IdentityUserClaim, IdentityRoleClaim, IdentityUserLogin, and IdentityUserToken entities.
