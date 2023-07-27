@@ -31,7 +31,7 @@ public class ChangePassword
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var user = await _userManager.FindByNameAsync(request.ChangePassword.Email) ?? 
+            var user = await _userManager.FindByNameAsync(request.ChangePassword.Email) ??
                 await _userManager.FindByEmailAsync(request.ChangePassword.Email);
 
             // Check if the user is valid

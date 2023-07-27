@@ -1,4 +1,7 @@
 ﻿using App.Application.AccountOperations;
+using App.Application.Interfaces;
+using App.Infrastructure.Configuration;
+using App.Infrastructure.Email;
 using App.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +30,15 @@ public static class ApplicationExtension
         {
             cfg.RegisterServicesFromAssemblies(typeof(Login.Handler).Assembly);
         });
+
+        // Add a singleton dependency for IEmailTemplatePathProvider with the implementation of EmailTemplatePathProvider.
+        services.AddSingleton<IEmailTemplatePathProvider, EmailTemplatePathProvider>();
+
+        // Configure and bind the EmailSettings section from the configuration.
+        services.Configure<EmailSettings>(configuration.GetSection(nameof(EmailSettings)));
+
+        // Add a transient dependency for IEmailService with the implementation of EmailService.
+        services.AddTransient<IEmailService, EmailService>();
 
         return services;
     }
