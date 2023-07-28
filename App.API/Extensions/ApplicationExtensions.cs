@@ -1,6 +1,7 @@
 ﻿using App.Application.AccountOperations;
 using App.Application.Interfaces;
 using App.Infrastructure.Configuration;
+using App.Infrastructure.ContextAccessor;
 using App.Infrastructure.Email;
 using App.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,8 @@ public static class ApplicationExtension
 
         // Add a transient dependency for IEmailService with the implementation of EmailService.
         services.AddTransient<IEmailService, EmailService>();
+
+        services.AddTransient<IHttpContextAccessorService, HttpContextAccessorService>();
 
         return services;
     }
