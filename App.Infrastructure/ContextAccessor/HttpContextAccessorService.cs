@@ -27,4 +27,22 @@ public class HttpContextAccessorService : IHttpContextAccessorService
     {
         return _httpContextAccessor.HttpContext.Request.Headers["origin"];
     }
+
+    /// <summary>
+    /// Gets the HttpRequest instance of the current HttpContext.
+    /// </summary>
+    /// <returns>The HttpRequest instance of the current HttpContext.</returns>
+    public HttpRequest GetRequest()
+    {
+        return _httpContextAccessor.HttpContext.Request;
+    }
+
+    /// <summary>
+    /// Gets the HttpResponse instance of the current HttpContext.
+    /// </summary>
+    /// <returns>The HttpResponse instance of the current HttpContext.</returns>
+    public HttpResponse GetResponse()
+    {
+        return _httpContextAccessor.HttpContext.Response;
+    }
 }

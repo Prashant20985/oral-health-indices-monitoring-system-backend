@@ -86,6 +86,9 @@ namespace App.Application.AccountOperations
                 // Generate the user token using the token service
                 userDto.Token = await _tokenService.CreateToken(user);
 
+                // Sets the refresh token for current user
+                await _tokenService.SetRefreshToken(user);
+
                 // Log successful user login
                 _logger.LogInformation("User Logged in");
 

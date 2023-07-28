@@ -76,5 +76,14 @@ namespace App.API.Controllers
         public async Task<ActionResult> ResetPassword([FromBody] ResetPasswordDto resetPassword) =>
             HandleOperationResult(await Mediator.Send(new ResetPassword.Command { ResetPassword = resetPassword }));
 
+
+        /// <summary>
+        /// Refreshes the authentication token for the authenticated user.
+        /// </summary>
+        /// <returns>An action result representing the outcome of the token refresh operation.</returns>
+        [Authorize]
+        [HttpPost("refreshToken")]
+        public async Task<ActionResult<UserLoginResponseDto>> RefreshToken() =>
+            HandleOperationResult(await Mediator.Send(new RefreshToken.Command { UserName = User.FindFirstValue(ClaimTypes.Name) }));
     }
 }

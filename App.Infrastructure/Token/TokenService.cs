@@ -1,20 +1,26 @@
 ﻿using App.Application.Interfaces;
 using App.Domain.Models.Users;
 using App.Infrastructure.Configuration;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace App.Infrastructure.Token;
 
+/// <summary>
+/// Service for creating and managing JWT tokens.
+/// </summary>
 public class TokenService : ITokenService
 {
     private readonly JwtConfig _jwtConfig;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly UserManager<User> _userManager;
+    private readonly IHttpContextAccessorService _httpContextAccessorService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TokenService"/> class.
@@ -22,13 +28,16 @@ public class TokenService : ITokenService
     /// <param name="optionsMonitor">The monitor for JWT configuration options.</param>
     /// <param name="roleManager">The role manager.</param>
     /// <param name="userManager">The user manager.</param>
+    /// <param name="httpContextAccessorService">The service providing access to the current HttpContext.</param>
     public TokenService(IOptionsMonitor<JwtConfig> optionsMonitor,
         RoleManager<IdentityRole> roleManager,
-        UserManager<User> userManager)
+        UserManager<User> userManager,
+        IHttpContextAccessorService httpContextAccessorService)
     {
         _roleManager = roleManager;
         _userManager = userManager;
         _jwtConfig = optionsMonitor.CurrentValue;
+        _httpContextAccessorService = httpContextAccessorService;
     }
 
     /// <summary>
@@ -88,5 +97,42 @@ public class TokenService : ITokenService
         }
 
         return claims;
+    }
+
+
+    /// <summary>
+    /// Sets a refresh token for the specified user.
+    /// </summary>
+    /// <param name="user">The user for whom the refresh token is set.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    public virtual async Task SetRefreshToken(User user)
+    {
+        var refreshToken = GenerateRefreshToken();
+
+        user.RefreshTokens.Add(refreshToken);
+        await _userManager.UpdateAsync(user);
+
+        var httpResponse = _httpContextAccessorService.GetResponse();
+
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Expires = DateTime.UtcNow.AddDays(7),
+        };
+
+        httpResponse.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
+    }
+
+
+    /// <summary>
+    /// Generates a new refresh token.
+    /// </summary>
+    /// <returns>The generated refresh token.</returns>
+    private RefreshToken GenerateRefreshToken()
+    {
+        var randomNumber = new byte[32];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(randomNumber);
+        return new RefreshToken { Token = Convert.ToBase64String(randomNumber) };
     }
 }
