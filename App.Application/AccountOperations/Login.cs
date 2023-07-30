@@ -6,7 +6,6 @@ using App.Application.Interfaces;
 using App.Domain.Models.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
 
 namespace App.Application.AccountOperations
 {
@@ -18,7 +17,7 @@ namespace App.Application.AccountOperations
         /// <summary>
         /// Class representing the command for user login.
         /// </summary>
-        public class Command : IRequest<OperationResult<UserLoginResponseDto>>
+        public class LoginCommand : IRequest<OperationResult<UserLoginResponseDto>>
         {
             /// <summary>
             /// Gets or sets the login data.
@@ -29,23 +28,21 @@ namespace App.Application.AccountOperations
         /// <summary>
         /// Class representing the handler for the user login request.
         /// </summary>
-        public class Handler : IRequestHandler<Command, OperationResult<UserLoginResponseDto>>
+        public class LoginCommandHandler : IRequestHandler<LoginCommand, OperationResult<UserLoginResponseDto>>
         {
             private readonly UserManager<User> _userManager;
             private readonly ITokenService _tokenService;
-            private readonly ILogger<Handler> _logger;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="Handler"/> class with the specified user manager, token service, and logger factory.
+            /// Initializes a new instance of the <see cref="LoginCommandHandler"/> class with the specified user manager, token service, and logger factory.
             /// </summary>
             /// <param name="userManager">The user manager for working with user accounts.</param>
             /// <param name="tokenService">The token service for creating authentication tokens.</param>
             /// <param name="loggerFactory">The logger factory to create the logger.</param>
-            public Handler(UserManager<User> userManager, ITokenService tokenService, ILoggerFactory loggerFactory)
+            public LoginCommandHandler(UserManager<User> userManager, ITokenService tokenService)
             {
                 _userManager = userManager;
                 _tokenService = tokenService;
-                _logger = loggerFactory.CreateLogger<Handler>();
             }
 
             /// <summary>
@@ -54,7 +51,7 @@ namespace App.Application.AccountOperations
             /// <param name="request">The command representing the user login request.</param>
             /// <param name="cancellationToken">The cancellation token.</param>
             /// <returns>A result indicating the outcome of the user login request.</returns>
-            public async Task<OperationResult<UserLoginResponseDto>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<OperationResult<UserLoginResponseDto>> Handle(LoginCommand request, CancellationToken cancellationToken)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
@@ -88,9 +85,6 @@ namespace App.Application.AccountOperations
 
                 // Sets the refresh token for current user
                 await _tokenService.SetRefreshToken(user);
-
-                // Log successful user login
-                _logger.LogInformation("User Logged in");
 
                 return OperationResult<UserLoginResponseDto>.Success(userDto);
             }

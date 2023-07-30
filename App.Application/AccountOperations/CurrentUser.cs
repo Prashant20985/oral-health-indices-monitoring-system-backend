@@ -16,7 +16,7 @@ public class CurrentUser
     /// <summary>
     /// Class representing the query for getting the current user information.
     /// </summary>
-    public class Query : IRequest<OperationResult<UserLoginResponseDto>>
+    public class CurrentUserQuery : IRequest<OperationResult<UserLoginResponseDto>>
     {
         /// <summary>
         /// Gets or sets the username of the current user.
@@ -27,7 +27,7 @@ public class CurrentUser
     /// <summary>
     /// Class representing the handler for the "CurrentUser" query.
     /// </summary>
-    public class Handler : IRequestHandler<Query, OperationResult<UserLoginResponseDto>>
+    public class CurrentUserHandler : IRequestHandler<CurrentUserQuery, OperationResult<UserLoginResponseDto>>
     {
         private readonly UserManager<User> _userManager;
         private readonly ITokenService _tokenService;
@@ -37,7 +37,7 @@ public class CurrentUser
         /// </summary>
         /// <param name="userManager">The user manager for working with user accounts.</param>
         /// <param name="tokenService">The token service for creating authentication tokens.</param>
-        public Handler(UserManager<User> userManager, ITokenService tokenService)
+        public CurrentUserHandler(UserManager<User> userManager, ITokenService tokenService)
         {
             _userManager = userManager;
             _tokenService = tokenService;
@@ -49,7 +49,7 @@ public class CurrentUser
         /// <param name="request">The query representing the "CurrentUser" request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A result indicating the outcome of the "CurrentUser" query.</returns>
-        public async Task<OperationResult<UserLoginResponseDto>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<OperationResult<UserLoginResponseDto>> Handle(CurrentUserQuery request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 

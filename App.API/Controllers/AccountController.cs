@@ -21,7 +21,7 @@ namespace App.API.Controllers
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<UserLoginResponseDto>> UserLogin([FromBody] UserCredentialsDto credentials) =>
-            HandleOperationResult(await Mediator.Send(new Login.Command { Credentials = credentials }));
+            HandleOperationResult(await Mediator.Send(new Login.LoginCommand { Credentials = credentials }));
 
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace App.API.Controllers
         [Authorize]
         [HttpPut("change-password")]
         public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordDto changePassword) =>
-            HandleOperationResult(await Mediator.Send(new ChangePassword.Command { ChangePassword = changePassword }));
+            HandleOperationResult(await Mediator.Send(new ChangePassword.ChangePasswordCommand { ChangePassword = changePassword }));
 
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace App.API.Controllers
         [Authorize]
         [HttpGet("current-user")]
         public async Task<ActionResult<UserLoginResponseDto>> GetCurrentUser() =>
-            HandleOperationResult(await Mediator.Send(new CurrentUser.Query { UserName = User.FindFirstValue(ClaimTypes.Name) }));
+            HandleOperationResult(await Mediator.Send(new CurrentUser.CurrentUserQuery { UserName = User.FindFirstValue(ClaimTypes.Name) }));
 
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace App.API.Controllers
         [AllowAnonymous]
         [HttpPost("reset-password/{email}")]
         public async Task<ActionResult> ResetPasswordEmailNotification([Required] string email) =>
-            HandleOperationResult(await Mediator.Send(new ResetPasswordEmailRequest.Command { Email = email }));
+            HandleOperationResult(await Mediator.Send(new ResetPasswordEmailRequest.ResetPasswordEmailRequestCommand { Email = email }));
 
         /// <summary>
         /// Displays the password reset page for the user with the provided token and email address.
@@ -74,7 +74,7 @@ namespace App.API.Controllers
         [AllowAnonymous]
         [HttpPost("reset-password")]
         public async Task<ActionResult> ResetPassword([FromBody] ResetPasswordDto resetPassword) =>
-            HandleOperationResult(await Mediator.Send(new ResetPassword.Command { ResetPassword = resetPassword }));
+            HandleOperationResult(await Mediator.Send(new ResetPassword.ResetPasswordCommand { ResetPassword = resetPassword }));
 
 
         /// <summary>
@@ -84,6 +84,6 @@ namespace App.API.Controllers
         [Authorize]
         [HttpPost("refreshToken")]
         public async Task<ActionResult<UserLoginResponseDto>> RefreshToken() =>
-            HandleOperationResult(await Mediator.Send(new RefreshToken.Command { UserName = User.FindFirstValue(ClaimTypes.Name) }));
+            HandleOperationResult(await Mediator.Send(new RefreshToken.RefreshTokenCommand { UserName = User.FindFirstValue(ClaimTypes.Name) }));
     }
 }

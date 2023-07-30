@@ -1,4 +1,5 @@
 ﻿using App.Application.AccountOperations;
+using App.Application.Behavior;
 using App.Application.Interfaces;
 using App.Infrastructure.Configuration;
 using App.Infrastructure.ContextAccessor;
@@ -29,7 +30,8 @@ public static class ApplicationExtension
 
         services.AddMediatR(cfg =>
         {
-            cfg.RegisterServicesFromAssemblies(typeof(Login.Handler).Assembly);
+            cfg.RegisterServicesFromAssemblies(typeof(Login.LoginCommand).Assembly);
+            cfg.AddOpenBehavior(typeof(LoggingBehaviorPipeline<,>));
         });
 
         // Add a singleton dependency for IEmailTemplatePathProvider with the implementation of EmailTemplatePathProvider.

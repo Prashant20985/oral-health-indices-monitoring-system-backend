@@ -18,7 +18,7 @@ public class ResetPassword
     /// <summary>
     /// Class representing the command for resetting a user's password.
     /// </summary>
-    public class Command : IRequest<OperationResult<Unit>>
+    public class ResetPasswordCommand : IRequest<OperationResult<Unit>>
     {
         /// <summary>
         /// Gets or sets the password reset data.
@@ -29,17 +29,17 @@ public class ResetPassword
     /// <summary>
     /// Class representing the handler for the password reset request.
     /// </summary>
-    public class Handler : IRequestHandler<Command, OperationResult<Unit>>
+    public class ResetPasswordHandler : IRequestHandler<ResetPasswordCommand, OperationResult<Unit>>
     {
         private readonly UserManager<User> _userManager;
         private readonly IMediator _mediator;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Handler"/> class with the specified user manager.
+        /// Initializes a new instance of the <see cref="ResetPasswordHandler"/> class with the specified user manager.
         /// </summary>
         /// <param name="userManager">The user manager for working with user accounts.</param>
         /// <param name="mediator">The MediatR mediator for publishing notifications.</param>
-        public Handler(UserManager<User> userManager, IMediator mediator)
+        public ResetPasswordHandler(UserManager<User> userManager, IMediator mediator)
         {
             _userManager = userManager;
             _mediator = mediator;
@@ -51,7 +51,7 @@ public class ResetPassword
         /// <param name="request">The command representing the password reset request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A result indicating the outcome of the password reset request.</returns>
-        public async Task<OperationResult<Unit>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<OperationResult<Unit>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
