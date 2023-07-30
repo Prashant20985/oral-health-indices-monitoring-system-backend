@@ -45,4 +45,14 @@ public class HttpContextAccessorService : IHttpContextAccessorService
     {
         return _httpContextAccessor.HttpContext.Response;
     }
+
+    /// <summary>
+    /// Gets the username instance of the current user.
+    /// </summary>
+    /// <returns>The username instance of the current user.</returns>
+    public string GetUserName()
+    {
+        return _httpContextAccessor.HttpContext?.User.Identity.Name;
+    }
 }
+

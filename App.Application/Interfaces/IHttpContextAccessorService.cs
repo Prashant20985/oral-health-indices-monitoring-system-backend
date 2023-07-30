@@ -24,4 +24,10 @@ public interface IHttpContextAccessorService
     /// </summary>
     /// <returns>The HttpRequest instance of the current HttpContext.</returns>
     HttpRequest GetRequest();
+
+    /// <summary>
+    /// Gets the username instance of the current user.
+    /// </summary>
+    /// <returns>The username instance of the current user.</returns>
+    string GetUserName();
 }

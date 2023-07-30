@@ -5,6 +5,7 @@ using App.Persistence.Contexts;
 using App.Persistence.SeedData;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,10 @@ builder.Services.AddHttpContextAccessor();
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+// Serilog 
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 // Extensions
 builder.Services.AddApplicationServices(builder.Configuration);
@@ -30,6 +35,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseSerilogRequestLogging();
 
 app.UseMiddleware<ExceptionMiddleware>();
 

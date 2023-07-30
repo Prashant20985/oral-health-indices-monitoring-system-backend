@@ -9,25 +9,25 @@ namespace App.Application.AccountOperations;
 
 public class ChangePassword
 {
-    public class Command : IRequest<OperationResult<Unit>>
+    public class ChangePasswordCommand : IRequest<OperationResult<Unit>>
     {
         public ChangePasswordDto ChangePassword { get; set; }
     }
 
-    public class Handler : IRequestHandler<Command, OperationResult<Unit>>
+    public class ChangePasswordHandler : IRequestHandler<ChangePasswordCommand, OperationResult<Unit>>
     {
         private readonly UserManager<User> _userManager;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Handler"/> class.
+        /// Initializes a new instance of the <see cref="ChangePasswordHandler"/> class.
         /// </summary>
         /// <param name="userManager">The user manager instance.</param>
-        public Handler(UserManager<User> userManager)
+        public ChangePasswordHandler(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
 
-        public async Task<OperationResult<Unit>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<OperationResult<Unit>> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 

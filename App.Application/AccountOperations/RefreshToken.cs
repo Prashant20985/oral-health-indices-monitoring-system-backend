@@ -17,7 +17,7 @@ public class RefreshToken
     /// <summary>
     /// Command to refresh the user authentication token.
     /// </summary>
-    public class Command : IRequest<OperationResult<UserLoginResponseDto>>
+    public class RefreshTokenCommand : IRequest<OperationResult<UserLoginResponseDto>>
     {
         /// <summary>
         /// Gets or sets the username of the user.
@@ -28,7 +28,7 @@ public class RefreshToken
     /// <summary>
     /// Handles the refresh token command and returns the updated user authentication information.
     /// </summary>
-    public class Handler : IRequestHandler<Command, OperationResult<UserLoginResponseDto>>
+    public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, OperationResult<UserLoginResponseDto>>
     {
         private readonly UserManager<User> _userManager;
         private readonly ITokenService _tokenService;
@@ -40,7 +40,7 @@ public class RefreshToken
         /// <param name="userManager">The user manager to handle user-related operations.</param>
         /// <param name="tokenService">The service responsible for generating tokens.</param>
         /// <param name="httpContextAccessorService">The service providing access to the current HTTP context.</param>
-        public Handler(UserManager<User> userManager,
+        public RefreshTokenHandler(UserManager<User> userManager,
             ITokenService tokenService,
             IHttpContextAccessorService httpContextAccessorService)
         {
@@ -55,7 +55,7 @@ public class RefreshToken
         /// <param name="request">The refresh token command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>An operation result containing the updated user authentication information.</returns>
-        public async Task<OperationResult<UserLoginResponseDto>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<OperationResult<UserLoginResponseDto>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
             var httpRequest = _httpContextAccessorService.GetRequest();
             var refreshToken = httpRequest.Cookies["refreshToken"];
@@ -63,7 +63,7 @@ public class RefreshToken
             // Retrieve the user with associated refresh tokens from the database
             var user = await _userManager.Users
                 .Include(r => r.RefreshTokens)
-                .FirstOrDefaultAsync(x => x.UserName == request.UserName);
+                .FirstOrDefaultAsync(x => x.UserName == request.UserName, cancellationToken: cancellationToken);
 
             // Check if the user is valid and not null
             var checkUserValidity = UserValidation.CheckUserValidity<UserLoginResponseDto>(user);

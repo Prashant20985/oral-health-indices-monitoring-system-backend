@@ -18,7 +18,7 @@ public class ResetPasswordEmailRequest
     /// <summary>
     /// Class representing the command for sending a password reset email request.
     /// </summary>
-    public class Command : IRequest<OperationResult<Unit>>
+    public class ResetPasswordEmailRequestCommand : IRequest<OperationResult<Unit>>
     {
         /// <summary>
         /// Gets or sets the email address of the user requesting the password reset.
@@ -29,19 +29,19 @@ public class ResetPasswordEmailRequest
     /// <summary>
     /// Class representing the handler for the password reset email request.
     /// </summary>
-    public class Handler : IRequestHandler<Command, OperationResult<Unit>>
+    public class ResetPasswordEmailRequestHandler : IRequestHandler<ResetPasswordEmailRequestCommand, OperationResult<Unit>>
     {
         private readonly UserManager<User> _userManager;
         private readonly IMediator _mediator;
         private readonly IHttpContextAccessorService _httpContextAccessorService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Handler"/> class with the specified dependencies.
+        /// Initializes a new instance of the <see cref="ResetPasswordEmailRequestHandler"/> class with the specified dependencies.
         /// </summary>
         /// <param name="userManager">The user manager for working with user accounts.</param>
         /// <param name="mediator">The MediatR mediator for publishing notifications.</param>
         /// <param name="httpContextAccessorService">The service for accessing the current HttpContext.</param>
-        public Handler(UserManager<User> userManager, IMediator mediator, IHttpContextAccessorService httpContextAccessorService)
+        public ResetPasswordEmailRequestHandler(UserManager<User> userManager, IMediator mediator, IHttpContextAccessorService httpContextAccessorService)
         {
             _userManager = userManager;
             _mediator = mediator;
@@ -54,7 +54,7 @@ public class ResetPasswordEmailRequest
         /// <param name="request">The command representing the password reset email request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A result indicating the outcome of the password reset email request.</returns>
-        public async Task<OperationResult<Unit>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<OperationResult<Unit>> Handle(ResetPasswordEmailRequestCommand request, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
