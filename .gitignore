@@ -36,6 +36,7 @@
 *.pidb
 *.svclog
 *.scc
+*.txt
 
 # NuGet
 ############

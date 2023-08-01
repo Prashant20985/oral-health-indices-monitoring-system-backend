@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Models.Roles;
+﻿namespace App.Domain.Models.Enums;
 
 /// <summary>
 /// Enum representing the roles that a user can have in the application.

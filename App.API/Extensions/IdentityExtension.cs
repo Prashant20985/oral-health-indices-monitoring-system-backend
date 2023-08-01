@@ -78,6 +78,7 @@ public static class IdentityExtension
                 jwt.TokenValidationParameters = tokenValidationParams;
             });
 
+        // Add a singleton dependency of tokenValidationParams.
         services.AddSingleton(tokenValidationParams);
 
         // Add a transient dependency for ITokenService with the implementation of TokenService.

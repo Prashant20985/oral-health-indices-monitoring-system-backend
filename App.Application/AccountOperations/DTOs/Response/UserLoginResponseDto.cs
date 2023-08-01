@@ -6,28 +6,44 @@
 public class UserLoginResponseDto
 {
     /// <summary>
-    /// Gets or sets the name of the user.
+    /// Initializes a new instance of the <see cref="UserLoginResponseDto"/> class.
     /// </summary>
-    public string Name { get; set; }
+    /// <param name="name">The name of the user.</param>
+    /// <param name="userName">The username of the user.</param>
+    /// <param name="email">The email of the user.</param>
+    /// <param name="role">The role of the user.</param>
+    /// <param name="token">The JWT token associated with the user.</param>
+    public UserLoginResponseDto(string name, string userName, string email, string role, string token)
+    {
+        Name = name;
+        UserName = userName;
+        Email = email;
+        Role = role;
+        Token = token;
+    }
 
     /// <summary>
-    /// Gets or sets the username of the user.
+    /// Gets the name of the user.
     /// </summary>
-    public string UserName { get; set; }
+    public string Name { get; private set; }
 
     /// <summary>
-    /// Gets or sets the email of the user.
+    /// Gets the username of the user.
     /// </summary>
-    public string Email { get; set; }
+    public string UserName { get; private set; }
 
     /// <summary>
-    /// Gets or sets the role of the user.
+    /// Gets the email of the user.
     /// </summary>
-    public string Role { get; set; }
+    public string Email { get; private set; }
 
     /// <summary>
-    /// Gets or sets the JWT token associated with the user.
+    /// Gets the role of the user.
     /// </summary>
-    public string Token { get; set; }
+    public string Role { get; private set; }
+
+    /// <summary>
+    /// Gets the JWT token associated with the user.
+    /// </summary>
+    public string Token { get; private set; }
 }
-
