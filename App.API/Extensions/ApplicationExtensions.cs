@@ -29,6 +29,7 @@ public static class ApplicationExtension
             opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         });
 
+        // 
         // Add a scoped dependency for IUserRepository with the impliementation of UserRepository.
         services.AddScoped<IUserRepository, UserRepository>();
 
