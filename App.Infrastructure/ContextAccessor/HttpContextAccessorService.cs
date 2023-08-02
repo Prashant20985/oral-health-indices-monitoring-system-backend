@@ -29,15 +29,6 @@ public class HttpContextAccessorService : IHttpContextAccessorService
     }
 
     /// <summary>
-    /// Gets the HttpRequest instance of the current HttpContext.
-    /// </summary>
-    /// <returns>The HttpRequest instance of the current HttpContext.</returns>
-    public HttpRequest GetRequest()
-    {
-        return _httpContextAccessor.HttpContext.Request;
-    }
-
-    /// <summary>
     /// Gets the HttpResponse instance of the current HttpContext.
     /// </summary>
     /// <returns>The HttpResponse instance of the current HttpContext.</returns>
@@ -54,5 +45,13 @@ public class HttpContextAccessorService : IHttpContextAccessorService
     {
         return _httpContextAccessor.HttpContext?.User.Identity.Name;
     }
-}
 
+    /// <summary>
+    /// Gets the username instance of the current user.
+    /// </summary>
+    /// <returns>The username instance of the current user.</returns>
+    public string GetRefreshTokenCookie()
+    {
+        return _httpContextAccessor.HttpContext.Request.Cookies["refreshToken"];
+    }
+}

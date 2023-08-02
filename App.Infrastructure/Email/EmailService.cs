@@ -1,5 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.Interfaces;
+using App.Domain.Models.Enums;
 using App.Infrastructure.Configuration;
 using MailKit.Net.Smtp;
 using MediatR;

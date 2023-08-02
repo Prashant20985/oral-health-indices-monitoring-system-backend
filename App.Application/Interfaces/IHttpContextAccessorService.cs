@@ -20,10 +20,10 @@ public interface IHttpContextAccessorService
     HttpResponse GetResponse();
 
     /// <summary>
-    /// Gets the HttpRequest instance of the current HttpContext.
+    /// Gets the cookie for Refresh Token
     /// </summary>
-    /// <returns>The HttpRequest instance of the current HttpContext.</returns>
-    HttpRequest GetRequest();
+    /// <returns>The refresh token string of the current HttpContext.</returns>
+    string GetRefreshTokenCookie();
 
     /// <summary>
     /// Gets the username instance of the current user.

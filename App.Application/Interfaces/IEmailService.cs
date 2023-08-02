@@ -1,4 +1,5 @@
 ﻿using App.Application.Core;
+using App.Domain.Models.Enums;
 using MediatR;
 
 namespace App.Application.Interfaces;
@@ -16,11 +17,4 @@ public interface IEmailService
     /// <param name="message">The email message body.</param>
     /// <param name="emailType">The type of email to be sent.</param>
     Task<OperationResult<Unit>> SendEmailAsync(string email, string subject, string message, EmailType emailType);
-}
-
-public enum EmailType
-{
-    Registration,
-    PasswordReset,
-    PasswordResetConfirmation
 }

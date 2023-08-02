@@ -1,4 +1,4 @@
-﻿using App.Domain.Models.Roles;
+﻿using App.Domain.Models.Enums;
 using App.Domain.Models.Users;
 using App.Persistence.Contexts;
 using Microsoft.AspNetCore.Identity;

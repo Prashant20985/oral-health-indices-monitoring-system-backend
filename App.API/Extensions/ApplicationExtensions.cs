@@ -1,10 +1,11 @@
-﻿using App.Application.AccountOperations;
-using App.Application.Behavior;
+﻿using App.Application.Behavior;
 using App.Application.Interfaces;
+using App.Domain.Repository;
 using App.Infrastructure.Configuration;
 using App.Infrastructure.ContextAccessor;
 using App.Infrastructure.Email;
 using App.Persistence.Contexts;
+using App.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.API.Extensions;
@@ -28,9 +29,16 @@ public static class ApplicationExtension
             opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         });
 
+        // 
+        // Add a scoped dependency for IUserRepository with the impliementation of UserRepository.
+        services.AddScoped<IUserRepository, UserRepository>();
+
+        // Add MediatoR
         services.AddMediatR(cfg =>
         {
-            cfg.RegisterServicesFromAssemblies(typeof(Login.LoginCommand).Assembly);
+            // Registering services from Application layer assembly.
+            cfg.RegisterServicesFromAssemblies(typeof(Application.AssemblyReference).Assembly);
+            // Add logging pipeline behavior.
             cfg.AddOpenBehavior(typeof(LoggingBehaviorPipeline<,>));
         });
 
@@ -43,6 +51,7 @@ public static class ApplicationExtension
         // Add a transient dependency for IEmailService with the implementation of EmailService.
         services.AddTransient<IEmailService, EmailService>();
 
+        // Add a transient for IHttpContextAccessorService with implimentation of HttpContextAccessorService.
         services.AddTransient<IHttpContextAccessorService, HttpContextAccessorService>();
 
         return services;
