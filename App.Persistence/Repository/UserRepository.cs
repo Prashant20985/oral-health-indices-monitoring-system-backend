@@ -35,7 +35,7 @@ public class UserRepository : IUserRepository
     /// <param name="applicationUser">The ApplicationUser instance to add to the role.</param>
     /// <param name="role">The role to which the user should be added.</param>
     /// <returns>An IdentityResult indicating the result of the role assignment operation.</returns>
-    public async Task<IdentityResult> AddApplicationUserToRoleAsync(ApplicationUser applicationUser, 
+    public async Task<IdentityResult> AddApplicationUserToRoleAsync(ApplicationUser applicationUser,
         string role) => await _userManager.AddToRoleAsync(applicationUser, role);
 
 

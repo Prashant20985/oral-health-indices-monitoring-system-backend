@@ -1,7 +1,7 @@
 ﻿using App.Application.AdminOperations.Helpers;
 using App.Application.Core;
-using App.Application.NotificationOperations.DTOs;
 using App.Application.NotificationOperations;
+using App.Application.NotificationOperations.DTOs;
 using App.Domain.Models.Enums;
 using App.Domain.Models.Users;
 using App.Domain.Repository;

@@ -8,7 +8,7 @@ namespace App.Application.AdminOperations.Query.DeletedApplicationUsersList;
 /// <summary>
 /// Handler for fetching a paged list of deleted application users.
 /// </summary>
-public class FetchDeletedApplicationUsersListHandler 
+public class FetchDeletedApplicationUsersListHandler
     : IRequestHandler<FetchDeletedApplicationUsersListQuery,
     OperationResult<PagedList<ApplicationUserDto>>>
 {

@@ -7,5 +7,5 @@ namespace App.Application.AdminOperations.Command.DeleteApplicationUser;
 /// Represents a command to delete an application user.
 /// </summary>
 public record DeleteApplicationUserCommand(
-    string UserName, 
+    string UserName,
     string DeleteComment) : IRequest<OperationResult<Unit>>;
