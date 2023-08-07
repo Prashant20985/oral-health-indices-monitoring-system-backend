@@ -1,11 +1,11 @@
-﻿using App.Application.AccountOperations.ChangePassword;
-using App.Application.AccountOperations.CurrentUser;
+﻿using App.Application.AccountOperations.Command.ChangePassword;
+using App.Application.AccountOperations.Command.Login;
+using App.Application.AccountOperations.Command.RefreshToken;
+using App.Application.AccountOperations.Command.ResetPassword;
+using App.Application.AccountOperations.Command.ResetPasswordUrlEmailRequest;
 using App.Application.AccountOperations.DTOs.Request;
 using App.Application.AccountOperations.DTOs.Response;
-using App.Application.AccountOperations.Login;
-using App.Application.AccountOperations.RefreshToken;
-using App.Application.AccountOperations.ResetPassword;
-using App.Application.AccountOperations.ResetPasswordUrlEmailRequest;
+using App.Application.AccountOperations.Query.CurrentUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
