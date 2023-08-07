@@ -90,7 +90,7 @@ public class EmailNotificationHandler : INotificationHandler<EmailNotification>
     /// Sends a batch of emails concurrently using Polly for retrying failed attempts.
     /// </summary>
     /// <param name="batch">The batch of emails to send.</param>
-    private async Task SendBatch(List<EmailContentDto> batch)
+    public async Task SendBatch(List<EmailContentDto> batch)
     {
         var sendTasks = batch.Select(SendEmailAsync);
         await Task.WhenAll(sendTasks);
@@ -100,7 +100,7 @@ public class EmailNotificationHandler : INotificationHandler<EmailNotification>
     /// Sends an individual email using Polly for retrying failed attempts.
     /// </summary>
     /// <param name="emailContent">The email content to send.</param>
-    private async Task SendEmailAsync(EmailContentDto emailContent)
+    public async Task SendEmailAsync(EmailContentDto emailContent)
     {
         int maxRetryAttempts = 3;
         TimeSpan retryDelay = TimeSpan.FromSeconds(5);
