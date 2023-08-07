@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using App.Domain.DTOs;
+using Microsoft.AspNetCore.Identity;
 
 namespace App.Domain.Models.Users;
 
@@ -8,41 +9,97 @@ namespace App.Domain.Models.Users;
 public class ApplicationUser : IdentityUser
 {
     /// <summary>
-    /// Gets or sets the first name of the user.
+    /// Initializes a new instance of the ApplicationUser class.
     /// </summary>
-    public string FirstName { get; set; }
+    /// <param name="email">The email address of the user.</param>
+    /// <param name="firstName">The first name of the user.</param>
+    /// <param name="lastName">The last name of the user.</param>
+    /// <param name="phoneNumber">The phone number of the user.</param>
+    /// <param name="guestUserComment">The comment for the guest user.</param>
+    public ApplicationUser(string email,
+        string firstName,
+        string lastName,
+        string phoneNumber,
+        string guestUserComment)
+    {
+        UserName = ExtractUserNameFromEmail(email);
+        Email = email;
+        FirstName = firstName;
+        LastName = lastName;
+        PhoneNumber = phoneNumber;
+        GuestUserComment = guestUserComment;
+    }
 
     /// <summary>
-    /// Gets or sets the last name of the user.
+    /// Gets the first name of the user.
     /// </summary>
-    public string LastName { get; set; }
+    public string FirstName { get; private set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the user's account is active or not.
+    /// Gets the last name of the user.
     /// </summary>
-    public bool IsAccountActive { get; set; } = true;
+    public string LastName { get; private set; }
 
     /// <summary>
-    /// Gets or sets the date and time when the user's account was created.
+    /// Gets a value indicating whether the user's account is active or not.
     /// </summary>
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public bool IsAccountActive { get; private set; } = true;
 
     /// <summary>
-    /// Gets or sets the date and time when the user's account was deleted.
+    /// Gets the date and time when the user's account was created.
+    /// </summary>
+    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+
+    /// <summary>
+    /// Gets the date and time when the user's account was deleted.
     /// This property is nullable, meaning it can have a null value.
     /// </summary>
-    public DateTime? DeletedAt { get; set; } = null;
+    public DateTime? DeletedAt { get; private set; } = null;
 
     /// <summary>
-    /// Gets or sets the comment of account was deletion.
+    /// Gets the comment of account was deletion.
     /// </summary>
-    public string DeleteUserComment { get; set; } = null;
+    public string DeleteUserComment { get; private set; } = null;
 
     /// <summary>
-    /// Gets or sets an comment associated with the guest user.
+    /// Gets an comment associated with the guest user.
     /// The initial value of this property is set to null.
     /// </summary>
-    public string GuestUserComment { get; set; } = null;
+    public string GuestUserComment { get; private set; } = null;
+
+    /// <summary>
+    /// Toggles the activation status of the user's account.
+    /// </summary>
+    public void ActivationStatusToggle() => IsAccountActive = !IsAccountActive;
+
+    /// <summary>
+    /// Extracts the username portion from the user's email address.
+    /// </summary>
+    /// <param name="email">The user's email address.</param>
+    /// <returns>The extracted username.</returns>
+    private string ExtractUserNameFromEmail(string email) => email[..email.IndexOf("@")];
+
+    /// <summary>
+    /// Marks the user as deleted and sets deletion-related properties.
+    /// </summary>
+    /// <param name="deleteComment">The comment or reason for deletion.</param>
+    public void DeleteUser(string deleteComment)
+    {
+        DeletedAt = DateTime.UtcNow;
+        DeleteUserComment = deleteComment;
+    }
+
+    /// <summary>
+    /// Updates user properties based on the provided DTO.
+    /// </summary>
+    /// <param name="updateApplicationUser">DTO containing updated user information.</param>
+    public void UpdateUser(UpdateApplicationUserDto updateApplicationUser)
+    {
+        FirstName = updateApplicationUser.FirstName;
+        LastName = updateApplicationUser.LastName;
+        PhoneNumber = updateApplicationUser.PhoneNumber;
+        GuestUserComment = updateApplicationUser.GuestUserComment;
+    }
 
     public ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; } = new List<ApplicationUserRole>();
 

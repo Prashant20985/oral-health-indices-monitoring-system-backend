@@ -30,106 +30,18 @@ public class SeedUserSchema
         if (!userManager.Users.Any())
         {
             // Create a list of AppUser objects representing different users.
+            // Create a list of AppUser objects representing different users.
             List<ApplicationUser> appUsers = new List<ApplicationUser>
             {
-                // Create an instance of Administrator user.
-                new ApplicationUser
-                {
-                    FirstName = "Clark",
-                    LastName = "Kent",
-                    Email = "superman@test.com",
-                    UserName = "superman",
-                    CreatedAt = DateTime.Now.AddDays(1),
-                    IsAccountActive = true,
-                    DeletedAt = null,
-                },
-                // Create an instance of Administrator user.
-                new ApplicationUser
-                {
-                    FirstName = "Bruce",
-                    LastName = "Wayne",
-                    Email = "batman@test.com",
-                    CreatedAt = DateTime.Now.AddDays(5),
-                    UserName = "batman",
-                    IsAccountActive = true,
-                    DeletedAt = null,
-                },
-                // Create an instance of Student user.
-                new ApplicationUser
-                {
-                    FirstName = "Hal",
-                    LastName = "Jordan",
-                    Email = "lantern@test.com",
-                    CreatedAt = DateTime.Now.AddDays(5),
-                    UserName = "lantern",
-                    IsAccountActive = true,
-                    DeletedAt = null,
-                },
-                // Create an instance of Student user.
-                new ApplicationUser
-                {
-                    FirstName = "Barry",
-                    LastName = "Allen",
-                    Email = "flash@test.com",
-                    CreatedAt = DateTime.Now.AddDays(7),
-                    UserName = "flash",
-                    IsAccountActive = true,
-                    DeletedAt = null,
-                },
-                // Create an instance of Dentist_Teacher_Examiner user.
-                new ApplicationUser
-                {
-                    FirstName = "Victor",
-                    LastName = "Stone",
-                    Email = "cyborg@test.com",
-                    UserName = "cyborg",
-                    CreatedAt = DateTime.Now.AddDays(3),
-                    IsAccountActive = false,
-                    DeletedAt = null,
-                },
-                // Create an instance of Dentist_Teacher_Examiner user.
-                new ApplicationUser
-                {
-                    FirstName = "Arthur",
-                    LastName = "Curry",
-                    Email = "aquaman@test.com",
-                    UserName = "aquaman",
-                    CreatedAt = DateTime.Now.AddDays(1),
-                    IsAccountActive = true,
-                    DeletedAt = null,
-                },
-                // Create an instance of Dentist_Teacher_Researcher user.
-                new ApplicationUser
-                {
-                    FirstName = "Oliver",
-                    LastName = "Queen",
-                    Email = "greenarrow@test.com",
-                    UserName = "greenarrow",
-                    CreatedAt = DateTime.Now.AddDays(7),
-                    IsAccountActive = false,
-                    DeletedAt = null,
-                },
-                // Create an instance of Dentist_Teacher_Researcher user.
-                new ApplicationUser
-                {
-                    FirstName = "Kara",
-                    LastName = "Denvers",
-                    Email = "supergirl@test.com",
-                    UserName = "supergirl",
-                    IsAccountActive = false,
-                    CreatedAt = DateTime.Now.AddDays(4),
-                    DeletedAt = DateTime.Now,
-                    GuestUserComment = "Guest Examiner",
-                },
-                new ApplicationUser
-                {
-                    FirstName = "Jhon",
-                    LastName = "wick",
-                    Email = "wick@test.com",
-                    UserName = "wick",
-                    IsAccountActive = true,
-                    DeletedAt = DateTime.Now.AddDays(3),
-                }
+                new ApplicationUser("superman@test.com", "Clark", "Kent", null, null),
+                new ApplicationUser("batman@test.com", "Bruce", "Wayne", null, null),
+                new ApplicationUser("lantern@test.com", "Hal", "Jordan", null, null),
+                new ApplicationUser("flash@test.com", "Barry", "Allen", null, null),
+                new ApplicationUser("cyborg@test.com", "Victor", "Stone", null, null),
+                new ApplicationUser("aquaman@test.com", "Arthur", "Kent", null, null),
+                new ApplicationUser("greenarrow@test.com", "Oliver", "Queen", null, null),
+                new ApplicationUser("supergirl@test.com", "Kara", "Denvers", null, "Guest Examiner"),
+                new ApplicationUser("wick@test.com", "Jhon", "wick", null, null),
             };
 
             // Iterate over the appUsers list and create each user using the user manager.

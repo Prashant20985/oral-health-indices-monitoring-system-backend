@@ -1,4 +1,5 @@
 ﻿using App.Application.Behavior;
+using App.Application.Core;
 using App.Application.Interfaces;
 using App.Domain.Repository;
 using App.Infrastructure.Configuration;
@@ -6,6 +7,8 @@ using App.Infrastructure.ContextAccessor;
 using App.Infrastructure.Email;
 using App.Persistence.Contexts;
 using App.Persistence.Repository;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.API.Extensions;
@@ -40,7 +43,18 @@ public static class ApplicationExtension
             cfg.RegisterServicesFromAssemblies(typeof(Application.AssemblyReference).Assembly);
             // Add logging pipeline behavior.
             cfg.AddOpenBehavior(typeof(LoggingBehaviorPipeline<,>));
+            // Add validation pipeline behavior.
+            cfg.AddOpenBehavior(typeof(ValidationBehaviorPipeline<,>));
         });
+
+        // Add FluentValidation auto-validation
+        services.AddFluentValidationAutoValidation();
+
+        // Add validators from the specified assembly
+        services.AddValidatorsFromAssembly(typeof(Application.AssemblyReference).Assembly);
+
+        // Add AutoMapper with mapping profiles from the specified assembly
+        services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
         // Add a singleton dependency for IEmailTemplatePathProvider with the implementation of EmailTemplatePathProvider.
         services.AddSingleton<IEmailTemplatePathProvider, EmailTemplatePathProvider>();
