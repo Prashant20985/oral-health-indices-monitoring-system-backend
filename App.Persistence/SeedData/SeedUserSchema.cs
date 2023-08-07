@@ -14,26 +14,26 @@ public class SeedUserSchema
     /// <param name="userManager">An instance of the UserManager<AppUser> class for managing user-related operations.</param>
     /// <param name="roleManager">An instance of the RoleManager<IdentityRole> class for managing role-related operations.</param>
     public static async Task SeedData(UserContext userContext,
-        UserManager<User> userManager,
-        RoleManager<IdentityRole> roleManager)
+        UserManager<ApplicationUser> userManager,
+        RoleManager<ApplicationRole> roleManager)
     {
         // Check if roles exist in the role manager. If not, create the roles.
         if (!roleManager.Roles.Any())
         {
-            await roleManager.CreateAsync(new IdentityRole(Role.Admin.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Role.Student.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Role.Dentist_Teacher_Examiner.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Role.Dentist_Teacher_Researcher.ToString()));
+            await roleManager.CreateAsync(new ApplicationRole { Name = Role.Admin.ToString() });
+            await roleManager.CreateAsync(new ApplicationRole { Name = Role.Dentist_Teacher_Examiner.ToString() });
+            await roleManager.CreateAsync(new ApplicationRole { Name = Role.Dentist_Teacher_Researcher.ToString() });
+            await roleManager.CreateAsync(new ApplicationRole { Name = Role.Student.ToString() });
         }
 
         // Check if any users exist in the user manager. If not, create the users.
         if (!userManager.Users.Any())
         {
             // Create a list of AppUser objects representing different users.
-            List<User> appUsers = new List<User>
+            List<ApplicationUser> appUsers = new List<ApplicationUser>
             {
                 // Create an instance of Administrator user.
-                new User
+                new ApplicationUser
                 {
                     FirstName = "Clark",
                     LastName = "Kent",
@@ -44,7 +44,7 @@ public class SeedUserSchema
                     DeletedAt = null,
                 },
                 // Create an instance of Administrator user.
-                new User
+                new ApplicationUser
                 {
                     FirstName = "Bruce",
                     LastName = "Wayne",
@@ -55,7 +55,7 @@ public class SeedUserSchema
                     DeletedAt = null,
                 },
                 // Create an instance of Student user.
-                new User
+                new ApplicationUser
                 {
                     FirstName = "Hal",
                     LastName = "Jordan",
@@ -66,7 +66,7 @@ public class SeedUserSchema
                     DeletedAt = null,
                 },
                 // Create an instance of Student user.
-                new User
+                new ApplicationUser
                 {
                     FirstName = "Barry",
                     LastName = "Allen",
@@ -77,7 +77,7 @@ public class SeedUserSchema
                     DeletedAt = null,
                 },
                 // Create an instance of Dentist_Teacher_Examiner user.
-                new User
+                new ApplicationUser
                 {
                     FirstName = "Victor",
                     LastName = "Stone",
@@ -88,7 +88,7 @@ public class SeedUserSchema
                     DeletedAt = null,
                 },
                 // Create an instance of Dentist_Teacher_Examiner user.
-                new User
+                new ApplicationUser
                 {
                     FirstName = "Arthur",
                     LastName = "Curry",
@@ -99,7 +99,7 @@ public class SeedUserSchema
                     DeletedAt = null,
                 },
                 // Create an instance of Dentist_Teacher_Researcher user.
-                new User
+                new ApplicationUser
                 {
                     FirstName = "Oliver",
                     LastName = "Queen",
@@ -110,7 +110,7 @@ public class SeedUserSchema
                     DeletedAt = null,
                 },
                 // Create an instance of Dentist_Teacher_Researcher user.
-                new User
+                new ApplicationUser
                 {
                     FirstName = "Kara",
                     LastName = "Denvers",
@@ -121,7 +121,7 @@ public class SeedUserSchema
                     DeletedAt = DateTime.Now,
                     GuestUserComment = "Guest Examiner",
                 },
-                new User
+                new ApplicationUser
                 {
                     FirstName = "Jhon",
                     LastName = "wick",

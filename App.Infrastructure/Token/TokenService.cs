@@ -18,8 +18,8 @@ namespace App.Infrastructure.Token;
 public class TokenService : ITokenService
 {
     private readonly JwtConfig _jwtConfig;
-    private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly UserManager<User> _userManager;
+    private readonly RoleManager<ApplicationRole> _roleManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly IHttpContextAccessorService _httpContextAccessorService;
 
     /// <summary>
@@ -30,8 +30,8 @@ public class TokenService : ITokenService
     /// <param name="userManager">The user manager.</param>
     /// <param name="httpContextAccessorService">The service providing access to the current HttpContext.</param>
     public TokenService(IOptionsMonitor<JwtConfig> optionsMonitor,
-        RoleManager<IdentityRole> roleManager,
-        UserManager<User> userManager,
+        RoleManager<ApplicationRole> roleManager,
+        UserManager<ApplicationUser> userManager,
         IHttpContextAccessorService httpContextAccessorService)
     {
         _roleManager = roleManager;
@@ -45,7 +45,7 @@ public class TokenService : ITokenService
     /// </summary>
     /// <param name="appUser">The user for whom to create the token.</param>
     /// <returns>The generated JWT token.</returns>
-    public virtual async Task<string> CreateToken(User appUser)
+    public virtual async Task<string> CreateToken(ApplicationUser appUser)
     {
         // Get all claims for the user
         var claims = await GetAllUserClaims(appUser);
@@ -75,7 +75,7 @@ public class TokenService : ITokenService
     /// </summary>
     /// <param name="userhe user for whom to retrieve the claims.</param>
     /// <returns>A list of claims for the user.</returns>
-    private async Task<List<Claim>> GetAllUserClaims(User user)
+    private async Task<List<Claim>> GetAllUserClaims(ApplicationUser user)
     {
         var claims = new List<Claim>
         {
@@ -105,7 +105,7 @@ public class TokenService : ITokenService
     /// </summary>
     /// <param name="user">The user for whom the refresh token is set.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public virtual async Task SetRefreshToken(User user)
+    public virtual async Task SetRefreshToken(ApplicationUser user)
     {
         var refreshToken = GenerateRefreshToken();
 

@@ -30,8 +30,8 @@ public static class IdentityExtension
             opts.TokenLifespan = TimeSpan.FromHours(10);
         });
 
-        // Add Identity with the specified configuration for AppUser and IdentityRole.
-        services.AddIdentity<User, IdentityRole>(opt =>
+        // Add Identity with the specified configuration for ApplicationUser and ApplicationRole.
+        services.AddIdentity<ApplicationUser, ApplicationRole>(opt =>
         {
             opt.Password.RequiredLength = 8;
             opt.Password.RequireDigit = true;
@@ -43,7 +43,11 @@ public static class IdentityExtension
             .AddEntityFrameworkStores<UserContext>()
             .AddDefaultTokenProviders();
 
-        services.AddScoped<UserManager<User>>();
+        // Add a transient dependency for UserManager.
+        services.AddScoped<UserManager<ApplicationUser>>();
+
+        // Add a transient dependency for RoleManager.
+        services.AddScoped<RoleManager<ApplicationRole>>();
 
         // Configure JwtConfig options from the configuration.
         services.Configure<JwtConfig>(config.GetSection("JwtConfig"));

@@ -18,7 +18,7 @@
         /// <summary>
         /// Gets or sets the User object associated with this Refresh Token.
         /// </summary>
-        public User Users { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
         /// <summary>
         /// Gets or sets the actual Refresh Token value.

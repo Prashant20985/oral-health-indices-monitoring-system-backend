@@ -10,13 +10,13 @@ namespace App.Persistence.Repository;
 /// </summary>
 public class UserRepository : IUserRepository
 {
-    private readonly UserManager<User> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UserRepository"/> class with the specified user manager.
     /// </summary>
     /// <param name="userManager">The ASP.NET Core Identity UserManager instance.</param>
-    public UserRepository(UserManager<User> userManager)
+    public UserRepository(UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
     }
@@ -28,7 +28,7 @@ public class UserRepository : IUserRepository
     /// <param name="currentPassword">The current password of the user.</param>
     /// <param name="newPassword">The new password to set for the user.</param>
     /// <returns>An IdentityResult indicating whether the password change was successful.</returns>
-    public async Task<IdentityResult> ChangePassword(User user, string currentPassword, string newPassword)
+    public async Task<IdentityResult> ChangePassword(ApplicationUser user, string currentPassword, string newPassword)
     {
         return await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
     }
@@ -39,7 +39,7 @@ public class UserRepository : IUserRepository
     /// <param name="user">The user to check the password against.</param>
     /// <param name="password">The password to check.</param>
     /// <returns>True if the password is valid, false otherwise.</returns>
-    public async Task<bool> CheckPassword(User user, string password)
+    public async Task<bool> CheckPassword(ApplicationUser user, string password)
     {
         return await _userManager.CheckPasswordAsync(user, password);
     }
@@ -49,7 +49,7 @@ public class UserRepository : IUserRepository
     /// </summary>
     /// <param name="user">The user for which to generate the reset password token.</param>
     /// <returns>The reset password token as a string.</returns>
-    public async Task<string> GenerateResetPasswordToken(User user)
+    public async Task<string> GenerateResetPasswordToken(ApplicationUser user)
     {
         return await _userManager.GeneratePasswordResetTokenAsync(user);
     }
@@ -59,7 +59,7 @@ public class UserRepository : IUserRepository
     /// </summary>
     /// <param name="user">The user for which to retrieve the roles.</param>
     /// <returns>A list of role names assigned to the user.</returns>
-    public async Task<IList<string>> GetRoles(User user)
+    public async Task<IList<string>> GetRoles(ApplicationUser user)
     {
         return await _userManager.GetRolesAsync(user);
     }
@@ -70,7 +70,7 @@ public class UserRepository : IUserRepository
     /// <param name="value">The username or email address to search for.</param>
     /// <param name="cancellationToken">A cancellation token to observe cancellation requests.</param>
     /// <returns>The user if found, or null if not found.</returns>
-    public async Task<User> GetUserByUserNameOrEmail(string value, CancellationToken cancellationToken)
+    public async Task<ApplicationUser> GetUserByUserNameOrEmail(string value, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -84,7 +84,7 @@ public class UserRepository : IUserRepository
     /// <param name="userName">The username to search for.</param>
     /// <param name="cancellationToken">A cancellation token to observe cancellation requests.</param>
     /// <returns>The user if found, or null if not found.</returns>
-    public async Task<User> GetUserByUserNameWithRefreshToken(string userName, CancellationToken cancellationToken)
+    public async Task<ApplicationUser> GetUserByUserNameWithRefreshToken(string userName, CancellationToken cancellationToken)
     {
         return await _userManager.Users
             .Include(r => r.RefreshTokens)
@@ -98,7 +98,7 @@ public class UserRepository : IUserRepository
     /// <param name="token">The reset password token.</param>
     /// <param name="password">The new password to set for the user.</param>
     /// <returns>An IdentityResult indicating whether the password reset was successful.</returns>
-    public async Task<IdentityResult> ResetPassword(User user, string token, string password)
+    public async Task<IdentityResult> ResetPassword(ApplicationUser user, string token, string password)
     {
         return await _userManager.ResetPasswordAsync(user, token, password);
     }
