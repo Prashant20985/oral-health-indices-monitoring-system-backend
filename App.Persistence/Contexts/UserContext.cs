@@ -5,7 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Persistence.Contexts;
 
-public class UserContext : IdentityDbContext<User>
+public class UserContext : IdentityDbContext<
+    ApplicationUser, ApplicationRole, string,
+    IdentityUserClaim<string>, ApplicationUserRole,
+    IdentityUserLogin<string>, IdentityRoleClaim<string>,
+    IdentityUserToken<string>>
 {
     /// <summary>
     /// Parameterless constructor provided for the framework to create an instance of the UserContext class.
@@ -28,12 +32,22 @@ public class UserContext : IdentityDbContext<User>
     /// <summary>
     /// Represents the database table for the User entities.
     /// </summary>
-    public virtual DbSet<User> AppUsers { get; set; }
+    public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
     /// <summary>
     /// Represents the database table for the RefreshToken entities.
     /// </summary>
     public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
+
+    /// <summary>
+    /// Represents the database table for the ApplicationRole entities.
+    /// </summary>
+    public virtual DbSet<ApplicationRole> ApplicationRoles { get; set; }
+
+    /// <summary>
+    /// Represents the database table for the ApplicationUserRole entities.
+    /// </summary>
+    public virtual DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
 
     /// <summary>
     /// Overrides the OnModelCreating method from the base class to provide custom model configuration.
@@ -46,14 +60,13 @@ public class UserContext : IdentityDbContext<User>
         // Sets the default schema for the model to "user".
         modelBuilder.HasDefaultSchema("user");
 
-        // Maps the IdentityRole entity to the "Roles" table.
-        modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+        modelBuilder.Entity<ApplicationRole>().ToTable(nameof(ApplicationRole));
 
-        // Maps the IdentityUserRole entity to the "AppUserRoles" table.
-        modelBuilder.Entity<IdentityUserRole<string>>().ToTable("AppUserRoles");
+        modelBuilder.Entity<ApplicationUserRole>().ToTable(nameof(ApplicationUserRole));
 
-        // Maps the AppUser entity to the "Users" table.
-        modelBuilder.Entity<User>().ToTable("Users");
+        modelBuilder.Entity<ApplicationUser>().ToTable(nameof(ApplicationUser));
+
+        modelBuilder.Entity<RefreshToken>().ToTable(nameof(RefreshToken));
 
         // Ignores the IdentityUserClaim, IdentityRoleClaim, IdentityUserLogin, and IdentityUserToken entities.
         modelBuilder.Ignore<IdentityUserClaim<string>>();

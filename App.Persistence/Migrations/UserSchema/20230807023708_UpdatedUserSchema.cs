@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace App.Persistence.Migrations.UserSchema
 {
     /// <inheritdoc />
-    public partial class InitialUserSchemaCreate : Migration
+    public partial class UpdatedUserSchema : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,7 +15,7 @@ namespace App.Persistence.Migrations.UserSchema
                 name: "user");
 
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "ApplicationRole",
                 schema: "user",
                 columns: table => new
                 {
@@ -25,11 +26,11 @@ namespace App.Persistence.Migrations.UserSchema
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.PrimaryKey("PK_ApplicationRole", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "ApplicationUser",
                 schema: "user",
                 columns: table => new
                 {
@@ -43,7 +44,7 @@ namespace App.Persistence.Migrations.UserSchema
                     GuestUserComment = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -51,11 +52,11 @@ namespace App.Persistence.Migrations.UserSchema
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_ApplicationUser", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppUserRoles",
+                name: "ApplicationUserRole",
                 schema: "user",
                 columns: table => new
                 {
@@ -64,19 +65,19 @@ namespace App.Persistence.Migrations.UserSchema
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppUserRoles", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_ApplicationUserRole", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_AppUserRoles_Roles_RoleId",
+                        name: "FK_ApplicationUserRole_ApplicationRole_RoleId",
                         column: x => x.RoleId,
                         principalSchema: "user",
-                        principalTable: "Roles",
+                        principalTable: "ApplicationRole",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AppUserRoles_Users_UserId",
+                        name: "FK_ApplicationUserRole_ApplicationUser_UserId",
                         column: x => x.UserId,
                         principalSchema: "user",
-                        principalTable: "Users",
+                        principalTable: "ApplicationUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -97,30 +98,18 @@ namespace App.Persistence.Migrations.UserSchema
                 {
                     table.PrimaryKey("PK_RefreshToken", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RefreshToken_Users_UserId",
+                        name: "FK_RefreshToken_ApplicationUser_UserId",
                         column: x => x.UserId,
                         principalSchema: "user",
-                        principalTable: "Users",
+                        principalTable: "ApplicationUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppUserRoles_RoleId",
-                schema: "user",
-                table: "AppUserRoles",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RefreshToken_UserId",
-                schema: "user",
-                table: "RefreshToken",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 schema: "user",
-                table: "Roles",
+                table: "ApplicationRole",
                 column: "NormalizedName",
                 unique: true,
                 filter: "[NormalizedName] IS NOT NULL");
@@ -128,23 +117,35 @@ namespace App.Persistence.Migrations.UserSchema
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 schema: "user",
-                table: "Users",
+                table: "ApplicationUser",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 schema: "user",
-                table: "Users",
+                table: "ApplicationUser",
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserRole_RoleId",
+                schema: "user",
+                table: "ApplicationUserRole",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RefreshToken_UserId",
+                schema: "user",
+                table: "RefreshToken",
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AppUserRoles",
+                name: "ApplicationUserRole",
                 schema: "user");
 
             migrationBuilder.DropTable(
@@ -152,11 +153,11 @@ namespace App.Persistence.Migrations.UserSchema
                 schema: "user");
 
             migrationBuilder.DropTable(
-                name: "Roles",
+                name: "ApplicationRole",
                 schema: "user");
 
             migrationBuilder.DropTable(
-                name: "Users",
+                name: "ApplicationUser",
                 schema: "user");
         }
     }

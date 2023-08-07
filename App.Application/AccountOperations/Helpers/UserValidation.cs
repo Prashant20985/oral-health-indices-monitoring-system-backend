@@ -11,7 +11,7 @@ internal static class UserValidation
     /// <typeparam name="T">The type of result.</typeparam>
     /// <param name="user">The user to check.</param>
     /// <returns>A result indicating the user's validity.</returns>
-    public static OperationResult<T> CheckUserValidity<T>(User user)
+    public static OperationResult<T> CheckUserValidity<T>(ApplicationUser user)
     {
         if (user is null)
             return OperationResult<T>.Failure("Invalid Email or Username");

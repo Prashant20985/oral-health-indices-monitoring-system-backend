@@ -5,7 +5,7 @@ namespace App.Domain.Models.Users;
 /// <summary>
 /// Class representing a user in the application. It inherits from the IdentityUser class provided by Microsoft.AspNetCore.Identity.
 /// </summary>
-public class User : IdentityUser
+public class ApplicationUser : IdentityUser
 {
     /// <summary>
     /// Gets or sets the first name of the user.
@@ -25,7 +25,7 @@ public class User : IdentityUser
     /// <summary>
     /// Gets or sets the date and time when the user's account was created.
     /// </summary>
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     /// <summary>
     /// Gets or sets the date and time when the user's account was deleted.
@@ -43,6 +43,8 @@ public class User : IdentityUser
     /// The initial value of this property is set to null.
     /// </summary>
     public string GuestUserComment { get; set; } = null;
+
+    public ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; } = new List<ApplicationUserRole>();
 
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 }
