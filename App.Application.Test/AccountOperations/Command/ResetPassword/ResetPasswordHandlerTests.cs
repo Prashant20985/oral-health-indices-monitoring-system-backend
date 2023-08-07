@@ -16,7 +16,6 @@ public class ResetPasswordHandlerTests : TestHelper
 
         var user = new ApplicationUser("test@example.com", "John", "Doe", "12345678", "xyz");
 
-
         var resetPasswordCommand = new ResetPasswordCommand(new ResetPasswordDto
         {
             Email = user.Email,
