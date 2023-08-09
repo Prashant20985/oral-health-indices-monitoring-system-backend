@@ -1,6 +1,5 @@
 ﻿using App.Application.Core;
 using App.Domain.Repository;
-using App.Persistence.Contexts;
 using MediatR;
 
 namespace App.Application.AdminOperations.Command.ChangeActivationStatus;
@@ -12,17 +11,15 @@ internal class ChangeActivationStatusHandler
     : IRequestHandler<ChangeActivationStatusCommand, OperationResult<Unit>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly UserContext _userContext;
 
     /// <summary>
     /// Initializes a new instance of the ChangeActivationStatusHandler class.
     /// </summary>
     /// <param name="userRepository">The repository for user-related operations.</param>
     /// <param name="userContext">The database context for user-related data.</param>
-    public ChangeActivationStatusHandler(IUserRepository userRepository, UserContext userContext)
+    public ChangeActivationStatusHandler(IUserRepository userRepository)
     {
         _userRepository = userRepository;
-        _userContext = userContext;
     }
 
     /// <summary>
@@ -41,12 +38,6 @@ internal class ChangeActivationStatusHandler
 
         // Toggle the activation status of the user.
         user.ActivationStatusToggle();
-
-        // Save the changes to the user context.
-        var result = await _userContext.SaveChangesAsync(cancellationToken);
-
-        if (result <= 0)
-            return OperationResult<Unit>.Failure("Error changing activation status");
 
         return OperationResult<Unit>.Success(Unit.Value);
     }

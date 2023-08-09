@@ -2,11 +2,13 @@
 using App.Application.Core;
 using App.Application.Interfaces;
 using App.Domain.Repository;
+using App.Domain.UnitOfWork;
 using App.Infrastructure.Configuration;
 using App.Infrastructure.ContextAccessor;
 using App.Infrastructure.Email;
 using App.Persistence.Contexts;
 using App.Persistence.Repository;
+using App.Persistence.UnitOfWorkImpl;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +47,8 @@ public static class ApplicationExtension
             cfg.AddOpenBehavior(typeof(LoggingBehaviorPipeline<,>));
             // Add validation pipeline behavior.
             cfg.AddOpenBehavior(typeof(ValidationBehaviorPipeline<,>));
+            // Add unitOfWork pipeline behavior.
+            cfg.AddOpenBehavior(typeof(UnitOfWorkBehaviorPipeline<,>));
         });
 
         // Add FluentValidation auto-validation
@@ -55,6 +59,9 @@ public static class ApplicationExtension
 
         // Add AutoMapper with mapping profiles from the specified assembly
         services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
+        // Add a scoped dependency for IUserContextUnitOfWork with the implementation of UserContextUnitOfWork.
+        services.AddScoped<IUserContextUnitOfWork, UserContextUnitOfWork>();
 
         // Add a singleton dependency for IEmailTemplatePathProvider with the implementation of EmailTemplatePathProvider.
         services.AddSingleton<IEmailTemplatePathProvider, EmailTemplatePathProvider>();

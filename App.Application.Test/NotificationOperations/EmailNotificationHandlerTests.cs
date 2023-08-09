@@ -1,208 +1,204 @@
 ﻿using App.Application.Core;
-using App.Application.Interfaces;
 using App.Application.NotificationOperations;
 using App.Application.NotificationOperations.DTOs;
 using App.Domain.Models.Enums;
 using MediatR;
 using Moq;
 using Polly;
-using System;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace App.Application.Test.NotificationOperations;
-    public class EmailNotificationHandlerTests : TestHelper
+public class EmailNotificationHandlerTests : TestHelper
+{
+    private readonly EmailContentDto emailContent;
+    private readonly EmailContentDto passwordResetEmailContent;
+    private readonly EmailNotificationHandler emailNotificationHandler;
+
+    public EmailNotificationHandlerTests()
     {
-        private readonly EmailContentDto emailContent;
-        private readonly EmailContentDto passwordResetEmailContent;
-        private readonly EmailNotificationHandler emailNotificationHandler;
+        emailNotificationHandler = new EmailNotificationHandler(emailServiceMock.Object);
 
-        public EmailNotificationHandlerTests()
-        {
-            emailNotificationHandler = new EmailNotificationHandler(emailServiceMock.Object);
+        emailContent = new EmailContentDto(
+            receiverEmail: "testemail@test.com",
+            subject: "Test Email",
+            message: "TestUser Password",
+            emailType: EmailType.Registration);
 
-            emailContent = new EmailContentDto(
-                receiverEmail: "testemail@test.com",
-                subject: "Test Email",
-                message: "TestUser Password",
-                emailType: EmailType.Registration);
+        passwordResetEmailContent = new EmailContentDto(
+            receiverEmail: "testemail@test.com",
+            subject: "Reset Link",
+            message: "TestUser Password",
+            emailType: EmailType.PasswordReset);
+    }
 
-            passwordResetEmailContent = new EmailContentDto(
-                receiverEmail: "testemail@test.com",
-                subject: "Reset Link",
-                message: "TestUser Password",
-                emailType: EmailType.PasswordReset);
-        }
+    [Fact]
+    public async Task Handle_PasswordResetEmailType_SendEmailWithoutBatching()
+    {
+        // Act
+        var emailNotification = new EmailNotification(passwordResetEmailContent);
+        await emailNotificationHandler.Handle(emailNotification, CancellationToken.None);
 
-        [Fact]
-        public async Task Handle_PasswordResetEmailType_SendEmailWithoutBatching()
-        {
-            // Act
-            var emailNotification = new EmailNotification(passwordResetEmailContent);
-            await emailNotificationHandler.Handle(emailNotification, CancellationToken.None);
+        // Assert
+        emailServiceMock.Verify(e => e.SendEmailAsync(
+            passwordResetEmailContent.ReceiverEmail,
+            passwordResetEmailContent.Subject,
+            passwordResetEmailContent.Message,
+            passwordResetEmailContent.EmailType
+            ), Times.Once);
 
-            // Assert
-            emailServiceMock.Verify(e => e.SendEmailAsync(
-                passwordResetEmailContent.ReceiverEmail,
-                passwordResetEmailContent.Subject,
-                passwordResetEmailContent.Message,
-                passwordResetEmailContent.EmailType
-                ), Times.Once);
-
-            var batchedEmailsField = typeof(EmailNotificationHandler)
-                    .GetField("_batchedEmails",
-                    System.Reflection.BindingFlags.NonPublic |
-                    System.Reflection.BindingFlags.Instance)?
-                    .GetValue(emailNotificationHandler) as List<EmailContentDto>;
-
-            Assert.NotNull(batchedEmailsField);
-            Assert.Empty(batchedEmailsField); // No emails should be present in batch
-        }
-
-        [Fact]
-        public async Task Handle_NonPasswordResetEmailType_AddsEmailToBatch()
-        {
-            // Act
-            var emailNotification = new EmailNotification(emailContent);
-            await emailNotificationHandler.Handle(emailNotification, CancellationToken.None);
-
-            // Assert 
-            var batchedEmailsField = typeof(EmailNotificationHandler)
-                    .GetField("_batchedEmails",
-                    System.Reflection.BindingFlags.NonPublic |
-                    System.Reflection.BindingFlags.Instance)?
-                    .GetValue(emailNotificationHandler) as List<EmailContentDto>;
-
-            Assert.NotNull(batchedEmailsField);
-            Assert.Single(batchedEmailsField);
-            Assert.Equal(emailContent.ReceiverEmail, batchedEmailsField[0].ReceiverEmail);
-            Assert.Equal(emailContent.Subject, batchedEmailsField[0].Subject);
-            Assert.Equal(emailContent.Message, batchedEmailsField[0].Message);
-            Assert.Equal(emailContent.EmailType, batchedEmailsField[0].EmailType);
-        }
-
-        [Fact]
-        public async Task Handle__NonPasswordResetEmailType_ReachesBatchLimit_SendsBatch()
-        {
-            // Act
-            var emailNotification = new EmailNotification(emailContent);
-
-            for (int i = 0; i < 10; i++)
-            {
-                await emailNotificationHandler.Handle(emailNotification, CancellationToken.None);
-            }
-
-            // Assert
-            emailServiceMock.Verify(e => e.SendEmailAsync(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<EmailType>()
-            ), Times.Exactly(10));
-
-            var batchedEmailsField = typeof(EmailNotificationHandler)
-                    .GetField("_batchedEmails",
-                    System.Reflection.BindingFlags.NonPublic |
-                    System.Reflection.BindingFlags.Instance)?
-                    .GetValue(emailNotificationHandler) as List<EmailContentDto>;
-
-            Assert.NotNull(batchedEmailsField);
-            Assert.Empty(batchedEmailsField); // Batch should be cleared after sending
-        }
-
-        [Fact]
-        public async Task Handle_NonPasswordResetEmailType_DoesNotReachBatchLimit_SchedulesBatch()
-        {
-            // Act
-            var emailNotification = new EmailNotification(emailContent);
-            await emailNotificationHandler.Handle(emailNotification, CancellationToken.None);
-
-            // Assert
-            var isBatchScheduledField = typeof(EmailNotificationHandler)
-                .GetField("_isBatchScheduled",
-                System.Reflection.BindingFlags.NonPublic |
-                System.Reflection.BindingFlags.Instance)?
-                .GetValue(emailNotificationHandler) as bool?;
-
-            Assert.True(isBatchScheduledField);
-
-            emailServiceMock.Verify(e => e.SendEmailAsync(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<EmailType>()
-            ), Times.Never);
-        }
-
-        [Fact]
-        public async Task SendBatchAsync_SendEmailSuccessfully_ClearsBatch()
-        {
-            // Arrange
-            var batchToSend = new List<EmailContentDto> { emailContent };
-
-            // Act
-            await emailNotificationHandler.SendBatch(batchToSend);
-
-            // Assert
-            var batchedEmailsField = typeof(EmailNotificationHandler)
+        var batchedEmailsField = typeof(EmailNotificationHandler)
                 .GetField("_batchedEmails",
                 System.Reflection.BindingFlags.NonPublic |
                 System.Reflection.BindingFlags.Instance)?
                 .GetValue(emailNotificationHandler) as List<EmailContentDto>;
 
-            Assert.NotNull(batchedEmailsField);
-            Assert.Empty(batchedEmailsField); // Batch should be cleared after sending
+        Assert.NotNull(batchedEmailsField);
+        Assert.Empty(batchedEmailsField); // No emails should be present in batch
+    }
+
+    [Fact]
+    public async Task Handle_NonPasswordResetEmailType_AddsEmailToBatch()
+    {
+        // Act
+        var emailNotification = new EmailNotification(emailContent);
+        await emailNotificationHandler.Handle(emailNotification, CancellationToken.None);
+
+        // Assert 
+        var batchedEmailsField = typeof(EmailNotificationHandler)
+                .GetField("_batchedEmails",
+                System.Reflection.BindingFlags.NonPublic |
+                System.Reflection.BindingFlags.Instance)?
+                .GetValue(emailNotificationHandler) as List<EmailContentDto>;
+
+        Assert.NotNull(batchedEmailsField);
+        Assert.Single(batchedEmailsField);
+        Assert.Equal(emailContent.ReceiverEmail, batchedEmailsField[0].ReceiverEmail);
+        Assert.Equal(emailContent.Subject, batchedEmailsField[0].Subject);
+        Assert.Equal(emailContent.Message, batchedEmailsField[0].Message);
+        Assert.Equal(emailContent.EmailType, batchedEmailsField[0].EmailType);
+    }
+
+    [Fact]
+    public async Task Handle__NonPasswordResetEmailType_ReachesBatchLimit_SendsBatch()
+    {
+        // Act
+        var emailNotification = new EmailNotification(emailContent);
+
+        for (int i = 0; i < 10; i++)
+        {
+            await emailNotificationHandler.Handle(emailNotification, CancellationToken.None);
         }
 
-        [Fact]
-        public async Task SendEmailAsync_RetryPolicy_SucceedsAfterRetries()
+        // Assert
+        emailServiceMock.Verify(e => e.SendEmailAsync(
+            It.IsAny<string>(),
+            It.IsAny<string>(),
+            It.IsAny<string>(),
+            It.IsAny<EmailType>()
+        ), Times.Exactly(10));
+
+        var batchedEmailsField = typeof(EmailNotificationHandler)
+                .GetField("_batchedEmails",
+                System.Reflection.BindingFlags.NonPublic |
+                System.Reflection.BindingFlags.Instance)?
+                .GetValue(emailNotificationHandler) as List<EmailContentDto>;
+
+        Assert.NotNull(batchedEmailsField);
+        Assert.Empty(batchedEmailsField); // Batch should be cleared after sending
+    }
+
+    [Fact]
+    public async Task Handle_NonPasswordResetEmailType_DoesNotReachBatchLimit_SchedulesBatch()
+    {
+        // Act
+        var emailNotification = new EmailNotification(emailContent);
+        await emailNotificationHandler.Handle(emailNotification, CancellationToken.None);
+
+        // Assert
+        var isBatchScheduledField = typeof(EmailNotificationHandler)
+            .GetField("_isBatchScheduled",
+            System.Reflection.BindingFlags.NonPublic |
+            System.Reflection.BindingFlags.Instance)?
+            .GetValue(emailNotificationHandler) as bool?;
+
+        Assert.True(isBatchScheduledField);
+
+        emailServiceMock.Verify(e => e.SendEmailAsync(
+            It.IsAny<string>(),
+            It.IsAny<string>(),
+            It.IsAny<string>(),
+            It.IsAny<EmailType>()
+        ), Times.Never);
+    }
+
+    [Fact]
+    public async Task SendBatchAsync_SendEmailSuccessfully_ClearsBatch()
+    {
+        // Arrange
+        var batchToSend = new List<EmailContentDto> { emailContent };
+
+        // Act
+        await emailNotificationHandler.SendBatch(batchToSend);
+
+        // Assert
+        var batchedEmailsField = typeof(EmailNotificationHandler)
+            .GetField("_batchedEmails",
+            System.Reflection.BindingFlags.NonPublic |
+            System.Reflection.BindingFlags.Instance)?
+            .GetValue(emailNotificationHandler) as List<EmailContentDto>;
+
+        Assert.NotNull(batchedEmailsField);
+        Assert.Empty(batchedEmailsField); // Batch should be cleared after sending
+    }
+
+    [Fact]
+    public async Task SendEmailAsync_RetryPolicy_SucceedsAfterRetries()
+    {
+        // Arrange
+        var maxRetryAttempts = 3;
+        var retryDelay = TimeSpan.FromSeconds(1);
+        var attemptCounter = 0;
+
+        emailServiceMock.Setup(e => e.SendEmailAsync(
+            It.IsAny<string>(),
+            It.IsAny<string>(),
+            It.IsAny<string>(),
+            It.IsAny<EmailType>()
+        )).Callback<string, string, string, EmailType>((email, subject, message, type) =>
         {
-            // Arrange
-            var maxRetryAttempts = 3;
-            var retryDelay = TimeSpan.FromSeconds(1);
-            var attemptCounter = 0;
-
-            emailServiceMock.Setup(e => e.SendEmailAsync(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<EmailType>()
-            )).Callback<string, string, string, EmailType>((email, subject, message, type) =>
+            attemptCounter++;
+            if (attemptCounter < maxRetryAttempts)
             {
-                attemptCounter++;
-                if (attemptCounter < maxRetryAttempts)
-                {
-                    throw new Exception("Failed to send email");
-                }
-            }).ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
+                throw new Exception("Failed to send email");
+            }
+        }).ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
-            var retryPolicy = Policy.Handle<Exception>()
-                .WaitAndRetryAsync(maxRetryAttempts, attempt => retryDelay, (exception, timeSpan, attempt, context) =>
-                {
-                    Console.WriteLine($"Retry attempt {attempt} failed: {exception.Message}");
-                });
-
-            var emailNotificationHandler = new EmailNotificationHandler(emailServiceMock.Object);
-
-            // Act
-            await retryPolicy.ExecuteAsync(async () =>
+        var retryPolicy = Policy.Handle<Exception>()
+            .WaitAndRetryAsync(maxRetryAttempts, attempt => retryDelay, (exception, timeSpan, attempt, context) =>
             {
-                await emailNotificationHandler.SendEmailAsync(emailContent);
+                Console.WriteLine($"Retry attempt {attempt} failed: {exception.Message}");
             });
 
-            // Assert
-            emailServiceMock.Verify(e => e.SendEmailAsync(
-                emailContent.ReceiverEmail,
-                emailContent.Subject,
-                emailContent.Message,
-                emailContent.EmailType
-            ), Times.Exactly(maxRetryAttempts)); // Should be retried maxRetryAttempts times
+        var emailNotificationHandler = new EmailNotificationHandler(emailServiceMock.Object);
 
-            emailServiceMock.Verify(e => e.SendEmailAsync(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<EmailType>()
-            ), Times.AtMost(maxRetryAttempts)); // At most maxRetryAttempts attempts should be made
-        }
+        // Act
+        await retryPolicy.ExecuteAsync(async () =>
+        {
+            await emailNotificationHandler.SendEmailAsync(emailContent);
+        });
+
+        // Assert
+        emailServiceMock.Verify(e => e.SendEmailAsync(
+            emailContent.ReceiverEmail,
+            emailContent.Subject,
+            emailContent.Message,
+            emailContent.EmailType
+        ), Times.Exactly(maxRetryAttempts)); // Should be retried maxRetryAttempts times
+
+        emailServiceMock.Verify(e => e.SendEmailAsync(
+            It.IsAny<string>(),
+            It.IsAny<string>(),
+            It.IsAny<string>(),
+            It.IsAny<EmailType>()
+        ), Times.AtMost(maxRetryAttempts)); // At most maxRetryAttempts attempts should be made
     }
+}
