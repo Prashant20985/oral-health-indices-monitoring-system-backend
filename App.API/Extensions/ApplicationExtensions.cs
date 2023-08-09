@@ -34,7 +34,20 @@ public static class ApplicationExtension
             opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         });
 
-        // 
+        // Add CORS
+        services.AddCors(opt =>
+        {
+            opt.AddPolicy("CorsPolicy", policy =>
+            {
+                policy
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    .WithExposedHeaders("WWW-Authenticate")
+                    .WithOrigins("http://localhost:3000", "https://localhost:3000");
+            });
+        });
+        
         // Add a scoped dependency for IUserRepository with the impliementation of UserRepository.
         services.AddScoped<IUserRepository, UserRepository>();
 
