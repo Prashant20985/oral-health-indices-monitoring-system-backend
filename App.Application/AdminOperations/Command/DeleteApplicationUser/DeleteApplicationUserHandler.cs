@@ -1,6 +1,5 @@
 ﻿using App.Application.Core;
 using App.Domain.Repository;
-using App.Persistence.Contexts;
 using MediatR;
 
 namespace App.Application.AdminOperations.Command.DeleteApplicationUser;
@@ -13,17 +12,14 @@ internal class DeleteApplicationUserHandler
     OperationResult<Unit>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly UserContext _userContext;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DeleteApplicationUserHandler"/> class.
     /// </summary>
-    /// <param name="userContext">The database context for user-related data.</param>
     /// <param name="userRepository">The repository for user-related operations.</param>
-    public DeleteApplicationUserHandler(UserContext userContext, IUserRepository userRepository)
+    public DeleteApplicationUserHandler(IUserRepository userRepository)
     {
-        _userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
-        _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+        _userRepository = userRepository;
     }
 
     /// <summary>
@@ -42,12 +38,6 @@ internal class DeleteApplicationUserHandler
 
         // Delete the user with the provided deletion comment.
         user.DeleteUser(request.DeleteComment);
-
-        // Save the changes to the user context.
-        var result = await _userContext.SaveChangesAsync(cancellationToken);
-
-        if (result <= 0)
-            return OperationResult<Unit>.Failure("Error Deleting user");
 
         return OperationResult<Unit>.Success(Unit.Value);
     }

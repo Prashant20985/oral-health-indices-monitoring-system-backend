@@ -1,6 +1,5 @@
 ﻿using App.Application.Core;
 using App.Domain.Repository;
-using App.Persistence.Contexts;
 using MediatR;
 
 namespace App.Application.AdminOperations.Command.UpdateApplicationUser;
@@ -13,17 +12,14 @@ public class UpdateApplicationUserCommandHandler
     OperationResult<Unit>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly UserContext _userContext;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UpdateApplicationUserCommandHandler"/> class.
     /// </summary>
-    /// <param name="userContext">The database context for user-related data.</param>
     /// <param name="userRepository">The repository for user-related operations.</param>
-    public UpdateApplicationUserCommandHandler(UserContext userContext, IUserRepository userRepository)
+    public UpdateApplicationUserCommandHandler(IUserRepository userRepository)
     {
-        _userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
-        _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+        _userRepository = userRepository;
     }
 
     /// <summary>
@@ -70,12 +66,6 @@ public class UpdateApplicationUserCommandHandler
             await _userRepository
                 .AddApplicationUserToRoleAsync(applicationUser, request.UpdateApplicationUser.Role);
         }
-
-        // Save the changes to the user context.
-        var result = await _userContext.SaveChangesAsync(cancellationToken);
-
-        if (result <= 0)
-            return OperationResult<Unit>.Failure("Error updating user");
 
         return OperationResult<Unit>.Success(Unit.Value);
     }
