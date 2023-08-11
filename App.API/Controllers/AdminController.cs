@@ -28,7 +28,7 @@ public class AdminController : BaseController
     [HttpGet("active-users")]
     public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetActiveUsers(string searchTerm,
         int pageNumber,
-        int pageSize) => HandleOperationResult(
+        int pageSize) => HandleOperationPagedResult(
             await Mediator.Send(new FetchActiveApplicationUsersPagedListQuery(searchTerm, pageNumber, pageSize)));
 
 
@@ -43,7 +43,7 @@ public class AdminController : BaseController
     [HttpGet("deactivated-users")]
     public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetDeactivatedUsers(string searchTerm,
         int pageNumber,
-        int pageSize) => HandleOperationResult(
+        int pageSize) => HandleOperationPagedResult(
             await Mediator.Send(new FetchDeactivatedApplicationUsersListQuery(searchTerm, pageNumber, pageSize)));
 
 
@@ -58,7 +58,7 @@ public class AdminController : BaseController
     [HttpGet("deleted-users")]
     public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetDeleetdUsers(string searchTerm,
         int pageNumber,
-        int pageSize) => HandleOperationResult(
+        int pageSize) => HandleOperationPagedResult(
             await Mediator.Send(new FetchDeletedApplicationUsersListQuery(searchTerm, pageNumber, pageSize)));
 
 
