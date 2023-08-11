@@ -24,7 +24,7 @@ public class AdminController : BaseController
     /// <param name="pageNumber">The page number for pagination.</param>
     /// <param name="pageSize">The number of items per page.</param>
     /// <returns>A paged list of active users.</returns>
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpGet("active-users")]
     public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetActiveUsers(string searchTerm,
         int pageNumber,
