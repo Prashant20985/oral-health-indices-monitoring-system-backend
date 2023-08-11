@@ -112,7 +112,7 @@ public class UserRepository : IUserRepository
     /// <returns>An IQueryable of ApplicationUserDto representing deleted application users.</returns>
     public IQueryable<ApplicationUserDto> GetDeletedApplicationUsersQuery() => _userManager.Users
         .ProjectTo<ApplicationUserDto>(_mapper.ConfigurationProvider)
-        .Where(x => x.DeletedAt != null && !string.IsNullOrWhiteSpace(x.DeleteUserComment))
+        .Where(x => x.DeletedAt != null || !string.IsNullOrWhiteSpace(x.DeleteUserComment))
         .OrderBy(c => c.CreatedAt)
         .AsQueryable();
 

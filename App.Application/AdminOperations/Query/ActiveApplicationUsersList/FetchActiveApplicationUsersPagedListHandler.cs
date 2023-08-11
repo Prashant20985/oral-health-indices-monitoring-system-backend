@@ -1,4 +1,5 @@
-﻿using App.Application.Core;
+﻿using App.Application.AdminOperations.Helpers;
+using App.Application.Core;
 using App.Domain.DTOs;
 using App.Domain.Repository;
 using MediatR;
@@ -36,21 +37,9 @@ public class FetchActiveApplicationUsersPagedListHandler
         // Retrieve the query for active application users
         var activeApplicationUsersQuery = _userRepository.GetActiveApplicationUsersQuery();
 
-        // Apply search term filter if provided
-        if (!string.IsNullOrWhiteSpace(request.SearchTerm))
-        {
-            activeApplicationUsersQuery = activeApplicationUsersQuery.Where(x =>
-                x.UserName.Contains(request.SearchTerm) ||
-                x.FirstName.Contains(request.SearchTerm));
-        }
-
         // Create paged list of active application users
-        var pagedActiveApplicationUsers = await PagedList<ApplicationUserDto>
-            .CreateAsync(
-                source: activeApplicationUsersQuery,
-                pageNumber: request.PageNumber,
-                pageSize: request.PageSize,
-                cancellationToken: cancellationToken);
+        var pagedActiveApplicationUsers = await QueryFilter
+                .ApplyFilters(activeApplicationUsersQuery, request.Params, cancellationToken);
 
         // Return the paged list as a successful operation result
         return OperationResult<PagedList<ApplicationUserDto>>.Success(pagedActiveApplicationUsers);

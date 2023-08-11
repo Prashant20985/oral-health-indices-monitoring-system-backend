@@ -7,7 +7,7 @@ namespace App.Application.AdminOperations.Query.ActiveApplicationUsersList;
 /// <summary>
 /// Represents a request to fetch a paged list of active application users.
 /// </summary>
-public record FetchActiveApplicationUsersPagedListQuery(string SearchTerm,
-    int PageNumber,
-    int PageSize) : IRequest<OperationResult<PagedList<ApplicationUserDto>>>;
+public record FetchActiveApplicationUsersPagedListQuery(
+    PagingAndSearchParams Params)
+        : IRequest<OperationResult<PagedList<ApplicationUserDto>>>;
 

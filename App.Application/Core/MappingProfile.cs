@@ -15,6 +15,8 @@ public class MappingProfile : Profile
         CreateMap<ApplicationUser, ApplicationUserDto>()
             .ForMember(d => d.Role, o => o.MapFrom(s => s.ApplicationUserRoles
                 .Select(x => x.ApplicationRole.Name)
-                .FirstOrDefault()));
+                .FirstOrDefault()))
+            .ForMember(d => d.UserType,
+                o => o.MapFrom(s => s.GuestUserComment == null ? "RegularUser" : "GuestUser"));
     }
 }

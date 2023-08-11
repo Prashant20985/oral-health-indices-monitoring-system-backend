@@ -47,7 +47,7 @@ public static class ApplicationExtension
                     .WithOrigins("http://localhost:3000", "https://localhost:3000");
             });
         });
-        
+
         // Add a scoped dependency for IUserRepository with the impliementation of UserRepository.
         services.AddScoped<IUserRepository, UserRepository>();
 

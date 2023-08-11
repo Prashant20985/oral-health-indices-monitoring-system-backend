@@ -1,4 +1,5 @@
-﻿using App.Application.Core;
+﻿using App.Application.AdminOperations.Helpers;
+using App.Application.Core;
 using App.Domain.DTOs;
 using App.Domain.Repository;
 using MediatR;
@@ -35,21 +36,9 @@ public class FetchDeletedApplicationUsersListHandler
         // Retrieve the query for deleted application users
         var deletedApplicationUsersQuery = _userRepository.GetDeletedApplicationUsersQuery();
 
-        // Apply search term filter if provided
-        if (!string.IsNullOrWhiteSpace(request.SearchTerm))
-        {
-            deletedApplicationUsersQuery = deletedApplicationUsersQuery.Where(x =>
-                x.UserName.Contains(request.SearchTerm) ||
-                x.FirstName.Contains(request.SearchTerm));
-        }
-
-        // Create paged list of deleted application users
-        var pagedDeletedApplicationUsers = await PagedList<ApplicationUserDto>
-            .CreateAsync(
-                source: deletedApplicationUsersQuery,
-                pageNumber: request.PageNumber,
-                pageSize: request.PageSize,
-                cancellationToken: cancellationToken);
+        // Create paged list of deleted application users and apply filters from search params 
+        var pagedDeletedApplicationUsers = await QueryFilter
+                .ApplyFilters(deletedApplicationUsersQuery, request.Params, cancellationToken);
 
         // Return the paged list as a successful operation result
         return OperationResult<PagedList<ApplicationUserDto>>.Success(pagedDeletedApplicationUsers);

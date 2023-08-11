@@ -7,6 +7,6 @@ namespace App.Application.AdminOperations.Query.DeletedApplicationUsersList;
 /// <summary>
 /// Represents a request to fetch a paged list of deleted application users.
 /// </summary>
-public record FetchDeletedApplicationUsersListQuery(string SearchTerm,
-    int PageNumber,
-    int PageSize) : IRequest<OperationResult<PagedList<ApplicationUserDto>>>;
+public record FetchDeletedApplicationUsersListQuery(
+    PagingAndSearchParams Params)
+        : IRequest<OperationResult<PagedList<ApplicationUserDto>>>;
