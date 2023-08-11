@@ -20,46 +20,37 @@ public class AdminController : BaseController
     /// <summary>
     /// Gets a paged list of active users.
     /// </summary>
-    /// <param name="searchTerm">A search term to filter users.</param>
-    /// <param name="pageNumber">The page number for pagination.</param>
-    /// <param name="pageSize">The number of items per page.</param>
+    /// <param name="pagingAndSearchParams">Search and paging params to filter and page user list</param>
     /// <returns>A paged list of active users.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("active-users")]
-    public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetActiveUsers(string searchTerm,
-        int pageNumber,
-        int pageSize) => HandleOperationPagedResult(
-            await Mediator.Send(new FetchActiveApplicationUsersPagedListQuery(searchTerm, pageNumber, pageSize)));
+    public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetActiveUsers(
+        [FromQuery] PagingAndSearchParams pagingAndSearchParams) => HandleOperationPagedResult(
+            await Mediator.Send(new FetchActiveApplicationUsersPagedListQuery(pagingAndSearchParams)));
 
 
     /// <summary>
     /// Gets a paged list of deactivated users.
     /// </summary>
-    /// <param name="searchTerm">A search term to filter users.</param>
-    /// <param name="pageNumber">The page number for pagination.</param>
-    /// <param name="pageSize">The number of items per page.</param>
+    /// <param name="pagingAndSearchParams">Search and paging params to filter and page user list</param>
     /// <returns>A paged list of deactivated users.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("deactivated-users")]
-    public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetDeactivatedUsers(string searchTerm,
-        int pageNumber,
-        int pageSize) => HandleOperationPagedResult(
-            await Mediator.Send(new FetchDeactivatedApplicationUsersListQuery(searchTerm, pageNumber, pageSize)));
+    public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetDeactivatedUsers(
+        [FromQuery] PagingAndSearchParams pagingAndSearchParams) => HandleOperationPagedResult(
+            await Mediator.Send(new FetchDeactivatedApplicationUsersListQuery(pagingAndSearchParams)));
 
 
     /// <summary>
     /// Gets a paged list of deleted users.
     /// </summary>
-    /// <param name="searchTerm">A search term to filter users.</param>
-    /// <param name="pageNumber">The page number for pagination.</param>
-    /// <param name="pageSize">The number of items per page.</param>
+    /// <param name="pagingAndSearchParams">Search and paging params to filter and page user list</param>
     /// <returns>A paged list of deleted users.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("deleted-users")]
-    public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetDeleetdUsers(string searchTerm,
-        int pageNumber,
-        int pageSize) => HandleOperationPagedResult(
-            await Mediator.Send(new FetchDeletedApplicationUsersListQuery(searchTerm, pageNumber, pageSize)));
+    public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetDeleetdUsers(
+        [FromQuery] PagingAndSearchParams pagingAndSearchParams) => HandleOperationPagedResult(
+            await Mediator.Send(new FetchDeletedApplicationUsersListQuery(pagingAndSearchParams)));
 
 
     /// <summary>

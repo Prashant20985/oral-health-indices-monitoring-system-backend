@@ -4,7 +4,7 @@ namespace App.API.Extensions;
 
 public static class HttpExtensions
 {
-    public static void AddPaginationHeader(this HttpResponse response, 
+    public static void AddPaginationHeader(this HttpResponse response,
         int currentPage, int itemsPerPage,
         int totalItems, int totalPages)
     {

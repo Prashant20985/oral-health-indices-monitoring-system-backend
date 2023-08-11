@@ -59,4 +59,10 @@ public class ApplicationUserDto
     /// Gets or sets a Role for a user.
     /// </summary>
     public string Role { get; set; }
+
+    /// <summary>
+    /// Gets or sets a User Type for a user based on GuestUserComment 
+    /// if comment is null user is a RegularUser else GuestUser.
+    /// </summary>
+    public string UserType { get; set; }
 }

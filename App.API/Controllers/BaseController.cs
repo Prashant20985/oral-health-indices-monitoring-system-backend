@@ -59,7 +59,7 @@ public class BaseController : ControllerBase
                     result.ResultValue.TotalPages);
 
                 return Ok(result.ResultValue);
-            }  
+            }
             else
                 return NotFound();
         }
