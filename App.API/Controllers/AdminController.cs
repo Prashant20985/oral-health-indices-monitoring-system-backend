@@ -24,11 +24,11 @@ public class AdminController : BaseController
     /// <param name="pageNumber">The page number for pagination.</param>
     /// <param name="pageSize">The number of items per page.</param>
     /// <returns>A paged list of active users.</returns>
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [HttpGet("active-users")]
     public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetActiveUsers(string searchTerm,
         int pageNumber,
-        int pageSize) => HandleOperationResult(
+        int pageSize) => HandleOperationPagedResult(
             await Mediator.Send(new FetchActiveApplicationUsersPagedListQuery(searchTerm, pageNumber, pageSize)));
 
 
@@ -43,7 +43,7 @@ public class AdminController : BaseController
     [HttpGet("deactivated-users")]
     public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetDeactivatedUsers(string searchTerm,
         int pageNumber,
-        int pageSize) => HandleOperationResult(
+        int pageSize) => HandleOperationPagedResult(
             await Mediator.Send(new FetchDeactivatedApplicationUsersListQuery(searchTerm, pageNumber, pageSize)));
 
 
@@ -58,7 +58,7 @@ public class AdminController : BaseController
     [HttpGet("deleted-users")]
     public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetDeleetdUsers(string searchTerm,
         int pageNumber,
-        int pageSize) => HandleOperationResult(
+        int pageSize) => HandleOperationPagedResult(
             await Mediator.Send(new FetchDeletedApplicationUsersListQuery(searchTerm, pageNumber, pageSize)));
 
 
