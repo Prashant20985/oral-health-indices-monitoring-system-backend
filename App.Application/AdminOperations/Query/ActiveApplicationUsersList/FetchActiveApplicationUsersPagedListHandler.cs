@@ -12,7 +12,7 @@ namespace App.Application.AdminOperations.Query.ActiveApplicationUsersList;
 /// </summary>
 public class FetchActiveApplicationUsersPagedListHandler
     : IRequestHandler<FetchActiveApplicationUsersPagedListQuery,
-        OperationResult<PagedList<ApplicationUserDto>>>
+        OperationResult<List<ApplicationUserDto>>>
 {
     private readonly IUserRepository _userRepository;
 
@@ -31,17 +31,17 @@ public class FetchActiveApplicationUsersPagedListHandler
     /// <param name="request">The query request.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>An operation result containing the paged list of active users.</returns>
-    public async Task<OperationResult<PagedList<ApplicationUserDto>>> Handle(
+    public async Task<OperationResult<List<ApplicationUserDto>>> Handle(
         FetchActiveApplicationUsersPagedListQuery request, CancellationToken cancellationToken)
     {
         // Retrieve the query for active application users
         var activeApplicationUsersQuery = _userRepository.GetActiveApplicationUsersQuery();
 
         // Create paged list of active application users
-        var pagedActiveApplicationUsers = await QueryFilter
+        var filterdUsers = await QueryFilter
                 .ApplyFilters(activeApplicationUsersQuery, request.Params, cancellationToken);
 
         // Return the paged list as a successful operation result
-        return OperationResult<PagedList<ApplicationUserDto>>.Success(pagedActiveApplicationUsers);
+        return OperationResult<List<ApplicationUserDto>>.Success(filterdUsers);
     }
 }

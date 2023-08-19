@@ -8,5 +8,5 @@ namespace App.Application.AdminOperations.Query.DeactivatedApplicationUsersList;
 /// Represents a request to fetch a paged list of deactivated application users.
 /// </summary>
 public record FetchDeactivatedApplicationUsersListQuery(
-    PagingAndSearchParams Params)
-        : IRequest<OperationResult<PagedList<ApplicationUserDto>>>;
+    SearchParams Params)
+        : IRequest<OperationResult<List<ApplicationUserDto>>>;

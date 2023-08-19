@@ -24,8 +24,8 @@ public class AdminController : BaseController
     /// <returns>A paged list of active users.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("active-users")]
-    public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetActiveUsers(
-        [FromQuery] PagingAndSearchParams pagingAndSearchParams) => HandleOperationPagedResult(
+    public async Task<ActionResult<List<ApplicationUserDto>>> GetActiveUsers(
+        [FromQuery] SearchParams pagingAndSearchParams) => HandleOperationResult(
             await Mediator.Send(new FetchActiveApplicationUsersPagedListQuery(pagingAndSearchParams)));
 
 
@@ -36,8 +36,8 @@ public class AdminController : BaseController
     /// <returns>A paged list of deactivated users.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("deactivated-users")]
-    public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetDeactivatedUsers(
-        [FromQuery] PagingAndSearchParams pagingAndSearchParams) => HandleOperationPagedResult(
+    public async Task<ActionResult<List<ApplicationUserDto>>> GetDeactivatedUsers(
+        [FromQuery] SearchParams pagingAndSearchParams) => HandleOperationResult(
             await Mediator.Send(new FetchDeactivatedApplicationUsersListQuery(pagingAndSearchParams)));
 
 
@@ -48,8 +48,8 @@ public class AdminController : BaseController
     /// <returns>A paged list of deleted users.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("deleted-users")]
-    public async Task<ActionResult<PagedList<ApplicationUserDto>>> GetDeleetdUsers(
-        [FromQuery] PagingAndSearchParams pagingAndSearchParams) => HandleOperationPagedResult(
+    public async Task<ActionResult<List<ApplicationUserDto>>> GetDeleetdUsers(
+        [FromQuery] SearchParams pagingAndSearchParams) => HandleOperationResult(
             await Mediator.Send(new FetchDeletedApplicationUsersListQuery(pagingAndSearchParams)));
 
 
@@ -70,7 +70,7 @@ public class AdminController : BaseController
     /// <param name="userName">The username of the user.</param>
     /// <returns>The result from activation status change operation.</returns>
     [Authorize(Roles = "Admin")]
-    [HttpPut("chnage-activation-status/{userName}")]
+    [HttpPut("change-activation-status/{userName}")]
     public async Task<ActionResult> ChangeActivationStatus(string userName) => HandleOperationResult(
             await Mediator.Send(new ChangeActivationStatusCommand(userName)));
 

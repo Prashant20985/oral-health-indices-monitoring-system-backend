@@ -12,7 +12,7 @@ namespace App.Application.AdminOperations.Query.DeactivatedApplicationUsersList;
 /// </summary>
 public class FetchDeactivatedApplicationUsersListHandler
     : IRequestHandler<FetchDeactivatedApplicationUsersListQuery,
-    OperationResult<PagedList<ApplicationUserDto>>>
+    OperationResult<List<ApplicationUserDto>>>
 {
     private readonly IUserRepository _userRepository;
 
@@ -31,17 +31,17 @@ public class FetchDeactivatedApplicationUsersListHandler
     /// <param name="request">The query request.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>An operation result containing the paged list of deactivated users.</returns>
-    public async Task<OperationResult<PagedList<ApplicationUserDto>>> Handle(
+    public async Task<OperationResult<List<ApplicationUserDto>>> Handle(
         FetchDeactivatedApplicationUsersListQuery request, CancellationToken cancellationToken)
     {
         // Retrieve the query for deactivated application users
         var deactivatedApplicationUsersQuery = _userRepository.GetDeactivatedApplicationUsersQuery();
 
         // Create paged list of deactivated application users
-        var pagedDeactivatedApplicationUsers = await QueryFilter
+        var filteredUsers = await QueryFilter
                 .ApplyFilters(deactivatedApplicationUsersQuery, request.Params, cancellationToken);
 
         // Return the paged list as a successful operation result
-        return OperationResult<PagedList<ApplicationUserDto>>.Success(pagedDeactivatedApplicationUsers);
+        return OperationResult<List<ApplicationUserDto>>.Success(filteredUsers);
     }
 }
