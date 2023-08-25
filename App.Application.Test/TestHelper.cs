@@ -1,6 +1,7 @@
 ﻿using App.Application.Interfaces;
 using App.Domain.Models.Users;
 using App.Domain.Repository;
+using App.Domain.UnitOfWork;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Moq;
@@ -42,6 +43,8 @@ public class TestHelper
     /// </summary>
     protected Mock<IEmailService> emailServiceMock;
 
+    protected Mock<IUserContextUnitOfWork> userContextUnitOfWork;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="TestHelper"/> class with default mocked dependencies.
     /// </summary>
@@ -53,6 +56,7 @@ public class TestHelper
         passwordHasher = new PasswordHasher<ApplicationUser>();
         mediatorMock = new Mock<IMediator>();
         emailServiceMock = new Mock<IEmailService>();
+        userContextUnitOfWork = new Mock<IUserContextUnitOfWork>();
     }
 }
 
