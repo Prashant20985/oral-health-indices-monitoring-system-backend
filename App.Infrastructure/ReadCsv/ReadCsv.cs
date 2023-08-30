@@ -1,22 +1,19 @@
-﻿using App.Domain.DTOs;
+﻿using App.Application.Interfaces;
+using App.Domain.DTOs;
 using CsvHelper;
 using Microsoft.AspNetCore.Http;
 using System.Globalization;
 
+namespace App.Infrastructure.ReadCsv;
 
-namespace App.Application.AdminOperations.Helpers;
-
-/// <summary>
-/// Helper class for reading users from a CSV file.
-/// </summary>
-internal static class ReadCsv
+public class ReadCsv : IReadCsv
 {
     /// <summary>
     /// Reads users from a CSV file.
     /// </summary>
     /// <param name="file">The CSV file containing user data.</param>
     /// <returns>A list of CreateUserDto objects representing the users.</returns>
-    public static List<CreateApplicationUserDto> ReadUsersFromCsv(IFormFile file)
+    public List<CreateApplicationUserDto> ReadApplicationUsersFromCsv(IFormFile file)
     {
         List<CreateApplicationUserDto> users = new List<CreateApplicationUserDto>();
 

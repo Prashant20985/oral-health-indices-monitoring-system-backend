@@ -1,13 +1,11 @@
 ﻿using App.Application.Core;
+using App.Application.Interfaces;
 using App.Domain.DTOs;
 using Microsoft.EntityFrameworkCore;
 
-namespace App.Application.AdminOperations.Helpers;
+namespace App.Infrastructure.QueryFilter;
 
-/// <summary>
-/// Helper class for applying filters to a query of ApplicationUserDto.
-/// </summary>
-internal static class QueryFilter
+public class QueryFilter : IQueryFilter
 {
     /// <summary>
     /// Apply filters to the given query based on search parameters and return a paged result.
@@ -16,8 +14,7 @@ internal static class QueryFilter
     /// <param name="pagingAndSearchParams">Paging and search parameters to apply.</param>
     /// <param name="cancellationToken">A token to cancel the operation if needed.</param>
     /// <returns>A paged list of ApplicationUserDto that match the applied filters.</returns>
-    internal async static Task<List<ApplicationUserDto>> ApplyFilters(
-        IQueryable<ApplicationUserDto> query,
+    public async Task<List<ApplicationUserDto>> ApplyFilters(IQueryable<ApplicationUserDto> query,
         SearchParams pagingAndSearchParams,
         CancellationToken cancellationToken)
     {

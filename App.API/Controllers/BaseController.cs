@@ -13,7 +13,7 @@ public class BaseController : ControllerBase
     protected IMediator Mediator => _mediator ??=
         HttpContext.RequestServices.GetService<IMediator>();
 
-    public void SetMediator(IMediator mediator) => _mediator = mediator;
+    protected void SetMediator(IMediator mediator) => _mediator = mediator;
 
     /// <summary>
     /// Handles the operation result of a request and returns an appropriate action result.

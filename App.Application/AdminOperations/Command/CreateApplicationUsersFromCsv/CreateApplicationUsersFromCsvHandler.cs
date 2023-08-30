@@ -1,6 +1,6 @@
 ﻿using App.Application.AdminOperations.Command.CreateApplicationUser;
-using App.Application.AdminOperations.Helpers;
 using App.Application.Core;
+using App.Application.Interfaces;
 using App.Domain.DTOs;
 using MediatR;
 
@@ -14,14 +14,18 @@ public class CreateApplicationUsersFromCsvHandler
     OperationResult<string>>
 {
     private readonly IMediator _mediator;
+    private readonly IReadCsv _readCsv;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CreateApplicationUsersFromCsvHandler"/> class.
     /// </summary>
     /// <param name="mediator">The mediator for handling communication between application components.</param>
-    public CreateApplicationUsersFromCsvHandler(IMediator mediator)
+    /// <param name="readCsv">The read csv instance.</param>
+    public CreateApplicationUsersFromCsvHandler(IMediator mediator,
+        IReadCsv readCsv)
     {
         _mediator = mediator;
+        _readCsv = readCsv;
     }
 
     /// <summary>
@@ -37,7 +41,7 @@ public class CreateApplicationUsersFromCsvHandler
         try
         {
             // Read user data from the provided CSV file.
-            applicationUserToCreate = ReadCsv.ReadUsersFromCsv(request.File);
+            applicationUserToCreate = _readCsv.ReadApplicationUsersFromCsv(request.File);
         }
         catch (Exception ex)
         {
