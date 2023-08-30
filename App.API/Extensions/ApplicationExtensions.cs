@@ -6,6 +6,9 @@ using App.Domain.UnitOfWork;
 using App.Infrastructure.Configuration;
 using App.Infrastructure.ContextAccessor;
 using App.Infrastructure.Email;
+using App.Infrastructure.GeneratePassword;
+using App.Infrastructure.QueryFilter;
+using App.Infrastructure.ReadCsv;
 using App.Persistence.Contexts;
 using App.Persistence.Repository;
 using App.Persistence.UnitOfWorkImpl;
@@ -72,6 +75,15 @@ public static class ApplicationExtension
 
         // Add AutoMapper with mapping profiles from the specified assembly
         services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
+        // Add a scoped dependency for IGeneratePassword with the implementation of GeneratePassword.
+        services.AddScoped<IGeneratePassword, GeneratePassword>();
+
+        // Add a scoped dependency for IQueryFilter with the implementation of QueryFilter.
+        services.AddScoped<IQueryFilter, QueryFilter>();
+
+        // Add a scoped dependency for IReadCsv with the implementation of ReadCsv.
+        services.AddScoped<IReadCsv, ReadCsv>();
 
         // Add a scoped dependency for IUserContextUnitOfWork with the implementation of UserContextUnitOfWork.
         services.AddScoped<IUserContextUnitOfWork, UserContextUnitOfWork>();

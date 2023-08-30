@@ -1,5 +1,5 @@
-﻿using App.Application.AdminOperations.Helpers;
-using App.Application.Core;
+﻿using App.Application.Core;
+using App.Application.Interfaces;
 using App.Domain.DTOs;
 using App.Domain.Repository;
 using MediatR;
@@ -14,14 +14,18 @@ public class FetchDeletedApplicationUsersListHandler
     OperationResult<List<ApplicationUserDto>>>
 {
     private readonly IUserRepository _userRepository;
+    private readonly IQueryFilter _queryFilter;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FetchDeletedApplicationUsersListHandler"/> class with the required dependencies.
     /// </summary>
     /// <param name="userRepository">The user repository instance.</param>
-    public FetchDeletedApplicationUsersListHandler(IUserRepository userRepository)
+    /// <param name="queryFilter">The query filter instance.</param>
+    public FetchDeletedApplicationUsersListHandler(IUserRepository userRepository,
+        IQueryFilter queryFilter)
     {
         _userRepository = userRepository;
+        _queryFilter = queryFilter;
     }
 
     /// <summary>
@@ -37,7 +41,7 @@ public class FetchDeletedApplicationUsersListHandler
         var deletedApplicationUsersQuery = _userRepository.GetDeletedApplicationUsersQuery();
 
         // Create paged list of deleted application users and apply filters from search params 
-        var filteredUsers = await QueryFilter
+        var filteredUsers = await _queryFilter
                 .ApplyFilters(deletedApplicationUsersQuery, request.Params, cancellationToken);
 
         // Return the paged list as a successful operation result

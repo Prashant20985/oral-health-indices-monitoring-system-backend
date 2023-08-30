@@ -26,7 +26,7 @@ public class AdminController : BaseController
     [HttpGet("active-users")]
     public async Task<ActionResult<List<ApplicationUserDto>>> GetActiveUsers(
         [FromQuery] SearchParams pagingAndSearchParams) => HandleOperationResult(
-            await Mediator.Send(new FetchActiveApplicationUsersPagedListQuery(pagingAndSearchParams)));
+            await Mediator.Send(new FetchActiveApplicationUsersListQuery(pagingAndSearchParams)));
 
 
     /// <summary>

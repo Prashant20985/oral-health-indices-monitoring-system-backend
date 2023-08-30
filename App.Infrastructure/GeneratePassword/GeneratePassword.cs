@@ -1,19 +1,24 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using App.Application.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System.Text;
 
-namespace App.Application.AdminOperations.Helpers;
+namespace App.Infrastructure.GeneratePassword;
 
-internal static class GeneratePassword
+public class GeneratePassword : IGeneratePassword
 {
+    private readonly IOptions<IdentityOptions> _opts;
+
+    public GeneratePassword(IOptions<IdentityOptions> opts) => _opts = opts;
+
     /// <summary>
     /// Generates a random password based on the IdentityOptions.
     /// </summary>
     /// <param name="opts">The IdentityOptions.</param>
     /// <returns>The randomly generated password.</returns>
-    public static string GenerateRandomPassword(IOptions<IdentityOptions> opts)
+    public string GenerateRandomPassword()
     {
-        var opt = opts.Value;
+        var opt = _opts.Value;
         var allowedChars = new StringBuilder();
 
         if (opt.Password.RequireDigit)

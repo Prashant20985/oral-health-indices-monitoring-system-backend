@@ -1,13 +1,11 @@
-﻿using App.Application.AdminOperations.Helpers;
-using App.Application.Core;
+﻿using App.Application.Core;
+using App.Application.Interfaces;
 using App.Application.NotificationOperations;
 using App.Application.NotificationOperations.DTOs;
 using App.Domain.Models.Enums;
 using App.Domain.Models.Users;
 using App.Domain.Repository;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 
 namespace App.Application.AdminOperations.Command.CreateApplicationUser;
 
@@ -18,21 +16,21 @@ public class CreateApplicationUserHandler
     : IRequestHandler<CreateApplicationUserCommand, OperationResult<Unit>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IOptions<IdentityOptions> _options;
+    private readonly IGeneratePassword _generatePassword;
     private readonly IMediator _mediator;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CreateApplicationUserHandler"/> class.
     /// </summary>
     /// <param name="userRepository">The repository for managing user-related operations.</param>
-    /// <param name="options">The identity options used for password generation.</param>
+    /// <param name="generatePassword">The henerate password instance.</param>
     /// <param name="mediator">The mediator for handling communication between application components.</param>
     public CreateApplicationUserHandler(IUserRepository userRepository,
-        IOptions<IdentityOptions> options,
+        IGeneratePassword generatePassword,
         IMediator mediator)
     {
         _userRepository = userRepository;
-        _options = options;
+        _generatePassword = generatePassword;
         _mediator = mediator;
     }
 
@@ -59,7 +57,7 @@ public class CreateApplicationUserHandler
             guestUserComment: CheckNullOrWhiteSpace(request.CreateApplicationUser.GuestUserComment));
 
         // Generate a random password for the new user.
-        var password = GeneratePassword.GenerateRandomPassword(_options);
+        var password = _generatePassword.GenerateRandomPassword();
 
         // Attempt to create the application user in the repository.
         var createUserResult = await _userRepository.CreateApplicationUserAsync(applicationUser, password);
