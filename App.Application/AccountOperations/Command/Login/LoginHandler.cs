@@ -10,7 +10,7 @@ namespace App.Application.AccountOperations.Command.Login;
 /// <summary>
 /// Represents the handler for the LoginCommand, responsible for handling user login operations.
 /// </summary>
-public class LoginHandler : IRequestHandler<LoginCommand, OperationResult<UserLoginResponseDto>>
+internal sealed class LoginHandler : IRequestHandler<LoginCommand, OperationResult<UserLoginResponseDto>>
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;

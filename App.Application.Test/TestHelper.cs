@@ -43,7 +43,15 @@ public class TestHelper
     /// </summary>
     protected Mock<IEmailService> emailServiceMock;
 
+    /// <summary>
+    /// Mock instance for the IUserContextUnitOfWork interface, used to simulate UserContextUnitOfWork service behavior in tests.
+    /// </summary>
     protected Mock<IUserContextUnitOfWork> userContextUnitOfWork;
+
+    /// <summary>
+    /// Mock instance for the IQueryFilter interface, used to simulate Query Filter service behavior in tests.
+    /// </summary>
+    protected Mock<IQueryFilter> queryFilterMock;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TestHelper"/> class with default mocked dependencies.
@@ -57,6 +65,7 @@ public class TestHelper
         mediatorMock = new Mock<IMediator>();
         emailServiceMock = new Mock<IEmailService>();
         userContextUnitOfWork = new Mock<IUserContextUnitOfWork>();
+        queryFilterMock = new Mock<IQueryFilter>();
     }
 }
 

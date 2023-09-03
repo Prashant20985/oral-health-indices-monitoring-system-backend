@@ -10,7 +10,7 @@ namespace App.Application.AccountOperations.Query.CurrentUser;
 /// <summary>
 /// Handler class for handling the CurrentUserQuery and returning the user's information
 /// </summary>
-public class CurrentUserHandler : IRequestHandler<CurrentUserQuery, OperationResult<UserLoginResponseDto>>
+internal sealed class CurrentUserHandler : IRequestHandler<CurrentUserQuery, OperationResult<UserLoginResponseDto>>
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;

@@ -7,7 +7,7 @@ namespace App.Application.AdminOperations.Command.UpdateApplicationUser;
 /// <summary>
 /// Represents a handler for updating an application user.
 /// </summary>
-public class UpdateApplicationUserCommandHandler
+internal sealed class UpdateApplicationUserCommandHandler
     : IRequestHandler<UpdateApplicationUserCommand,
     OperationResult<Unit>>
 {

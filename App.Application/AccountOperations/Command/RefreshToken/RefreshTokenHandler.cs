@@ -10,7 +10,7 @@ namespace App.Application.AccountOperations.Command.RefreshToken;
 /// <summary>
 /// Request handler for the RefreshTokenCommand.
 /// </summary>
-public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, OperationResult<UserLoginResponseDto>>
+internal sealed class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, OperationResult<UserLoginResponseDto>>
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;

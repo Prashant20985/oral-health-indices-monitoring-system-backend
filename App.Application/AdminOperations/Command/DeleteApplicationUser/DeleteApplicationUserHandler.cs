@@ -7,7 +7,7 @@ namespace App.Application.AdminOperations.Command.DeleteApplicationUser;
 /// <summary>
 /// Represents a handler for deleting an application user.
 /// </summary>
-internal class DeleteApplicationUserHandler
+internal sealed class DeleteApplicationUserHandler
     : IRequestHandler<DeleteApplicationUserCommand,
     OperationResult<Unit>>
 {

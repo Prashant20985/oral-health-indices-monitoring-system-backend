@@ -9,7 +9,7 @@ namespace App.Application.AdminOperations.Query.UserDetails;
 /// <summary>
 /// Handler for fetching details about a specific user.
 /// </summary>
-public class FetchUserDetailsHandler
+internal sealed class FetchUserDetailsHandler
     : IRequestHandler<FetchUserDetailsQuery,
         OperationResult<ApplicationUserDto>>
 {

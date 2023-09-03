@@ -9,7 +9,7 @@ namespace App.Application.NotificationOperations;
 /// <summary>
 /// Class representing the handler for the email notification.
 /// </summary>
-public class EmailNotificationHandler : INotificationHandler<EmailNotification>
+internal sealed class EmailNotificationHandler : INotificationHandler<EmailNotification>
 {
     private readonly IEmailService _emailService;
     private readonly List<EmailContentDto> _batchedEmails = new();

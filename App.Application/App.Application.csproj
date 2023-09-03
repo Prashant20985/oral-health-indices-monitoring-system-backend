@@ -27,5 +27,8 @@
 		<ProjectReference Include="..\App.Domain\App.Domain.csproj" />
 		<ProjectReference Include="..\App.Persistence\App.Persistence.csproj" />
 	</ItemGroup>
-
+	<ItemGroup>
+		<InternalsVisibleTo Include="App.Application.Test"/>
+	</ItemGroup>
+	
 </Project>
