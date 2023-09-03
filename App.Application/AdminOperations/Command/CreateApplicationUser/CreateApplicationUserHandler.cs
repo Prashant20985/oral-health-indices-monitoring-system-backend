@@ -12,7 +12,7 @@ namespace App.Application.AdminOperations.Command.CreateApplicationUser;
 /// <summary>
 /// Represents a handler for the CreateApplicationUserCommand.
 /// </summary>
-public class CreateApplicationUserHandler
+internal sealed class CreateApplicationUserHandler
     : IRequestHandler<CreateApplicationUserCommand, OperationResult<Unit>>
 {
     private readonly IUserRepository _userRepository;

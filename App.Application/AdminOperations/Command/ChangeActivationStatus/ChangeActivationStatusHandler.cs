@@ -7,7 +7,7 @@ namespace App.Application.AdminOperations.Command.ChangeActivationStatus;
 /// <summary>
 /// Handles the command to change the activation status of a user.
 /// </summary>
-internal class ChangeActivationStatusHandler
+internal sealed class ChangeActivationStatusHandler
     : IRequestHandler<ChangeActivationStatusCommand, OperationResult<Unit>>
 {
     private readonly IUserRepository _userRepository;

@@ -10,7 +10,7 @@ namespace App.Application.AdminOperations.Query.DeactivatedApplicationUsersList;
 /// <summary>
 /// Handler for fetching a paged list of deactivated application users.
 /// </summary>
-public class FetchDeactivatedApplicationUsersListHandler
+internal sealed class FetchDeactivatedApplicationUsersListHandler
     : IRequestHandler<FetchDeactivatedApplicationUsersListQuery,
     OperationResult<List<ApplicationUserDto>>>
 {

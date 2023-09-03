@@ -8,7 +8,7 @@ namespace App.Application.AccountOperations.Command.ChangePassword;
 /// <summary>
 /// Class to handle the ChangePasswordCommand
 /// </summary>
-public class ChangePasswordHandler : IRequestHandler<ChangePasswordCommand, OperationResult<Unit>>
+internal sealed class ChangePasswordHandler : IRequestHandler<ChangePasswordCommand, OperationResult<Unit>>
 {
     private readonly IUserRepository _userRepository;
 

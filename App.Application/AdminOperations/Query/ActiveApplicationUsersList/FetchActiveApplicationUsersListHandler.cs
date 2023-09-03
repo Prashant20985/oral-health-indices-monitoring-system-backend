@@ -10,7 +10,7 @@ namespace App.Application.AdminOperations.Query.ActiveApplicationUsersList;
 /// <summary>
 /// Handler for fetching a paged list of active application users.
 /// </summary>
-public class FetchActiveApplicationUsersListHandler
+internal sealed class FetchActiveApplicationUsersListHandler
     : IRequestHandler<FetchActiveApplicationUsersListQuery,
         OperationResult<List<ApplicationUserDto>>>
 {

@@ -11,7 +11,7 @@ namespace App.Application.AccountOperations.Command.ResetPassword;
 /// <summary>
 /// Handles the ResetPasswordCommand to reset a user's password.
 /// </summary>
-public class ResetPasswordHandler : IRequestHandler<ResetPasswordCommand, OperationResult<Unit>>
+internal sealed class ResetPasswordHandler : IRequestHandler<ResetPasswordCommand, OperationResult<Unit>>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMediator _mediator;

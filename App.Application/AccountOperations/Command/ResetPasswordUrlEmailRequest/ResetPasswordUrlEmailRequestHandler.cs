@@ -13,7 +13,7 @@ namespace App.Application.AccountOperations.Command.ResetPasswordUrlEmailRequest
 /// <summary>
 /// Handler the ResetPasswordUrlEmailRequestCommand to request a password reset URL through email.
 /// </summary>
-public class ResetPasswordUrlEmailRequestHandler : IRequestHandler<ResetPasswordUrlEmailRequestCommand, OperationResult<Unit>>
+internal sealed class ResetPasswordUrlEmailRequestHandler : IRequestHandler<ResetPasswordUrlEmailRequestCommand, OperationResult<Unit>>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMediator _mediator;

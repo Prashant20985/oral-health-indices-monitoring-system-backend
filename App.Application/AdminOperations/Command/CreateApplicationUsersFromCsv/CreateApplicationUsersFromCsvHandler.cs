@@ -9,7 +9,7 @@ namespace App.Application.AdminOperations.Command.CreateApplicationUsersFromCsv;
 /// <summary>
 /// Represents a handler for creating application users from a CSV file.
 /// </summary>
-public class CreateApplicationUsersFromCsvHandler
+internal sealed class CreateApplicationUsersFromCsvHandler
     : IRequestHandler<CreateApplicationUsersFromCsvCommand,
     OperationResult<string>>
 {
