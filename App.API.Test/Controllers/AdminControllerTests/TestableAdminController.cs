@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using App.API.Controllers;
+using MediatR;
 
-namespace App.API.Test.Controllers.AdminControllerTests
+namespace App.API.Test.Controllers.AdminControllerTests;
+
+public class TestableAdminController : AdminController
 {
-    internal class TestableAdminController
+    public void ExposeSetMediator(IMediator mediator)
     {
+        SetMediator(mediator);
     }
 }
