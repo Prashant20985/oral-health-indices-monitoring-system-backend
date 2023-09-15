@@ -34,7 +34,7 @@ public class HttpContextAccessorService : IHttpContextAccessorService
     /// <returns>The HttpResponse instance of the current HttpContext.</returns>
     public HttpResponse GetResponse()
     {
-        return _httpContextAccessor.HttpContext.Response;
+        return _httpContextAccessor.HttpContext?.Response;
     }
 
     /// <summary>
