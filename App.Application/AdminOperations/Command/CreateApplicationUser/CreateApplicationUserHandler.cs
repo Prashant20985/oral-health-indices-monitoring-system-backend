@@ -52,7 +52,7 @@ internal sealed class CreateApplicationUserHandler
         ApplicationUser applicationUser = new(
             email: request.CreateApplicationUser.Email,
             firstName: request.CreateApplicationUser.FirstName,
-            lastName: request.CreateApplicationUser.LastName,
+            lastName: CheckNullOrWhiteSpace(request.CreateApplicationUser.LastName),
             phoneNumber: CheckNullOrWhiteSpace(request.CreateApplicationUser.PhoneNumber),
             guestUserComment: CheckNullOrWhiteSpace(request.CreateApplicationUser.GuestUserComment));
 

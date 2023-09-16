@@ -23,4 +23,8 @@
     <ProjectReference Include="..\App.Domain\App.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\UserSchema\" />
+  </ItemGroup>
+
 </Project>

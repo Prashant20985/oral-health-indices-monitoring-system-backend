@@ -20,7 +20,6 @@ internal class ApplicationUserConfiguration : IEntityTypeConfiguration<Applicati
 
         // Configures the LastName property of the ApplicationUser entity.
         builder.Property(x => x.LastName)
-            .IsRequired()
             .HasMaxLength(225);
 
         // Configures the Delete Comment property of the ApplicationUser entity.

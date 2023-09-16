@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Persistence.Migrations.UserSchema
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20230807023708_UpdatedUserSchema")]
-    partial class UpdatedUserSchema
+    [Migration("20230916130327_UpdatedApplicationUser")]
+    partial class UpdatedApplicationUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace App.Persistence.Migrations.UserSchema
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("user")
-                .HasAnnotation("ProductVersion", "7.0.9")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -86,7 +86,6 @@ namespace App.Persistence.Migrations.UserSchema
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(225)
                         .HasColumnType("nvarchar(225)");
 
