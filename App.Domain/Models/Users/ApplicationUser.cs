@@ -38,7 +38,7 @@ public class ApplicationUser : IdentityUser
     /// <summary>
     /// Gets the last name of the user.
     /// </summary>
-    public string LastName { get; private set; }
+    public string LastName { get; private set; } = null;
 
     /// <summary>
     /// Gets a value indicating whether the user's account is active or not.
@@ -77,7 +77,7 @@ public class ApplicationUser : IdentityUser
     /// </summary>
     /// <param name="email">The user's email address.</param>
     /// <returns>The extracted username.</returns>
-    private string ExtractUserNameFromEmail(string email) => email[..email.IndexOf("@")];
+    private static string ExtractUserNameFromEmail(string email) => email[..email.IndexOf("@")];
 
     /// <summary>
     /// Marks the user as deleted and sets deletion-related properties.
