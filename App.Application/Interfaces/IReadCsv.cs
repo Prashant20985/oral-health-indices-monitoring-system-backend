@@ -8,5 +8,5 @@ namespace App.Application.Interfaces;
 /// </summary>
 public interface IReadCsv
 {
-    List<CreateApplicationUserDto> ReadApplicationUsersFromCsv(IFormFile file);
+    List<CreateApplicationUserFromCsvDto> ReadApplicationUsersFromCsv(IFormFile file);
 }

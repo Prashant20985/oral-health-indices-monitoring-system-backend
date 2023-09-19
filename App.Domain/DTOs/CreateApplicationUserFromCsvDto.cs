@@ -1,9 +1,9 @@
 ﻿namespace App.Domain.DTOs;
 
 /// <summary>
-/// Data transfer object (DTO) for creating a user.
+/// Data transfer object (DTO) for creating a user from Csv.
 /// </summary>
-public class CreateApplicationUserDto
+public class CreateApplicationUserFromCsvDto
 {
     /// <summary>
     /// Gets or sets the first name of the user.
@@ -30,9 +30,4 @@ public class CreateApplicationUserDto
     /// Default value is null.
     /// </summary>
     public string GuestUserComment { get; set; }
-
-    /// <summary>
-    /// Gets or sets the role of the user.
-    /// </summary>
-    public string Role { get; set; }
 }

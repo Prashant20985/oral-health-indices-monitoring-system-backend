@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using App.Domain.Models.Enums;
+using FluentValidation;
 
 namespace App.Application.AdminOperations.Command.CreateApplicationUser;
 
@@ -15,7 +16,6 @@ public class CreateApplicationUserCommandValidator : AbstractValidator<CreateApp
             .OverridePropertyName("FirstName");
 
         RuleFor(x => x.CreateApplicationUser.LastName)
-            .NotEmpty()
             .MaximumLength(225)
             .OverridePropertyName("LastName");
 
@@ -31,5 +31,10 @@ public class CreateApplicationUserCommandValidator : AbstractValidator<CreateApp
         RuleFor(x => x.CreateApplicationUser.GuestUserComment)
             .MaximumLength(500)
             .OverridePropertyName("GuestUserComment");
+
+        RuleFor(x => x.CreateApplicationUser.Role)
+            .Must(r => string.IsNullOrWhiteSpace(r) || Enum.IsDefined(typeof(Role), r))
+            .WithMessage("Invalid Role input")
+            .OverridePropertyName("Role");
     }
 }
