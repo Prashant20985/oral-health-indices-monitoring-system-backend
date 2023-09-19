@@ -2,6 +2,7 @@
 using App.Application.Interfaces;
 using App.Application.NotificationOperations;
 using App.Domain.DTOs;
+using App.Domain.Models.Enums;
 using App.Domain.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Moq;
@@ -24,7 +25,8 @@ public class CreateApplicationUserHandlerTests : TestHelper
             LastName = "Doe",
             Email = "test@test.com",
             PhoneNumber = "1234567890",
-            GuestUserComment = null
+            GuestUserComment = null,
+            Role = Enum.GetName(Role.Student)
         };
 
         applicationUser = new ApplicationUser(

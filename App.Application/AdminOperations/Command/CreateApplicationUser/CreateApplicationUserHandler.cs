@@ -66,8 +66,8 @@ internal sealed class CreateApplicationUserHandler
             return OperationResult<Unit>.Failure($"{applicationUser.FirstName} {applicationUser.LastName}: " +
                 $"{string.Join("\n", createUserResult.Errors)}");
 
-        // Add the newly created user to the "Student" role.
-        await _userRepository.AddApplicationUserToRoleAsync(applicationUser, Enum.GetName(Role.Student));
+        // Add the newly created user to the role.
+        await _userRepository.AddApplicationUserToRoleAsync(applicationUser, request.CreateApplicationUser.Role);
 
         // Prepare email content for account registration notification.
         var emailContent = new EmailContentDto(

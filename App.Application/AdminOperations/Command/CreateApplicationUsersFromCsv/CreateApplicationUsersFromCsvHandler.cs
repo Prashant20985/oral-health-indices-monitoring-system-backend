@@ -2,6 +2,7 @@
 using App.Application.Core;
 using App.Application.Interfaces;
 using App.Domain.DTOs;
+using AutoMapper;
 using MediatR;
 
 namespace App.Application.AdminOperations.Command.CreateApplicationUsersFromCsv;
@@ -15,6 +16,7 @@ internal sealed class CreateApplicationUsersFromCsvHandler
 {
     private readonly IMediator _mediator;
     private readonly IReadCsv _readCsv;
+    private readonly IMapper _mapper;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CreateApplicationUsersFromCsvHandler"/> class.
@@ -22,10 +24,12 @@ internal sealed class CreateApplicationUsersFromCsvHandler
     /// <param name="mediator">The mediator for handling communication between application components.</param>
     /// <param name="readCsv">The read csv instance.</param>
     public CreateApplicationUsersFromCsvHandler(IMediator mediator,
-        IReadCsv readCsv)
+        IReadCsv readCsv,
+        IMapper mapper)
     {
         _mediator = mediator;
         _readCsv = readCsv;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -36,7 +40,7 @@ internal sealed class CreateApplicationUsersFromCsvHandler
     /// <returns>An operation result indicating the success or failure of the operation.</returns>
     public async Task<OperationResult<string>> Handle(CreateApplicationUsersFromCsvCommand request, CancellationToken cancellationToken)
     {
-        List<CreateApplicationUserDto> applicationUserToCreate;
+        List<CreateApplicationUserFromCsvDto> applicationUserToCreate;
 
         try
         {
@@ -58,8 +62,10 @@ internal sealed class CreateApplicationUsersFromCsvHandler
         // Loop through each application user data read from the CSV file.
         foreach (var applicationUser in applicationUserToCreate)
         {
+            var user = _mapper.Map<CreateApplicationUserDto>(applicationUser);
+
             // Send a command to create an application user using the mediator.
-            var result = await _mediator.Send(new CreateApplicationUserCommand(applicationUser), cancellationToken);
+            var result = await _mediator.Send(new CreateApplicationUserCommand(user), cancellationToken);
 
             // Check if the user creation was successful or not.
             if (!result.IsSuccessful)

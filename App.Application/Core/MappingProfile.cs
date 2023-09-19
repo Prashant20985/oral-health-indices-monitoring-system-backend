@@ -1,4 +1,5 @@
 ﻿using App.Domain.DTOs;
+using App.Domain.Models.Enums;
 using App.Domain.Models.Users;
 using AutoMapper;
 
@@ -18,5 +19,10 @@ public class MappingProfile : Profile
                 .FirstOrDefault()))
             .ForMember(d => d.UserType,
                 o => o.MapFrom(s => s.GuestUserComment == null ? "RegularUser" : "GuestUser"));
+
+        // CreateMap<TSource, TDestination> creates a mapping from CreateApplicationUserFromCsvDto to CreateApplicationUserDto
+        CreateMap<CreateApplicationUserFromCsvDto, CreateApplicationUserDto>()
+            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => Enum.GetName(Role.Student)));
+
     }
 }
