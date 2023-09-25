@@ -43,6 +43,7 @@ internal sealed class UpdateApplicationUserCommandHandler
         // Check if the phone number and guest user comment are null or whitespace and update them accordingly.
         request.UpdateApplicationUser.PhoneNumber = CheckNullOrWhiteSpace(request.UpdateApplicationUser.PhoneNumber);
         request.UpdateApplicationUser.GuestUserComment = CheckNullOrWhiteSpace(request.UpdateApplicationUser.GuestUserComment);
+        request.UpdateApplicationUser.LastName = CheckNullOrWhiteSpace(request.UpdateApplicationUser.LastName);
 
         // Update the user with the provided updated user data.
         applicationUser.UpdateUser(request.UpdateApplicationUser);
