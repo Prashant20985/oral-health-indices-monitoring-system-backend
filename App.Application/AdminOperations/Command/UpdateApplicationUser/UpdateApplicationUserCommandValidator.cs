@@ -19,7 +19,6 @@ public class UpdateApplicationUserCommandValidator : AbstractValidator<UpdateApp
             .OverridePropertyName("FirstName");
 
         RuleFor(x => x.UpdateApplicationUser.LastName)
-            .NotEmpty()
             .MaximumLength(50)
             .OverridePropertyName("LastName");
 
