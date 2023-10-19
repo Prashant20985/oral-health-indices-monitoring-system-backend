@@ -75,7 +75,7 @@ public class TokenService : ITokenService
     /// </summary>
     /// <param name="userhe user for whom to retrieve the claims.</param>
     /// <returns>A list of claims for the user.</returns>
-    private async Task<List<Claim>> GetAllUserClaims(ApplicationUser user)
+    internal async Task<List<Claim>> GetAllUserClaims(ApplicationUser user)
     {
         var claims = new List<Claim>
         {
