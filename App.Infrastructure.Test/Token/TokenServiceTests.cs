@@ -6,11 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Moq;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace App.Infrastructure.Test.Token
 {
