@@ -24,5 +24,9 @@ public class MappingProfile : Profile
         CreateMap<CreateApplicationUserFromCsvDto, CreateApplicationUserDto>()
             .ForMember(dest => dest.Role, opt => opt.MapFrom(src => Enum.GetName(Role.Student)));
 
+        // CreateMap<TSource, TDestination> creates a mapping from ApplicationUser to StudentDto
+        CreateMap<ApplicationUser, StudentDto>()
+            .ForMember(x => x.Groups, o => o.MapFrom(s => s.StudentGroups
+            .Select(x => x.Group.GroupName).ToList()));    
     }
 }

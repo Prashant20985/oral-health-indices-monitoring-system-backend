@@ -88,6 +88,9 @@ public static class ApplicationExtension
         // Add a scoped dependency for IUserContextUnitOfWork with the implementation of UserContextUnitOfWork.
         services.AddScoped<IUserContextUnitOfWork, UserContextUnitOfWork>();
 
+        // Add a scoped dependency for IGroupRepository with the implementation of GroupRepository.
+        services.AddScoped<IGroupRepository, GroupRepository>();
+
         // Add a singleton dependency for IEmailTemplatePathProvider with the implementation of EmailTemplatePathProvider.
         services.AddSingleton<IEmailTemplatePathProvider, EmailTemplatePathProvider>();
 
