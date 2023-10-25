@@ -28,7 +28,7 @@
 		<ProjectReference Include="..\App.Persistence\App.Persistence.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<InternalsVisibleTo Include="App.Application.Test"/>
+		<InternalsVisibleTo Include="App.Application.Test" />
 	</ItemGroup>
 	
 </Project>
