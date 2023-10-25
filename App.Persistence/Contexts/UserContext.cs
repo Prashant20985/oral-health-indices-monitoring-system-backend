@@ -50,6 +50,16 @@ public class UserContext : IdentityDbContext<
     public virtual DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
 
     /// <summary>
+    /// Represents the database table for the Group entities.
+    /// </summary>
+    public virtual DbSet<Group> Groups { get; set; }
+
+    /// <summary>
+    /// Represents the database table for the StudentGroup entities.
+    /// </summary>
+    public virtual DbSet<StudentGroup> StudentGroups { get; set; }
+
+    /// <summary>
     /// Overrides the OnModelCreating method from the base class to provide custom model configuration.
     /// </summary>
     /// <param name="modelBuilder">The model builder instance to configure the model.</param>
@@ -67,6 +77,10 @@ public class UserContext : IdentityDbContext<
         modelBuilder.Entity<ApplicationUser>().ToTable(nameof(ApplicationUser));
 
         modelBuilder.Entity<RefreshToken>().ToTable(nameof(RefreshToken));
+
+        modelBuilder.Entity<Group>().ToTable(nameof(Group));
+
+        modelBuilder.Entity<StudentGroup>().ToTable(nameof(StudentGroup));
 
         // Ignores the IdentityUserClaim, IdentityRoleClaim, IdentityUserLogin, and IdentityUserToken entities.
         modelBuilder.Ignore<IdentityUserClaim<string>>();

@@ -101,8 +101,24 @@ public class ApplicationUser : IdentityUser
         GuestUserComment = updateApplicationUser.GuestUserComment;
     }
 
+    /// <summary>
+    /// Gets or sets the collection of roles associated with the user.
+    /// </summary>
     public ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; } = new List<ApplicationUserRole>();
 
+    /// <summary>
+    /// Gets or sets the collection of refresh tokens associated with the user.
+    /// </summary>
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+
+    /// <summary>
+    /// Gets or sets the collection of groups the user is a part of.
+    /// </summary>
+    public ICollection<Group> Groups { get; set; } = new List<Group>();
+
+    /// <summary>
+    /// Gets or sets the collection of student-group relationships associated with the user.
+    /// </summary>
+    public ICollection<StudentGroup> StudentGroups { get; set; } = new List<StudentGroup>();
 }
 
