@@ -57,7 +57,7 @@ namespace App.API.Test.Controllers.AdminControllerTests
                 .ReturnsAsync(OperationResult<List<ApplicationUserDto>>.Success(deletedUsers));
 
             // Act
-            var result = await _adminController.GetDeleetdUsers(searchParams);
+            var result = await _adminController.GetDeletedUsers(searchParams);
 
             // Assert
             var actionResult = Assert.IsType<ActionResult<List<ApplicationUserDto>>>(result);

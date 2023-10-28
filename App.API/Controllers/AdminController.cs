@@ -48,7 +48,7 @@ public class AdminController : BaseController
     /// <returns>A paged list of deleted users.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("deleted-users")]
-    public async Task<ActionResult<List<ApplicationUserDto>>> GetDeleetdUsers(
+    public async Task<ActionResult<List<ApplicationUserDto>>> GetDeletedUsers(
         [FromQuery] SearchParams pagingAndSearchParams) => HandleOperationResult(
             await Mediator.Send(new FetchDeletedApplicationUsersListQuery(pagingAndSearchParams)));
 

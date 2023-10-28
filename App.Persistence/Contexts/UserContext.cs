@@ -58,7 +58,12 @@ public class UserContext : IdentityDbContext<
     /// Represents the database table for the StudentGroup entities.
     /// </summary>
     public virtual DbSet<StudentGroup> StudentGroups { get; set; }
-
+    
+    /// <summary>
+    /// Represents the database table for the UserRequest entities.
+    /// </summary>
+    public virtual DbSet<UserRequest> UserRequests { get; set; }
+    
     /// <summary>
     /// Overrides the OnModelCreating method from the base class to provide custom model configuration.
     /// </summary>
@@ -81,6 +86,8 @@ public class UserContext : IdentityDbContext<
         modelBuilder.Entity<Group>().ToTable(nameof(Group));
 
         modelBuilder.Entity<StudentGroup>().ToTable(nameof(StudentGroup));
+
+        modelBuilder.Entity<UserRequest>().ToTable(nameof(UserRequests));
 
         // Ignores the IdentityUserClaim, IdentityRoleClaim, IdentityUserLogin, and IdentityUserToken entities.
         modelBuilder.Ignore<IdentityUserClaim<string>>();
