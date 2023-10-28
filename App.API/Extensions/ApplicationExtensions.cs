@@ -82,6 +82,9 @@ public static class ApplicationExtension
         // Add a scoped dependency for IQueryFilter with the implementation of QueryFilter.
         services.AddScoped<IQueryFilter, QueryFilter>();
 
+        // Add a scoped dependency for IUserRequestRepository with the implementation of UserRequestRepository.
+        services.AddScoped<IUserRequestRepository, UserRequestRepository>();
+
         // Add a scoped dependency for IReadCsv with the implementation of ReadCsv.
         services.AddScoped<IReadCsv, ReadCsv>();
 
