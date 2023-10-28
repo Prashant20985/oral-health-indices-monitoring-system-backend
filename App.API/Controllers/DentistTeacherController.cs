@@ -1,5 +1,6 @@
 ﻿using App.Application.DentistTeacherOperations.Command.AddStudentToGroup;
 using App.Application.DentistTeacherOperations.Command.CreateGroup;
+using App.Application.DentistTeacherOperations.Command.DeleteGroup;
 using App.Application.DentistTeacherOperations.Command.RemoveStudentFromGroup;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,4 +41,13 @@ public class DentistTeacherController : BaseController
     [HttpDelete("remove-student")]
     public async Task<ActionResult> RemoveStudentFromGroup(Guid groupId, string studentId) => HandleOperationResult(
     await Mediator.Send(new RemoveStudentFromGroupCommand(groupId, studentId)));
+
+    /// <summary>
+    /// Deletes group
+    /// </summary>
+    /// <param name="groupId">The identifier of the group which will be deleted.</param>
+    /// <returns>An HTTP response indicating the result of the operation.</returns>
+    [HttpDelete("delete-group")]
+    public async Task<ActionResult> DeleteGroup(Guid groupId) => HandleOperationResult(
+        await Mediator.Send(new DeleteGroupCommand(groupId)));
 }
