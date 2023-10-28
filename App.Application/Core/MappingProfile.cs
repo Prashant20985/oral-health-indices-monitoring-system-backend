@@ -28,5 +28,9 @@ public class MappingProfile : Profile
         CreateMap<ApplicationUser, StudentDto>()
             .ForMember(x => x.Groups, o => o.MapFrom(s => s.StudentGroups
             .Select(x => x.Group.GroupName).ToList()));
+
+        // CreateMap<TSource, TDestination> creates a mapping from UserRequest to UserRequestDto
+        CreateMap<UserRequest, UserRequestDto>()
+            .ForMember(x => x.UserName, o => o.MapFrom(s => s.ApplicationUser.UserName));
     }
 }
