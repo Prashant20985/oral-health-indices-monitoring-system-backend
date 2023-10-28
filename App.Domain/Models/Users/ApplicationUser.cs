@@ -120,5 +120,7 @@ public class ApplicationUser : IdentityUser
     /// Gets or sets the collection of student-group relationships associated with the user.
     /// </summary>
     public ICollection<StudentGroup> StudentGroups { get; set; } = new List<StudentGroup>();
+    public ICollection<UserRequest> UserRequests { get; set; } = new List<UserRequest>();
+
 }
 
