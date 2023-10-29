@@ -3,8 +3,9 @@ using App.Application.DentistTeacherOperations.Command.CreateGroup;
 using App.Application.DentistTeacherOperations.Command.DeleteGroup;
 using App.Application.DentistTeacherOperations.Command.RemoveStudentFromGroup;
 using App.Application.DentistTeacherOperations.Command.UpdateGroupName;
-using Microsoft.AspNetCore.Authorization;
+using App.Application.DentistTeacherOperations.Query;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace App.API.Controllers;
@@ -61,4 +62,13 @@ public class DentistTeacherController : BaseController
     [HttpPut("update-groupname")]
     public async Task<IActionResult> UpdateGroupName(Guid groupId, string groupName) => HandleOperationResult(
         await Mediator.Send(new UpdateGroupNameCommand(groupId, groupName)));
+
+    /// <summary>
+    /// fetches students not in the group
+    /// </summary>
+    /// <param name="groupId">The identiffier of the group in which students are not present</param>
+    /// <returns>An HTTP response indicating the result of the operation.</returns>
+    [HttpGet("get-studentsNotInGroup")]
+    public async Task<IActionResult> GetStudentsNotInGroup([Required] Guid groupId) => HandleOperationResult(
+        await Mediator.Send(new FetchStudentsNotInGroupListQuery(groupId)));
 }

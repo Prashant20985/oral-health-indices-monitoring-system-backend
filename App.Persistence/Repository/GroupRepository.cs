@@ -5,7 +5,6 @@ using App.Persistence.Contexts;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography.X509Certificates;
 
 namespace App.Persistence.Repository;
 
