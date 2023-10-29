@@ -2,13 +2,14 @@
 using App.Application.DentistTeacherOperations.Command.CreateGroup;
 using App.Application.DentistTeacherOperations.Command.DeleteGroup;
 using App.Application.DentistTeacherOperations.Command.RemoveStudentFromGroup;
+using App.Application.DentistTeacherOperations.Command.UpdateGroupName;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace App.API.Controllers;
 
-[Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+//[Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
 public class DentistTeacherController : BaseController
 {
     /// <summary>
@@ -50,4 +51,14 @@ public class DentistTeacherController : BaseController
     [HttpDelete("delete-group")]
     public async Task<ActionResult> DeleteGroup(Guid groupId) => HandleOperationResult(
         await Mediator.Send(new DeleteGroupCommand(groupId)));
+
+    /// <summary>
+    /// Updates name of group
+    /// </summary>
+    /// <param name="groupId">The identifier of the group whch groups name will be updated</param>
+    /// <param name="groupName"></param>
+    /// <returns>An HTTP response indicating the result of the operation.</returns>
+    [HttpPut("update-groupname")]
+    public async Task<IActionResult> UpdateGroupName(Guid groupId, string groupName) => HandleOperationResult(
+        await Mediator.Send(new UpdateGroupNameCommand(groupId, groupName)));
 }

@@ -5,6 +5,7 @@ using App.Persistence.Contexts;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace App.Persistence.Repository;
 
@@ -57,21 +58,24 @@ public class GroupRepository : IGroupRepository
 
     /// <inheritdoc />
     public async Task<List<StudentDto>> GetAllStudentsGroupedByTeacher(string teacherId) => await _userContext.Users
-        .Where(x => x.StudentGroups.Any(g => g.Group.TeacherId == teacherId))
+        .Where(x => x.StudentGroups.Any(g => g.Group.TeacherId == teacherId)
+             && x.ApplicationUserRoles.Any(x => x.ApplicationRole.Name.Equals("Student")))
         .ProjectTo<StudentDto>(_mapper.ConfigurationProvider)
         .OrderBy(s => s.UserName)
         .ToListAsync();
 
     /// <inheritdoc />
     public async Task<List<StudentDto>> GetAllStudentsInGroup(Guid groupId) => await _userContext.Users
-        .Where(x => x.StudentGroups.Any(g => g.GroupId == groupId))
+        .Where(x => x.StudentGroups.Any(g => g.GroupId == groupId)
+             && x.ApplicationUserRoles.Any(x => x.ApplicationRole.Name.Equals("Student")))
         .ProjectTo<StudentDto>(_mapper.ConfigurationProvider)
         .OrderBy(s => s.UserName)
         .ToListAsync();
 
     /// <inheritdoc />
     public async Task<List<StudentDto>> GetAllStudentsNotInGroup(Guid groupId) => await _userContext.Users
-        .Where(x => !x.StudentGroups.Any(g => g.GroupId == groupId))
+        .Where(x => !x.StudentGroups.Any(g => g.GroupId == groupId)
+            && x.ApplicationUserRoles.Any(x => x.ApplicationRole.Name.Equals("Student")))
         .ProjectTo<StudentDto>(_mapper.ConfigurationProvider)
         .OrderBy(s => s.UserName)
         .ToListAsync();
