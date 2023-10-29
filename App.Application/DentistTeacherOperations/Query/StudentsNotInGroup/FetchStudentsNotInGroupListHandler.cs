@@ -3,7 +3,7 @@ using App.Domain.DTOs;
 using App.Domain.Repository;
 using MediatR;
 
-namespace App.Application.DentistTeacherOperations.Query;
+namespace App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
 
 /// <summary>
 ///  Handler for fetching a list of students not assigned to a specific group.

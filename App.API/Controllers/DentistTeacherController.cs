@@ -3,14 +3,17 @@ using App.Application.DentistTeacherOperations.Command.CreateGroup;
 using App.Application.DentistTeacherOperations.Command.DeleteGroup;
 using App.Application.DentistTeacherOperations.Command.RemoveStudentFromGroup;
 using App.Application.DentistTeacherOperations.Command.UpdateGroupName;
-using App.Application.DentistTeacherOperations.Query;
+using App.Application.DentistTeacherOperations.Query.Groups;
+using App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
+using App.Domain.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace App.API.Controllers;
 
-//[Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+[Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
 public class DentistTeacherController : BaseController
 {
     /// <summary>
@@ -71,4 +74,12 @@ public class DentistTeacherController : BaseController
     [HttpGet("get-studentsNotInGroup")]
     public async Task<IActionResult> GetStudentsNotInGroup([Required] Guid groupId) => HandleOperationResult(
         await Mediator.Send(new FetchStudentsNotInGroupListQuery(groupId)));
+
+    /// <summary>
+    /// Retrieves a list of all groups associated with the currently authentcated teacher. 
+    /// </summary>
+    /// <returns>An HTTP response indicating the result of the operation.</returns>
+    [HttpGet("groups")]
+    public async Task<ActionResult<List<GroupDto>>> GetAllGroups() => HandleOperationResult(
+        await Mediator.Send(new FetchGroupsQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
 }
