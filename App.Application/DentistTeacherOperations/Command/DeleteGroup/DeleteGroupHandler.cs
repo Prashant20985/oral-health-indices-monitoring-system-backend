@@ -23,7 +23,7 @@ internal sealed class DeleteGroupHandler : IRequestHandler<DeleteGroupCommand, O
         // Retrive the group.
         var group = await _groupRepository.GetGroupById(request.GroupId);
 
-        if (group == null)
+        if (group == null) 
             return OperationResult<Unit>.Failure("Group Id not found");
 
         // Remove the group.
