@@ -74,4 +74,11 @@ public interface IGroupRepository
     /// </summary>
     /// <param name="groupId">The identifier of the group.</param>
     Task<List<StudentDto>> GetAllStudentsNotInGroup(Guid groupId);
+
+    /// <summary>
+    /// Gets a list of groups with associated students, grouped by a teacher.
+    /// </summary>
+    /// <param name="teacherId">The identifier of the teacher.</param>
+    /// <returns>A list of GroupDto objects representing groups and their associated students.</returns>
+    Task<List<GroupDto>> GetAllGroupsWithStudentsList(string teacherId);
 }

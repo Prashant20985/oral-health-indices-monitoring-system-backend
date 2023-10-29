@@ -83,4 +83,17 @@ public class GroupRepository : IGroupRepository
     public async Task<List<Group>> GetAllGroupsCreatedByTeacher(string teacherId) => await _userContext.Groups
         .Where(x => x.TeacherId == teacherId)
         .ToListAsync();
+
+    /// <inheritdoc />
+    public async Task<List<GroupDto>> GetAllGroupsWithStudentsList(string teacherId)
+    {
+        return await _userContext.Groups
+            .Where(x => x.TeacherId.Equals(teacherId))
+            .Select(x => new GroupDto
+            {
+                Id = x.Id,
+                GroupName = x.GroupName,
+                Students = x.StudentGroups.Select(x => _mapper.Map<StudentDto>(x.Student)).ToList()
+            }).ToListAsync();
+    }
 }
