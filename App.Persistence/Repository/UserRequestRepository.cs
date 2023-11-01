@@ -79,7 +79,6 @@ public class UserRequestRepository : IUserRequestRepository
     /// Retrieves a user request by its unique identifier.
     /// </summary>
     /// <param name="requestId">The unique identifier of the user request to retrieve.</param>
-    public async Task<UserRequestDto> GetUserRequestById(Guid requestId) => await _userContext.UserRequests
-        .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)
+    public async Task<UserRequest> GetUserRequestById(Guid requestId) => await _userContext.UserRequests
         .FirstOrDefaultAsync(x => x.Id.Equals(requestId));
 }
