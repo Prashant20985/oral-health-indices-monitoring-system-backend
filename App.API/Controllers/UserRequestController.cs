@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using App.Application.AdminOperations.Query.UserRequests;
 using App.Application.UserRequestOperations.Command.CreateRequest;
 using App.Application.UserRequestOperations.Command.DeleteRequest;
 using App.Application.UserRequestOperations.Query.RequestsListByUserId;
+using App.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +35,7 @@ public class UserRequestController:BaseController
     public async Task<ActionResult> DeleteRequest(Guid userRequestId) => HandleOperationResult(
             await Mediator.Send(new DeleteRequestCommand(userRequestId)));
 
+
     // <summary>
     /// Retrieves a list of user requests by their user ID.
     /// </summary>
@@ -41,4 +44,14 @@ public class UserRequestController:BaseController
     public async Task<IActionResult> GetRequestsByUserId() => HandleOperationResult(
         await Mediator.Send(new FetchRequestsListByUserIdQuery(
             User.FindFirstValue(ClaimTypes.NameIdentifier))));
+    /// <summary>
+    /// Retrieves user requests based on their status.
+    /// </summary>
+    /// <param name="requestStatus">The status of the user requests to retrieve.</param>
+    /// <returns>A list of user requests with the specified status.</returns>
+    [Authorize(Roles = "Admin")]
+    [HttpGet("user-requests")]
+    public async Task<ActionResult<List<UserRequestDto>>>
+        GetUserRequestByStatus(string requestStatus) =>
+        HandleOperationResult(await Mediator.Send(new UserRequestQuery(requestStatus)));
 }

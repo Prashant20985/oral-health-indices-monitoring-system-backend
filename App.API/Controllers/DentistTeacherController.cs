@@ -32,7 +32,7 @@ public class DentistTeacherController : BaseController
     /// <param name="groupId">The identifier of the group to which the student will be added.</param>
     /// <param name="studentId">The identifier of the student to add to the group.</param>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [HttpPost("add-student")]
+    [HttpPost("add-student/{groupId}")]
     public async Task<ActionResult> AddStudentToGroup(Guid groupId, string studentId) => HandleOperationResult(
         await Mediator.Send(new AddStudentToGroupCommand(groupId, studentId)));
 
@@ -43,7 +43,7 @@ public class DentistTeacherController : BaseController
     /// <param name="groupId">The identifier of the group from which the student will be removed.</param>
     /// <param name="studentId">The identifier of the student to remove from the group.</param>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [HttpDelete("remove-student")]
+    [HttpDelete("remove-student/{groupId}")]
     public async Task<ActionResult> RemoveStudentFromGroup(Guid groupId, string studentId) => HandleOperationResult(
     await Mediator.Send(new RemoveStudentFromGroupCommand(groupId, studentId)));
 
@@ -52,7 +52,7 @@ public class DentistTeacherController : BaseController
     /// </summary>
     /// <param name="groupId">The identifier of the group which will be deleted.</param>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [HttpDelete("delete-group")]
+    [HttpDelete("delete-group/{groupId}")]
     public async Task<ActionResult> DeleteGroup(Guid groupId) => HandleOperationResult(
         await Mediator.Send(new DeleteGroupCommand(groupId)));
 
@@ -62,7 +62,7 @@ public class DentistTeacherController : BaseController
     /// <param name="groupId">The identifier of the group whch groups name will be updated</param>
     /// <param name="groupName"></param>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [HttpPut("update-groupname")]
+    [HttpPut("update-groupname/{groupId}")]
     public async Task<IActionResult> UpdateGroupName(Guid groupId, string groupName) => HandleOperationResult(
         await Mediator.Send(new UpdateGroupNameCommand(groupId, groupName)));
 
@@ -71,7 +71,7 @@ public class DentistTeacherController : BaseController
     /// </summary>
     /// <param name="groupId">The identiffier of the group in which students are not present</param>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [HttpGet("get-studentsNotInGroup")]
+    [HttpGet("get-studentsNotInGroup/{groupId}")]
     public async Task<IActionResult> GetStudentsNotInGroup([Required] Guid groupId) => HandleOperationResult(
         await Mediator.Send(new FetchStudentsNotInGroupListQuery(groupId)));
 

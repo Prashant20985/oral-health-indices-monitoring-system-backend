@@ -43,26 +43,10 @@ public class UserRequestRepository : IUserRequestRepository
         _userContext.UserRequests.Remove(userRequest);
 
     /// <summary>
-    /// Retrieves a list of all user requests with a status of "Completed."
+    /// Retrieves a list of all user requests based on status.
     /// </summary>
-    public async Task<List<UserRequestDto>> GetAllCompletedRequest() => await _userContext.UserRequests
-        .Where(x => x.RequestStatus.Equals(Enum.GetName(RequestStatus.Completed)))
-        .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)
-        .ToListAsync();
-
-    /// <summary>
-    /// Retrieves a list of all user requests with a status of "In Progress."
-    /// </summary>
-    public async Task<List<UserRequestDto>> GetAllInProgressRequest() => await _userContext.UserRequests
-        .Where(x => x.RequestStatus.Equals(Enum.GetName(RequestStatus.In_Progress)))
-        .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)
-        .ToListAsync();
-
-    /// <summary>
-    /// Retrieves a list of all user requests with a status of "Submitted."
-    /// </summary>
-    public async Task<List<UserRequestDto>> GetAllSubmittedRequest() => await _userContext.UserRequests
-        .Where(x => x.RequestStatus.Equals(Enum.GetName(RequestStatus.Submitted)))
+    public async Task<List<UserRequestDto>> GetAllRequestsByStatus(RequestStatus requestStatus) => await _userContext.UserRequests
+        .Where(x => x.RequestStatus == requestStatus)
         .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)
         .ToListAsync();
 
@@ -74,6 +58,7 @@ public class UserRequestRepository : IUserRequestRepository
         .Where(x => x.ApplicationUser.Id.Equals(userId))
         .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)
         .ToListAsync();
+
 
     /// <summary>
     /// Retrieves a user request by its unique identifier.

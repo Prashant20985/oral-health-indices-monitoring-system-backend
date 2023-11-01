@@ -1,4 +1,5 @@
 ﻿using App.Domain.DTOs;
+using App.Domain.Models.Enums;
 using App.Domain.Models.Users;
 
 namespace App.Domain.Repository;
@@ -21,19 +22,9 @@ public interface IUserRequestRepository
     void DeleteRequest(UserRequest userRequest);
 
     /// <summary>
-    /// Retrieves a list of all user requests that have been submitted.
+    /// Retrieves a list of all user requests based on request status.
     /// </summary>
-    Task<List<UserRequestDto>> GetAllSubmittedRequest();
-
-    /// <summary>
-    /// Retrieves a list of all completed user requests.
-    /// </summary>
-    Task<List<UserRequestDto>> GetAllCompletedRequest();
-
-    /// <summary>
-    /// Retrieves a list of all user requests that are in progress.
-    /// </summary>
-    Task<List<UserRequestDto>> GetAllInProgressRequest();
+    Task<List<UserRequestDto>> GetAllRequestsByStatus(RequestStatus requestStatus);
 
     /// <summary>
     /// Retrieves a list of user requests associated with a specific user.
