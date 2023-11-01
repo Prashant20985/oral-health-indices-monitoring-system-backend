@@ -45,6 +45,6 @@ public interface IUserRequestRepository
     /// Retrieves a user request by its unique identifier.
     /// </summary>
     /// <param name="requestId">The unique identifier of the user request to retrieve.</param>
-    Task<UserRequestDto> GetUserRequestById(Guid requestId);
+    Task<UserRequest> GetUserRequestById(Guid requestId);
 }
 
