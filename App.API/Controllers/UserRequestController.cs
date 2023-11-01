@@ -1,6 +1,8 @@
 using System.Security.Claims;
+using App.Application.AdminOperations.Query.UserRequests;
 using App.Application.UserRequestOperations.Command.CreateRequest;
 using App.Application.UserRequestOperations.Command.DeleteRequest;
+using App.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,4 +32,16 @@ public class UserRequestController:BaseController
     [HttpDelete("delete-request/{userRequestId}")]
     public async Task<ActionResult> DeleteRequest(Guid userRequestId) => HandleOperationResult(
             await Mediator.Send(new DeleteRequestCommand(userRequestId)));
+
+    /// <summary>
+    /// Retrieves user requests based on their status.
+    /// </summary>
+    /// <param name="requestStatus">The status of the user requests to retrieve.</param>
+    /// <returns>A list of user requests with the specified status.</returns>
+    [Authorize(Roles = "Admin")]
+    [HttpGet("user-requests")]
+    public async Task<ActionResult<List<UserRequestDto>>>
+        GetUserRequestByStatus(string requestStatus) =>
+        HandleOperationResult(await Mediator.Send(new UserRequestQuery(requestStatus)));
+
 }
