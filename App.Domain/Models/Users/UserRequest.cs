@@ -1,4 +1,5 @@
 using App.Domain.Models.Enums;
+using System;
 
 namespace App.Domain.Models.Users;
 
@@ -59,4 +60,15 @@ public class UserRequest
     /// Gets or sets the date and time when the request was completed.
     /// </summary>
     public DateTime DateCompleted { get; private set; }
+
+    /// <summary>
+    /// Updates the title and description of the user request.
+    /// </summary>
+    /// <param name="title">The new title for the request.</param>
+    /// <param name="description">The new description for the request.</param>
+    public void UpdateRequestTitleAndDescription(string title, string description)
+    {
+        RequestTitle = title;
+        Description = description;
+    }
 }

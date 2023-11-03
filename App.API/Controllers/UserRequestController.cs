@@ -1,14 +1,15 @@
-using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using App.Application.AdminOperations.Query.UserRequests;
 using App.Application.UserRequestOperations.Command.CreateRequest;
 using App.Application.UserRequestOperations.Command.DeleteRequest;
+using App.Application.UserRequestOperations.Command.UpdateRequest;
 using App.Application.UserRequestOperations.Query.RequestsListByUserId;
 using App.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.API.Controllers;
+
 /// <summary>
 /// Controller for managing user requests.
 /// </summary>
@@ -44,6 +45,8 @@ public class UserRequestController:BaseController
     public async Task<IActionResult> GetRequestsByUserId() => HandleOperationResult(
         await Mediator.Send(new FetchRequestsListByUserIdQuery(
             User.FindFirstValue(ClaimTypes.NameIdentifier))));
+
+
     /// <summary>
     /// Retrieves user requests based on their status.
     /// </summary>
@@ -54,4 +57,17 @@ public class UserRequestController:BaseController
     public async Task<ActionResult<List<UserRequestDto>>>
         GetUserRequestByStatus(string requestStatus) =>
         HandleOperationResult(await Mediator.Send(new UserRequestQuery(requestStatus)));
+
+
+    /// <summary>
+    /// Updates the title and description of a user request.
+    /// </summary>
+    /// <param name="userRequestId">The unique identifier of the user request to update.</param>
+    /// <param name="title">The new title for the user request.</param>
+    /// <param name="description">The new description for the user request.</param>
+    /// <returns>An ActionResult indicating the result of the update operation.</returns>
+    [HttpPut("update-request/{userRequestId}")]
+    public async Task<ActionResult> UpdateRequestTitleAndDescription(Guid userRequestId, 
+        string title, string description) => HandleOperationResult(
+            await Mediator.Send(new UpdateRequestCommand(userRequestId, title, description)));
 }
