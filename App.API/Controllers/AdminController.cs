@@ -3,6 +3,7 @@ using App.Application.AdminOperations.Command.CreateApplicationUser;
 using App.Application.AdminOperations.Command.CreateApplicationUsersFromCsv;
 using App.Application.AdminOperations.Command.DeleteApplicationUser;
 using App.Application.AdminOperations.Command.UpdateApplicationUser;
+using App.Application.AdminOperations.Command.UpdateUserRequest;
 using App.Application.AdminOperations.Query.ActiveApplicationUsersList;
 using App.Application.AdminOperations.Query.DeactivatedApplicationUsersList;
 using App.Application.AdminOperations.Query.DeletedApplicationUsersList;
@@ -121,4 +122,16 @@ public class AdminController : BaseController
     [HttpPost("create-users")]
     public async Task<ActionResult> CreateUsersFromCsv(IFormFile file) => HandleOperationResult(
         await Mediator.Send(new CreateApplicationUsersFromCsvCommand(file)));
+
+    /// <summary>
+    /// Updates RequestStatus and Admin comment of user request
+    /// </summary>
+    /// <param name="userRequestId">The unique identifier of the user request to update.</param>
+    /// <param name="requestStatus">The status of the request to update</param>
+    /// <param name="adminComment">The adminComment of the request to update</param>
+    /// <returns></returns>
+    [Authorize(Roles = "Admin")]
+    [HttpPut("update-requestStatus/{userRequestId}")]
+    public async Task<ActionResult> UpdateUserRequestStatus(Guid userRequestId, string requestStatus, string adminComment)
+        => HandleOperationResult(await Mediator.Send(new UpdateUserRequestStatusCommand(userRequestId, requestStatus, adminComment)));
 }

@@ -71,4 +71,15 @@ public class UserRequest
         RequestTitle = title;
         Description = description;
     }
+    /// <summary>
+    /// Updates the request status of request.
+    /// </summary>
+    /// <param name="status">The new status of the request.</param>
+    public void UpdateRequestStatus(RequestStatus status) => RequestStatus = status;
+
+    /// <summary>
+    /// Updates the comment of the request.
+    /// </summary>
+    /// <param name="comment">The new comment of the request.</param>
+    public void AddAdminComment(string comment) => AdminComment = comment;
 }
