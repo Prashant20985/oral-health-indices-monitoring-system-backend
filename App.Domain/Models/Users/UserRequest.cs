@@ -1,5 +1,4 @@
 using App.Domain.Models.Enums;
-using System;
 
 namespace App.Domain.Models.Users;
 
@@ -8,14 +7,14 @@ namespace App.Domain.Models.Users;
 /// </summary>
 public class UserRequest
 {
-    public UserRequest(string createdBy, string requestTitle,string description)
+    public UserRequest(string createdBy, string requestTitle, string description)
     {
         Id = Guid.NewGuid();
         CreatedBy = createdBy;
         RequestTitle = requestTitle;
         Description = description;
     }
-    
+
     /// <summary>
     /// Gets or sets the unique identifier for the user request.
     /// </summary>

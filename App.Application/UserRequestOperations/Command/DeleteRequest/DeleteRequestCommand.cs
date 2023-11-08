@@ -7,5 +7,5 @@ namespace App.Application.UserRequestOperations.Command.DeleteRequest;
 /// Represents a command to delete a new user request.
 /// </summary>
 [UserContextUnitOfWork]
-public record DeleteRequestCommand(Guid UserRequestId) 
+public record DeleteRequestCommand(Guid UserRequestId)
     : IRequest<OperationResult<Unit>>;

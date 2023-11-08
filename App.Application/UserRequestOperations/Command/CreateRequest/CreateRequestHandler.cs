@@ -7,7 +7,7 @@ namespace App.Application.UserRequestOperations.Command.CreateRequest;
 /// <summary>
 /// Handler for creating a user request.
 /// </summary>
-internal sealed class CreateRequestHandler 
+internal sealed class CreateRequestHandler
 : IRequestHandler<CreateRequestCommand, OperationResult<Unit>>
 {
     private readonly IUserRequestRepository _userRequestRepository;
@@ -18,7 +18,7 @@ internal sealed class CreateRequestHandler
     /// <param name="userRequestRepository">The repository for user requests.</param>
     public CreateRequestHandler(IUserRequestRepository userRequestRepository) =>
         _userRequestRepository = userRequestRepository;
-    
+
     /// <summary>
     /// Handles the creation of a user request.
     /// </summary>

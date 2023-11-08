@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using App.Application.AdminOperations.Query.UserRequests;
 using App.Application.UserRequestOperations.Command.CreateRequest;
 using App.Application.UserRequestOperations.Command.DeleteRequest;
@@ -7,6 +6,7 @@ using App.Application.UserRequestOperations.Query.RequestsListByUserId;
 using App.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace App.API.Controllers;
 
@@ -14,7 +14,7 @@ namespace App.API.Controllers;
 /// Controller for managing user requests.
 /// </summary>
 [Authorize]
-public class UserRequestController:BaseController
+public class UserRequestController : BaseController
 {
     /// <summary>
     /// Creates a new user request.
@@ -42,9 +42,10 @@ public class UserRequestController:BaseController
     /// </summary>
     /// <returns>An action result with the result of the request list retrieval operation.</returns>
     [HttpGet("requests-by-userid")]
-    public async Task<IActionResult> GetRequestsByUserId() => HandleOperationResult(
+    public async Task<IActionResult> GetRequestsByUserId(string requestStatus,
+        DateTime dateSubmitted) => HandleOperationResult(
         await Mediator.Send(new FetchRequestsListByUserIdQuery(
-            User.FindFirstValue(ClaimTypes.NameIdentifier))));
+            User.FindFirstValue(ClaimTypes.NameIdentifier), requestStatus, dateSubmitted)));
 
 
     /// <summary>
@@ -55,8 +56,8 @@ public class UserRequestController:BaseController
     [Authorize(Roles = "Admin")]
     [HttpGet("user-requests")]
     public async Task<ActionResult<List<UserRequestDto>>>
-        GetUserRequestByStatus(string requestStatus) =>
-        HandleOperationResult(await Mediator.Send(new UserRequestQuery(requestStatus)));
+        GetUserRequestByStatus(string requestStatus, DateTime dateSubmitted) =>
+        HandleOperationResult(await Mediator.Send(new UserRequestQuery(requestStatus, dateSubmitted)));
 
 
     /// <summary>
@@ -67,7 +68,7 @@ public class UserRequestController:BaseController
     /// <param name="description">The new description for the user request.</param>
     /// <returns>An ActionResult indicating the result of the update operation.</returns>
     [HttpPut("update-request/{userRequestId}")]
-    public async Task<ActionResult> UpdateRequestTitleAndDescription(Guid userRequestId, 
+    public async Task<ActionResult> UpdateRequestTitleAndDescription(Guid userRequestId,
         string title, string description) => HandleOperationResult(
             await Mediator.Send(new UpdateRequestCommand(userRequestId, title, description)));
 }
