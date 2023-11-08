@@ -10,7 +10,7 @@ namespace App.Application.AdminOperations.Query.UserRequests;
 /// <summary>
 /// Handler for processing UserRequestQuery requests.
 /// </summary>
-internal sealed class UserRequestHandler 
+internal sealed class UserRequestHandler
     : IRequestHandler<UserRequestQuery, OperationResult<List<UserRequestDto>>>
 {
     private readonly IUserRequestRepository _userRequestRepository;
@@ -31,7 +31,8 @@ internal sealed class UserRequestHandler
     public async Task<OperationResult<List<UserRequestDto>>> Handle(UserRequestQuery request, CancellationToken cancellationToken)
     {
         var status = Enum.Parse<RequestStatus>(request.RequestStatus);
-        var result = await _userRequestRepository.GetAllRequestsByStatus(status);
+        var result = await _userRequestRepository
+            .GetAllRequestsByStatusAndDateSubmitted(status, request.DateSubmitted);
 
         if (result.IsNullOrEmpty())
             return OperationResult<List<UserRequestDto>>.Failure("No Requests Found");

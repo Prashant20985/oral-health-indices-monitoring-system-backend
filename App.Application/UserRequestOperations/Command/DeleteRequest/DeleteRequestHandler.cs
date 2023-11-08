@@ -11,14 +11,14 @@ internal sealed class DeleteRequestHandler
     : IRequestHandler<DeleteRequestCommand, OperationResult<Unit>>
 {
     private readonly IUserRequestRepository _userRequestRepository;
-    
+
     /// <summary>
     /// Initializes a new instance of the DeleteRequestHandler class.
     /// </summary>
     /// <param name="userRequestRepository">The repository for user requests.</param>
     public DeleteRequestHandler(IUserRequestRepository userRequestRepository) =>
         _userRequestRepository = userRequestRepository;
-   
+
     /// <summary>
     /// Handles the deletion of a user request.
     /// </summary>
@@ -31,7 +31,7 @@ internal sealed class DeleteRequestHandler
 
         if (userRequest is null)
             return OperationResult<Unit>.Failure("Request not found");
-        
+
         _userRequestRepository.DeleteRequest(userRequest);
 
         return OperationResult<Unit>.Success(Unit.Value);

@@ -45,17 +45,22 @@ public class UserRequestRepository : IUserRequestRepository
     /// <summary>
     /// Retrieves a list of all user requests based on status.
     /// </summary>
-    public async Task<List<UserRequestDto>> GetAllRequestsByStatus(RequestStatus requestStatus) => await _userContext.UserRequests
-        .Where(x => x.RequestStatus == requestStatus)
-        .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)
-        .ToListAsync();
+    public async Task<List<UserRequestDto>> GetAllRequestsByStatusAndDateSubmitted(RequestStatus requestStatus,
+        DateTime dateSubmitted) => await _userContext.UserRequests
+            .Where(x => x.RequestStatus == requestStatus &&
+                x.DateSubmitted.Date == dateSubmitted.Date)
+            .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
 
     /// <summary>
     /// Retrieves a list of user requests associated with a specific user.
     /// </summary>
-    /// <param name="userId">The identifier of the user.</param>
-    public async Task<List<UserRequestDto>> GetRequestsByUserId(string userId) => await _userContext.UserRequests
-        .Where(x => x.ApplicationUser.Id.Equals(userId))
+    public async Task<List<UserRequestDto>> GetRequestsByUserIdStatusAndDateSubmitted(string userId,
+        RequestStatus requestStatus,
+        DateTime dateSubmitted) => await _userContext.UserRequests
+        .Where(x => x.ApplicationUser.Id.Equals(userId) &&
+                x.RequestStatus == requestStatus &&
+                x.DateSubmitted.Date == dateSubmitted.Date)
         .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)
         .ToListAsync();
 

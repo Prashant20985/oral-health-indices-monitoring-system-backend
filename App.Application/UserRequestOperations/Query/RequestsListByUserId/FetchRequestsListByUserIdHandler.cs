@@ -1,8 +1,8 @@
 using App.Application.Core;
 using App.Domain.DTOs;
+using App.Domain.Models.Enums;
 using App.Domain.Repository;
 using MediatR;
-using Org.BouncyCastle.Bcpg;
 
 namespace App.Application.UserRequestOperations.Query.RequestsListByUserId;
 
@@ -13,14 +13,14 @@ internal sealed class FetchRequestsListByUserIdHandler
     : IRequestHandler<FetchRequestsListByUserIdQuery, OperationResult<List<UserRequestDto>>>
 {
     private readonly IUserRequestRepository _userRequestRepository;
-    
+
     /// <summary>
     /// Initializes a new instance of the FetchRequestsListByUserIdHandler class.
     /// </summary>
     /// <param name="userRequestRepository">The repository for user requests.</param>
     public FetchRequestsListByUserIdHandler(IUserRequestRepository userRequestRepository) =>
         _userRequestRepository = userRequestRepository;
-    
+
     /// <summary>
     /// Handles the retrieval of a list of user requests by user ID.
     /// </summary>
@@ -30,8 +30,11 @@ internal sealed class FetchRequestsListByUserIdHandler
     public async Task<OperationResult<List<UserRequestDto>>> Handle
         (FetchRequestsListByUserIdQuery request, CancellationToken cancellationToken)
     {
-        var requestsByUserIdQuery = await _userRequestRepository.GetRequestsByUserId(request.UserId);
-        
+        var status = Enum.Parse<RequestStatus>(request.RequestStatus);
+
+        var requestsByUserIdQuery = await _userRequestRepository
+            .GetRequestsByUserIdStatusAndDateSubmitted(request.UserId, status, request.DateSubmitted);
+
         if (requestsByUserIdQuery is null)
             return OperationResult<List<UserRequestDto>>.Failure("No requests found by given userId");
 
