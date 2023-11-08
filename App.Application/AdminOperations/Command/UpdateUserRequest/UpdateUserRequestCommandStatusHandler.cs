@@ -33,7 +33,8 @@ internal sealed class UpdateUserRequestCommandStatusHandler
             return OperationResult<Unit>.Failure("User request not found");
 
         // Update the request status and admin comment of a user request.
-        userRequest.AddAdminComment(request.AdminComment);
+        if (!string.IsNullOrEmpty(request.AdminComment))
+            userRequest.AddAdminComment(request.AdminComment);
 
         userRequest.UpdateRequestStatus(Enum.Parse<RequestStatus>(request.RequestStatus));
 

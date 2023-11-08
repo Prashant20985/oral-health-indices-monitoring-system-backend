@@ -74,7 +74,13 @@ public class UserRequest
     /// Updates the request status of request.
     /// </summary>
     /// <param name="status">The new status of the request.</param>
-    public void UpdateRequestStatus(RequestStatus status) => RequestStatus = status;
+    public void UpdateRequestStatus(RequestStatus status)
+    {
+        if (status == RequestStatus.Completed)
+            DateCompleted = DateTime.UtcNow;
+
+        RequestStatus = status;
+    }
 
     /// <summary>
     /// Updates the comment of the request.

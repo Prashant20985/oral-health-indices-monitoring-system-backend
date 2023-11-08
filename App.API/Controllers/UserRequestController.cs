@@ -1,3 +1,4 @@
+using App.Application.AdminOperations.Command.UpdateUserRequest;
 using App.Application.AdminOperations.Query.UserRequests;
 using App.Application.UserRequestOperations.Command.CreateRequest;
 using App.Application.UserRequestOperations.Command.DeleteRequest;
@@ -71,4 +72,16 @@ public class UserRequestController : BaseController
     public async Task<ActionResult> UpdateRequestTitleAndDescription(Guid userRequestId,
         string title, string description) => HandleOperationResult(
             await Mediator.Send(new UpdateRequestCommand(userRequestId, title, description)));
+
+    /// <summary>
+    /// Updates RequestStatus and Admin comment of user request
+    /// </summary>
+    /// <param name="userRequestId">The unique identifier of the user request to update.</param>
+    /// <param name="requestStatus">The status of the request to update</param>
+    /// <param name="adminComment">The adminComment of the request to update</param>
+    /// <returns></returns>
+    [Authorize(Roles = "Admin")]
+    [HttpPut("update-requestStatus/{userRequestId}")]
+    public async Task<ActionResult> UpdateUserRequestStatus(Guid userRequestId, string requestStatus, string adminComment)
+        => HandleOperationResult(await Mediator.Send(new UpdateUserRequestStatusCommand(userRequestId, requestStatus, adminComment)));
 }
