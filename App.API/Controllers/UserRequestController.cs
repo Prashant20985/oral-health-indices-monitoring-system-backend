@@ -1,4 +1,3 @@
-using App.Application.AdminOperations.Command.UpdateUserRequest;
 using App.Application.AdminOperations.Query.UserRequests;
 using App.Application.UserRequestOperations.Command.CreateRequest;
 using App.Application.UserRequestOperations.Command.DeleteRequest;
@@ -8,6 +7,7 @@ using App.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using App.Application.AdminOperations.Command.UpdateRequestStatusToInProgress;
 
 namespace App.API.Controllers;
 
@@ -72,16 +72,15 @@ public class UserRequestController : BaseController
     public async Task<ActionResult> UpdateRequestTitleAndDescription(Guid userRequestId,
         string title, string description) => HandleOperationResult(
             await Mediator.Send(new UpdateRequestCommand(userRequestId, title, description)));
-
+    
     /// <summary>
-    /// Updates RequestStatus and Admin comment of user request
+    /// Updates the status of a user request to "In Progress" for administrators.
     /// </summary>
     /// <param name="userRequestId">The unique identifier of the user request to update.</param>
-    /// <param name="requestStatus">The status of the request to update</param>
-    /// <param name="adminComment">The adminComment of the request to update</param>
-    /// <returns></returns>
+    /// <returns>An action result with the result of the request status update operation.</returns>
     [Authorize(Roles = "Admin")]
-    [HttpPut("update-requestStatus/{userRequestId}")]
-    public async Task<ActionResult> UpdateUserRequestStatus(Guid userRequestId, string requestStatus, string adminComment)
-        => HandleOperationResult(await Mediator.Send(new UpdateUserRequestStatusCommand(userRequestId, requestStatus, adminComment)));
+    [HttpPut("update-to-inProgress/{userRequestId}")]
+    public async Task<ActionResult> UpdateRequestStatusToInProgress(Guid userRequestId)
+        => HandleOperationResult(await Mediator.Send(new UpdateRequestStatusToInProgressCommand(userRequestId)));
+
 }
