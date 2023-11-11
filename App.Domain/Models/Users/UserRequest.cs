@@ -70,18 +70,12 @@ public class UserRequest
         RequestTitle = title;
         Description = description;
     }
+
     /// <summary>
-    /// Updates the request status of request.
+    /// Updates the request status of request to In_Progress.
     /// </summary>
-    /// <param name="status">The new status of the request.</param>
-    public void UpdateRequestStatus(RequestStatus status)
-    {
-        if (status == RequestStatus.Completed)
-            DateCompleted = DateTime.UtcNow;
-
-        RequestStatus = status;
-    }
-
+    public void SetRequestToInProgress() => RequestStatus = RequestStatus.In_Progress;
+    
     /// <summary>
     /// Updates the comment of the request.
     /// </summary>
