@@ -72,6 +72,17 @@ public class UserRequest
     }
 
     /// <summary>
+    /// Sets the request status to "Completed" and updates related properties.
+    /// </summary>
+    /// <param name="adminComment">The admin comment associated with the completion.</param>
+    public void SetRequestToCompleted(string adminComment)
+    {
+        RequestStatus = RequestStatus.Completed;
+        DateCompleted = DateTime.UtcNow;
+        AdminComment = adminComment;
+    }
+
+    /// <summary>
     /// Updates the request status of request to In_Progress.
     /// </summary>
     public void SetRequestToInProgress() => RequestStatus = RequestStatus.In_Progress;

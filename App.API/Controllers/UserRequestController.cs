@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using App.Application.AdminOperations.Query.UserRequests;
 using App.Application.UserRequestOperations.Command.CreateRequest;
 using App.Application.UserRequestOperations.Command.DeleteRequest;
@@ -7,6 +8,7 @@ using App.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using App.Application.AdminOperations.Command.UpdateRequestStatusToCompleted;
 using App.Application.AdminOperations.Command.UpdateRequestStatusToInProgress;
 
 namespace App.API.Controllers;
@@ -82,5 +84,15 @@ public class UserRequestController : BaseController
     [HttpPut("update-to-inProgress/{userRequestId}")]
     public async Task<ActionResult> UpdateRequestStatusToInProgress(Guid userRequestId)
         => HandleOperationResult(await Mediator.Send(new UpdateRequestStatusToInProgressCommand(userRequestId)));
+
+    /// <summary>
+    /// Updates the status of a user request to "Completed" for administrators.
+    /// </summary>
+    /// <param name="userRequestId">The unique identifier of the user request to update.</param>
+    /// <returns>An action result with the result of the request status update operation.</returns>
+    [Authorize(Roles = "Admin")]
+    [HttpPut("update-to-completed/{userRequestId}")]
+    public async Task<ActionResult> UpdateRequestStatusToCompleted(Guid userRequestId, string adminComment)
+        => HandleOperationResult(await Mediator.Send(new UpdateRequestStatusToCompletedCommand(userRequestId, adminComment)));
 
 }
