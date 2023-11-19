@@ -46,7 +46,7 @@ public class UserRequestController : BaseController
     /// <returns>An action result with the result of the request list retrieval operation.</returns>
     [HttpGet("requests-by-userid")]
     public async Task<IActionResult> GetRequestsByUserId(string requestStatus,
-        DateTime dateSubmitted) => HandleOperationResult(
+        DateTime? dateSubmitted) => HandleOperationResult(
         await Mediator.Send(new FetchRequestsListByUserIdQuery(
             User.FindFirstValue(ClaimTypes.NameIdentifier), requestStatus, dateSubmitted)));
 
@@ -59,7 +59,7 @@ public class UserRequestController : BaseController
     [Authorize(Roles = "Admin")]
     [HttpGet("user-requests")]
     public async Task<ActionResult<List<UserRequestDto>>>
-        GetUserRequestByStatus(string requestStatus, DateTime dateSubmitted) =>
+        GetUserRequestByStatus(string requestStatus, DateTime? dateSubmitted) =>
         HandleOperationResult(await Mediator.Send(new UserRequestQuery(requestStatus, dateSubmitted)));
 
 

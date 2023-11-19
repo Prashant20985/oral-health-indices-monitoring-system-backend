@@ -3,6 +3,7 @@ using App.Domain.DTOs;
 using App.Domain.Models.Enums;
 using App.Domain.Repository;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace App.Application.UserRequestOperations.Query.RequestsListByUserId;
 
@@ -32,12 +33,13 @@ internal sealed class FetchRequestsListByUserIdHandler
     {
         var status = Enum.Parse<RequestStatus>(request.RequestStatus);
 
-        var requestsByUserIdQuery = await _userRequestRepository
-            .GetRequestsByUserIdStatusAndDateSubmitted(request.UserId, status, request.DateSubmitted);
+        var requestsByUserIdQuery = _userRequestRepository
+            .GetRequestsByUserIdStatusAndDateSubmitted(request.UserId, status);
 
-        if (requestsByUserIdQuery is null)
-            return OperationResult<List<UserRequestDto>>.Failure("No requests found by given userId");
+        if (request.DateSubmitted is not null)
+            requestsByUserIdQuery = requestsByUserIdQuery
+                .Where(x => x.DateSubmitted.Date == request.DateSubmitted.Value.Date);
 
-        return OperationResult<List<UserRequestDto>>.Success(requestsByUserIdQuery);
+        return OperationResult<List<UserRequestDto>>.Success(await requestsByUserIdQuery.ToListAsync());
     }
 }
