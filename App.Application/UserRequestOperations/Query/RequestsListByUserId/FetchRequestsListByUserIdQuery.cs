@@ -8,5 +8,5 @@ namespace App.Application.UserRequestOperations.Query.RequestsListByUserId;
 /// Represents a query to fetch a list of user requests by user ID.
 /// </summary>
 public record FetchRequestsListByUserIdQuery(
-        string UserId, string RequestStatus, DateTime DateSubmitted)
+        string UserId, string RequestStatus, DateTime? DateSubmitted)
     : IRequest<OperationResult<List<UserRequestDto>>>;

@@ -3,7 +3,7 @@ using App.Domain.DTOs;
 using App.Domain.Models.Enums;
 using App.Domain.Repository;
 using MediatR;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 
 namespace App.Application.AdminOperations.Query.UserRequests;
 
@@ -31,12 +31,13 @@ internal sealed class UserRequestHandler
     public async Task<OperationResult<List<UserRequestDto>>> Handle(UserRequestQuery request, CancellationToken cancellationToken)
     {
         var status = Enum.Parse<RequestStatus>(request.RequestStatus);
-        var result = await _userRequestRepository
-            .GetAllRequestsByStatusAndDateSubmitted(status, request.DateSubmitted);
+        var userRequestsQuery = _userRequestRepository
+            .GetAllRequestsByStatusAndDateSubmitted(status);
 
-        if (result.IsNullOrEmpty())
-            return OperationResult<List<UserRequestDto>>.Failure("No Requests Found");
+        if (request.DateSubmitted is not null)
+            userRequestsQuery = userRequestsQuery
+                .Where(x => x.DateSubmitted.Date == request.DateSubmitted.Value.Date);
 
-        return OperationResult<List<UserRequestDto>>.Success(result);
+        return OperationResult<List<UserRequestDto>>.Success(await userRequestsQuery.ToListAsync());
     }
 }
