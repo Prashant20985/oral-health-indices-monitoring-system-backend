@@ -56,25 +56,9 @@ public class GroupRepository : IGroupRepository
         _userContext.StudentGroups.Remove(studentGroup);
 
     /// <inheritdoc />
-    public async Task<List<StudentDto>> GetAllStudentsGroupedByTeacher(string teacherId) => await _userContext.Users
-        .Where(x => x.StudentGroups.Any(g => g.Group.TeacherId == teacherId)
-             && x.ApplicationUserRoles.Any(x => x.ApplicationRole.Name.Equals("Student")))
-        .ProjectTo<StudentDto>(_mapper.ConfigurationProvider)
-        .OrderBy(s => s.UserName)
-        .ToListAsync();
-
-    /// <inheritdoc />
-    public async Task<List<StudentDto>> GetAllStudentsInGroup(Guid groupId) => await _userContext.Users
-        .Where(x => x.StudentGroups.Any(g => g.GroupId == groupId)
-             && x.ApplicationUserRoles.Any(x => x.ApplicationRole.Name.Equals("Student")))
-        .ProjectTo<StudentDto>(_mapper.ConfigurationProvider)
-        .OrderBy(s => s.UserName)
-        .ToListAsync();
-
-    /// <inheritdoc />
     public async Task<List<StudentDto>> GetAllStudentsNotInGroup(Guid groupId) => await _userContext.Users
         .Where(x => !x.StudentGroups.Any(g => g.GroupId == groupId)
-            && x.ApplicationUserRoles.Any(x => x.ApplicationRole.Name.Equals("Student")))
+            && x.ApplicationUserRoles.Any(r => r.ApplicationRole.Name.Equals("Student")))
         .ProjectTo<StudentDto>(_mapper.ConfigurationProvider)
         .OrderBy(s => s.UserName)
         .ToListAsync();
