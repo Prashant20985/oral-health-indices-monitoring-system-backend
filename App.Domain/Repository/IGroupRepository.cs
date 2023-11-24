@@ -58,18 +58,6 @@ public interface IGroupRepository
     Task<List<Group>> GetAllGroupsCreatedByTeacher(string teacherId);
 
     /// <summary>
-    /// Gets a list of students grouped by a teacher.
-    /// </summary>
-    /// <param name="teacherId">The identifier of the teacher.</param>
-    Task<List<StudentDto>> GetAllStudentsGroupedByTeacher(string teacherId);
-
-    /// <summary>
-    /// Gets a list of students in a specific group.
-    /// </summary>
-    /// <param name="groupId">The identifier of the group.</param>
-    Task<List<StudentDto>> GetAllStudentsInGroup(Guid groupId);
-
-    /// <summary>
     /// Gets a list of students not in a specific group.
     /// </summary>
     /// <param name="groupId">The identifier of the group.</param>
