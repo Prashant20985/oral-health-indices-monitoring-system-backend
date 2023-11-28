@@ -32,7 +32,7 @@ internal sealed class UserRequestHandler
     {
         var status = Enum.Parse<RequestStatus>(request.RequestStatus);
         var userRequestsQuery = _userRequestRepository
-            .GetAllRequestsByStatusAndDateSubmitted(status);
+            .GetAllRequestsByStatus(status);
 
         if (request.DateSubmitted is not null)
             userRequestsQuery = userRequestsQuery

@@ -34,7 +34,7 @@ internal sealed class FetchRequestsListByUserIdHandler
         var status = Enum.Parse<RequestStatus>(request.RequestStatus);
 
         var requestsByUserIdQuery = _userRequestRepository
-            .GetRequestsByUserIdStatusAndDateSubmitted(request.UserId, status);
+            .GetRequestsByUserIdAndStatus(request.UserId, status);
 
         if (request.DateSubmitted is not null)
             requestsByUserIdQuery = requestsByUserIdQuery

@@ -45,7 +45,7 @@ public class UserRequestRepository : IUserRequestRepository
     /// <summary>
     /// Retrieves a list of all user requests based on status.
     /// </summary>
-    public IQueryable<UserRequestDto> GetAllRequestsByStatusAndDateSubmitted(RequestStatus requestStatus) => 
+    public IQueryable<UserRequestDto> GetAllRequestsByStatus(RequestStatus requestStatus) => 
         _userContext.UserRequests
             .Where(x => x.RequestStatus == requestStatus)
             .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)
@@ -54,7 +54,7 @@ public class UserRequestRepository : IUserRequestRepository
     /// <summary>
     /// Retrieves a list of user requests associated with a specific user.
     /// </summary>
-    public IQueryable<UserRequestDto> GetRequestsByUserIdStatusAndDateSubmitted(string userId,
+    public IQueryable<UserRequestDto> GetRequestsByUserIdAndStatus(string userId,
         RequestStatus requestStatus) => _userContext.UserRequests
         .Where(x => x.ApplicationUser.Id.Equals(userId) &&
                 x.RequestStatus == requestStatus)
