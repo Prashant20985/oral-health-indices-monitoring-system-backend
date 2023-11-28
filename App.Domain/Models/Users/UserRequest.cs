@@ -28,7 +28,7 @@ public class UserRequest
     /// <summary>
     /// Gets or sets an instance of the ApplicationUser class associated with this request.
     /// </summary>
-    public ApplicationUser ApplicationUser { get; private set; }
+    public ApplicationUser ApplicationUser { get; set; }
 
     /// <summary>
     /// Gets or sets the title of the user request.

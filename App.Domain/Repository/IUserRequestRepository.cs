@@ -24,13 +24,13 @@ public interface IUserRequestRepository
     /// <summary>
     /// Retrieves a list of all user requests based on request status.
     /// </summary>
-    IQueryable<UserRequestDto> GetAllRequestsByStatusAndDateSubmitted(RequestStatus requestStatus);
+    IQueryable<UserRequestDto> GetAllRequestsByStatus(RequestStatus requestStatus);
 
     /// <summary>
     /// Retrieves a list of user requests associated with a specific user.
     /// </summary>
     /// <param name="userId">The identifier of the user.</param>
-    IQueryable<UserRequestDto> GetRequestsByUserIdStatusAndDateSubmitted(string userId, RequestStatus requestStatus);
+    IQueryable<UserRequestDto> GetRequestsByUserIdAndStatus(string userId, RequestStatus requestStatus);
 
     /// <summary>
     /// Retrieves a user request by its unique identifier.
