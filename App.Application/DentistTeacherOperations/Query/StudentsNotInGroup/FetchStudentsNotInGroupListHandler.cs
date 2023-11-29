@@ -2,6 +2,7 @@
 using App.Domain.DTOs;
 using App.Domain.Repository;
 using MediatR;
+using Microsoft.IdentityModel.Tokens;
 
 namespace App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
 
@@ -30,7 +31,7 @@ internal sealed class FetchStudentsNotInGroupListHandler
         // check if students list not in group is empty
         var studentsNotInGroupQuery = await _groupRepository.GetAllStudentsNotInGroup(request.GroupId);
 
-        if (studentsNotInGroupQuery is null)
+        if (studentsNotInGroupQuery.IsNullOrEmpty())
             return OperationResult<List<StudentDto>>.Failure("Students not found");
 
         // Return a success result with no specific data.
