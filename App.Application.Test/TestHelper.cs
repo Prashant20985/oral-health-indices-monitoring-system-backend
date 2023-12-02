@@ -53,6 +53,8 @@ public class TestHelper
     /// </summary>
     protected Mock<IQueryFilter> queryFilterMock;
 
+    protected Mock<IGroupRepository> groupRepositoryMock;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="TestHelper"/> class with default mocked dependencies.
     /// </summary>
@@ -66,6 +68,7 @@ public class TestHelper
         emailServiceMock = new Mock<IEmailService>();
         userContextUnitOfWork = new Mock<IUserContextUnitOfWork>();
         queryFilterMock = new Mock<IQueryFilter>();
+        groupRepositoryMock = new Mock<IGroupRepository>();
     }
 }
 
