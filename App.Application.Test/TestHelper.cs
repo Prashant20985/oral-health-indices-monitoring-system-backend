@@ -53,7 +53,15 @@ public class TestHelper
     /// </summary>
     protected Mock<IQueryFilter> queryFilterMock;
 
+    /// <summary>
+    /// Mock instance for the IGroupRepository interface, used to simulate groupRepository service behavior in tests.
+    /// </summary>
     protected Mock<IGroupRepository> groupRepositoryMock;
+
+    /// <summary>
+    /// Mock instance for the IUserRequestRepository interface, used to simulate userRequestRepository service behavior in tests.
+    /// </summary>
+    protected Mock<IUserRequestRepository> userRequestRepositoryMock;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TestHelper"/> class with default mocked dependencies.
@@ -69,6 +77,7 @@ public class TestHelper
         userContextUnitOfWork = new Mock<IUserContextUnitOfWork>();
         queryFilterMock = new Mock<IQueryFilter>();
         groupRepositoryMock = new Mock<IGroupRepository>();
+        userRequestRepositoryMock = new Mock<IUserRequestRepository>();
     }
 }
 
