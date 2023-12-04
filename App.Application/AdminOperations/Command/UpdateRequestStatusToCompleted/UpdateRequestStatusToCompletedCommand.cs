@@ -1,5 +1,4 @@
 using App.Application.Core;
-using App.Domain.DTOs;
 using App.Persistence.Attributes;
 using MediatR;
 
@@ -9,5 +8,5 @@ namespace App.Application.AdminOperations.Command.UpdateRequestStatusToCompleted
 /// </summary>
 [UserContextUnitOfWork]
 public record UpdateRequestStatusToCompletedCommand(
-        Guid UserRequestId, 
+        Guid UserRequestId,
         string AdminComment) : IRequest<OperationResult<Unit>>;

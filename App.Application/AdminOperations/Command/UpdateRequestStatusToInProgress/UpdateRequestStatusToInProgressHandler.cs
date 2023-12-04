@@ -19,7 +19,7 @@ internal sealed class UpdateRequestStatusToInProgressHandler
     {
         _userRequestRepository = userRequestRepository;
     }
-    
+
     /// <summary>
     /// Handles the update of a user request status to "In Progress".
     /// </summary>
@@ -29,12 +29,12 @@ internal sealed class UpdateRequestStatusToInProgressHandler
     public async Task<OperationResult<Unit>> Handle(UpdateRequestStatusToInProgressCommand requestStatus, CancellationToken cancellationToken)
     {
         var userRequest = await _userRequestRepository.GetUserRequestById(requestStatus.UserRequestId);
-        
+
         if (userRequest is null)
             return OperationResult<Unit>.Failure("User request not found");
-    
+
         userRequest.SetRequestToInProgress();
- 
+
         // Return a success result with no specific data.
         return OperationResult<Unit>.Success(Unit.Value);
     }
