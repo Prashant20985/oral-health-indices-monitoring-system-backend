@@ -19,7 +19,7 @@ internal sealed class UpdateRequestStatusToCompletedHandler
     {
         _userRequestRepository = userRequestRepository;
     }
-    
+
     /// <summary>
     /// Handles the update of a user request status to "Completed".
     /// </summary>
@@ -29,15 +29,15 @@ internal sealed class UpdateRequestStatusToCompletedHandler
     public async Task<OperationResult<Unit>> Handle(UpdateRequestStatusToCompletedCommand requestStatus, CancellationToken cancellationToken)
     {
         var userRequest = await _userRequestRepository.GetUserRequestById(requestStatus.UserRequestId);
-        
+
         if (userRequest is null)
             return OperationResult<Unit>.Failure("User request not found");
-    
+
         userRequest.SetRequestToCompleted(requestStatus.AdminComment);
 
- 
+
         // Return a success result with no specific data.
         return OperationResult<Unit>.Success(Unit.Value);
     }
-    
+
 }

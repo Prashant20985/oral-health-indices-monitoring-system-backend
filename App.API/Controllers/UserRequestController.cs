@@ -1,4 +1,5 @@
-using System.ComponentModel.DataAnnotations;
+using App.Application.AdminOperations.Command.UpdateRequestStatusToCompleted;
+using App.Application.AdminOperations.Command.UpdateRequestStatusToInProgress;
 using App.Application.AdminOperations.Query.UserRequests;
 using App.Application.UserRequestOperations.Command.CreateRequest;
 using App.Application.UserRequestOperations.Command.DeleteRequest;
@@ -8,8 +9,6 @@ using App.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using App.Application.AdminOperations.Command.UpdateRequestStatusToCompleted;
-using App.Application.AdminOperations.Command.UpdateRequestStatusToInProgress;
 
 namespace App.API.Controllers;
 
@@ -74,7 +73,7 @@ public class UserRequestController : BaseController
     public async Task<ActionResult> UpdateRequestTitleAndDescription(Guid userRequestId,
         string title, string description) => HandleOperationResult(
             await Mediator.Send(new UpdateRequestCommand(userRequestId, title, description)));
-    
+
     /// <summary>
     /// Updates the status of a user request to "In Progress" for administrators.
     /// </summary>

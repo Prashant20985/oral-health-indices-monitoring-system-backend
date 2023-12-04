@@ -45,7 +45,7 @@ public class UserRequestRepository : IUserRequestRepository
     /// <summary>
     /// Retrieves a list of all user requests based on status.
     /// </summary>
-    public IQueryable<UserRequestDto> GetAllRequestsByStatus(RequestStatus requestStatus) => 
+    public IQueryable<UserRequestDto> GetAllRequestsByStatus(RequestStatus requestStatus) =>
         _userContext.UserRequests
             .Where(x => x.RequestStatus == requestStatus)
             .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)

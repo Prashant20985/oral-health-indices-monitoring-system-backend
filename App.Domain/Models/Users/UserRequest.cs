@@ -86,7 +86,7 @@ public class UserRequest
     /// Updates the request status of request to In_Progress.
     /// </summary>
     public void SetRequestToInProgress() => RequestStatus = RequestStatus.In_Progress;
-    
+
     /// <summary>
     /// Updates the comment of the request.
     /// </summary>

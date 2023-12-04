@@ -109,7 +109,7 @@ public class GroupRepositoryTests
     {
         // Arrange
         var group = new Group(Guid.NewGuid().ToString(), "Group");
-        var groups = new List<Group> {  }
+        var groups = new List<Group> { }
             .AsQueryable().BuildMockDbSet();
 
         _mockUserContext.Setup(x => x.Groups).Returns(groups.Object);
@@ -183,7 +183,7 @@ public class GroupRepositoryTests
     {
         // Arrange
         var studentGroup = new StudentGroup(Guid.NewGuid(), Guid.NewGuid().ToString());
-        var studentGroups = new List<StudentGroup> {  }
+        var studentGroups = new List<StudentGroup> { }
             .AsQueryable().BuildMockDbSet();
 
         _mockUserContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
@@ -224,13 +224,13 @@ public class GroupRepositoryTests
             new ApplicationUserRole { ApplicationRole =  new ApplicationRole { Name = "Student"}}
         };
 
-        var student1 = new ApplicationUser("test@test.com", "Test", "User", "7418552", "comment") 
-            { ApplicationUserRoles = applicationUserRoles };
+        var student1 = new ApplicationUser("test@test.com", "Test", "User", "7418552", "comment")
+        { ApplicationUserRoles = applicationUserRoles };
 
         student1.StudentGroups.Add(new StudentGroup(groupId, student1.Id.ToString()));
 
-        var student2 = new ApplicationUser("test2@test.com", "Test2", "User", "85277441", "comment") 
-            { ApplicationUserRoles = applicationUserRoles};
+        var student2 = new ApplicationUser("test2@test.com", "Test2", "User", "85277441", "comment")
+        { ApplicationUserRoles = applicationUserRoles };
 
         var users = new List<ApplicationUser> { student1, student2 };
 
