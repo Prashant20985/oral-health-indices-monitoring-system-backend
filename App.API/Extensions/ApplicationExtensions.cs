@@ -97,6 +97,12 @@ public static class ApplicationExtension
         // Add a singleton dependency for IEmailTemplatePathProvider with the implementation of EmailTemplatePathProvider.
         services.AddSingleton<IEmailTemplatePathProvider, EmailTemplatePathProvider>();
 
+        // Add a scoped dependency for IPatientRepository with the implementation of PatientRepository.
+        services.AddScoped<IPatientRepository, PatientRepository>();
+
+        // Add a scoped dependency for IResearchGroupRepository with the implementation of ResearchGroupRepository.
+        services.AddScoped<IResearchGroupRepository, ResearchGroupRepository>();
+
         // Configure and bind the EmailSettings section from the configuration.
         services.Configure<EmailSettings>(configuration.GetSection(nameof(EmailSettings)));
 

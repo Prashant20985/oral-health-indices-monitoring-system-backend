@@ -4,16 +4,19 @@ using App.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace App.Persistence.Migrations.UserSchema
+namespace App.Persistence.Migrations.OralHealthExaminationSchema
 {
     [DbContext(typeof(OralEhrContext))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [Migration("20231215150958_Updated_UpdatedOralHealthExaminationSchema2")]
+    partial class Updated_UpdatedOralHealthExaminationSchema2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

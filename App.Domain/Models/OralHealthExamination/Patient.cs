@@ -37,6 +37,7 @@ public class Patient
     public string OtherData3 { get; private set; }
     public string Location { get; private set; }
     public int Age { get; private set; }
+    public DateTime CreatedAt { get; private set; } = DateTime.Now;
     public bool IsArchived { get; private set; } = false;
     public string ArchiveComment { get; private set; } = null;
 
