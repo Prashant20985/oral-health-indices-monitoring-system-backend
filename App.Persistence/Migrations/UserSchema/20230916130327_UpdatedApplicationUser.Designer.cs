@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace App.Persistence.Migrations.UserSchema
 {
-    [DbContext(typeof(UserContext))]
+    [DbContext(typeof(OralEhrContext))]
     [Migration("20230916130327_UpdatedApplicationUser")]
     partial class UpdatedApplicationUser
     {

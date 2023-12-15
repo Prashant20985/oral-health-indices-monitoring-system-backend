@@ -13,6 +13,8 @@ internal class ApplicationUserConfiguration : IEntityTypeConfiguration<Applicati
     /// <param name="builder">The entity type builder for the ApplicationUser entity.</param>
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
+        builder.HasKey(x => x.Id);
+
         // Configures the FirstName property of the ApplicationUser entity.
         builder.Property(x => x.FirstName)
             .IsRequired()

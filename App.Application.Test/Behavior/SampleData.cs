@@ -8,6 +8,6 @@ public class SampleData
     public class SampleRequest { }
     public class SampleResponse { }
 
-    [UserContextUnitOfWork]
+    [OralEhrContextUnitOfWork]
     public class SampleRequestWithUnitOfWorkAttribute { }
 }

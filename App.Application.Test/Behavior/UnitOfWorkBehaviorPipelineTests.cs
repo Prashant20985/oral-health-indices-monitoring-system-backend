@@ -11,7 +11,7 @@ public class UnitOfWorkBehaviorPipelineTests : TestHelper
     public async Task Handle_UnitOfWorkAttribute_AppliesTransaction()
     {
         // Arrange
-        var behavior = new UnitOfWorkBehaviorPipeline<SampleRequestWithUnitOfWorkAttribute, SampleResponse>(userContextUnitOfWork.Object);
+        var behavior = new UnitOfWorkBehaviorPipeline<SampleRequestWithUnitOfWorkAttribute, SampleResponse>(unitOfWork.Object);
 
         var request = new SampleRequestWithUnitOfWorkAttribute();
         var cancellationToken = CancellationToken.None;
@@ -20,7 +20,7 @@ public class UnitOfWorkBehaviorPipelineTests : TestHelper
         var response = await behavior.Handle(request, NextHandler, cancellationToken);
 
         // Assert
-        userContextUnitOfWork.Verify(uow => uow.SaveChangesAsync(cancellationToken), Times.Once);
+        unitOfWork.Verify(uow => uow.SaveChangesAsync(cancellationToken), Times.Once);
         Assert.NotNull(response);
     }
 
@@ -28,7 +28,7 @@ public class UnitOfWorkBehaviorPipelineTests : TestHelper
     public async Task Handle_NoUnitOfWorkAttribute_NoTransactionApplied()
     {
         // Arrange
-        var behavior = new UnitOfWorkBehaviorPipeline<SampleRequest, SampleResponse>(userContextUnitOfWork.Object);
+        var behavior = new UnitOfWorkBehaviorPipeline<SampleRequest, SampleResponse>(unitOfWork.Object);
 
         var request = new SampleRequest();
         var cancellationToken = CancellationToken.None;
@@ -37,7 +37,7 @@ public class UnitOfWorkBehaviorPipelineTests : TestHelper
         var response = await behavior.Handle(request, NextHandler, cancellationToken);
 
         // Assert
-        userContextUnitOfWork.Verify(uow => uow.SaveChangesAsync(cancellationToken), Times.Never);
+        unitOfWork.Verify(uow => uow.SaveChangesAsync(cancellationToken), Times.Never);
         Assert.NotNull(response);
     }
 

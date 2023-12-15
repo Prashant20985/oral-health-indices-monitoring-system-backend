@@ -1,4 +1,5 @@
 ﻿using App.Domain.DTOs;
+using App.Domain.Models.OralHealthExamination;
 using Microsoft.AspNetCore.Identity;
 
 namespace App.Domain.Models.Users;
@@ -122,5 +123,11 @@ public class ApplicationUser : IdentityUser
     public ICollection<StudentGroup> StudentGroups { get; set; } = new List<StudentGroup>();
     public ICollection<UserRequest> UserRequests { get; set; } = new List<UserRequest>();
 
+    public ICollection<Patient> Patients { get; set; } = new List<Patient>();
+    public ICollection<ResearchGroup> PatientGroups { get; set; } = new List<ResearchGroup>();
+
+    public ICollection<PatientExaminationTestMode> PatientExaminationTestModeStudentNavigation { get; set; } = new List<PatientExaminationTestMode>();
+    public ICollection<PatientExaminationTestMode> PatientExaminationTestModeDoctorNavigation { get; set; } = new List<PatientExaminationTestMode>();
+    public ICollection<PatientExaminationRegularMode> PatientExaminationRegularModeDoctorNavigation { get; set; } = new List<PatientExaminationRegularMode>();
 }
 

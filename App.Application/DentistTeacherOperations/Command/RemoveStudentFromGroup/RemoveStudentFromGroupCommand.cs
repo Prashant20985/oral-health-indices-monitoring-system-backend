@@ -7,6 +7,6 @@ namespace App.Application.DentistTeacherOperations.Command.RemoveStudentFromGrou
 /// <summary>
 /// Represents a command to remove a student from a group.
 /// </summary>
-[UserContextUnitOfWork]
+[OralEhrContextUnitOfWork]
 public record RemoveStudentFromGroupCommand(Guid GroupId, string StudentId)
     : IRequest<OperationResult<Unit>>;

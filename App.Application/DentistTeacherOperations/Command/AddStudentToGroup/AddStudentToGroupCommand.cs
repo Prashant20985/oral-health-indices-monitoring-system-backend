@@ -7,7 +7,7 @@ namespace App.Application.DentistTeacherOperations.Command.AddStudentToGroup;
 /// <summary>
 /// Represents a command to add a student to a group.
 /// </summary>
-[UserContextUnitOfWork]
+[OralEhrContextUnitOfWork]
 public record AddStudentToGroupCommand(Guid GroupId, string StudentId)
     : IRequest<OperationResult<Unit>>;
 

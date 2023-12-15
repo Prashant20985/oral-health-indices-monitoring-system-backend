@@ -32,7 +32,7 @@ public static class ApplicationExtension
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
         // Add the UserContext to the service collection with the specified connection string.
-        services.AddDbContext<UserContext>(opt =>
+        services.AddDbContext<OralEhrContext>(opt =>
         {
             opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         });
@@ -89,7 +89,7 @@ public static class ApplicationExtension
         services.AddScoped<IReadCsv, ReadCsv>();
 
         // Add a scoped dependency for IUserContextUnitOfWork with the implementation of UserContextUnitOfWork.
-        services.AddScoped<IUserContextUnitOfWork, UserContextUnitOfWork>();
+        services.AddScoped<IUnitOfWork, OralEhrContextUnitOfWork>();
 
         // Add a scoped dependency for IGroupRepository with the implementation of GroupRepository.
         services.AddScoped<IGroupRepository, GroupRepository>();

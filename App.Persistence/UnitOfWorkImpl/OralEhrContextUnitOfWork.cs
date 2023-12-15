@@ -7,20 +7,20 @@ namespace App.Persistence.UnitOfWorkImpl;
 /// Implementation of the <see cref="IUserContextUnitOfWork"/> interface.
 /// This class is responsible for managing transactions and saving changes within the user context.
 /// </summary>
-public class UserContextUnitOfWork : IUserContextUnitOfWork
+public class OralEhrContextUnitOfWork : IUnitOfWork
 {
-    private readonly UserContext _userContext;
+    private readonly OralEhrContext _oralEhrContext;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="UserContextUnitOfWork"/> class.
+    /// Initializes a new instance of the <see cref="OralEhrContextUnitOfWork"/> class.
     /// </summary>
-    /// <param name="userContext">The user context instance.</param>
-    public UserContextUnitOfWork(UserContext userContext)
+    /// <param name="oralEhrContext">The user context instance.</param>
+    public OralEhrContextUnitOfWork(OralEhrContext oralEhrContext)
     {
-        _userContext = userContext;
+        _oralEhrContext = oralEhrContext;
     }
 
     /// <inheritdoc/>
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default) =>
-        await _userContext.SaveChangesAsync(cancellationToken);
+        await _oralEhrContext.SaveChangesAsync(cancellationToken);
 }

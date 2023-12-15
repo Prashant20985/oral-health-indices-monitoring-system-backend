@@ -13,6 +13,8 @@ internal class ApplicationRoleConfiguration : IEntityTypeConfiguration<Applicati
     /// <param name="builder">The entity type builder for the ApplicationRole entity.</param>
     public void Configure(EntityTypeBuilder<ApplicationRole> builder)
     {
+        builder.HasKey(x => x.Id);
+
         // Defines the relationship between ApplicationRole and ApplicationUserRole entities using the foreign key RoleId.
         builder.HasMany(x => x.ApplicationUserRoles)
             .WithOne(e => e.ApplicationRole)

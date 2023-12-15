@@ -14,15 +14,15 @@ public class UnitOfWorkBehaviorPipeline<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull
 {
-    private readonly IUserContextUnitOfWork _userContextUnitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UnitOfWorkBehaviorPipeline{TRequest, TResponse}"/> class.
     /// </summary>
-    /// <param name="userContextUnitOfWork">The user context unit of work instance.</param>
-    public UnitOfWorkBehaviorPipeline(IUserContextUnitOfWork userContextUnitOfWork)
+    /// <param name="unitOfWork">The user context unit of work instance.</param>
+    public UnitOfWorkBehaviorPipeline(IUnitOfWork unitOfWork)
     {
-        _userContextUnitOfWork = userContextUnitOfWork;
+        _unitOfWork = unitOfWork;
     }
 
     /// <inheritdoc/>
@@ -31,10 +31,10 @@ public class UnitOfWorkBehaviorPipeline<TRequest, TResponse>
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        if (request.GetType().GetCustomAttribute<UserContextUnitOfWorkAttribute>() is not null)
+        if (request.GetType().GetCustomAttribute<OralEhrContextUnitOfWorkAttribute>() is not null)
         {
             var response = await next();
-            await _userContextUnitOfWork.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
             return response;
         }
 

@@ -7,5 +7,5 @@ namespace App.Application.DentistTeacherOperations.Command.UpdateGroupName;
 /// <summary>
 /// Represents a command to update name of a  group.
 /// </summary>
-[UserContextUnitOfWork]
+[OralEhrContextUnitOfWork]
 public record UpdateGroupNameCommand(Guid GroupId, string GroupName) : IRequest<OperationResult<Unit>>;
