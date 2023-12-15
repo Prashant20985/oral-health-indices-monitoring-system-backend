@@ -25,4 +25,7 @@ public class PatientExaminationCard
 
     public Guid? PatientExaminationTestModeId { get; set; }
     public virtual PatientExaminationTestMode PatientExaminationTestMode { get; set; }
+
+    public Guid PatientExaminationResultId { get; set; }
+    public virtual PatientExaminationResult PatientExaminationResult { get; set; }
 }

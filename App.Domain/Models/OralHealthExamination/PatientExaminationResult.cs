@@ -24,4 +24,6 @@ public class PatientExaminationResult
 
     public Guid APIBleedingId { get; set; }
     public virtual APIBleeding APIBleeding { get; set; }
+
+    public virtual PatientExaminationCard PatientExaminationCard { get; set; }
 }

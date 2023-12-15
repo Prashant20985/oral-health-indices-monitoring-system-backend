@@ -25,6 +25,9 @@ internal class PatientConfiguration : IEntityTypeConfiguration<Patient>
         builder.HasIndex(x => x.Email)
             .IsUnique();
 
+        builder.Property(x => x.CreatedAt)
+            .IsRequired();
+
         builder.Property(x => x.Gender)
             .HasConversion<string>()
             .IsRequired();

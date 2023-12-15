@@ -33,5 +33,10 @@ internal class PatientExaminationCardConfiguration
             .WithOne(e => e.PatientExaminationCard)
             .HasForeignKey<PatientExaminationCard>(e => e.RiskFactorAssesmentId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(e => e.PatientExaminationResult)
+            .WithOne(e => e.PatientExaminationCard)
+            .HasForeignKey<PatientExaminationCard>(e => e.PatientExaminationResultId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
