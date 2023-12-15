@@ -10,18 +10,306 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace App.Persistence.Migrations.UserSchema
 {
-    [DbContext(typeof(UserContext))]
+    [DbContext(typeof(OralEhrContext))]
     partial class UserContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("user")
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.APIBleedingModels.APIBleeding", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("APIResult")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("BleedingResult")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("Comments")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("APIBleeding", "oralHealthExamination");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.BEWEModels.Bewe", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("BeweResult")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bewe", "oralHealthExamination");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.DMFT_DMFSModels.DMFT_DMFS", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal>("DMFSResult")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DMFTResult")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DMFT_DMFS", "oralHealthExamination");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.Patient", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ArchiveComment")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("DoctorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("EthnicGroup")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("OtherData")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("OtherData2")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("OtherData3")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("OtherGroup")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid?>("PatientGroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("YearsInSchool")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("PatientGroupId");
+
+                    b.ToTable("Patient", "oralHealthExamination");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.PatientExaminationCard", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DoctorComment")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid?>("PatientExaminationRegularModeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PatientExaminationTestModeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PatientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RiskFactorAssesmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PatientExaminationRegularModeId")
+                        .IsUnique()
+                        .HasFilter("[PatientExaminationRegularModeId] IS NOT NULL");
+
+                    b.HasIndex("PatientExaminationTestModeId")
+                        .IsUnique()
+                        .HasFilter("[PatientExaminationTestModeId] IS NOT NULL");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("RiskFactorAssesmentId")
+                        .IsUnique();
+
+                    b.ToTable("PatientExaminationCard", "oralHealthExamination");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.PatientExaminationRegularMode", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateOfExamination")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DoctorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("PatientExaminationRegularMode", "oralHealthExamination");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.PatientExaminationResult", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("APIBleedingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BeweId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DMFT_DMFSId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("APIBleedingId")
+                        .IsUnique();
+
+                    b.HasIndex("BeweId")
+                        .IsUnique();
+
+                    b.HasIndex("DMFT_DMFSId")
+                        .IsUnique();
+
+                    b.ToTable("PatientExaminationResult", "oralHealthExamination");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.PatientExaminationTestMode", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateOfExamination")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DoctorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("StudentMarks")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("PatientExaminationTestMode", "oralHealthExamination");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.ResearchGroup", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DoctorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("ResearchGroup", "oralHealthExamination");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.RiskFactorAssessmentModels.RiskFactorAssessment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RiskFactorAssessment", "oralHealthExamination");
+                });
 
             modelBuilder.Entity("App.Domain.Models.Users.ApplicationRole", b =>
                 {
@@ -29,23 +317,15 @@ namespace App.Persistence.Migrations.UserSchema
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("ApplicationRole", "user");
                 });
@@ -67,8 +347,7 @@ namespace App.Persistence.Migrations.UserSchema
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -87,12 +366,10 @@ namespace App.Persistence.Migrations.UserSchema
                         .HasColumnType("nvarchar(225)");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -104,18 +381,9 @@ namespace App.Persistence.Migrations.UserSchema
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("ApplicationUser", "user");
                 });
@@ -237,6 +505,2397 @@ namespace App.Persistence.Migrations.UserSchema
                     b.ToTable("UserRequests", "user");
                 });
 
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.APIBleedingModels.APIBleeding", b =>
+                {
+                    b.OwnsOne("App.Domain.Models.OralHealthExamination.APIBleedingModels.APIBleedingAssessmentModel", "AssessmentModel", b1 =>
+                        {
+                            b1.Property<Guid>("APIBleedingId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("APIBleedingId");
+
+                            b1.ToTable("APIBleeding", "oralHealthExamination");
+
+                            b1.ToJson("AssessmentModel");
+
+                            b1.WithOwner()
+                                .HasForeignKey("APIBleedingId");
+
+                            b1.OwnsOne("App.Domain.Models.OralHealthExamination.APIBleedingModels.Quadrant", "Quadrant1", b2 =>
+                                {
+                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.Property<string>("Value1")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value2")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value3")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value4")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value5")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value6")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value7")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
+
+                                    b2.ToTable("APIBleeding", "oralHealthExamination");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("APIBleedingAssessmentModelAPIBleedingId");
+                                });
+
+                            b1.OwnsOne("App.Domain.Models.OralHealthExamination.APIBleedingModels.Quadrant", "Quadrant2", b2 =>
+                                {
+                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.Property<string>("Value1")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value2")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value3")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value4")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value5")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value6")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value7")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
+
+                                    b2.ToTable("APIBleeding", "oralHealthExamination");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("APIBleedingAssessmentModelAPIBleedingId");
+                                });
+
+                            b1.OwnsOne("App.Domain.Models.OralHealthExamination.APIBleedingModels.Quadrant", "Quadrant3", b2 =>
+                                {
+                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.Property<string>("Value1")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value2")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value3")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value4")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value5")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value6")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value7")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
+
+                                    b2.ToTable("APIBleeding", "oralHealthExamination");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("APIBleedingAssessmentModelAPIBleedingId");
+                                });
+
+                            b1.OwnsOne("App.Domain.Models.OralHealthExamination.APIBleedingModels.Quadrant", "Quadrant4", b2 =>
+                                {
+                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.Property<string>("Value1")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value2")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value3")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value4")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value5")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value6")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Value7")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
+
+                                    b2.ToTable("APIBleeding", "oralHealthExamination");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("APIBleedingAssessmentModelAPIBleedingId");
+                                });
+
+                            b1.Navigation("Quadrant1");
+
+                            b1.Navigation("Quadrant2");
+
+                            b1.Navigation("Quadrant3");
+
+                            b1.Navigation("Quadrant4");
+                        });
+
+                    b.Navigation("AssessmentModel");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.BEWEModels.Bewe", b =>
+                {
+                    b.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.BeweAssessmentModel", "AssessmentModel", b1 =>
+                        {
+                            b1.Property<Guid>("BeweId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("BeweId");
+
+                            b1.ToTable("Bewe", "oralHealthExamination");
+
+                            b1.ToJson("AssessmentModel");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BeweId");
+
+                            b1.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.Sectant1", "Sectant1", b2 =>
+                                {
+                                    b2.Property<Guid>("BeweAssessmentModelBeweId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.HasKey("BeweAssessmentModelBeweId");
+
+                                    b2.ToTable("Bewe", "oralHealthExamination");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("BeweAssessmentModelBeweId");
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_14", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant1BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant1BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant1BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_15", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant1BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant1BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant1BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_16", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant1BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant1BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant1BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_17", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant1BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant1BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant1BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.Navigation("Tooth_14");
+
+                                    b2.Navigation("Tooth_15");
+
+                                    b2.Navigation("Tooth_16");
+
+                                    b2.Navigation("Tooth_17");
+                                });
+
+                            b1.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.Sectant2", "Sectant2", b2 =>
+                                {
+                                    b2.Property<Guid>("BeweAssessmentModelBeweId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.HasKey("BeweAssessmentModelBeweId");
+
+                                    b2.ToTable("Bewe", "oralHealthExamination");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("BeweAssessmentModelBeweId");
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_11", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant2BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant2BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant2BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_12", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant2BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant2BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant2BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_13", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant2BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant2BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant2BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_21", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant2BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant2BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant2BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_22", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant2BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant2BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant2BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_23", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant2BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant2BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant2BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.Navigation("Tooth_11");
+
+                                    b2.Navigation("Tooth_12");
+
+                                    b2.Navigation("Tooth_13");
+
+                                    b2.Navigation("Tooth_21");
+
+                                    b2.Navigation("Tooth_22");
+
+                                    b2.Navigation("Tooth_23");
+                                });
+
+                            b1.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.Sectant3", "Sectant3", b2 =>
+                                {
+                                    b2.Property<Guid>("BeweAssessmentModelBeweId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.HasKey("BeweAssessmentModelBeweId");
+
+                                    b2.ToTable("Bewe", "oralHealthExamination");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("BeweAssessmentModelBeweId");
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_24", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant3BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant3BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant3BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_25", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant3BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant3BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant3BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_26", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant3BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant3BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant3BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_27", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant3BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant3BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant3BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.Navigation("Tooth_24");
+
+                                    b2.Navigation("Tooth_25");
+
+                                    b2.Navigation("Tooth_26");
+
+                                    b2.Navigation("Tooth_27");
+                                });
+
+                            b1.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.Sectant4", "Sectant4", b2 =>
+                                {
+                                    b2.Property<Guid>("BeweAssessmentModelBeweId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.HasKey("BeweAssessmentModelBeweId");
+
+                                    b2.ToTable("Bewe", "oralHealthExamination");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("BeweAssessmentModelBeweId");
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_34", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant4BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant4BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant4BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_35", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant4BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant4BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant4BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_36", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant4BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant4BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant4BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_37", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant4BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant4BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant4BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.Navigation("Tooth_34");
+
+                                    b2.Navigation("Tooth_35");
+
+                                    b2.Navigation("Tooth_36");
+
+                                    b2.Navigation("Tooth_37");
+                                });
+
+                            b1.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.Sectant5", "Sectant5", b2 =>
+                                {
+                                    b2.Property<Guid>("BeweAssessmentModelBeweId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.HasKey("BeweAssessmentModelBeweId");
+
+                                    b2.ToTable("Bewe", "oralHealthExamination");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("BeweAssessmentModelBeweId");
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_31", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant5BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant5BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant5BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_32", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant5BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant5BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant5BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_33", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant5BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant5BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant5BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_41", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant5BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant5BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant5BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_42", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant5BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant5BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant5BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_43", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant5BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant5BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant5BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.Navigation("Tooth_31");
+
+                                    b2.Navigation("Tooth_32");
+
+                                    b2.Navigation("Tooth_33");
+
+                                    b2.Navigation("Tooth_41");
+
+                                    b2.Navigation("Tooth_42");
+
+                                    b2.Navigation("Tooth_43");
+                                });
+
+                            b1.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.Sectant6", "Sectant6", b2 =>
+                                {
+                                    b2.Property<Guid>("BeweAssessmentModelBeweId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.HasKey("BeweAssessmentModelBeweId");
+
+                                    b2.ToTable("Bewe", "oralHealthExamination");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("BeweAssessmentModelBeweId");
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_44", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant6BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant6BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant6BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_45", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant6BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant6BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant6BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_46", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant6BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant6BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant6BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_47", b3 =>
+                                        {
+                                            b3.Property<Guid>("Sectant6BeweAssessmentModelBeweId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("Sectant6BeweAssessmentModelBeweId");
+
+                                            b3.ToTable("Bewe", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("Sectant6BeweAssessmentModelBeweId");
+                                        });
+
+                                    b2.Navigation("Tooth_44");
+
+                                    b2.Navigation("Tooth_45");
+
+                                    b2.Navigation("Tooth_46");
+
+                                    b2.Navigation("Tooth_47");
+                                });
+
+                            b1.Navigation("Sectant1");
+
+                            b1.Navigation("Sectant2");
+
+                            b1.Navigation("Sectant3");
+
+                            b1.Navigation("Sectant4");
+
+                            b1.Navigation("Sectant5");
+
+                            b1.Navigation("Sectant6");
+                        });
+
+                    b.Navigation("AssessmentModel");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.DMFT_DMFSModels.DMFT_DMFS", b =>
+                {
+                    b.OwnsOne("App.Domain.Models.OralHealthExamination.DMFT_DMFSModels.DMFT_DMFSAssessmentModel", "AssessmentModel", b1 =>
+                        {
+                            b1.Property<Guid>("DMFT_DMFSId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("DMFT_DMFSId");
+
+                            b1.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                            b1.ToJson("AssessmentModel");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DMFT_DMFSId");
+
+                            b1.OwnsOne("App.Domain.Models.OralHealthExamination.DMFT_DMFSModels.LowerMouth", "LowerMouth", b2 =>
+                                {
+                                    b2.Property<Guid>("DMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.Property<string>("Tooth_71")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_72")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_73")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_74")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_75")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_81")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_82")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_83")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_84")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_85")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.HasKey("DMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                    b2.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("DMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_31", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_32", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_33", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_34", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_35", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_36", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_37", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_38", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_41", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_42", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_43", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_44", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_45", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_46", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_47", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_48", b3 =>
+                                        {
+                                            b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.Navigation("Tooth_31");
+
+                                    b2.Navigation("Tooth_32");
+
+                                    b2.Navigation("Tooth_33");
+
+                                    b2.Navigation("Tooth_34");
+
+                                    b2.Navigation("Tooth_35");
+
+                                    b2.Navigation("Tooth_36");
+
+                                    b2.Navigation("Tooth_37");
+
+                                    b2.Navigation("Tooth_38");
+
+                                    b2.Navigation("Tooth_41");
+
+                                    b2.Navigation("Tooth_42");
+
+                                    b2.Navigation("Tooth_43");
+
+                                    b2.Navigation("Tooth_44");
+
+                                    b2.Navigation("Tooth_45");
+
+                                    b2.Navigation("Tooth_46");
+
+                                    b2.Navigation("Tooth_47");
+
+                                    b2.Navigation("Tooth_48");
+                                });
+
+                            b1.OwnsOne("App.Domain.Models.OralHealthExamination.DMFT_DMFSModels.UpperMouth", "UpperMouth", b2 =>
+                                {
+                                    b2.Property<Guid>("DMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.Property<string>("Tooth_51")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_52")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_53")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_54")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_55")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_61")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_62")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_63")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_64")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Tooth_65")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.HasKey("DMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                    b2.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("DMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_11", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_12", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_13", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_14", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_15", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_16", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_17", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_18", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_21", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_22", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_23", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_24", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_25", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_26", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_27", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_28", b3 =>
+                                        {
+                                            b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("Surface1")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface2")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface3")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface4")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface5")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("Surface6")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+
+                                            b3.ToTable("DMFT_DMFS", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
+                                        });
+
+                                    b2.Navigation("Tooth_11");
+
+                                    b2.Navigation("Tooth_12");
+
+                                    b2.Navigation("Tooth_13");
+
+                                    b2.Navigation("Tooth_14");
+
+                                    b2.Navigation("Tooth_15");
+
+                                    b2.Navigation("Tooth_16");
+
+                                    b2.Navigation("Tooth_17");
+
+                                    b2.Navigation("Tooth_18");
+
+                                    b2.Navigation("Tooth_21");
+
+                                    b2.Navigation("Tooth_22");
+
+                                    b2.Navigation("Tooth_23");
+
+                                    b2.Navigation("Tooth_24");
+
+                                    b2.Navigation("Tooth_25");
+
+                                    b2.Navigation("Tooth_26");
+
+                                    b2.Navigation("Tooth_27");
+
+                                    b2.Navigation("Tooth_28");
+                                });
+
+                            b1.Navigation("LowerMouth");
+
+                            b1.Navigation("UpperMouth");
+                        });
+
+                    b.Navigation("AssessmentModel");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.Patient", b =>
+                {
+                    b.HasOne("App.Domain.Models.Users.ApplicationUser", "Doctor")
+                        .WithMany("Patients")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("App.Domain.Models.OralHealthExamination.ResearchGroup", "PatientGroup")
+                        .WithMany("Patients")
+                        .HasForeignKey("PatientGroupId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("PatientGroup");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.PatientExaminationCard", b =>
+                {
+                    b.HasOne("App.Domain.Models.OralHealthExamination.PatientExaminationRegularMode", "PatientExaminationRegularMode")
+                        .WithOne("PatientExaminationCard")
+                        .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationCard", "PatientExaminationRegularModeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("App.Domain.Models.OralHealthExamination.PatientExaminationTestMode", "PatientExaminationTestMode")
+                        .WithOne("PatientExaminationCard")
+                        .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationCard", "PatientExaminationTestModeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("App.Domain.Models.OralHealthExamination.Patient", "Patient")
+                        .WithMany("PatientExaminationCards")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("App.Domain.Models.OralHealthExamination.RiskFactorAssessmentModels.RiskFactorAssessment", "RiskFactorAssessment")
+                        .WithOne("PatientExaminationCard")
+                        .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationCard", "RiskFactorAssesmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("PatientExaminationRegularMode");
+
+                    b.Navigation("PatientExaminationTestMode");
+
+                    b.Navigation("RiskFactorAssessment");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.PatientExaminationRegularMode", b =>
+                {
+                    b.HasOne("App.Domain.Models.Users.ApplicationUser", "Doctor")
+                        .WithMany("PatientExaminationRegularModeDoctorNavigation")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.PatientExaminationResult", b =>
+                {
+                    b.HasOne("App.Domain.Models.OralHealthExamination.APIBleedingModels.APIBleeding", "APIBleeding")
+                        .WithOne("PatientExaminationResult")
+                        .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationResult", "APIBleedingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("App.Domain.Models.OralHealthExamination.BEWEModels.Bewe", "Bewe")
+                        .WithOne("PatientExaminationResult")
+                        .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationResult", "BeweId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("App.Domain.Models.OralHealthExamination.DMFT_DMFSModels.DMFT_DMFS", "DMFT_DMFS")
+                        .WithOne("PatientExaminationResult")
+                        .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationResult", "DMFT_DMFSId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("APIBleeding");
+
+                    b.Navigation("Bewe");
+
+                    b.Navigation("DMFT_DMFS");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.PatientExaminationTestMode", b =>
+                {
+                    b.HasOne("App.Domain.Models.Users.ApplicationUser", "Doctor")
+                        .WithMany("PatientExaminationTestModeDoctorNavigation")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("App.Domain.Models.Users.ApplicationUser", "Student")
+                        .WithMany("PatientExaminationTestModeStudentNavigation")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.ResearchGroup", b =>
+                {
+                    b.HasOne("App.Domain.Models.Users.ApplicationUser", "Doctor")
+                        .WithMany("PatientGroups")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.RiskFactorAssessmentModels.RiskFactorAssessment", b =>
+                {
+                    b.OwnsOne("App.Domain.Models.OralHealthExamination.RiskFactorAssessmentModels.RiskFactorAssessmentModel", "RiskFactorAssessmentModel", b1 =>
+                        {
+                            b1.Property<Guid>("RiskFactorAssessmentId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("RiskFactorAssessmentId");
+
+                            b1.ToTable("RiskFactorAssessment", "oralHealthExamination");
+
+                            b1.ToJson("RiskFactorAssessmentModel");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RiskFactorAssessmentId");
+
+                            b1.OwnsMany("App.Domain.Models.OralHealthExamination.RiskFactorAssessmentModels.RiskFactorAssessmentQuestionModel", "Questions", b2 =>
+                                {
+                                    b2.Property<Guid>("RiskFactorAssessmentModelRiskFactorAssessmentId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.Property<int>("Id")
+                                        .ValueGeneratedOnAdd()
+                                        .HasColumnType("int");
+
+                                    b2.Property<string>("QuestionText")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.HasKey("RiskFactorAssessmentModelRiskFactorAssessmentId", "Id");
+
+                                    b2.ToTable("RiskFactorAssessment", "oralHealthExamination");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("RiskFactorAssessmentModelRiskFactorAssessmentId");
+
+                                    b2.OwnsOne("App.Domain.Models.OralHealthExamination.RiskFactorAssessmentModels.RiskFactorAssessmentAnswerModel", "Answer", b3 =>
+                                        {
+                                            b3.Property<Guid>("RiskFactorAssessmentQuestionModelRiskFactorAssessmentModelRiskFactorAssessmentId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<int>("RiskFactorAssessmentQuestionModelId")
+                                                .HasColumnType("int");
+
+                                            b3.Property<string>("HighRisk")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("LowRisk")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("ModerateRisk")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("RiskFactorAssessmentQuestionModelRiskFactorAssessmentModelRiskFactorAssessmentId", "RiskFactorAssessmentQuestionModelId");
+
+                                            b3.ToTable("RiskFactorAssessment", "oralHealthExamination");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("RiskFactorAssessmentQuestionModelRiskFactorAssessmentModelRiskFactorAssessmentId", "RiskFactorAssessmentQuestionModelId");
+                                        });
+
+                                    b2.Navigation("Answer");
+                                });
+
+                            b1.Navigation("Questions");
+                        });
+
+                    b.Navigation("RiskFactorAssessmentModel");
+                });
+
             modelBuilder.Entity("App.Domain.Models.Users.ApplicationUserRole", b =>
                 {
                     b.HasOne("App.Domain.Models.Users.ApplicationRole", "ApplicationRole")
@@ -305,6 +2964,46 @@ namespace App.Persistence.Migrations.UserSchema
                     b.Navigation("ApplicationUser");
                 });
 
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.APIBleedingModels.APIBleeding", b =>
+                {
+                    b.Navigation("PatientExaminationResult");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.BEWEModels.Bewe", b =>
+                {
+                    b.Navigation("PatientExaminationResult");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.DMFT_DMFSModels.DMFT_DMFS", b =>
+                {
+                    b.Navigation("PatientExaminationResult");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.Patient", b =>
+                {
+                    b.Navigation("PatientExaminationCards");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.PatientExaminationRegularMode", b =>
+                {
+                    b.Navigation("PatientExaminationCard");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.PatientExaminationTestMode", b =>
+                {
+                    b.Navigation("PatientExaminationCard");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.ResearchGroup", b =>
+                {
+                    b.Navigation("Patients");
+                });
+
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.RiskFactorAssessmentModels.RiskFactorAssessment", b =>
+                {
+                    b.Navigation("PatientExaminationCard");
+                });
+
             modelBuilder.Entity("App.Domain.Models.Users.ApplicationRole", b =>
                 {
                     b.Navigation("ApplicationUserRoles");
@@ -315,6 +3014,16 @@ namespace App.Persistence.Migrations.UserSchema
                     b.Navigation("ApplicationUserRoles");
 
                     b.Navigation("Groups");
+
+                    b.Navigation("PatientExaminationRegularModeDoctorNavigation");
+
+                    b.Navigation("PatientExaminationTestModeDoctorNavigation");
+
+                    b.Navigation("PatientExaminationTestModeStudentNavigation");
+
+                    b.Navigation("PatientGroups");
+
+                    b.Navigation("Patients");
 
                     b.Navigation("RefreshTokens");
 

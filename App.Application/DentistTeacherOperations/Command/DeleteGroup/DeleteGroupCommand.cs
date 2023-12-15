@@ -8,5 +8,5 @@ namespace App.Application.DentistTeacherOperations.Command.DeleteGroup;
 /// Represents command to delete a group
 /// </summary>
 /// <param name="GroupId"></param>
-[UserContextUnitOfWork]
+[OralEhrContextUnitOfWork]
 public record DeleteGroupCommand(Guid GroupId) : IRequest<OperationResult<Unit>>;

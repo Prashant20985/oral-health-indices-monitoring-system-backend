@@ -9,7 +9,7 @@ namespace App.Application.AdminOperations.Command.DeleteApplicationUser;
 /// This command is marked with the <see cref="UserContextUnitOfWork"/> attribute,
 /// indicating that it should be handled within the user context unit of work.
 /// </summary>
-[UserContextUnitOfWork]
+[OralEhrContextUnitOfWork]
 public record DeleteApplicationUserCommand(
     string UserName,
     string DeleteComment) : IRequest<OperationResult<Unit>>;

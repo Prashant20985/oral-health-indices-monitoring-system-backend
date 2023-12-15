@@ -10,12 +10,12 @@ namespace App.Persistence.Test.Repository;
 
 public class GroupRepositoryTests
 {
-    private readonly Mock<UserContext> _mockUserContext;
+    private readonly Mock<OralEhrContext> _mockOralEhrContext;
     private readonly GroupRepository _groupRepository;
 
     public GroupRepositoryTests()
     {
-        _mockUserContext = new Mock<UserContext>();
+        _mockOralEhrContext = new Mock<OralEhrContext>();
         var mapperConfig = new MapperConfiguration(cfg =>
         {
             cfg.CreateMap<ApplicationUser, StudentDto>()
@@ -23,7 +23,7 @@ public class GroupRepositoryTests
                 .Select(x => x.Group.GroupName).ToList()));
         });
         var mapper = mapperConfig.CreateMapper();
-        _groupRepository = new GroupRepository(_mockUserContext.Object, mapper);
+        _groupRepository = new GroupRepository(_mockOralEhrContext.Object, mapper);
     }
 
     [Fact]
@@ -35,7 +35,7 @@ public class GroupRepositoryTests
         var groups = new List<Group> { group1, group2 }
             .AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.Groups).Returns(groups.Object);
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(groups.Object);
 
         // Act
         var result = await _groupRepository.GetGroupById(group1.Id);
@@ -56,7 +56,7 @@ public class GroupRepositoryTests
         var groups = new List<Group> { group1, group2 }
             .AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.Groups).Returns(groups.Object);
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(groups.Object);
 
         // Act
         var result = await _groupRepository.GetGroupById(Guid.NewGuid());
@@ -74,7 +74,7 @@ public class GroupRepositoryTests
         var groups = new List<Group> { group1, group2 }
             .AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.Groups).Returns(groups.Object);
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(groups.Object);
 
         // Act
         var result = await _groupRepository.GetGroupByName(group1.GroupName);
@@ -95,7 +95,7 @@ public class GroupRepositoryTests
         var groups = new List<Group> { group1, group2 }
             .AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.Groups).Returns(groups.Object);
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(groups.Object);
 
         // Act
         var result = await _groupRepository.GetGroupByName("Group 3");
@@ -112,13 +112,13 @@ public class GroupRepositoryTests
         var groups = new List<Group> { }
             .AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.Groups).Returns(groups.Object);
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(groups.Object);
 
         // Act
         await _groupRepository.CreateGroup(group);
 
         // Assert
-        _mockUserContext.Verify(x => x.Groups.AddAsync(group, CancellationToken.None), Times.Once);
+        _mockOralEhrContext.Verify(x => x.Groups.AddAsync(group, CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -129,13 +129,13 @@ public class GroupRepositoryTests
         var groups = new List<Group> { group }
             .AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.Groups).Returns(groups.Object);
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(groups.Object);
 
         // Act
         _groupRepository.DeleteGroup(group);
 
         // Assert
-        _mockUserContext.Verify(x => x.Groups.Remove(group), Times.Once);
+        _mockOralEhrContext.Verify(x => x.Groups.Remove(group), Times.Once);
     }
 
     [Fact]
@@ -148,7 +148,7 @@ public class GroupRepositoryTests
         var studentGroups = new List<StudentGroup> { studentGroup1, studentGroup2 }
         .AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
+        _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
 
         // Act
         var result = await _groupRepository.GetStudentGroup(studentGroup1.StudentId, studentGroup1.GroupId);
@@ -169,7 +169,7 @@ public class GroupRepositoryTests
         var studentGroups = new List<StudentGroup> { studentGroup1, studentGroup2 }
             .AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
+        _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
 
         // Act
         var result = await _groupRepository.GetStudentGroup("studentId", Guid.NewGuid());
@@ -186,13 +186,13 @@ public class GroupRepositoryTests
         var studentGroups = new List<StudentGroup> { }
             .AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
+        _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
 
         // Act
         await _groupRepository.AddStudentToGroup(studentGroup);
 
         // Assert
-        _mockUserContext.Verify(x => x.StudentGroups.AddAsync(studentGroup, CancellationToken.None), Times.Once);
+        _mockOralEhrContext.Verify(x => x.StudentGroups.AddAsync(studentGroup, CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -204,13 +204,13 @@ public class GroupRepositoryTests
         var studentGroups = new List<StudentGroup> { studentGroup }
             .AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
+        _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
 
         // Act
         _groupRepository.RemoveStudentFromGroup(studentGroup);
 
         // Assert
-        _mockUserContext.Verify(x => x.StudentGroups.Remove(studentGroup), Times.Once);
+        _mockOralEhrContext.Verify(x => x.StudentGroups.Remove(studentGroup), Times.Once);
     }
 
     [Fact]
@@ -237,8 +237,8 @@ public class GroupRepositoryTests
         var mockUsers = users.AsQueryable().BuildMockDbSet();
         var mockApplicationUserRoles = applicationUserRoles.AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.Users).Returns(mockUsers.Object);
-        _mockUserContext.Setup(x => x.ApplicationUserRoles).Returns(mockApplicationUserRoles.Object);
+        _mockOralEhrContext.Setup(x => x.Users).Returns(mockUsers.Object);
+        _mockOralEhrContext.Setup(x => x.ApplicationUserRoles).Returns(mockApplicationUserRoles.Object);
 
         // Act
         var result = await _groupRepository.GetAllStudentsNotInGroup(groupId);
@@ -262,7 +262,7 @@ public class GroupRepositoryTests
         var groups = new List<Group> { group1, group2 }
             .AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.Groups).Returns(groups.Object);
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(groups.Object);
 
         // Act
         var result = await _groupRepository.GetAllGroupsCreatedByTeacher(teacherId);
@@ -299,8 +299,8 @@ public class GroupRepositoryTests
         var mockStudentGroups = studentGroups.AsQueryable().BuildMockDbSet();
         var mockGroups = groups.AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.StudentGroups).Returns(mockStudentGroups.Object);
-        _mockUserContext.Setup(x => x.Groups).Returns(mockGroups.Object);
+        _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(mockStudentGroups.Object);
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(mockGroups.Object);
 
         // Act
         var result = await _groupRepository.GetAllGroupsWithStudentsList(teacherId);

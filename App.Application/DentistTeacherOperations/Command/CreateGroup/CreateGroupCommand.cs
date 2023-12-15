@@ -7,5 +7,5 @@ namespace App.Application.DentistTeacherOperations.Command.CreateGroup;
 /// <summary>
 /// Represents a command to create a new group.
 /// </summary>
-[UserContextUnitOfWork]
+[OralEhrContextUnitOfWork]
 public record CreateGroupCommand(string GroupName, string TeacherId) : IRequest<OperationResult<Unit>>;

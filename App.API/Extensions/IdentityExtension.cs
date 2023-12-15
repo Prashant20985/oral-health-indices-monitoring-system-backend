@@ -40,7 +40,7 @@ public static class IdentityExtension
             opt.Password.RequireNonAlphanumeric = true;
             opt.User.RequireUniqueEmail = true;
         })
-            .AddEntityFrameworkStores<UserContext>()
+            .AddEntityFrameworkStores<OralEhrContext>()
             .AddDefaultTokenProviders();
 
         // Add a transient dependency for UserManager.

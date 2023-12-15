@@ -11,16 +11,16 @@ namespace App.Persistence.Test.Repository;
 
 public class UserRequestRepositoryTests
 {
-    private readonly Mock<UserContext> _mockUserContext;
+    private readonly Mock<OralEhrContext> _mockOralEhrContext;
     private readonly UserRequestRepository _userRequestRepository;
 
     public UserRequestRepositoryTests()
     {
-        _mockUserContext = new Mock<UserContext>();
+        _mockOralEhrContext = new Mock<OralEhrContext>();
         var mapper = new MapperConfiguration(cfg =>
             cfg.CreateMap<UserRequest, UserRequestDto>()
                 .ForMember(x => x.UserName, o => o.MapFrom(s => s.ApplicationUser.UserName))).CreateMapper();
-        _userRequestRepository = new UserRequestRepository(mapper, _mockUserContext.Object);
+        _userRequestRepository = new UserRequestRepository(mapper, _mockOralEhrContext.Object);
     }
 
     [Fact]
@@ -30,13 +30,13 @@ public class UserRequestRepositoryTests
         var request = new UserRequest("CreatedById", "Request Title", "Request Description");
         var requests = new List<UserRequest>().AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.UserRequests).Returns(requests.Object);
+        _mockOralEhrContext.Setup(x => x.UserRequests).Returns(requests.Object);
 
         // Act
         await _userRequestRepository.CreateRequest(request);
 
         // Assert
-        _mockUserContext.Verify(x => x.UserRequests.AddAsync(request, CancellationToken.None), Times.Once);
+        _mockOralEhrContext.Verify(x => x.UserRequests.AddAsync(request, CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -46,13 +46,13 @@ public class UserRequestRepositoryTests
         var request = new UserRequest("CreatedById", "Request Title", "Request Description");
         var requests = new List<UserRequest> { request }.AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.UserRequests).Returns(requests.Object);
+        _mockOralEhrContext.Setup(x => x.UserRequests).Returns(requests.Object);
 
         // Act
         _userRequestRepository.DeleteRequest(request);
 
         // Assert
-        _mockUserContext.Verify(x => x.UserRequests.Remove(request), Times.Once);
+        _mockOralEhrContext.Verify(x => x.UserRequests.Remove(request), Times.Once);
     }
 
     [Fact]
@@ -67,7 +67,7 @@ public class UserRequestRepositoryTests
 
         var mockDbSet = requests.BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.UserRequests).Returns(mockDbSet.Object);
+        _mockOralEhrContext.Setup(x => x.UserRequests).Returns(mockDbSet.Object);
 
         // Act
         var result = _userRequestRepository.GetAllRequestsByStatus(RequestStatus.Submitted);
@@ -92,7 +92,7 @@ public class UserRequestRepositoryTests
 
         var mockDbSet = requests.BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.UserRequests).Returns(mockDbSet.Object);
+        _mockOralEhrContext.Setup(x => x.UserRequests).Returns(mockDbSet.Object);
 
         // Act
         var result = _userRequestRepository.GetAllRequestsByStatus(RequestStatus.In_Progress);
@@ -116,7 +116,7 @@ public class UserRequestRepositoryTests
 
         var mockDbSet = requests.BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.UserRequests).Returns(mockDbSet.Object);
+        _mockOralEhrContext.Setup(x => x.UserRequests).Returns(mockDbSet.Object);
 
         // Act
         var result = _userRequestRepository.GetAllRequestsByStatus(RequestStatus.Completed);
@@ -140,7 +140,7 @@ public class UserRequestRepositoryTests
 
         var mockuserRequestDbSet = requests.BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.UserRequests).Returns(mockuserRequestDbSet.Object);
+        _mockOralEhrContext.Setup(x => x.UserRequests).Returns(mockuserRequestDbSet.Object);
 
         // Act
         var result = _userRequestRepository.GetRequestsByUserIdAndStatus(applicationUser.Id, RequestStatus.Submitted);
@@ -167,7 +167,7 @@ public class UserRequestRepositoryTests
 
         var mockuserRequestDbSet = requests.BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.UserRequests).Returns(mockuserRequestDbSet.Object);
+        _mockOralEhrContext.Setup(x => x.UserRequests).Returns(mockuserRequestDbSet.Object);
 
         // Act
         var result = _userRequestRepository.GetRequestsByUserIdAndStatus(applicationUser.Id, RequestStatus.In_Progress);
@@ -192,7 +192,7 @@ public class UserRequestRepositoryTests
 
         var mockuserRequestDbSet = requests.BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.UserRequests).Returns(mockuserRequestDbSet.Object);
+        _mockOralEhrContext.Setup(x => x.UserRequests).Returns(mockuserRequestDbSet.Object);
 
         // Act
         var result = _userRequestRepository.GetRequestsByUserIdAndStatus(applicationUser.Id, RequestStatus.Completed);
@@ -213,7 +213,7 @@ public class UserRequestRepositoryTests
 
         var requests = new List<UserRequest> { request }.AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.UserRequests).Returns(requests.Object);
+        _mockOralEhrContext.Setup(x => x.UserRequests).Returns(requests.Object);
 
         // Act
         var result = await _userRequestRepository.GetUserRequestById(request.Id);
@@ -234,7 +234,7 @@ public class UserRequestRepositoryTests
         // Arrange
         var requests = new List<UserRequest>().AsQueryable().BuildMockDbSet();
 
-        _mockUserContext.Setup(x => x.UserRequests).Returns(requests.Object);
+        _mockOralEhrContext.Setup(x => x.UserRequests).Returns(requests.Object);
 
         // Act
         var result = await _userRequestRepository.GetUserRequestById(Guid.NewGuid());

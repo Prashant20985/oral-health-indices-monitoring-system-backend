@@ -10,6 +10,6 @@ namespace App.Application.AdminOperations.Command.UpdateApplicationUser;
 /// This command is marked with the <see cref="UserContextUnitOfWork"/> attribute,
 /// indicating that it should be handled within the user context unit of work.
 /// </summary>
-[UserContextUnitOfWork]
+[OralEhrContextUnitOfWork]
 public record UpdateApplicationUserCommand(string UserName,
     UpdateApplicationUserDto UpdateApplicationUser) : IRequest<OperationResult<Unit>>;

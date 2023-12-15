@@ -13,7 +13,7 @@ public class SeedUserSchema
     /// <param name="userContext">An instance of the UserContext class for accessing the user database context.</param>
     /// <param name="userManager">An instance of the UserManager<AppUser> class for managing user-related operations.</param>
     /// <param name="roleManager">An instance of the RoleManager<IdentityRole> class for managing role-related operations.</param>
-    public static async Task SeedData(UserContext userContext,
+    public static async Task SeedData(OralEhrContext userContext,
         UserManager<ApplicationUser> userManager,
         RoleManager<ApplicationRole> roleManager)
     {

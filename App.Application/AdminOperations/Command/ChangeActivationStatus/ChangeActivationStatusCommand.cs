@@ -9,5 +9,5 @@ namespace App.Application.AdminOperations.Command.ChangeActivationStatus;
 /// This command is marked with the <see cref="UserContextUnitOfWork"/> attribute,
 /// indicating that it should be handled within the user context unit of work.
 /// </summary>
-[UserContextUnitOfWork]
+[OralEhrContextUnitOfWork]
 public record ChangeActivationStatusCommand(string UserName) : IRequest<OperationResult<Unit>>;

@@ -14,18 +14,18 @@ namespace App.Persistence.Repository;
 /// </summary>
 public class UserRequestRepository : IUserRequestRepository
 {
-    private readonly UserContext _userContext;
+    private readonly OralEhrContext _oralEhrContext;
     private readonly IMapper _mapper;
 
     /// <summary>
     /// Initializes a new instance of the UserRequestRepository class.
     /// </summary>
     /// <param name="mapper">The AutoMapper instance used for mapping between entities and DTOs.</param>
-    /// <param name="userContext">The database context for user-related entities.</param>
-    public UserRequestRepository(IMapper mapper, UserContext userContext)
+    /// <param name="oralEhrContext">The database context for user-related entities.</param>
+    public UserRequestRepository(IMapper mapper, OralEhrContext oralEhrContext)
     {
         _mapper = mapper;
-        _userContext = userContext;
+        _oralEhrContext = oralEhrContext;
     }
 
     /// <summary>
@@ -33,20 +33,20 @@ public class UserRequestRepository : IUserRequestRepository
     /// </summary>
     /// <param name="userRequest">The user request to create.</param>
     public async Task CreateRequest(UserRequest userRequest) =>
-        await _userContext.UserRequests.AddAsync(userRequest);
+        await _oralEhrContext.UserRequests.AddAsync(userRequest);
 
     /// <summary>
     /// Deletes a user request.
     /// </summary>
     /// <param name="userRequest">The user request to delete.</param>
     public void DeleteRequest(UserRequest userRequest) =>
-        _userContext.UserRequests.Remove(userRequest);
+        _oralEhrContext.UserRequests.Remove(userRequest);
 
     /// <summary>
     /// Retrieves a list of all user requests based on status.
     /// </summary>
     public IQueryable<UserRequestDto> GetAllRequestsByStatus(RequestStatus requestStatus) =>
-        _userContext.UserRequests
+        _oralEhrContext.UserRequests
             .Where(x => x.RequestStatus == requestStatus)
             .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)
             .AsQueryable();
@@ -55,7 +55,7 @@ public class UserRequestRepository : IUserRequestRepository
     /// Retrieves a list of user requests associated with a specific user.
     /// </summary>
     public IQueryable<UserRequestDto> GetRequestsByUserIdAndStatus(string userId,
-        RequestStatus requestStatus) => _userContext.UserRequests
+        RequestStatus requestStatus) => _oralEhrContext.UserRequests
         .Where(x => x.ApplicationUser.Id.Equals(userId) &&
                 x.RequestStatus == requestStatus)
         .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)
@@ -66,6 +66,6 @@ public class UserRequestRepository : IUserRequestRepository
     /// Retrieves a user request by its unique identifier.
     /// </summary>
     /// <param name="requestId">The unique identifier of the user request to retrieve.</param>
-    public async Task<UserRequest> GetUserRequestById(Guid requestId) => await _userContext.UserRequests
+    public async Task<UserRequest> GetUserRequestById(Guid requestId) => await _oralEhrContext.UserRequests
         .FirstOrDefaultAsync(x => x.Id.Equals(requestId));
 }

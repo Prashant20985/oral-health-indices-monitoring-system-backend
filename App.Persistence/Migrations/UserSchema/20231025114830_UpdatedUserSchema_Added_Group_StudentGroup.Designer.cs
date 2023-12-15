@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace App.Persistence.Migrations.UserSchema
 {
-    [DbContext(typeof(UserContext))]
+    [DbContext(typeof(OralEhrContext))]
     [Migration("20231025114830_UpdatedUserSchema_Added_Group_StudentGroup")]
     partial class UpdatedUserSchema_Added_Group_StudentGroup
     {

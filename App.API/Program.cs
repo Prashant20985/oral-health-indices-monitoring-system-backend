@@ -53,7 +53,7 @@ var services = scope.ServiceProvider;
 
 try
 {
-    var userContext = services.GetRequiredService<UserContext>();
+    var userContext = services.GetRequiredService<OralEhrContext>();
     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
     await userContext.Database.MigrateAsync();

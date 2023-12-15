@@ -6,6 +6,6 @@ namespace App.Application.UserRequestOperations.Command.CreateRequest;
 /// <summary>
 /// Represents a command to create a new user request.
 /// </summary>
-[UserContextUnitOfWork]
+[OralEhrContextUnitOfWork]
 public record CreateRequestCommand(string RequestTitle, string Description, string CreatedBy)
     : IRequest<OperationResult<Unit>>;

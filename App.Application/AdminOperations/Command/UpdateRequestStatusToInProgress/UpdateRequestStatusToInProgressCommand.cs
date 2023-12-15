@@ -6,6 +6,6 @@ namespace App.Application.AdminOperations.Command.UpdateRequestStatusToInProgres
 /// <summary>
 /// Command to update the status of a user request to "In Progress" for administrators.
 /// </summary>
-[UserContextUnitOfWork]
+[OralEhrContextUnitOfWork]
 public record UpdateRequestStatusToInProgressCommand(Guid UserRequestId)
     : IRequest<OperationResult<Unit>>;
