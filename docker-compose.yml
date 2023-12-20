@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  oralEhrDB:
+    container_name: OralEhrSystemDb
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "Password123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1450:1433"
+  app.api:
+    container_name: OralEhrSystemAppApi
+    image: ${DOCKER_REGISTRY-}appapi
+    build:
+      context: .
+      dockerfile: App.API/Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - oralEhrDB
