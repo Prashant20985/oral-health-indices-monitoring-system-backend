@@ -58,9 +58,9 @@ internal class PatientConfiguration : IEntityTypeConfiguration<Patient>
         builder.Property(x => x.ArchiveComment)
             .HasMaxLength(500);
 
-        builder.HasOne(x => x.PatientGroup)
+        builder.HasOne(x => x.ResearchGroup)
             .WithMany(x => x.Patients)
-            .HasForeignKey(x => x.PatientGroupId)
+            .HasForeignKey(x => x.ResearchGroupId)
             .OnDelete(DeleteBehavior.SetNull);
 
         builder.HasOne(x => x.Doctor)
