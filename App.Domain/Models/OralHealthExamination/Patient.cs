@@ -44,14 +44,18 @@ public class Patient
     public string DoctorId { get; set; }
     public virtual ApplicationUser Doctor { get; set; }
 
-    public Guid? PatientGroupId { get; set; }
-    public virtual ResearchGroup PatientGroup { get; set; } = null;
+    public Guid? ResearchGroupId { get; set; }
+    public virtual ResearchGroup ResearchGroup { get; set; } = null;
 
     public void Archive(string comment)
     {
         IsArchived = true;
         ArchiveComment = comment;
     }
+
+    public void AddResearchGroup(Guid researchGroupId) => ResearchGroupId = researchGroupId;
+
+    public void RemoveResearchGroup() => ResearchGroupId = null;
 
     public ICollection<PatientExaminationCard> PatientExaminationCards { get; set; } = new List<PatientExaminationCard>();
 }

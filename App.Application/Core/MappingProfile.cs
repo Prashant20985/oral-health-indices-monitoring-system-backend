@@ -1,5 +1,6 @@
 ﻿using App.Domain.DTOs;
 using App.Domain.Models.Enums;
+using App.Domain.Models.OralHealthExamination;
 using App.Domain.Models.Users;
 using AutoMapper;
 
@@ -32,5 +33,12 @@ public class MappingProfile : Profile
         // CreateMap<TSource, TDestination> creates a mapping from UserRequest to UserRequestDto
         CreateMap<UserRequest, UserRequestDto>()
             .ForMember(x => x.UserName, o => o.MapFrom(s => s.ApplicationUser.UserName));
+
+        CreateMap<Patient, ResearchGroupPatientDto>()
+           .ForMember(x => x.AddedBy, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"));
+
+        CreateMap<ResearchGroup, ResearchGroupDto>()
+            .ForMember(x => x.CreatedBy, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"))
+            .ForMember(x => x.Patients, o => o.MapFrom(s => s.Patients));
     }
 }

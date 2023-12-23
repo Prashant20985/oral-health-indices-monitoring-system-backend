@@ -30,7 +30,7 @@ public class PatientRepository : IPatientRepository
 
     public IQueryable<Patient> GetAllActivePatientsByDoctorId(string doctorId) => _oralEhrContext.Patients
         .Where(patient => patient.IsArchived == false && patient.DoctorId.Equals(doctorId))
-        .Include(p => p.PatientGroup.GroupName)
+        .Include(p => p.ResearchGroup.GroupName)
         .Include(p => p.PatientExaminationCards.Select(x => new
         {
             x.RiskFactorAssessment,
@@ -42,7 +42,7 @@ public class PatientRepository : IPatientRepository
 
     public IQueryable<Patient> GetAllArchivedPatientsByDoctorId(string doctorId) => _oralEhrContext.Patients
         .Where(patient => patient.IsArchived == true && patient.DoctorId.Equals(doctorId))
-        .Include(p => p.PatientGroup.GroupName)
+        .Include(p => p.ResearchGroup.GroupName)
         .Include(p => p.PatientExaminationCards.Select(x => new 
         { 
             x.RiskFactorAssessment, 

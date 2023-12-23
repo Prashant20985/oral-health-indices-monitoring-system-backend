@@ -14,6 +14,9 @@ internal class ResearchGroupConfiguration : IEntityTypeConfiguration<ResearchGro
             .IsRequired()
             .HasMaxLength(50);
 
+        builder.Property(x => x.Description)
+            .HasMaxLength(500);
+
         builder.HasOne(x => x.Doctor)
             .WithMany(x => x.PatientGroups)
             .HasForeignKey(x => x.DoctorId)
