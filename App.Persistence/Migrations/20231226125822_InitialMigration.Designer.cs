@@ -3,33 +3,33 @@ using System;
 using App.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace App.Persistence.Migrations.OralHealthExaminationSchema
+namespace App.Persistence.Migrations
 {
     [DbContext(typeof(OralEhrContext))]
-    [Migration("20231215150958_Updated_UpdatedOralHealthExaminationSchema2")]
-    partial class Updated_UpdatedOralHealthExaminationSchema2
+    [Migration("20231226125822_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.10")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("App.Domain.Models.OralHealthExamination.APIBleedingModels.APIBleeding", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<decimal>("APIResult")
                         .HasColumnType("decimal(18, 2)");
@@ -39,7 +39,7 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
 
                     b.Property<string>("Comments")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.HasKey("Id");
 
@@ -50,14 +50,14 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<decimal>("BeweResult")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Comment")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.HasKey("Id");
 
@@ -68,11 +68,11 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Comment")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<decimal>("DMFSResult")
                         .HasColumnType("decimal(18,2)");
@@ -89,74 +89,74 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Age")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ArchiveComment")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("DoctorId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("character varying(255)");
 
                     b.Property<string>("EthnicGroup")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsArchived")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("OtherData")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("OtherData2")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("OtherData3")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("OtherGroup")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
-                    b.Property<Guid?>("PatientGroupId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<Guid?>("ResearchGroupId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("YearsInSchool")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -165,7 +165,7 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("PatientGroupId");
+                    b.HasIndex("ResearchGroupId");
 
                     b.ToTable("Patient", "oralHealthExamination");
                 });
@@ -174,39 +174,37 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("DoctorComment")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<Guid?>("PatientExaminationRegularModeId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("PatientExaminationResultId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("PatientExaminationTestModeId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("PatientId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("RiskFactorAssesmentId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PatientExaminationRegularModeId")
-                        .IsUnique()
-                        .HasFilter("[PatientExaminationRegularModeId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("PatientExaminationResultId")
                         .IsUnique();
 
                     b.HasIndex("PatientExaminationTestModeId")
-                        .IsUnique()
-                        .HasFilter("[PatientExaminationTestModeId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("PatientId");
 
@@ -220,13 +218,13 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("DateOfExamination")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("DoctorId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -239,16 +237,16 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("APIBleedingId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("BeweId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("DMFT_DMFSId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -268,19 +266,19 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("DateOfExamination")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("DoctorId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<decimal>("StudentMarks")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
@@ -295,15 +293,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<string>("DoctorId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("GroupName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
@@ -316,7 +321,7 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -326,16 +331,16 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
             modelBuilder.Entity("App.Domain.Models.Users.ApplicationRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -345,55 +350,55 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
             modelBuilder.Entity("App.Domain.Models.Users.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("DeleteUserComment")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(225)
-                        .HasColumnType("nvarchar(225)");
+                        .HasColumnType("character varying(225)");
 
                     b.Property<string>("GuestUserComment")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<bool>("IsAccountActive")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(225)
-                        .HasColumnType("nvarchar(225)");
+                        .HasColumnType("character varying(225)");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -403,10 +408,10 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
             modelBuilder.Entity("App.Domain.Models.Users.ApplicationUserRole", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -419,15 +424,15 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("GroupName")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("TeacherId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -440,21 +445,21 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Expires")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("Revoked")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Token")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -466,10 +471,10 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
             modelBuilder.Entity("App.Domain.Models.Users.StudentGroup", b =>
                 {
                     b.Property<Guid>("GroupId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("GroupId", "StudentId");
 
@@ -482,33 +487,33 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AdminComment")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("DateCompleted")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("DateSubmitted")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<int>("RequestStatus")
                         .HasMaxLength(20)
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("RequestTitle")
                         .IsRequired()
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.HasKey("Id");
 
@@ -522,7 +527,7 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                     b.OwnsOne("App.Domain.Models.OralHealthExamination.APIBleedingModels.APIBleedingAssessmentModel", "AssessmentModel", b1 =>
                         {
                             b1.Property<Guid>("APIBleedingId")
-                                .HasColumnType("uniqueidentifier");
+                                .HasColumnType("uuid");
 
                             b1.HasKey("APIBleedingId");
 
@@ -536,28 +541,28 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                             b1.OwnsOne("App.Domain.Models.OralHealthExamination.APIBleedingModels.Quadrant", "Quadrant1", b2 =>
                                 {
                                     b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value2")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value3")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value4")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value5")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value6")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value7")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
 
@@ -570,28 +575,28 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                             b1.OwnsOne("App.Domain.Models.OralHealthExamination.APIBleedingModels.Quadrant", "Quadrant2", b2 =>
                                 {
                                     b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value2")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value3")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value4")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value5")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value6")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value7")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
 
@@ -604,28 +609,28 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                             b1.OwnsOne("App.Domain.Models.OralHealthExamination.APIBleedingModels.Quadrant", "Quadrant3", b2 =>
                                 {
                                     b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value2")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value3")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value4")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value5")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value6")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value7")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
 
@@ -638,28 +643,28 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                             b1.OwnsOne("App.Domain.Models.OralHealthExamination.APIBleedingModels.Quadrant", "Quadrant4", b2 =>
                                 {
                                     b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value2")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value3")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value4")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value5")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value6")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Value7")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
 
@@ -686,7 +691,7 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                     b.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.BeweAssessmentModel", "AssessmentModel", b1 =>
                         {
                             b1.Property<Guid>("BeweId")
-                                .HasColumnType("uniqueidentifier");
+                                .HasColumnType("uuid");
 
                             b1.HasKey("BeweId");
 
@@ -700,7 +705,7 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                             b1.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.Sectant1", "Sectant1", b2 =>
                                 {
                                     b2.Property<Guid>("BeweAssessmentModelBeweId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.HasKey("BeweAssessmentModelBeweId");
 
@@ -712,22 +717,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_14", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant1BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant1BeweAssessmentModelBeweId");
 
@@ -740,22 +745,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_15", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant1BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant1BeweAssessmentModelBeweId");
 
@@ -768,22 +773,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_16", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant1BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant1BeweAssessmentModelBeweId");
 
@@ -796,22 +801,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_17", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant1BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant1BeweAssessmentModelBeweId");
 
@@ -833,7 +838,7 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                             b1.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.Sectant2", "Sectant2", b2 =>
                                 {
                                     b2.Property<Guid>("BeweAssessmentModelBeweId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.HasKey("BeweAssessmentModelBeweId");
 
@@ -845,19 +850,19 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_11", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant2BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant2BeweAssessmentModelBeweId");
 
@@ -870,19 +875,19 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_12", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant2BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant2BeweAssessmentModelBeweId");
 
@@ -895,19 +900,19 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_13", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant2BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant2BeweAssessmentModelBeweId");
 
@@ -920,19 +925,19 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_21", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant2BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant2BeweAssessmentModelBeweId");
 
@@ -945,19 +950,19 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_22", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant2BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant2BeweAssessmentModelBeweId");
 
@@ -970,19 +975,19 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_23", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant2BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant2BeweAssessmentModelBeweId");
 
@@ -1008,7 +1013,7 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                             b1.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.Sectant3", "Sectant3", b2 =>
                                 {
                                     b2.Property<Guid>("BeweAssessmentModelBeweId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.HasKey("BeweAssessmentModelBeweId");
 
@@ -1020,22 +1025,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_24", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant3BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant3BeweAssessmentModelBeweId");
 
@@ -1048,22 +1053,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_25", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant3BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant3BeweAssessmentModelBeweId");
 
@@ -1076,22 +1081,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_26", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant3BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant3BeweAssessmentModelBeweId");
 
@@ -1104,22 +1109,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_27", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant3BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant3BeweAssessmentModelBeweId");
 
@@ -1141,7 +1146,7 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                             b1.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.Sectant4", "Sectant4", b2 =>
                                 {
                                     b2.Property<Guid>("BeweAssessmentModelBeweId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.HasKey("BeweAssessmentModelBeweId");
 
@@ -1153,22 +1158,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_34", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant4BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant4BeweAssessmentModelBeweId");
 
@@ -1181,22 +1186,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_35", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant4BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant4BeweAssessmentModelBeweId");
 
@@ -1209,22 +1214,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_36", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant4BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant4BeweAssessmentModelBeweId");
 
@@ -1237,22 +1242,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_37", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant4BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant4BeweAssessmentModelBeweId");
 
@@ -1274,7 +1279,7 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                             b1.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.Sectant5", "Sectant5", b2 =>
                                 {
                                     b2.Property<Guid>("BeweAssessmentModelBeweId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.HasKey("BeweAssessmentModelBeweId");
 
@@ -1286,19 +1291,19 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_31", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant5BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant5BeweAssessmentModelBeweId");
 
@@ -1311,19 +1316,19 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_32", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant5BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant5BeweAssessmentModelBeweId");
 
@@ -1336,19 +1341,19 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_33", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant5BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant5BeweAssessmentModelBeweId");
 
@@ -1361,19 +1366,19 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_41", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant5BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant5BeweAssessmentModelBeweId");
 
@@ -1386,19 +1391,19 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_42", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant5BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant5BeweAssessmentModelBeweId");
 
@@ -1411,19 +1416,19 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FourSurfaceTooth", "Tooth_43", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant5BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant5BeweAssessmentModelBeweId");
 
@@ -1449,7 +1454,7 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                             b1.OwnsOne("App.Domain.Models.OralHealthExamination.BEWEModels.Sectant6", "Sectant6", b2 =>
                                 {
                                     b2.Property<Guid>("BeweAssessmentModelBeweId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.HasKey("BeweAssessmentModelBeweId");
 
@@ -1461,22 +1466,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_44", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant6BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant6BeweAssessmentModelBeweId");
 
@@ -1489,22 +1494,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_45", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant6BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant6BeweAssessmentModelBeweId");
 
@@ -1517,22 +1522,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_46", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant6BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant6BeweAssessmentModelBeweId");
 
@@ -1545,22 +1550,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_47", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant6BeweAssessmentModelBeweId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("Sectant6BeweAssessmentModelBeweId");
 
@@ -1600,7 +1605,7 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                     b.OwnsOne("App.Domain.Models.OralHealthExamination.DMFT_DMFSModels.DMFT_DMFSAssessmentModel", "AssessmentModel", b1 =>
                         {
                             b1.Property<Guid>("DMFT_DMFSId")
-                                .HasColumnType("uniqueidentifier");
+                                .HasColumnType("uuid");
 
                             b1.HasKey("DMFT_DMFSId");
 
@@ -1614,37 +1619,37 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                             b1.OwnsOne("App.Domain.Models.OralHealthExamination.DMFT_DMFSModels.LowerMouth", "LowerMouth", b2 =>
                                 {
                                     b2.Property<Guid>("DMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.Property<string>("Tooth_71")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_72")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_73")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_74")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_75")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_81")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_82")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_83")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_84")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_85")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.HasKey("DMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -1656,22 +1661,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_31", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -1684,22 +1689,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_32", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -1712,22 +1717,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_33", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -1740,25 +1745,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_34", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -1771,25 +1776,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_35", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -1802,25 +1807,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_36", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -1833,25 +1838,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_37", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -1864,25 +1869,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_38", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -1895,22 +1900,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_41", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -1923,22 +1928,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_42", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -1951,22 +1956,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_43", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -1979,25 +1984,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_44", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2010,25 +2015,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_45", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2041,25 +2046,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_46", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2072,25 +2077,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_47", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2103,25 +2108,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_48", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2167,37 +2172,37 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                             b1.OwnsOne("App.Domain.Models.OralHealthExamination.DMFT_DMFSModels.UpperMouth", "UpperMouth", b2 =>
                                 {
                                     b2.Property<Guid>("DMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.Property<string>("Tooth_51")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_52")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_53")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_54")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_55")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_61")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_62")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_63")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_64")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.Property<string>("Tooth_65")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.HasKey("DMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2209,22 +2214,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_11", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2237,22 +2242,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_12", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2265,22 +2270,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_13", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2293,25 +2298,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_14", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2324,25 +2329,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_15", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2355,25 +2360,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_16", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2386,25 +2391,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_17", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2417,25 +2422,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_18", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2448,22 +2453,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_21", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2476,22 +2481,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_22", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2504,22 +2509,22 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.FiveSurfaceTooth", "Tooth_23", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2532,25 +2537,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_24", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2563,25 +2568,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_25", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2594,25 +2599,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_26", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2625,25 +2630,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_27", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2656,25 +2661,25 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.Tooth.SixSurfaceTooth", "Tooth_28", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid");
 
                                             b3.Property<string>("Surface1")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface2")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface3")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface4")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface5")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("Surface6")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
 
@@ -2732,14 +2737,14 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("App.Domain.Models.OralHealthExamination.ResearchGroup", "PatientGroup")
+                    b.HasOne("App.Domain.Models.OralHealthExamination.ResearchGroup", "ResearchGroup")
                         .WithMany("Patients")
-                        .HasForeignKey("PatientGroupId")
+                        .HasForeignKey("ResearchGroupId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Doctor");
 
-                    b.Navigation("PatientGroup");
+                    b.Navigation("ResearchGroup");
                 });
 
             modelBuilder.Entity("App.Domain.Models.OralHealthExamination.PatientExaminationCard", b =>
@@ -2852,7 +2857,7 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                     b.OwnsOne("App.Domain.Models.OralHealthExamination.RiskFactorAssessmentModels.RiskFactorAssessmentModel", "RiskFactorAssessmentModel", b1 =>
                         {
                             b1.Property<Guid>("RiskFactorAssessmentId")
-                                .HasColumnType("uniqueidentifier");
+                                .HasColumnType("uuid");
 
                             b1.HasKey("RiskFactorAssessmentId");
 
@@ -2866,14 +2871,14 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                             b1.OwnsMany("App.Domain.Models.OralHealthExamination.RiskFactorAssessmentModels.RiskFactorAssessmentQuestionModel", "Questions", b2 =>
                                 {
                                     b2.Property<Guid>("RiskFactorAssessmentModelRiskFactorAssessmentId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.Property<int>("Id")
                                         .ValueGeneratedOnAdd()
-                                        .HasColumnType("int");
+                                        .HasColumnType("integer");
 
                                     b2.Property<string>("QuestionText")
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasColumnType("text");
 
                                     b2.HasKey("RiskFactorAssessmentModelRiskFactorAssessmentId", "Id");
 
@@ -2885,19 +2890,20 @@ namespace App.Persistence.Migrations.OralHealthExaminationSchema
                                     b2.OwnsOne("App.Domain.Models.OralHealthExamination.RiskFactorAssessmentModels.RiskFactorAssessmentAnswerModel", "Answer", b3 =>
                                         {
                                             b3.Property<Guid>("RiskFactorAssessmentQuestionModelRiskFactorAssessmentModelRiskFactorAssessmentId")
-                                                .HasColumnType("uniqueidentifier");
+                                                .HasColumnType("uuid")
+                                                .HasColumnName("RiskFactorAssessmentQuestionModelRiskFactorAssessmentModelRisk~");
 
                                             b3.Property<int>("RiskFactorAssessmentQuestionModelId")
-                                                .HasColumnType("int");
+                                                .HasColumnType("integer");
 
                                             b3.Property<string>("HighRisk")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("LowRisk")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.Property<string>("ModerateRisk")
-                                                .HasColumnType("nvarchar(max)");
+                                                .HasColumnType("text");
 
                                             b3.HasKey("RiskFactorAssessmentQuestionModelRiskFactorAssessmentModelRiskFactorAssessmentId", "RiskFactorAssessmentQuestionModelId");
 
