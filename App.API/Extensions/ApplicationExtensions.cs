@@ -34,7 +34,7 @@ public static class ApplicationExtension
         // Add the UserContext to the service collection with the specified connection string.
         services.AddDbContext<OralEhrContext>(opt =>
         {
-            opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
         });
 
         // Add CORS
