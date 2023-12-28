@@ -1,16 +1,17 @@
-﻿using App.Domain.Models.OralHealthExamination;
+﻿using App.Domain.DTOs.PatientDtos.Response;
+using App.Domain.Models.OralHealthExamination;
 
 namespace App.Domain.Repository;
 
 public interface IPatientRepository
 {
-    IQueryable<Patient> GetAllActivePatients();
+    IQueryable<PatientDto> GetAllActivePatients();
 
-    IQueryable<Patient> GetAllArchivedPatients();
+    IQueryable<PatientDto> GetAllArchivedPatients();
 
-    IQueryable<Patient> GetAllActivePatientsByDoctorId(string doctorId);
+    IQueryable<PatientExaminationDto> GetAllActivePatientsByDoctorId(string doctorId);
 
-    IQueryable<Patient> GetAllArchivedPatientsByDoctorId(string doctorId);
+    IQueryable<PatientExaminationDto> GetAllArchivedPatientsByDoctorId(string doctorId);
 
     Task CreatePatient (Patient patient);
 
