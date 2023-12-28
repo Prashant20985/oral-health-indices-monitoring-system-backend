@@ -3,6 +3,9 @@ using App.Domain.Models.Users;
 
 namespace App.Domain.Models.OralHealthExamination;
 
+/// <summary>
+/// Represents a patient entity with information about personal details, examinations, and archival status.
+/// </summary>
 public class Patient
 {
     public Patient(string firstName, string lastName, string email, Gender gender, string ethnicGroup, string location,
@@ -37,7 +40,7 @@ public class Patient
     public string OtherData3 { get; private set; }
     public string Location { get; private set; }
     public int Age { get; private set; }
-    public DateTime CreatedAt { get; private set; } = DateTime.Now;
+    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
     public bool IsArchived { get; private set; } = false;
     public string ArchiveComment { get; private set; } = null;
 
@@ -47,12 +50,33 @@ public class Patient
     public Guid? ResearchGroupId { get; set; }
     public virtual ResearchGroup ResearchGroup { get; set; } = null;
 
-    public void Archive(string comment)
+    public void ArchivePatient(string comment)
     {
         IsArchived = true;
         ArchiveComment = comment;
     }
 
+    public void UnarchivePatient()
+    {
+        IsArchived = false;
+        ArchiveComment = null;
+    }
+
+    public void UpdatePatient(string firstName, string lastName, string gender, string ethnicGroup, string location,
+        int age, string otherGroup, string otherData, string otherData2, string otherData3, int yearsInSchool)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Gender = Enum.Parse<Gender>(gender);
+        EthnicGroup = ethnicGroup;
+        OtherGroup = otherGroup;
+        YearsInSchool = yearsInSchool;
+        OtherData = otherData;
+        OtherData2 = otherData2;
+        OtherData3 = otherData3;
+        Location = location;
+        Age = age;
+    }
     public void AddResearchGroup(Guid researchGroupId) => ResearchGroupId = researchGroupId;
 
     public void RemoveResearchGroup() => ResearchGroupId = null;
