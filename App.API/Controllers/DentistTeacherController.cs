@@ -1,22 +1,22 @@
-﻿using App.Application.DentistTeacherOperations.Command.AddStudentToGroup;
+﻿using App.Application.DentistTeacherOperations.Command.AddPatientToResearchGroup;
+using App.Application.DentistTeacherOperations.Command.AddStudentToGroup;
 using App.Application.DentistTeacherOperations.Command.CreateGroup;
+using App.Application.DentistTeacherOperations.Command.CreateResearchGroup;
 using App.Application.DentistTeacherOperations.Command.DeleteGroup;
+using App.Application.DentistTeacherOperations.Command.DeleteResearchGroup;
+using App.Application.DentistTeacherOperations.Command.RemovePatientFromResearchGroup;
 using App.Application.DentistTeacherOperations.Command.RemoveStudentFromGroup;
 using App.Application.DentistTeacherOperations.Command.UpdateGroupName;
+using App.Application.DentistTeacherOperations.Command.UpdateResearchGroup;
 using App.Application.DentistTeacherOperations.Query.Groups;
+using App.Application.DentistTeacherOperations.Query.PatientsNotInResearchGroups;
+using App.Application.DentistTeacherOperations.Query.ResearchGroups;
 using App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
 using App.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using App.Application.DentistTeacherOperations.Query.ResearchGroups;
-using App.Application.DentistTeacherOperations.Query.PatientsNotInResearchGroups;
-using App.Application.DentistTeacherOperations.Command.CreateResearchGroup;
-using App.Application.DentistTeacherOperations.Command.DeleteResearchGroup;
-using App.Application.DentistTeacherOperations.Command.AddPatientToResearchGroup;
-using App.Application.DentistTeacherOperations.Command.RemovePatientFromResearchGroup;
-using App.Application.DentistTeacherOperations.Command.UpdateResearchGroup;
 
 namespace App.API.Controllers;
 

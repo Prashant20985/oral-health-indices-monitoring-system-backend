@@ -25,7 +25,7 @@ public class ResearchGroupRepository : IResearchGroupRepository
     public void DeleteResearchGroup(ResearchGroup research) =>
         _oralEhrContext.ResearchGroups.Remove(research);
 
-    public IQueryable<ResearchGroupPatientDto> GetAllPatientsNotInAnyResearchGroup() => 
+    public IQueryable<ResearchGroupPatientDto> GetAllPatientsNotInAnyResearchGroup() =>
         _oralEhrContext.Patients
             .Where(rg => rg.ResearchGroupId.Equals(Guid.Empty))
             .OrderByDescending(rg => rg.CreatedAt)

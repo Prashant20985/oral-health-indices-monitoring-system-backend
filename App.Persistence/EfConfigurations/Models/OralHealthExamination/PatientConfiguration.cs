@@ -1,6 +1,6 @@
 ﻿using App.Domain.Models.OralHealthExamination;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.OralHealthExamination;
 
