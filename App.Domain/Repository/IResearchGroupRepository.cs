@@ -11,4 +11,5 @@ public interface IResearchGroupRepository
     void DeleteResearchGroup(ResearchGroup researchGroup);
     Task CreateResearchGroup(ResearchGroup researchGroup);
     Task<ResearchGroup> GetResearchGroupById(Guid researchGroupId);
+    Task<ResearchGroupDto> GetResearchGroupDetailsById(Guid researchGroupId);
 }

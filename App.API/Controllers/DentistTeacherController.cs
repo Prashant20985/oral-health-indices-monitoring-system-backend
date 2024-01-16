@@ -10,6 +10,7 @@ using App.Application.DentistTeacherOperations.Command.UpdateGroupName;
 using App.Application.DentistTeacherOperations.Command.UpdateResearchGroup;
 using App.Application.DentistTeacherOperations.Query.Groups;
 using App.Application.DentistTeacherOperations.Query.PatientsNotInResearchGroups;
+using App.Application.DentistTeacherOperations.Query.ResearchGroupDetailsById;
 using App.Application.DentistTeacherOperations.Query.ResearchGroups;
 using App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
 using App.Domain.DTOs;
@@ -172,5 +173,15 @@ public class DentistTeacherController : BaseController
     [HttpDelete("remove-patient/{patientId}")]
     public async Task<ActionResult> RemovePatientFromResearchGroup(Guid patientId) => HandleOperationResult(
               await Mediator.Send(new RemovePatientFromResearchGroupCommand(patientId)));
+
+    /// <summary>
+    /// Retrieves details about a research group by research group id.
+    /// </summary>
+    /// <param name="researchGroupId">The identifier of the research group.</param>
+    /// <returns>An HTTP response indicating the result of the operation.</returns>
+    [Authorize(Roles = "Dentist_Teacher_Researcher")]
+    [HttpGet("research-group-details/{researchGroupId}")]
+    public async Task<ActionResult> GetResearchGroupDetailsById(Guid researchGroupId) => HandleOperationResult(
+                     await Mediator.Send(new FetchResearchGroupDetailsByIdQuery(researchGroupId)));
 
 }

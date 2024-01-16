@@ -20,7 +20,7 @@ public class ResearchGroup
 
     public string Description { get; set; }
 
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public ICollection<Patient> Patients { get; set; } = new List<Patient>();
 
