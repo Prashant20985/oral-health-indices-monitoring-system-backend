@@ -19,7 +19,7 @@ public class PatientRepository : IPatientRepository
         _mapper = mapper;
     }
 
-    public async Task CreatePatient(Patient patient) => await 
+    public async Task CreatePatient(Patient patient) => await
         _oralEhrContext.Patients.AddAsync(patient);
 
     public void DeletePatient(Patient patient) =>

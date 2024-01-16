@@ -13,11 +13,11 @@ public interface IPatientRepository
 
     IQueryable<PatientExaminationDto> GetAllArchivedPatientsByDoctorId(string doctorId);
 
-    Task CreatePatient (Patient patient);
+    Task CreatePatient(Patient patient);
 
     Task<Patient> GetPatientById(Guid id);
 
-    void DeletePatient (Patient patient);
+    void DeletePatient(Patient patient);
 
     Task<Patient> GetPatientByEmail(string email);
 }

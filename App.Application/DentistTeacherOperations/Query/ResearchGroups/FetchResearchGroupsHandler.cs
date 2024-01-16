@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Application.DentistTeacherOperations.Query.ResearchGroups
 {
-    internal sealed class FetchResearchGroupsHandler 
+    internal sealed class FetchResearchGroupsHandler
         : IRequestHandler<FetchResearchGroupsQuery, OperationResult<List<ResearchGroupDto>>>
     {
         private readonly IResearchGroupRepository _researchGroupRepository;
@@ -18,7 +18,7 @@ namespace App.Application.DentistTeacherOperations.Query.ResearchGroups
 
         public async Task<OperationResult<List<ResearchGroupDto>>> Handle(FetchResearchGroupsQuery request, CancellationToken cancellationToken)
         {
-            var query  = _researchGroupRepository.GetAllResearchGroups();
+            var query = _researchGroupRepository.GetAllResearchGroups();
 
             if (!string.IsNullOrEmpty(request.GroupName))
                 query = query.Where(x => x.GroupName.Contains(request.GroupName));
