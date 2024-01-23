@@ -45,4 +45,9 @@ public class ResearchGroupRepository : IResearchGroupRepository
     public async Task<ResearchGroup> GetResearchGroupByName(string groupName) =>
         await _oralEhrContext.ResearchGroups
             .FirstOrDefaultAsync(rg => rg.GroupName.Equals(groupName));
+
+    public async Task<ResearchGroupDto> GetResearchGroupDetailsById(Guid researchGroupId) => await
+        _oralEhrContext.ResearchGroups
+        .ProjectTo<ResearchGroupDto>(_mapper.ConfigurationProvider)
+        .FirstOrDefaultAsync(rg => rg.Id.Equals(researchGroupId));
 }
