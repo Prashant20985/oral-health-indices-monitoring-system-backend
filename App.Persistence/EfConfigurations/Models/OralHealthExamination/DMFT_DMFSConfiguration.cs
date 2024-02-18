@@ -1,4 +1,4 @@
-﻿using App.Domain.Models.OralHealthExamination.DMFT_DMFSModels;
+﻿using App.Domain.Models.OralHealthExamination;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

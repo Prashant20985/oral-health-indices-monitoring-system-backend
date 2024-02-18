@@ -1,12 +1,13 @@
-﻿using App.Domain.Models.OralHealthExamination;
+﻿using App.Domain.Models.CreditSchema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace App.Persistence.EfConfigurations.Models.OralHealthExamination;
+namespace App.Persistence.EfConfigurations.Models.CreditSchema;
 
-internal class RiskFactorAssesmentConfiguration : IEntityTypeConfiguration<RiskFactorAssessment>
+public class PracticeRiskFactorAssessmentConfiguration
+    : IEntityTypeConfiguration<PracticeRiskFactorAssessment>
 {
-    public void Configure(EntityTypeBuilder<RiskFactorAssessment> builder)
+    public void Configure(EntityTypeBuilder<PracticeRiskFactorAssessment> builder)
     {
         builder.HasKey(x => x.Id);
 

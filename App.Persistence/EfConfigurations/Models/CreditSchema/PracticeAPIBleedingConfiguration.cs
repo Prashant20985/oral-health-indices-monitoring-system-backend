@@ -1,12 +1,12 @@
-﻿using App.Domain.Models.OralHealthExamination;
+﻿using App.Domain.Models.CreditSchema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace App.Persistence.EfConfigurations.Models.OralHealthExamination;
+namespace App.Persistence.EfConfigurations.Models.CreditSchema;
 
-public class APIBleedingConfiguration : IEntityTypeConfiguration<APIBleeding>
+public class PracticeAPIBleedingConfiguration : IEntityTypeConfiguration<PracticeAPIBleeding>
 {
-    public void Configure(EntityTypeBuilder<APIBleeding> builder)
+    public void Configure(EntityTypeBuilder<PracticeAPIBleeding> builder)
     {
         builder.HasKey(k => k.Id);
 

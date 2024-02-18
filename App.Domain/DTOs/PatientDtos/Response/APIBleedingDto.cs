@@ -1,4 +1,4 @@
-﻿using App.Domain.Models.OralHealthExamination.APIBleedingModels;
+﻿using App.Domain.Models.Common.APIBleeding;
 
 namespace App.Domain.DTOs.PatientDtos.Response;
 

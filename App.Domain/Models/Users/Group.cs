@@ -1,4 +1,6 @@
-﻿namespace App.Domain.Models.Users;
+﻿using App.Domain.Models.CreditSchema;
+
+namespace App.Domain.Models.Users;
 
 /// <summary>
 /// Represents a group of students led by a teacher.
@@ -47,4 +49,9 @@ public class Group
     /// Gets or sets the collection of StudentGroup objects associated with the group.
     /// </summary>
     public ICollection<StudentGroup> StudentGroups { get; set; } = new List<StudentGroup>();
+
+    /// <summary>
+    /// Gets or sets the collection of GroupExam objects associated with the group.
+    /// </summary>
+    public ICollection<GroupExam> GroupExams { get; set; } = new List<GroupExam>();
 }

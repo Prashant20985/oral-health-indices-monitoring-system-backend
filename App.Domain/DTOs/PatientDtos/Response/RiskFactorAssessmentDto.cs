@@ -1,4 +1,4 @@
-﻿using App.Domain.Models.OralHealthExamination.RiskFactorAssessmentModels;
+﻿using App.Domain.Models.Common.RiskFactorAssessment;
 
 namespace App.Domain.DTOs.PatientDtos.Response;
 
