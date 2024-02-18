@@ -1,8 +1,4 @@
-﻿using App.Domain.Models.OralHealthExamination.APIBleedingModels;
-using App.Domain.Models.OralHealthExamination.BEWEModels;
-using App.Domain.Models.OralHealthExamination.DMFT_DMFSModels;
-
-namespace App.Domain.Models.OralHealthExamination;
+﻿namespace App.Domain.Models.OralHealthExamination;
 
 public class PatientExaminationResult
 {

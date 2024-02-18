@@ -1,4 +1,4 @@
-﻿using App.Domain.Models.OralHealthExamination.BEWEModels;
+﻿using App.Domain.Models.Common.Bewe;
 
 namespace App.Domain.DTOs.PatientDtos.Response;
 

@@ -1,4 +1,4 @@
-﻿using App.Domain.Models.OralHealthExamination.DMFT_DMFSModels;
+﻿using App.Domain.Models.Common.DMFT_DMFS;
 
 namespace App.Domain.DTOs.PatientDtos.Response;
 

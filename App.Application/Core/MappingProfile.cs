@@ -2,10 +2,6 @@
 using App.Domain.DTOs.PatientDtos.Response;
 using App.Domain.Models.Enums;
 using App.Domain.Models.OralHealthExamination;
-using App.Domain.Models.OralHealthExamination.APIBleedingModels;
-using App.Domain.Models.OralHealthExamination.BEWEModels;
-using App.Domain.Models.OralHealthExamination.DMFT_DMFSModels;
-using App.Domain.Models.OralHealthExamination.RiskFactorAssessmentModels;
 using App.Domain.Models.Users;
 using AutoMapper;
 

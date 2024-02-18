@@ -1,13 +1,13 @@
-﻿
-using App.Domain.Models.OralHealthExamination;
+﻿using App.Domain.Models.CreditSchema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace App.Persistence.EfConfigurations.Models.OralHealthExamination;
+namespace App.Persistence.EfConfigurations.Models.CreditSchema;
 
-internal class BeweConfiguration : IEntityTypeConfiguration<Bewe>
+public class PracticeBeweConfiguration
+    : IEntityTypeConfiguration<PracticeBewe>
 {
-    public void Configure(EntityTypeBuilder<Bewe> builder)
+    public void Configure(EntityTypeBuilder<PracticeBewe> builder)
     {
         builder.HasKey(x => x.Id);
 

@@ -1,6 +1,4 @@
-﻿using App.Domain.Models.OralHealthExamination.RiskFactorAssessmentModels;
-
-namespace App.Domain.Models.OralHealthExamination;
+﻿namespace App.Domain.Models.OralHealthExamination;
 
 public class PatientExaminationCard
 {

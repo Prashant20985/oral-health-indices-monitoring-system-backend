@@ -1,4 +1,5 @@
 ﻿using App.Domain.DTOs;
+using App.Domain.Models.CreditSchema;
 using App.Domain.Models.OralHealthExamination;
 using Microsoft.AspNetCore.Identity;
 
@@ -129,5 +130,6 @@ public class ApplicationUser : IdentityUser
     public ICollection<PatientExaminationTestMode> PatientExaminationTestModeStudentNavigation { get; set; } = new List<PatientExaminationTestMode>();
     public ICollection<PatientExaminationTestMode> PatientExaminationTestModeDoctorNavigation { get; set; } = new List<PatientExaminationTestMode>();
     public ICollection<PatientExaminationRegularMode> PatientExaminationRegularModeDoctorNavigation { get; set; } = new List<PatientExaminationRegularMode>();
+    public ICollection<PracticePatientExaminationCard> PracticePatientExaminationCards { get; set; } = new List<PracticePatientExaminationCard>();
 }
 
