@@ -8,4 +8,4 @@ namespace App.Application.PatientOperations.Query.ActivePatientsByDoctorId;
 /// Represents a query to fetch all active patients by doctor ID, with optional name and email filters.
 /// </summary>
 public record FetchAllActivePatientsByDoctorIdQuery(string DoctorId, string Name, string Email)
-    : IRequest<OperationResult<List<PatientExaminationDto>>>;
+    : IRequest<OperationResult<List<PatientDto>>>;

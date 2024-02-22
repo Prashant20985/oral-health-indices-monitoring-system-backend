@@ -15,7 +15,7 @@ namespace App.Application.PatientOperations.Query.ArchivedPatientsByDoctorId;
 /// </remarks>
 /// <param name="patientRepository">The repository for patient-related operations.</param>
 internal sealed class FetchAllArchivedPatientsByDoctorIdHandler(IPatientRepository patientRepository)
-        : IRequestHandler<FetchAllArchivedPatientsByDoctorIdQuery, OperationResult<List<PatientExaminationDto>>>
+        : IRequestHandler<FetchAllArchivedPatientsByDoctorIdQuery, OperationResult<List<PatientDto>>>
 {
     private readonly IPatientRepository _patientRepository = patientRepository;
 
@@ -26,7 +26,7 @@ internal sealed class FetchAllArchivedPatientsByDoctorIdHandler(IPatientReposito
     /// <param name="request">The FetchAllArchivedPatientsByDoctorIdQuery containing optional filters.</param>
     /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
     /// <returns>An operation result containing a list of archived patient examination DTOs.</returns>
-    public async Task<OperationResult<List<PatientExaminationDto>>> Handle(FetchAllArchivedPatientsByDoctorIdQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<List<PatientDto>>> Handle(FetchAllArchivedPatientsByDoctorIdQuery request, CancellationToken cancellationToken)
     {
         var query = _patientRepository.GetAllArchivedPatientsByDoctorId(request.DoctorId);
 
@@ -38,7 +38,7 @@ internal sealed class FetchAllArchivedPatientsByDoctorIdHandler(IPatientReposito
 
         var patients = await query.AsNoTracking().ToListAsync(cancellationToken);
 
-        return OperationResult<List<PatientExaminationDto>>.Success(patients);
+        return OperationResult<List<PatientDto>>.Success(patients);
     }
 }
 

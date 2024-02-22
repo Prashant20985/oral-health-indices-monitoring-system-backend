@@ -17,7 +17,7 @@ internal sealed class FetchResearchGroupDetailsByIdHandler
     /// Initializes a new instance of the <see cref="FetchResearchGroupDetailsByIdHandler"/> class.
     /// </summary>
     /// <param name="researchGroupRepository">The repository for research group-related operations.</param>
-    public FetchResearchGroupDetailsByIdHandler (IResearchGroupRepository researchGroupRepository)
+    public FetchResearchGroupDetailsByIdHandler(IResearchGroupRepository researchGroupRepository)
     {
         _researchGroupRepository = researchGroupRepository;
     }
