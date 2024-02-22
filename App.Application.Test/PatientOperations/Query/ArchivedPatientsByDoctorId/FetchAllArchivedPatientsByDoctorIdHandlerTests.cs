@@ -20,11 +20,11 @@ public class FetchAllArchivedPatientsByDoctorIdHandlerTests : TestHelper
     public async Task Handle_WithValidQuery_ShouldReturnListOfPatientExaminationDtos()
     {
         // Arrange
-        var patients = new List<PatientExaminationDto>
-        {
-                new PatientExaminationDto { Id = Guid.NewGuid(),FirstName = "Patient1", LastName = "test", Email = "test@test.com"},
-                new PatientExaminationDto { Id = Guid.NewGuid(), FirstName = "Patient2", LastName = "test", Email = "test@test.com"}
-        }.AsQueryable().BuildMock();
+        var patients = new List<PatientDto>
+            {
+                new PatientDto { Id = Guid.NewGuid(), FirstName = "Patient1", LastName = "test", Email = "test@test.com" },
+                new PatientDto { Id = Guid.NewGuid(), FirstName = "Patient2", LastName = "test", Email = "test@test.com" }
+            }.AsQueryable().BuildMock();
 
         patientRepositoryMock.Setup(repo => repo.GetAllArchivedPatientsByDoctorId(query.DoctorId))
             .Returns(patients);

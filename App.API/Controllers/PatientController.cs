@@ -91,7 +91,7 @@ public class PatientController : BaseController
     /// <param name="email">Email filter.</param>
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     [HttpGet("active-patients-by-doctorId")]
-    public async Task<ActionResult<List<PatientExaminationDto>>> FetchAllActivePatientsByDoctorId([FromQuery] string name, [FromQuery] string email) =>
+    public async Task<ActionResult<List<PatientDto>>> FetchAllActivePatientsByDoctorId([FromQuery] string name, [FromQuery] string email) =>
         HandleOperationResult(await Mediator.Send(new FetchAllActivePatientsByDoctorIdQuery(User.FindFirstValue(ClaimTypes.NameIdentifier), name, email)));
 
     /// <summary>
@@ -101,7 +101,7 @@ public class PatientController : BaseController
     /// <param name="email">Email filter.</param>
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     [HttpGet("archived-patients-by-doctorId")]
-    public async Task<ActionResult<List<PatientExaminationDto>>> FetchAllArchivedPatientsByDoctorId([FromQuery] string name, [FromQuery] string email) =>
+    public async Task<ActionResult<List<PatientDto>>> FetchAllArchivedPatientsByDoctorId([FromQuery] string name, [FromQuery] string email) =>
         HandleOperationResult(await Mediator.Send(new FetchAllArchivedPatientsByDoctorIdQuery(User.FindFirstValue(ClaimTypes.NameIdentifier), name, email)));
 
 }

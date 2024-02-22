@@ -37,15 +37,15 @@ public class PatientRepository : IPatientRepository
         .OrderBy(x => x.CreatedAt)
         .AsQueryable();
 
-    public IQueryable<PatientExaminationDto> GetAllActivePatientsByDoctorId(string doctorId) => _oralEhrContext.Patients
+    public IQueryable<PatientDto> GetAllActivePatientsByDoctorId(string doctorId) => _oralEhrContext.Patients
         .Where(patient => patient.IsArchived == false && patient.DoctorId.Equals(doctorId))
-        .ProjectTo<PatientExaminationDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<PatientDto>(_mapper.ConfigurationProvider)
         .OrderBy(x => x.CreatedAt)
         .AsQueryable();
 
-    public IQueryable<PatientExaminationDto> GetAllArchivedPatientsByDoctorId(string doctorId) => _oralEhrContext.Patients
+    public IQueryable<PatientDto> GetAllArchivedPatientsByDoctorId(string doctorId) => _oralEhrContext.Patients
         .Where(patient => patient.IsArchived == true && patient.DoctorId.Equals(doctorId))
-        .ProjectTo<PatientExaminationDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<PatientDto>(_mapper.ConfigurationProvider)
         .OrderBy(x => x.CreatedAt)
         .AsQueryable();
 

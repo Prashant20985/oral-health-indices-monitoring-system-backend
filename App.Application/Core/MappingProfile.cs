@@ -48,37 +48,5 @@ public class MappingProfile : Profile
         CreateMap<Patient, PatientDto>()
             .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"))
             .ForMember(x => x.ResearchGroupName, o => o.MapFrom(s => s.ResearchGroup.GroupName));
-
-        // CreateMap<TSource, TDestination> creates a mapping from UserRequest to UserRequestDto
-        CreateMap<Patient, PatientExaminationDto>()
-            .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"))
-            .ForMember(x => x.ResearchGroupName, o => o.MapFrom(s => s.ResearchGroup.GroupName));
-
-        // CreateMap<TSource, TDestination> creates a mapping from RiskFactorAssessment to RiskFactorAssessmentDto
-        CreateMap<RiskFactorAssessment, RiskFactorAssessmentDto>();
-
-        // CreateMap<TSource, TDestination> creates a mapping from Bewe to BeweDto
-        CreateMap<Bewe, BeweDto>();
-
-        // CreateMap<TSource, TDestination> creates a mapping from APIBleeding to APIBleedingDto
-        CreateMap<APIBleeding, APIBleedingDto>();
-
-        // CreateMap<TSource, TDestination> creates a mapping from DMFT_DMFS to DMFT_DMFSDto
-        CreateMap<DMFT_DMFS, DMFT_DMFSDto>();
-
-        // CreateMap<TSource, TDestination> creates a mapping from PatientExaminationResult to PatientExaminationResultDto
-        CreateMap<PatientExaminationResult, PatientExaminationResultDto>();
-
-        // CreateMap<TSource, TDestination> creates a mapping from PatientExaminationCard to PatientExaminationCardDto
-        CreateMap<PatientExaminationCard, PatientExaminationCardDto>();
-
-        // CreateMap<TSource, TDestination> creates a mapping from PatientExaminationRegularMode to PatientExaminationRegularModeDto
-        CreateMap<PatientExaminationRegularMode, PatientExaminationRegularModeDto>()
-            .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"));
-
-        // CreateMap<TSource, TDestination> creates a mapping from PatientExaminationTestMode to PatientExaminationTestModeDto
-        CreateMap<PatientExaminationTestMode, PatientExaminationTestModeDto>()
-            .ForMember(x => x.StudentName, o => o.MapFrom(s => $"{s.Student.FirstName} {s.Student.LastName}"))
-            .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"));
     }
 }
