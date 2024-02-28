@@ -7,6 +7,7 @@ using App.Application.PatientOperations.Query.ActivePatients;
 using App.Application.PatientOperations.Query.ActivePatientsByDoctorId;
 using App.Application.PatientOperations.Query.ArchivedPatients;
 using App.Application.PatientOperations.Query.ArchivedPatientsByDoctorId;
+using App.Application.PatientOperations.Query.PatientDetails;
 using App.Domain.DTOs.PatientDtos.Request;
 using App.Domain.DTOs.PatientDtos.Response;
 using Microsoft.AspNetCore.Authorization;
@@ -103,5 +104,14 @@ public class PatientController : BaseController
     [HttpGet("archived-patients-by-doctorId")]
     public async Task<ActionResult<List<PatientDto>>> FetchAllArchivedPatientsByDoctorId([FromQuery] string name, [FromQuery] string email) =>
         HandleOperationResult(await Mediator.Send(new FetchAllArchivedPatientsByDoctorIdQuery(User.FindFirstValue(ClaimTypes.NameIdentifier), name, email)));
+
+    /// <summary>
+    /// Fetches patient details.
+    /// </summary>
+    /// <param name="patientId">ID of the patient to fetch details for.</param>
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
+    [HttpGet("patient-details/{patientId}")]
+    public async Task<ActionResult<PatientExaminationDto>> FetchPatientDetails(Guid patientId) =>
+        HandleOperationResult(await Mediator.Send(new FetchPatientDetailsQuery(patientId)));
 
 }

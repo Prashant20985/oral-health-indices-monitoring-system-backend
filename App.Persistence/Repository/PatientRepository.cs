@@ -54,4 +54,10 @@ public class PatientRepository : IPatientRepository
 
     public async Task<Patient> GetPatientByEmail(string email) => await _oralEhrContext.Patients
         .FirstOrDefaultAsync(patient => patient.Email.Equals(email));
+
+    public async Task<PatientExaminationDto> GetPatientDetails(Guid patientId) => await _oralEhrContext.Patients
+        .Where(patient => patient.Id.Equals(patientId))
+        .ProjectTo<PatientExaminationDto>(_mapper.ConfigurationProvider)
+        .FirstOrDefaultAsync();
+
 }
