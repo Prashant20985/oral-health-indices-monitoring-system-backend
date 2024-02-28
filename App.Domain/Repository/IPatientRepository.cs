@@ -20,4 +20,6 @@ public interface IPatientRepository
     void DeletePatient(Patient patient);
 
     Task<Patient> GetPatientByEmail(string email);
+
+    Task<PatientExaminationDto> GetPatientDetails(Guid patientId);
 }
