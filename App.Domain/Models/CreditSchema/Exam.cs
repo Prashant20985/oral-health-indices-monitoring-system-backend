@@ -1,4 +1,7 @@
-﻿namespace App.Domain.Models.CreditSchema;
+﻿using App.Domain.Models.Enums;
+using App.Domain.Models.Users;
+
+namespace App.Domain.Models.CreditSchema;
 
 /// <summary>
 /// Represents an examination.
@@ -68,9 +71,15 @@ public class Exam(DateTime dateOfExamination,
     public int MaxMark { get; set; } = maxMark;
 
     /// <summary>
-    /// Gets or sets the collection of group exams associated with this examination.
+    /// Gets or sets the status of the examination.
     /// </summary>
-    public ICollection<GroupExam> GroupExams { get; set; } = new List<GroupExam>();
+    public ExamStatus ExamStatus { get; set; } = ExamStatus.Published;
+
+    /// <summary>
+    /// Gets or sets the unique identifier of the group associated with the examination.
+    /// </summary>
+    public Guid GroupId { get; set; }
+    public virtual Group Group { get; set; }
 
     /// <summary>
     /// Gets or sets the collection of practice patient examination cards associated with this examination.

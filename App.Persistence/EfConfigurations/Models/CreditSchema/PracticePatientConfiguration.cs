@@ -23,9 +23,6 @@ public class PracticePatientConfiguration
             .IsRequired()
             .HasMaxLength(255);
 
-        builder.HasIndex(x => x.Email)
-            .IsUnique();
-
         builder.Property(x => x.Gender)
             .HasConversion<string>()
             .IsRequired();
