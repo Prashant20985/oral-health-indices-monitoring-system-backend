@@ -51,7 +51,7 @@ public class Group
     public ICollection<StudentGroup> StudentGroups { get; set; } = new List<StudentGroup>();
 
     /// <summary>
-    /// Gets or sets the collection of GroupExam objects associated with the group.
+    /// Gets or sets the collection of Exam objects associated with the group.
     /// </summary>
-    public ICollection<GroupExam> GroupExams { get; set; } = new List<GroupExam>();
+    public ICollection<Exam> Exams { get; set; } = new List<Exam>();
 }

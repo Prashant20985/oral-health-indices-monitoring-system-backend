@@ -31,5 +31,14 @@ public class ExamConfiguration : IEntityTypeConfiguration<Exam>
 
         builder.Property(x => x.Duration)
             .IsRequired();
+
+        builder.Property(x => x.ExamStatus)
+            .HasConversion<string>()
+            .IsRequired();
+
+        builder.HasOne(x => x.Group)
+            .WithMany(x => x.Exams)
+            .HasForeignKey(x => x.GroupId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

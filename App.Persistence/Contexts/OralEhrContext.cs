@@ -122,11 +122,6 @@ public class OralEhrContext : IdentityDbContext<
     public virtual DbSet<Exam> Exams { get; set; }
 
     /// <summary>
-    /// Gets or sets the set of group exams.
-    /// </summary>
-    public virtual DbSet<GroupExam> GroupExams { get; set; }
-
-    /// <summary>
     /// Gets or sets the set of practice patients.
     /// </summary>
     public virtual DbSet<PracticePatient> PracticePatients { get; set; }
@@ -202,8 +197,6 @@ public class OralEhrContext : IdentityDbContext<
         modelBuilder.Entity<PatientExaminationResult>().ToTable(nameof(PatientExaminationResult), "oralHealthExamination");
 
         modelBuilder.Entity<Exam>().ToTable(nameof(Exam), "credit");
-
-        modelBuilder.Entity<GroupExam>().ToTable(nameof(GroupExam), "credit");
 
         modelBuilder.Entity<PracticePatient>().ToTable(nameof(PracticePatient), "credit");
 
