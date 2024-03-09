@@ -8,6 +8,7 @@ using App.Application.PatientOperations.Query.ActivePatientsByDoctorId;
 using App.Application.PatientOperations.Query.ArchivedPatients;
 using App.Application.PatientOperations.Query.ArchivedPatientsByDoctorId;
 using App.Application.PatientOperations.Query.PatientDetails;
+using App.Domain.DTOs.Common.Response;
 using App.Domain.DTOs.PatientDtos.Request;
 using App.Domain.DTOs.PatientDtos.Response;
 using Microsoft.AspNetCore.Authorization;
@@ -44,7 +45,7 @@ public class PatientController : BaseController
     /// <param name="archiveComment">Comment for archiving the patient.</param>
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
     [HttpPut("archive-patient/{patientId}")]
-    public async Task<ActionResult> ArchivePatient(Guid patientId, [FromBody] string archiveComment) =>
+    public async Task<ActionResult> ArchivePatient(Guid patientId, string archiveComment) =>
         HandleOperationResult(await Mediator.Send(new ArchivePatientCommand(patientId, archiveComment)));
 
     /// <summary>

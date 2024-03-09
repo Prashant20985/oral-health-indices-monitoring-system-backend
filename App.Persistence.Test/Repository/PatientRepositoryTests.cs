@@ -1,4 +1,4 @@
-﻿using App.Domain.DTOs.PatientDtos.Response;
+﻿using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Enums;
 using App.Domain.Models.OralHealthExamination;
 using App.Persistence.Contexts;

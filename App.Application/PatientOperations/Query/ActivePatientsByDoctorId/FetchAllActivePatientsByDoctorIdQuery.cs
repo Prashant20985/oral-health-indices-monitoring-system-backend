@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs.PatientDtos.Response;
+using App.Domain.DTOs.Common.Response;
 using MediatR;
 
 namespace App.Application.PatientOperations.Query.ActivePatientsByDoctorId;

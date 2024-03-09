@@ -1,6 +1,6 @@
 ﻿using App.Domain.Models.Common.APIBleeding;
 
-namespace App.Domain.DTOs.PatientDtos.Response;
+namespace App.Domain.DTOs.Common.Response;
 
 /// <summary>
 /// Data transfer object representing information about API (Aproximal Plaque Index) and Bleeding.

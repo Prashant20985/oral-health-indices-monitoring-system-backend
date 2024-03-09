@@ -1,6 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.PatientOperations.Query.ArchivedPatientsByDoctorId;
-using App.Domain.DTOs.PatientDtos.Response;
+using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Http;

@@ -1,4 +1,5 @@
-﻿using App.Domain.DTOs.PatientDtos.Response;
+﻿using App.Domain.DTOs.Common.Response;
+using App.Domain.DTOs.PatientDtos.Response;
 using App.Domain.Models.OralHealthExamination;
 using App.Domain.Repository;
 using App.Persistence.Contexts;
@@ -58,6 +59,7 @@ public class PatientRepository : IPatientRepository
     public async Task<PatientExaminationDto> GetPatientDetails(Guid patientId) => await _oralEhrContext.Patients
         .Where(patient => patient.Id.Equals(patientId))
         .ProjectTo<PatientExaminationDto>(_mapper.ConfigurationProvider)
+        .AsNoTracking()
         .FirstOrDefaultAsync();
 
 }

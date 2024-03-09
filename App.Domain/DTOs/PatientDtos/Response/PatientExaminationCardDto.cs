@@ -1,4 +1,6 @@
-﻿namespace App.Domain.DTOs.PatientDtos.Response;
+﻿using App.Domain.DTOs.Common.Response;
+
+namespace App.Domain.DTOs.PatientDtos.Response;
 
 /// <summary>
 /// Data transfer object representing information about a patient examination card.

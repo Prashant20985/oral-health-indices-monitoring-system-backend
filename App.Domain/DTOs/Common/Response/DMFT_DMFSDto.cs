@@ -1,6 +1,6 @@
 ﻿using App.Domain.Models.Common.DMFT_DMFS;
 
-namespace App.Domain.DTOs.PatientDtos.Response;
+namespace App.Domain.DTOs.Common.Response;
 
 /// <summary>
 /// Data transfer object representing information about DMFT (Decayed, Missing, Filled Teeth) and DMFS (Decayed, Missing, Filled Surfaces) assessment.

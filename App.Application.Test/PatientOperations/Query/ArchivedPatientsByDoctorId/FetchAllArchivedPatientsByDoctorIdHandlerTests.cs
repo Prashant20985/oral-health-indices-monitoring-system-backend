@@ -1,5 +1,5 @@
 ﻿using App.Application.PatientOperations.Query.ArchivedPatientsByDoctorId;
-using App.Domain.DTOs.PatientDtos.Response;
+using App.Domain.DTOs.Common.Response;
 using MockQueryable.Moq;
 using Moq;
 
