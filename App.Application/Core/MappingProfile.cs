@@ -1,5 +1,8 @@
 ﻿using App.Domain.DTOs;
+using App.Domain.DTOs.Common.Response;
+using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.DTOs.PatientDtos.Response;
+using App.Domain.Models.CreditSchema;
 using App.Domain.Models.Enums;
 using App.Domain.Models.OralHealthExamination;
 using App.Domain.Models.Users;
@@ -52,7 +55,8 @@ public class MappingProfile : Profile
         // CreateMap<TSource, TDestination> creates a mapping from Patient to PatientExaminationDto
         CreateMap<Patient, PatientExaminationDto>()
             .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"))
-            .ForMember(x => x.ResearchGroupName, o => o.MapFrom(s => s.ResearchGroup.GroupName));
+            .ForMember(x => x.ResearchGroupName, o => o.MapFrom(s => s.ResearchGroup.GroupName))
+            .ForMember(x => x.ExaminationCards, o => o.MapFrom(s => s.PatientExaminationCards));
 
         // CreateMap<TSource, TDestination> creates a mapping from RiskFactorAssessment to RiskFactorAssessmentDto
         CreateMap<RiskFactorAssessment, RiskFactorAssessmentDto>();
@@ -80,5 +84,28 @@ public class MappingProfile : Profile
         CreateMap<PatientExaminationTestMode, PatientExaminationTestModeDto>()
             .ForMember(x => x.StudentName, o => o.MapFrom(s => $"{s.Student.FirstName} {s.Student.LastName}"))
             .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"));
+
+        // CreateMap<TSource, TDestination> creates a mapping from Exam to ExamDto
+        CreateMap<Exam, ExamDto>();
+
+        // CreateMap<TSource, TDestination> creates a mapping from PracticePatient to PatientDto
+        CreateMap<PracticePatient, PatientDto>();
+
+        // CreateMap<TSource, TDestination> creates a mapping from PracticeRiskFactorAssessment to RiskFactorAssessment
+        CreateMap<PracticeRiskFactorAssessment, RiskFactorAssessment>();
+
+        // CreateMap<TSource, TDestination> creates a mapping from PracticeBewe to BeweDto
+        CreateMap<PracticeBewe, BeweDto>();
+
+        // CreateMap<TSource, TDestination> creates a mapping from PracticeDMFT_DMFS to DMFT_DMFSDto
+        CreateMap<PracticeDMFT_DMFS, DMFT_DMFSDto>();
+
+        // CreateMap<TSource, TDestination> creates a mapping from PracticeAPIBleeding to APIBleedingDto
+        CreateMap<PracticeAPIBleeding, APIBleedingDto>();
+
+        // CreateMap<TSource, TDestination> creates a mapping from PracticePatientExaminationCard to PracticePatientExaminationCardDto
+        CreateMap<PracticePatientExaminationCard, PracticePatientExaminationCardDto>()
+            .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Exam.Group.Teacher.FirstName} {s.Exam.Group.Teacher.LastName} ({s.Exam.Group.Teacher.UserName})"))
+            .ForMember(x => x.StudentName, o => o.MapFrom(s => $"{s.Student.FirstName} {s.Student.LastName} ({s.Student.UserName})"));
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace App.Domain.DTOs.PatientDtos.Response;
+﻿namespace App.Domain.DTOs.Common.Response;
 
 
 /// <summary>

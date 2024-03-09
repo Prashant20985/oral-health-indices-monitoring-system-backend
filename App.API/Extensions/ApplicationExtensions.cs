@@ -103,6 +103,8 @@ public static class ApplicationExtension
         // Add a scoped dependency for IResearchGroupRepository with the implementation of ResearchGroupRepository.
         services.AddScoped<IResearchGroupRepository, ResearchGroupRepository>();
 
+        services.AddScoped<IStudentExamRepository, StudentExamRepository>();
+
         // Configure and bind the EmailSettings section from the configuration.
         services.Configure<EmailSettings>(configuration.GetSection(nameof(EmailSettings)));
 

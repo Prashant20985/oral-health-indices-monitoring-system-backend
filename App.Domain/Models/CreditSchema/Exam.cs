@@ -22,7 +22,8 @@ public class Exam(DateTime dateOfExamination,
     TimeOnly startTime,
     TimeOnly endTime,
     int duration,
-    int maxMark)
+    int maxMark,
+    Guid groupId)
 {
 
     /// <summary>
@@ -78,7 +79,7 @@ public class Exam(DateTime dateOfExamination,
     /// <summary>
     /// Gets or sets the unique identifier of the group associated with the examination.
     /// </summary>
-    public Guid GroupId { get; set; }
+    public Guid GroupId { get; set; } = groupId;
     public virtual Group Group { get; set; }
 
     /// <summary>
