@@ -10,7 +10,6 @@ using App.Application.PatientOperations.Query.ArchivedPatientsByDoctorId;
 using App.Application.PatientOperations.Query.PatientDetails;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.DTOs.PatientDtos.Request;
-using App.Domain.DTOs.PatientDtos.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -112,7 +111,7 @@ public class PatientController : BaseController
     /// <param name="patientId">ID of the patient to fetch details for.</param>
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     [HttpGet("patient-details/{patientId}")]
-    public async Task<ActionResult<PatientExaminationDto>> FetchPatientDetails(Guid patientId) =>
+    public async Task<ActionResult<PatientDto>> FetchPatientDetails(Guid patientId) =>
         HandleOperationResult(await Mediator.Send(new FetchPatientDetailsQuery(patientId)));
 
 }

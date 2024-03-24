@@ -1,5 +1,4 @@
 ﻿using App.Domain.DTOs.Common.Response;
-using App.Domain.DTOs.PatientDtos.Response;
 using App.Domain.Models.OralHealthExamination;
 
 namespace App.Domain.Repository;
@@ -22,5 +21,5 @@ public interface IPatientRepository
 
     Task<Patient> GetPatientByEmail(string email);
 
-    Task<PatientExaminationDto> GetPatientDetails(Guid patientId);
+    Task<PatientDto> GetPatientDetails(Guid patientId);
 }

@@ -52,12 +52,6 @@ public class MappingProfile : Profile
             .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"))
             .ForMember(x => x.ResearchGroupName, o => o.MapFrom(s => s.ResearchGroup.GroupName));
 
-        // CreateMap<TSource, TDestination> creates a mapping from Patient to PatientExaminationDto
-        CreateMap<Patient, PatientExaminationDto>()
-            .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"))
-            .ForMember(x => x.ResearchGroupName, o => o.MapFrom(s => s.ResearchGroup.GroupName))
-            .ForMember(x => x.ExaminationCards, o => o.MapFrom(s => s.PatientExaminationCards));
-
         // CreateMap<TSource, TDestination> creates a mapping from RiskFactorAssessment to RiskFactorAssessmentDto
         CreateMap<RiskFactorAssessment, RiskFactorAssessmentDto>();
 
