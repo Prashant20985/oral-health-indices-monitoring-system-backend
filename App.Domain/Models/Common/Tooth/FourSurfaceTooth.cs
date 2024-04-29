@@ -2,8 +2,8 @@
 
 public class FourSurfaceTooth
 {
-    public string Surface1 { get; set; }
-    public string Surface2 { get; set; }
-    public string Surface3 { get; set; }
-    public string Surface4 { get; set; }
+    public string B { get; set; }
+    public string L { get; set; }
+    public string D { get; set; }
+    public string M { get; set; }
 }
