@@ -2,8 +2,8 @@
 
 public class FourSurfaceTooth
 {
-    public string Buccal { get; set; }
-    public string Lingual { get; set; }
-    public string Distal { get; set; }
-    public string Mesial { get; set; }
+    public string B { get; set; }
+    public string L { get; set; }
+    public string D { get; set; }
+    public string M { get; set; }
 }
