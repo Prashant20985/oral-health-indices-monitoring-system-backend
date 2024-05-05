@@ -5,8 +5,9 @@ namespace App.Domain.Models.CreditSchema;
 /// <summary>
 /// Represents a practice BEWE (Basic Erosive Wear Examination) assessment.
 /// </summary>
-public class PracticeBewe
+public class PracticeBewe(decimal beweResult)
 {
+
     /// <summary>
     /// Gets or sets the unique identifier of the practice BEWE assessment.
     /// </summary>
@@ -15,7 +16,7 @@ public class PracticeBewe
     /// <summary>
     /// Gets or sets the BEWE result of the assessment.
     /// </summary>
-    public decimal BeweResult { get; set; }
+    public decimal BeweResult { get; set; } = beweResult;
 
     /// <summary>
     /// Gets or sets the comment related to the assessment.
@@ -37,5 +38,7 @@ public class PracticeBewe
     /// </summary>
     /// <param name="comment">The comment to add.</param>
     public void AddComment(string comment) => Comment = comment;
+
+    public void SetAssessmentModel(BeweAssessmentModel assessmentModel) => AssessmentModel = assessmentModel;
 }
 

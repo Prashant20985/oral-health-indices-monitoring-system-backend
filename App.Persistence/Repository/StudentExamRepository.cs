@@ -15,17 +15,38 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
     private readonly IMapper _mapper = mapper;
 
     /// <inheritdoc/>
-    public async Task<Exam> PublishExam(Exam exam)
+    public async Task<ExamDto> PublishExam(Exam exam)
     {
         await _context.Exams.AddAsync(exam);
-        return exam;
+        return _mapper.Map<ExamDto>(exam);
     }
 
     /// <inheritdoc/>
-    public async void DeleteExam(Guid examId)
+    public async Task DeleteExam(Guid examId)
     {
-        var exam = await GetExamById(examId);
+        var exam = await _context.Exams
+            .Include(x => x.PracticePatientExaminationCards)
+            .ThenInclude(x => x.PracticeRiskFactorAssessment)
+            .Include(x => x.PracticePatientExaminationCards)
+            .ThenInclude(x => x.PracticePatient)
+            .Include(x => x.PracticePatientExaminationCards)
+            .ThenInclude(x => x.PracticePatientExaminationResult)
+            .ThenInclude(x => x.APIBleeding)
+            .Include(x => x.PracticePatientExaminationCards)
+            .ThenInclude(x => x.PracticePatientExaminationResult)
+            .ThenInclude(x => x.DMFT_DMFS)
+            .Include(x => x.PracticePatientExaminationCards)
+            .ThenInclude(x => x.PracticePatientExaminationResult)
+            .ThenInclude(x => x.Bewe)
+            .FirstOrDefaultAsync(x => x.Id == examId);
+
         _context.Exams.Remove(exam);
+        _context.PracticePatients.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatient));
+        _context.PracticeRiskFactorAssessments.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticeRiskFactorAssessment));
+        _context.PracticeAPIBleedings.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatientExaminationResult.APIBleeding));
+        _context.PracticeDMFT_DMFSs.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatientExaminationResult.DMFT_DMFS));
+        _context.PracticeBewes.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatientExaminationResult.Bewe));
+
     }
 
     /// <inheritdoc/>
@@ -36,6 +57,7 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
     public async Task<List<ExamDto>> GetExamDtosByGroupId(Guid groupId) => await _context.Exams
         .Where(x => x.GroupId == groupId)
         .ProjectTo<ExamDto>(_mapper.ConfigurationProvider)
+        .OrderByDescending(x => x.DateOfExamination)
         .ToListAsync();
 
     /// <inheritdoc/>
@@ -48,7 +70,9 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
     public async Task<List<PracticePatientExaminationCardDto>> GetPracticePatientExaminationCardsByExamId(Guid examId) => 
         await _context.PracticePatientExaminationCards
             .Where(x => x.ExamId == examId)
+            .OrderBy(x => x.Student.UserName)
             .ProjectTo<PracticePatientExaminationCardDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
             .ToListAsync();
 
     /// <inheritdoc/>
@@ -56,18 +80,14 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
         await _context.PracticePatientExaminationCards
             .Where(x => x.Id == practicePatientExaminationCardId)
             .ProjectTo<PracticePatientExaminationCardDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
             .FirstOrDefaultAsync();
 
     /// <inheritdoc/>
     public async Task<PracticePatientExaminationCard> GetPracticePatientExaminationCardById(Guid practicePatientExaminationCardId) => 
-        await _context.PracticePatientExaminationCards.FindAsync(practicePatientExaminationCardId);
-
-    /// <inheritdoc/>
-    public async Task<PracticeRiskFactorAssessment> GetPracticeRiskFactorAssessment(Guid practicePatientExaminationCardId) =>
-    await _context.PracticePatientExaminationCards
-        .Where(x => x.Id == practicePatientExaminationCardId)
-        .Select(x => x.PracticeRiskFactorAssessment)
-        .FirstOrDefaultAsync();
+        await _context.PracticePatientExaminationCards
+        .Include(x => x.Exam)
+        .FirstOrDefaultAsync(x => x.Id == practicePatientExaminationCardId);
 
     /// <inheritdoc/>
     public async Task<PracticeAPIBleeding> GetPracticeAPIBleedingByCardId(Guid practicePatientExaminationCardId) =>
@@ -91,59 +111,41 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
             .FirstOrDefaultAsync();
 
     /// <inheritdoc/>
-    public async Task<List<ExamDto>> GetExamDtosByStudentId(string studentId) => await _context.Exams
-        .Where(x => x.Group.StudentGroups.Any(x => x.StudentId == studentId))
-        .ProjectTo<ExamDto>(_mapper.ConfigurationProvider)
-        .ToListAsync();
-
-    /// <inheritdoc/>
-    public async Task<PracticePatientExaminationCard> AddPracticePatientExaminationCard(PracticePatientExaminationCard practicePatientExaminationCard)
-    {
+    public async Task AddPracticePatientExaminationCard(PracticePatientExaminationCard practicePatientExaminationCard) =>
         await _context.PracticePatientExaminationCards.AddAsync(practicePatientExaminationCard);
-        return practicePatientExaminationCard;
-    }
 
     /// <inheritdoc/>
-    public async Task<PatientDto> AddPracticePatient(PracticePatient practicePatient, Guid practicePatientExaminationCardId)
-    {
+    public async Task AddPracticePatient(PracticePatient practicePatient) =>
         await _context.PracticePatients.AddAsync(practicePatient);
-        var practicePatientExaminationCard = await GetPracticePatientExaminationCardById(practicePatientExaminationCardId);
-        practicePatientExaminationCard.SetPatientId(practicePatient.Id);
-        return _mapper.Map<PatientDto>(practicePatient);
-    }
 
     /// <inheritdoc/>
-    public async Task<PracticeRiskFactorAssessment> AddPracticeRiskFactorAssessment(PracticeRiskFactorAssessment practiceRiskFactorAssessment)
-    {
+    public async Task AddPracticeRiskFactorAssessment(PracticeRiskFactorAssessment practiceRiskFactorAssessment) =>
         await _context.PracticeRiskFactorAssessments.AddAsync(practiceRiskFactorAssessment);
-        return practiceRiskFactorAssessment;
-    }
 
     /// <inheritdoc/>
-    public async Task<PracticeDMFT_DMFS> AddPracticeDMFT_DMFS(PracticeDMFT_DMFS practiceDMFT_DMFS)
-    {
+    public async Task AddPracticeDMFT_DMFS(PracticeDMFT_DMFS practiceDMFT_DMFS) =>
         await _context.PracticeDMFT_DMFSs.AddAsync(practiceDMFT_DMFS);
-        return practiceDMFT_DMFS;
-    }
 
     /// <inheritdoc/>
-    public async Task<PracticeAPIBleeding> AddPracticeAPIBleeding(PracticeAPIBleeding practiceAPIBleeding)
-    {
+    public async Task AddPracticeAPIBleeding(PracticeAPIBleeding practiceAPIBleeding) =>
         await _context.PracticeAPIBleedings.AddAsync(practiceAPIBleeding);
-        return practiceAPIBleeding;
-    }
 
     /// <inheritdoc/>
-    public async Task<PracticeBewe> AddPracticeBewe(PracticeBewe practiceBewe)
-    {
+    public async Task AddPracticeBewe(PracticeBewe practiceBewe) =>
         await _context.PracticeBewes.AddAsync(practiceBewe);
-        return practiceBewe;
-    }
 
     /// <inheritdoc/>
-    public async Task<PracticePatientExaminationResult> AddPracticePatientExaminationResult(PracticePatientExaminationResult practicePatientExaminationResult)
-    {
+    public async Task AddPracticePatientExaminationResult(PracticePatientExaminationResult practicePatientExaminationResult) =>
         await _context.PracticePatientExaminationResults.AddAsync(practicePatientExaminationResult);
-        return practicePatientExaminationResult;
-    }
+
+    /// <inheritdoc/>
+    public async Task<bool> CheckIfStudentHasAlreadyTakenTheExam(Guid examId, string studentId) =>
+        await _context.PracticePatientExaminationCards.AnyAsync(x => x.StudentId == studentId && x.ExamId == examId);
+
+    /// <inheritdoc/>
+    public async Task<PracticePatientExaminationCardDto> GetPracticePatientExaminationCardByExamIdAndStudentId(Guid examId, string studentId) =>
+        await _context.PracticePatientExaminationCards
+            .Where(x => x.ExamId == examId && x.StudentId == studentId)
+            .ProjectTo<PracticePatientExaminationCardDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync();
 }
