@@ -14,13 +14,13 @@ public interface IStudentExamRepository
     /// </summary>
     /// <param name="exam">The exam to be published.</param>
     /// <returns>The published exam.</returns>
-    Task<Exam> PublishExam(Exam exam);
+    Task<ExamDto> PublishExam(Exam exam);
 
     /// <summary>
     /// Deletes an exam by its ID.
     /// </summary>
     /// <param name="examId">The ID of the exam to be deleted.</param>
-    void DeleteExam(Guid examId);
+    Task DeleteExam(Guid examId);
 
     /// <summary>
     /// Retrieves an exam by its ID.
@@ -65,13 +65,6 @@ public interface IStudentExamRepository
     Task<PracticePatientExaminationCard> GetPracticePatientExaminationCardById(Guid practicePatientExaminationCardId);
 
     /// <summary>
-    /// Retrieves a practice risk factor assessment by practice patient examination card ID.
-    /// </summary>
-    /// <param name="practicePatientExaminationCardId">The ID of the practice patient examination card.</param>
-    /// <returns>The practice risk factor assessment corresponding to the provided practice patient examination card ID.</returns>
-    Task<PracticeRiskFactorAssessment> GetPracticeRiskFactorAssessment(Guid practicePatientExaminationCardId);
-
-    /// <summary>
     /// Retrieves a practice API bleeding assessment by practice patient examination card ID.
     /// </summary>
     /// <param name="practicePatientExaminationCardId">The ID of the practice patient examination card.</param>
@@ -93,53 +86,62 @@ public interface IStudentExamRepository
     Task<PracticeBewe> GetPracticeBeweByCardId(Guid practicePatientExaminationCardId);
 
     /// <summary>
-    /// Retrieves exam data transfer objects (DTOs) by student ID.
-    /// </summary>
-    /// <param name="studentId">The ID of the student for whom to retrieve exam DTOs.</param>
-    /// <returns>A list of exam DTOs belonging to the specified student.</returns>
-    Task<List<ExamDto>> GetExamDtosByStudentId(string studentId);
-
-    /// <summary>
     /// Adds a practice patient and associates it with a practice patient examination card.
     /// </summary>
     /// <param name="practicePatient">The practice patient to add.</param>
-    /// <param name="practicePatientExaminationCardId">The ID of the practice patient examination card to associate with the practice patient.</param>
-    /// <returns>The added patient DTO.</returns>
-    Task<PatientDto> AddPracticePatient(PracticePatient practicePatient, Guid practicePatientExaminationCardId);
+    Task AddPracticePatient(PracticePatient practicePatient);
 
     /// <summary>
     /// Adds a practice risk factor assessment.
     /// </summary>
     /// <param name="practiceRiskFactorAssessment">The practice risk factor assessment to add.</param>
-    /// <returns>The added practice risk factor assessment.</returns>
-    Task<PracticeRiskFactorAssessment> AddPracticeRiskFactorAssessment(PracticeRiskFactorAssessment practiceRiskFactorAssessment);
+    Task AddPracticeRiskFactorAssessment(PracticeRiskFactorAssessment practiceRiskFactorAssessment);
 
     /// <summary>
     /// Adds a practice DMFT/DMFS assessment.
     /// </summary>
     /// <param name="practiceDMFT_DMFS">The practice DMFT/DMFS assessment to add.</param>
-    /// <returns>The added practice DMFT/DMFS assessment.</returns>
-    Task<PracticeDMFT_DMFS> AddPracticeDMFT_DMFS(PracticeDMFT_DMFS practiceDMFT_DMFS);
+    Task AddPracticeDMFT_DMFS(PracticeDMFT_DMFS practiceDMFT_DMFS);
 
     /// <summary>
     /// Adds a practice API bleeding assessment.
     /// </summary>
     /// <param name="practiceAPIBleeding">The practice API bleeding assessment to add.</param>
-    /// <returns>The added practice API bleeding assessment.</returns>
-    Task<PracticeAPIBleeding> AddPracticeAPIBleeding(PracticeAPIBleeding practiceAPIBleeding);
+    Task AddPracticeAPIBleeding(PracticeAPIBleeding practiceAPIBleeding);
 
     /// <summary>
     /// Adds a practice BEWE assessment.
     /// </summary>
     /// <param name="practiceBewe">The practice BEWE assessment to add.</param>
-    /// <returns>The added practice BEWE assessment.</returns>
-    Task<PracticeBewe> AddPracticeBewe(PracticeBewe practiceBewe);
+    Task AddPracticeBewe(PracticeBewe practiceBewe);
 
     /// <summary>
     /// Adds a practice patient examination result.
     /// </summary>
     /// <param name="practicePatientExaminationResult">The practice patient examination result to add.</param>
-    /// <returns>The added practice patient examination result.</returns>
-    Task<PracticePatientExaminationResult> AddPracticePatientExaminationResult(PracticePatientExaminationResult practicePatientExaminationResult);
+    Task AddPracticePatientExaminationResult(PracticePatientExaminationResult practicePatientExaminationResult);
+
+    /// <summary>
+    /// Adds a practice patient examination card to the repository.
+    /// </summary>
+    /// <param name="practicePatientExaminationCard">The practice patient examination card to add.</param>
+    public Task AddPracticePatientExaminationCard(PracticePatientExaminationCard practicePatientExaminationCard);
+
+    /// <summary>
+    /// Checks if a student has already taken the exam.
+    /// </summary>
+    /// <param name="examId">The ID of the exam.</param>
+    /// <param name="studentId">The ID of the student.</param>
+    /// <returns>returning true if the student has already taken the exam; otherwise, false.</returns>
+    public Task<bool> CheckIfStudentHasAlreadyTakenTheExam(Guid examId, string studentId);
+
+    /// <summary>
+    /// Retrieves a practice patient examination card by exam ID and student ID.
+    /// </summary>
+    /// <param name="examId"></param>
+    /// <param name="studentId"></param>
+    /// <returns>Returns the practice patient examination card DTO corresponding to the provided Exam Id and Student Id.</returns>
+    public Task<PracticePatientExaminationCardDto> GetPracticePatientExaminationCardByExamIdAndStudentId(Guid examId, string studentId);
+
 }
 

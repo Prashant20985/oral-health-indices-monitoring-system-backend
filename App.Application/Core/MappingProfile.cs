@@ -80,13 +80,14 @@ public class MappingProfile : Profile
             .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"));
 
         // CreateMap<TSource, TDestination> creates a mapping from Exam to ExamDto
-        CreateMap<Exam, ExamDto>();
+        CreateMap<Exam, ExamDto>()
+            .ForMember(x => x.ExamStatus, o => o.MapFrom(s => Enum.GetName(s.ExamStatus)));
 
         // CreateMap<TSource, TDestination> creates a mapping from PracticePatient to PatientDto
         CreateMap<PracticePatient, PatientDto>();
 
         // CreateMap<TSource, TDestination> creates a mapping from PracticeRiskFactorAssessment to RiskFactorAssessment
-        CreateMap<PracticeRiskFactorAssessment, RiskFactorAssessment>();
+        CreateMap<PracticeRiskFactorAssessment, RiskFactorAssessmentDto>();
 
         // CreateMap<TSource, TDestination> creates a mapping from PracticeBewe to BeweDto
         CreateMap<PracticeBewe, BeweDto>();
@@ -96,6 +97,8 @@ public class MappingProfile : Profile
 
         // CreateMap<TSource, TDestination> creates a mapping from PracticeAPIBleeding to APIBleedingDto
         CreateMap<PracticeAPIBleeding, APIBleedingDto>();
+
+        CreateMap<PracticePatientExaminationResult, PatientExaminationResultDto>();
 
         // CreateMap<TSource, TDestination> creates a mapping from PracticePatientExaminationCard to PracticePatientExaminationCardDto
         CreateMap<PracticePatientExaminationCard, PracticePatientExaminationCardDto>()

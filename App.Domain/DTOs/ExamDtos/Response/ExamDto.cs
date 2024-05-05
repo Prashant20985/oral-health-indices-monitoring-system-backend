@@ -52,5 +52,5 @@ public class ExamDto
     /// <summary>
     /// Gets or sets the status of the examination.
     /// </summary>
-    public ExamStatus ExamStatus { get; set; }
+    public string ExamStatus { get; set; }
 }

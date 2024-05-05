@@ -15,11 +15,14 @@ public class PracticeRiskFactorAssessment
     /// <summary>
     /// Gets or sets the risk factor assessment model associated with this assessment.
     /// </summary>
-    public RiskFactorAssessmentModel RiskFactorAssessmentModel { get; set; }
+    public RiskFactorAssessmentModel RiskFactorAssessmentModel { get; private set; }
 
     /// <summary>
     /// Gets or sets the examination card associated with this assessment.
     /// </summary>
     public virtual PracticePatientExaminationCard PracticePatientExaminationCard { get; set; }
+
+    public void SetRiskFactorAssessmentModel(RiskFactorAssessmentModel riskFactorAssessmentModel) => 
+        RiskFactorAssessmentModel = riskFactorAssessmentModel;
 }
 

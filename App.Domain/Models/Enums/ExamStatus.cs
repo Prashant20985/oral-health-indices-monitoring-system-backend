@@ -2,5 +2,5 @@
 
 public enum ExamStatus
 {
-    Published, Submitted, Graded
+    Published, Graded
 }

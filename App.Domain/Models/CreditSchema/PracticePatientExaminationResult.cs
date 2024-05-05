@@ -3,8 +3,9 @@
 /// <summary>
 /// Represents the examination result for a patient in a practice scenario.
 /// </summary>
-public class PracticePatientExaminationResult
+public class PracticePatientExaminationResult(Guid beweId, Guid dMFT_DMFSId, Guid aPIBleedingId)
 {
+
     /// <summary>
     /// Gets or sets the unique identifier of the patient examination result.
     /// </summary>
@@ -13,7 +14,7 @@ public class PracticePatientExaminationResult
     /// <summary>
     /// Gets or sets the unique identifier of the BEWE assessment associated with this examination result.
     /// </summary>
-    public Guid BeweId { get; set; }
+    public Guid BeweId { get; set; } = beweId;
 
     /// <summary>
     /// Gets or sets the BEWE assessment associated with this examination result.
@@ -23,7 +24,7 @@ public class PracticePatientExaminationResult
     /// <summary>
     /// Gets or sets the unique identifier of the DMFT_DMFS assessment associated with this examination result.
     /// </summary>
-    public Guid DMFT_DMFSId { get; set; }
+    public Guid DMFT_DMFSId { get; set; } = dMFT_DMFSId;
 
     /// <summary>
     /// Gets or sets the DMFT_DMFS assessment associated with this examination result.
@@ -33,7 +34,7 @@ public class PracticePatientExaminationResult
     /// <summary>
     /// Gets or sets the unique identifier of the API bleeding assessment associated with this examination result.
     /// </summary>
-    public Guid APIBleedingId { get; set; }
+    public Guid APIBleedingId { get; set; } = aPIBleedingId;
 
     /// <summary>
     /// Gets or sets the API bleeding assessment associated with this examination result.
