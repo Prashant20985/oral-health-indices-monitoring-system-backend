@@ -12,6 +12,7 @@ using App.Application.DentistTeacherOperations.Query.Groups;
 using App.Application.DentistTeacherOperations.Query.PatientsNotInResearchGroups;
 using App.Application.DentistTeacherOperations.Query.ResearchGroupDetailsById;
 using App.Application.DentistTeacherOperations.Query.ResearchGroups;
+using App.Application.DentistTeacherOperations.Query.StudentGroupDetails;
 using App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
 using App.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
@@ -96,6 +97,15 @@ public class DentistTeacherController : BaseController
     [HttpGet("groups")]
     public async Task<ActionResult<List<GroupDto>>> GetAllGroups() => HandleOperationResult(
         await Mediator.Send(new FetchGroupsQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
+
+    /// <summary>
+    /// Retrieves details about a student group by group id.
+    /// </summary>
+    /// <returns>An HTTP response indicating the result of the operation.</returns>
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [HttpGet("group-details/{groupId}")]
+    public async Task<ActionResult<GroupDto>> GetGroupDetails(Guid groupId) => HandleOperationResult(
+               await Mediator.Send(new FetchStudentGroupQuery(groupId)));
 
     /// <summary>
     /// Retrieves a list of all research groups.

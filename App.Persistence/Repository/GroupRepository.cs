@@ -80,4 +80,17 @@ public class GroupRepository : IGroupRepository
                 Students = x.StudentGroups.Select(x => _mapper.Map<StudentDto>(x.Student)).ToList()
             }).ToListAsync();
     }
+
+    /// <inheritdoc />
+    public async Task<GroupDto> GetGroupDetailsWithStudentList(Guid groupId)
+    {
+        return await _oralEhrContext.Groups
+            .Where(x => x.Id == groupId)
+            .Select(x => new GroupDto
+            {
+                Id = x.Id,
+                GroupName = x.GroupName,
+                Students = x.StudentGroups.Select(x => _mapper.Map<StudentDto>(x.Student)).ToList()
+            }).FirstOrDefaultAsync();
+    }
 }
