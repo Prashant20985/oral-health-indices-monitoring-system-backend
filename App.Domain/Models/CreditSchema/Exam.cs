@@ -22,7 +22,7 @@ public class Exam(DateTime dateOfExamination,
     string description,
     TimeOnly startTime,
     TimeOnly endTime,
-    int duration,
+    TimeSpan durationInterval,
     int maxMark,
     Guid groupId)
 {
@@ -65,7 +65,7 @@ public class Exam(DateTime dateOfExamination,
     /// <summary>
     /// Gets or sets the duration of the examination in minutes.
     /// </summary>
-    public int Duration { get; private set; } = duration;
+    public TimeSpan DurationInterval { get; private set; } = durationInterval;
 
     /// <summary>
     /// Gets or sets the maximum mark of the examination.
@@ -97,7 +97,7 @@ public class Exam(DateTime dateOfExamination,
         Description = updateExam.Description;
         StartTime = updateExam.StartTime;
         EndTime = updateExam.EndTime;
-        Duration = updateExam.Duration;
+        DurationInterval = updateExam.DurationInterval;
         MaxMark = updateExam.MaxMark;
     }
 }

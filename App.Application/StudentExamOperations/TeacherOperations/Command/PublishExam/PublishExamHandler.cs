@@ -28,7 +28,7 @@ internal sealed class PublishExamHandler(IStudentExamRepository studentExamRepos
                         request.PublishExam.Description,
                         request.PublishExam.StartTime,
                         request.PublishExam.EndTime,
-                        request.PublishExam.Duration,
+                        request.PublishExam.DurationInterval,
                         request.PublishExam.MaxMark,
                         request.PublishExam.GroupId);
 

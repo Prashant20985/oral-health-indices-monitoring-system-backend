@@ -39,10 +39,11 @@ public class UpdateExamCommandValidator
             .WithMessage("End time must be greater than start time")
             .OverridePropertyName("EndTime");
 
-        RuleFor(x => x.UpdateExam.Duration)
+        RuleFor(x => x.UpdateExam.DurationInterval)
             .NotEmpty()
-            .GreaterThan(0)
-            .Must((command, duration) => command.UpdateExam.EndTime - command.UpdateExam.StartTime >= TimeSpan.FromHours(duration))
+            .GreaterThan(TimeSpan.Zero)
+            .WithMessage("Duration must be greater than zero")
+            .Must((command, duration) => duration <= command.UpdateExam.EndTime - command.UpdateExam.StartTime)
             .OverridePropertyName("Duration");
     }
 }
