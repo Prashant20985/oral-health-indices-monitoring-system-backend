@@ -42,11 +42,11 @@ public class PublishExamCommandValidator : AbstractValidator<PublishExamCommand>
             .NotEmpty()
             .OverridePropertyName("GroupId");
 
-        RuleFor(x => x.PublishExam.Duration)
+        RuleFor(x => x.PublishExam.DurationInterval)
             .NotEmpty()
-            .GreaterThan(0)
-            .Must((command, duration) => 
-                command.PublishExam.EndTime - command.PublishExam.StartTime >= TimeSpan.FromHours(duration))
+            .GreaterThan(TimeSpan.Zero)
+            .WithMessage("Duration must be greater than zero")
+            .Must((command, duration) => duration <= command.PublishExam.EndTime - command.PublishExam.StartTime)
             .OverridePropertyName("Duration");
     }
 }

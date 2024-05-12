@@ -29,7 +29,7 @@ public class ExamConfiguration : IEntityTypeConfiguration<Exam>
         builder.Property(x => x.EndTime)
             .IsRequired();
 
-        builder.Property(x => x.Duration)
+        builder.Property(x => x.DurationInterval)
             .IsRequired();
 
         builder.Property(x => x.ExamStatus)

@@ -42,7 +42,7 @@ public class ExamDto
     /// <summary>
     /// Gets or sets the duration of the examination in minutes.
     /// </summary>
-    public int Duration { get; set; }
+    public TimeSpan DurationInterval { get; set; }
 
     /// <summary>
     /// Gets or sets the maximum mark of the examination.
