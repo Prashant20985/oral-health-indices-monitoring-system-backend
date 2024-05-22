@@ -35,32 +35,32 @@ public class UpperMouth
     /// <summary>
     /// Gets or sets the tooth at position 13 with five surfaces.
     /// </summary>
-    public FiveSurfaceTooth Tooth_13 { get; set; }
+    public FiveSurfaceToothDMFT_DMFS Tooth_13 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 12 with five surfaces.
     /// </summary>
-    public FiveSurfaceTooth Tooth_12 { get; set; }
+    public FiveSurfaceToothDMFT_DMFS Tooth_12 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 11 with five surfaces.
     /// </summary>
-    public FiveSurfaceTooth Tooth_11 { get; set; }
+    public FiveSurfaceToothDMFT_DMFS Tooth_11 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 21 with five surfaces.
     /// </summary>
-    public FiveSurfaceTooth Tooth_21 { get; set; }
+    public FiveSurfaceToothDMFT_DMFS Tooth_21 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 22 with five surfaces.
     /// </summary>
-    public FiveSurfaceTooth Tooth_22 { get; set; }
+    public FiveSurfaceToothDMFT_DMFS Tooth_22 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 23 with five surfaces.
     /// </summary>
-    public FiveSurfaceTooth Tooth_23 { get; set; }
+    public FiveSurfaceToothDMFT_DMFS Tooth_23 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 24 with six surfaces.

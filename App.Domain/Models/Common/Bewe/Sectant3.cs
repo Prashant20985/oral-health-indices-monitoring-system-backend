@@ -10,21 +10,21 @@ public class Sectant3
     /// <summary>
     /// Gets or sets the tooth at position 24.
     /// </summary>
-    public FiveSurfaceTooth Tooth_24 { get; set; }
+    public FiveSurfaceToothBEWE Tooth_24 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 25.
     /// </summary>
-    public FiveSurfaceTooth Tooth_25 { get; set; }
+    public FiveSurfaceToothBEWE Tooth_25 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 26.
     /// </summary>
-    public FiveSurfaceTooth Tooth_26 { get; set; }
+    public FiveSurfaceToothBEWE Tooth_26 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 27.
     /// </summary>
-    public FiveSurfaceTooth Tooth_27 { get; set; }
+    public FiveSurfaceToothBEWE Tooth_27 { get; set; }
 }
 

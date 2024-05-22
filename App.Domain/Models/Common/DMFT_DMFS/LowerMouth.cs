@@ -35,32 +35,32 @@ public class LowerMouth
     /// <summary>
     /// Gets or sets the tooth at position 43 with five surfaces.
     /// </summary>
-    public FiveSurfaceTooth Tooth_43 { get; set; }
+    public FiveSurfaceToothDMFT_DMFS Tooth_43 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 42 with five surfaces.
     /// </summary>
-    public FiveSurfaceTooth Tooth_42 { get; set; }
+    public FiveSurfaceToothDMFT_DMFS Tooth_42 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 41 with five surfaces.
     /// </summary>
-    public FiveSurfaceTooth Tooth_41 { get; set; }
+    public FiveSurfaceToothDMFT_DMFS Tooth_41 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 31 with five surfaces.
     /// </summary>
-    public FiveSurfaceTooth Tooth_31 { get; set; }
+    public FiveSurfaceToothDMFT_DMFS Tooth_31 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 32 with five surfaces.
     /// </summary>
-    public FiveSurfaceTooth Tooth_32 { get; set; }
+    public FiveSurfaceToothDMFT_DMFS Tooth_32 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 33 with five surfaces.
     /// </summary>
-    public FiveSurfaceTooth Tooth_33 { get; set; }
+    public FiveSurfaceToothDMFT_DMFS Tooth_33 { get; set; }
 
     /// <summary>
     /// Gets or sets the tooth at position 34 with six surfaces.
