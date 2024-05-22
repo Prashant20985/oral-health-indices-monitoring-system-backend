@@ -22,7 +22,8 @@ namespace App.Infrastructure.Test.Token
 
         public TokenServiceTests()
         {
-            jwtConfig = new JwtConfig { SecretKey = "yourSuperSecretKeyWith128BitsOrMore", AccessTokenExpiration = 60 };
+            jwtConfig = new JwtConfig { SecretKey = "2925887903cacac60f2bb402514c940cf6c892b6e73b0b63e8ef11b4138c3048",
+                AccessTokenExpiration = 60 };
 
             jwtConfigOptionsMonitor = new Mock<IOptionsMonitor<JwtConfig>>();
             jwtConfigOptionsMonitor.Setup(opt => opt.CurrentValue).Returns(jwtConfig);
