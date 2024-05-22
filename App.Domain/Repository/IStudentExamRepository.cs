@@ -1,5 +1,4 @@
-﻿using App.Domain.DTOs.Common.Response;
-using App.Domain.DTOs.ExamDtos.Response;
+﻿using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.Models.CreditSchema;
 
 namespace App.Domain.Repository;

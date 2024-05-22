@@ -10,6 +10,6 @@ namespace App.Application.StudentExamOperations.TeacherOperations.Command.Publis
 /// Command to publish an exam.
 /// </summary>
 [OralEhrContextUnitOfWork]
-public record PublishExamCommand(PublishExamDto PublishExam) 
+public record PublishExamCommand(PublishExamDto PublishExam)
     : IRequest<OperationResult<ExamDto>>;
 
