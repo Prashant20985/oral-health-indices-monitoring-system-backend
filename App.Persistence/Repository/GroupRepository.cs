@@ -1,4 +1,5 @@
 ﻿using App.Domain.DTOs;
+using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.Models.Users;
 using App.Domain.Repository;
 using App.Persistence.Contexts;
@@ -91,6 +92,33 @@ public class GroupRepository : IGroupRepository
                 Id = x.Id,
                 GroupName = x.GroupName,
                 Students = x.StudentGroups.Select(x => _mapper.Map<StudentDto>(x.Student)).ToList()
+            }).FirstOrDefaultAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task<List<GroupWithExamsListDto>> GetAllGroupsByStudentIdWithExamsList(string studentId)
+    {
+        return await _oralEhrContext.Groups.Where(x => x.StudentGroups.Any(s => s.StudentId == studentId))
+            .Select(x => new GroupWithExamsListDto
+            {
+                Id = x.Id,
+                GroupName = x.GroupName,
+                Teacher = $"{x.Teacher.FirstName} {x.Teacher.LastName} ({x.Teacher.UserName})",
+                Exams = x.Exams.Select(x => _mapper.Map<ExamDto>(x)).ToList()
+            }).ToListAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task<GroupWithExamsListDto> GetGroupDetailsWithExamsListByGroupIdAndStudentId(Guid groupId, string studentId)
+    {
+        return await _oralEhrContext.Groups
+            .Where(x => x.Id == groupId && x.StudentGroups.Any(s => s.StudentId == studentId))
+            .Select(x => new GroupWithExamsListDto
+            {
+                Id = x.Id,
+                GroupName = x.GroupName,
+                Teacher = $"{x.Teacher.FirstName} {x.Teacher.LastName} ({x.Teacher.UserName})",
+                Exams = x.Exams.Select(x => _mapper.Map<ExamDto>(x)).ToList()
             }).FirstOrDefaultAsync();
     }
 }
