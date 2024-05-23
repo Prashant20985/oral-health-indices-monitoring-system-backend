@@ -76,4 +76,19 @@ public interface IGroupRepository
     /// <param name="groupId">The identifier of the group.</param>
     /// <returns>A GroupDto object representing the group and its associated students.</returns>
     Task<GroupDto> GetGroupDetailsWithStudentList(Guid groupId);
+
+    /// <summary>
+    /// Gets a list of groups with associated exams, by student identifier.
+    /// </summary>
+    /// <param name="studentId">The identifier of the student.</param>
+    /// <returns>A list of GroupWithExamsListDto objects representing groups and their associated exams.</returns>
+    Task<List<GroupWithExamsListDto>> GetAllGroupsByStudentIdWithExamsList(string studentId);
+
+    /// <summary>
+    /// Gets the details of a group with a list of exams, by group and student identifier.
+    /// </summary>
+    /// <param name="groupId">The identifier of the group.</param>
+    /// <param name="studentId">The identifier of the student.</param>
+    /// <returns>A GroupWithExamsListDto object representing the group and its associated exams.</returns>
+    Task<GroupWithExamsListDto> GetGroupDetailsWithExamsListByGroupIdAndStudentId(Guid groupId, string studentId);
 }
