@@ -52,7 +52,7 @@ public class TokenService : ITokenService
 
         // Create the security key and signing credentials
         var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtConfig.SecretKey));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         // Create the token descriptor
         var tokenDescriptor = new SecurityTokenDescriptor
