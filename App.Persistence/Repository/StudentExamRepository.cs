@@ -1,5 +1,4 @@
-﻿using App.Domain.DTOs.Common.Response;
-using App.Domain.DTOs.ExamDtos.Response;
+﻿using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.Models.CreditSchema;
 using App.Domain.Repository;
 using App.Persistence.Contexts;
@@ -67,7 +66,7 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
         .FirstOrDefaultAsync();
 
     /// <inheritdoc/>
-    public async Task<List<PracticePatientExaminationCardDto>> GetPracticePatientExaminationCardsByExamId(Guid examId) => 
+    public async Task<List<PracticePatientExaminationCardDto>> GetPracticePatientExaminationCardsByExamId(Guid examId) =>
         await _context.PracticePatientExaminationCards
             .Where(x => x.ExamId == examId)
             .OrderBy(x => x.Student.UserName)
@@ -76,7 +75,7 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
             .ToListAsync();
 
     /// <inheritdoc/>
-    public async Task<PracticePatientExaminationCardDto> GetPracticePatientExaminationCardDtoById(Guid practicePatientExaminationCardId) => 
+    public async Task<PracticePatientExaminationCardDto> GetPracticePatientExaminationCardDtoById(Guid practicePatientExaminationCardId) =>
         await _context.PracticePatientExaminationCards
             .Where(x => x.Id == practicePatientExaminationCardId)
             .ProjectTo<PracticePatientExaminationCardDto>(_mapper.ConfigurationProvider)
@@ -84,7 +83,7 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
             .FirstOrDefaultAsync();
 
     /// <inheritdoc/>
-    public async Task<PracticePatientExaminationCard> GetPracticePatientExaminationCardById(Guid practicePatientExaminationCardId) => 
+    public async Task<PracticePatientExaminationCard> GetPracticePatientExaminationCardById(Guid practicePatientExaminationCardId) =>
         await _context.PracticePatientExaminationCards
         .Include(x => x.Exam)
         .FirstOrDefaultAsync(x => x.Id == practicePatientExaminationCardId);
@@ -104,7 +103,7 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
             .FirstOrDefaultAsync();
 
     /// <inheritdoc/>
-    public async Task<PracticeBewe> GetPracticeBeweByCardId(Guid practicePatientExaminationCardId) => 
+    public async Task<PracticeBewe> GetPracticeBeweByCardId(Guid practicePatientExaminationCardId) =>
         await _context.PracticePatientExaminationCards
             .Where(x => x.Id == practicePatientExaminationCardId)
             .Select(x => x.PracticePatientExaminationResult.Bewe)

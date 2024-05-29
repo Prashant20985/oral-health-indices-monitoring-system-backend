@@ -22,7 +22,7 @@ public class PracticeRiskFactorAssessment
     /// </summary>
     public virtual PracticePatientExaminationCard PracticePatientExaminationCard { get; set; }
 
-    public void SetRiskFactorAssessmentModel(RiskFactorAssessmentModel riskFactorAssessmentModel) => 
+    public void SetRiskFactorAssessmentModel(RiskFactorAssessmentModel riskFactorAssessmentModel) =>
         RiskFactorAssessmentModel = riskFactorAssessmentModel;
 }
 

@@ -74,6 +74,11 @@ public class TestHelper
     protected Mock<IResearchGroupRepository> researchGroupRepositoryMock;
 
     /// <summary>
+    /// Mock instance for the IStudentExamRepository interface, used to simulate studentExamRepository service behavior in tests.
+    /// </summary>
+    protected Mock<IStudentExamRepository> studentExamRepositoryMock;
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="TestHelper"/> class with default mocked dependencies.
     /// </summary>
     public TestHelper()
@@ -90,6 +95,7 @@ public class TestHelper
         userRequestRepositoryMock = new Mock<IUserRequestRepository>();
         patientRepositoryMock = new Mock<IPatientRepository>();
         researchGroupRepositoryMock = new Mock<IResearchGroupRepository>();
+        studentExamRepositoryMock = new Mock<IStudentExamRepository>();
     }
 }
 
