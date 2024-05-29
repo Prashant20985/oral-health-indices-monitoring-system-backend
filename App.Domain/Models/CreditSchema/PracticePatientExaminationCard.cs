@@ -77,5 +77,7 @@ public class PracticePatientExaminationCard(Guid examId, string studentId)
     public void SetDoctorComment(string doctorComment) => DoctorComment = doctorComment;
     public void SetPatientExaminationResultId(Guid patientExaminationResultId) => PatientExaminationResultId = patientExaminationResultId;
     public void SetRiskFactorAssessmentId(Guid riskFactorAssessmentId) => RiskFactorAssessmentId = riskFactorAssessmentId;
+    public void SetPracticePatientExaminationResult(PracticePatientExaminationResult practicePatientExaminationResult) => PracticePatientExaminationResult = practicePatientExaminationResult;
+    public void SetStudent(ApplicationUser student) => Student = student;
 }
 
