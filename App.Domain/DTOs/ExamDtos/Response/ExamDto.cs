@@ -1,6 +1,4 @@
-﻿using App.Domain.Models.Enums;
-
-namespace App.Domain.DTOs.ExamDtos.Response;
+﻿namespace App.Domain.DTOs.ExamDtos.Response;
 
 public class ExamDto
 {

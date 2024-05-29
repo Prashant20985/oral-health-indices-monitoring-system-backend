@@ -18,11 +18,12 @@ public class ResearchGroupRepositoryTests
     {
         _mockOralEhrContext = new Mock<OralEhrContext>();
         var mapperConfig = new MapperConfiguration(
-            cfg => {
+            cfg =>
+            {
                 cfg.CreateMap<ResearchGroup, ResearchGroupDto>();
                 cfg.CreateMap<Patient, ResearchGroupPatientDto>();
             }
-         ) ;
+         );
         var mapper = mapperConfig.CreateMapper();
         _researchGroupRepository = new ResearchGroupRepository(_mockOralEhrContext.Object, mapper);
     }
@@ -46,7 +47,7 @@ public class ResearchGroupRepositoryTests
             .Returns(mockResearchGroups.Object);
 
         // Act
-        var result =  _researchGroupRepository.GetAllResearchGroups();
+        var result = _researchGroupRepository.GetAllResearchGroups();
 
         // Assert
         Assert.NotNull(result);
@@ -66,7 +67,7 @@ public class ResearchGroupRepositoryTests
             .Returns(mockResearchGroups.Object);
 
         // Act
-        var result =  _researchGroupRepository.GetAllResearchGroups();
+        var result = _researchGroupRepository.GetAllResearchGroups();
 
         // Assert
         Assert.NotNull(result);
@@ -98,7 +99,7 @@ public class ResearchGroupRepositoryTests
             .Returns(mockPatients.Object);
 
         // Act
-        var result =  _researchGroupRepository.GetAllPatientsNotInAnyResearchGroup();
+        var result = _researchGroupRepository.GetAllPatientsNotInAnyResearchGroup();
 
         // Assert
         Assert.NotNull(result);
@@ -132,7 +133,7 @@ public class ResearchGroupRepositoryTests
             .Returns(mockPatients.Object);
 
         // Act
-        var result =  _researchGroupRepository.GetAllPatientsNotInAnyResearchGroup();
+        var result = _researchGroupRepository.GetAllPatientsNotInAnyResearchGroup();
 
         // Assert
         Assert.NotNull(result);
