@@ -1,6 +1,8 @@
-﻿using App.Application.Behavior;
+﻿using App.API.LogServices;
+using App.Application.Behavior;
 using App.Application.Core;
 using App.Application.Interfaces;
+using App.Domain.Models.Logs;
 using App.Domain.Repository;
 using App.Domain.UnitOfWork;
 using App.Infrastructure.Configuration;
@@ -113,6 +115,12 @@ public static class ApplicationExtension
 
         // Add a transient for IHttpContextAccessorService with implimentation of HttpContextAccessorService.
         services.AddTransient<IHttpContextAccessorService, HttpContextAccessorService>();
+
+        // Configure and bind the LogsDatabaseSettings section from the configuration.
+        services.Configure<LogsDatabaseSettings>(configuration.GetSection(nameof(LogsDatabaseSettings)));
+
+        // Add a scoped dependency for LogService.
+        services.AddScoped<LogService>();
 
         return services;
     }
