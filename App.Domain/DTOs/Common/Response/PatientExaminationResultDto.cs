@@ -16,8 +16,13 @@ public class PatientExaminationResultDto
     public DMFT_DMFSDto DMFT_DMFS { get; init; }
 
     /// <summary>
-    /// Gets or sets the result of the API (Assessment of Periodontal Inflammation) and Bleeding assessment.
+    /// Gets or sets the result of the API (Assessment of Periodontal Inflammation) assessment.
     /// </summary>
-    public APIBleedingDto APIBleeding { get; init; }
+    public APIDto API { get; init; }
+
+    /// <summary>
+    /// Gets or sets the result of the bleeding assessment.
+    /// </summary>
+    public BleedingDto Bleeding { get; init; }
 }
 

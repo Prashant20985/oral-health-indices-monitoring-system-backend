@@ -29,10 +29,11 @@ public class CommentDMFT_DMFSFormTest
         var studentId = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
-        var practiceAPIBleeding = new PracticeAPIBleeding(22, 22);
+        var practiceAPI = new PracticeAPI(22, 10, 10);
+        var practiceBleeding = new PracticeBleeding(22, 10, 10);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPIBleeding.Id);
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
 
         var comment = "This is a test comment.";
 
@@ -55,11 +56,11 @@ public class CommentDMFT_DMFSFormTest
         var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
         var studentId = Guid.NewGuid().ToString();
 
-        var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
-        var practiceAPIBleeding = new PracticeAPIBleeding(22, 22);
+        var practiceAPI = new PracticeAPI(22, 10, 10);
+        var practiceBleeding = new PracticeBleeding(22, 10, 10);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPIBleeding.Id);
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
 
         var comment = "";
 

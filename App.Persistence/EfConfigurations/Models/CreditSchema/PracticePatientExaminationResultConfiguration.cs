@@ -11,9 +11,14 @@ public class PracticePatientExaminationResultConfiguration
     {
         builder.HasKey(x => x.Id);
 
-        builder.HasOne(x => x.APIBleeding)
+        builder.HasOne(x => x.API)
             .WithOne(x => x.PatientExaminationResult)
-            .HasForeignKey<PracticePatientExaminationResult>(x => x.APIBleedingId)
+            .HasForeignKey<PracticePatientExaminationResult>(x => x.APIId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(x => x.Bleeding)
+            .WithOne(x => x.PatientExaminationResult)
+            .HasForeignKey<PracticePatientExaminationResult>(x => x.BleedingId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasOne(x => x.Bewe)

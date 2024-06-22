@@ -64,11 +64,18 @@ public interface IStudentExamRepository
     Task<PracticePatientExaminationCard> GetPracticePatientExaminationCardById(Guid practicePatientExaminationCardId);
 
     /// <summary>
-    /// Retrieves a practice API bleeding assessment by practice patient examination card ID.
+    /// Retrieves a practice API assessment by practice patient examination card ID.
     /// </summary>
     /// <param name="practicePatientExaminationCardId">The ID of the practice patient examination card.</param>
-    /// <returns>The practice API bleeding assessment corresponding to the provided practice patient examination card ID.</returns>
-    Task<PracticeAPIBleeding> GetPracticeAPIBleedingByCardId(Guid practicePatientExaminationCardId);
+    /// <returns>The practice API assessment corresponding to the provided practice patient examination card ID.</returns>
+    Task<PracticeAPI> GetPracticeAPIByCardId(Guid practicePatientExaminationCardId);
+
+    /// <summary>
+    /// Retrieves a practice Bleeding assessment by practice patient examination card ID.
+    /// </summary>
+    /// <param name="practicePatientExaminationCardId">The ID of the practice patient examination card.</param>
+    /// <returns>The practice Bleeding assessment corresponding to the provided practice patient examination card ID.</returns>
+    Task<PracticeBleeding> GetPracticeBleedingByCardId(Guid practicePatientExaminationCardId);
 
     /// <summary>
     /// Retrieves a practice DMFT/DMFS assessment by practice patient examination card ID.
@@ -103,10 +110,16 @@ public interface IStudentExamRepository
     Task AddPracticeDMFT_DMFS(PracticeDMFT_DMFS practiceDMFT_DMFS);
 
     /// <summary>
-    /// Adds a practice API bleeding assessment.
+    /// Adds a practice API assessment.
     /// </summary>
-    /// <param name="practiceAPIBleeding">The practice API bleeding assessment to add.</param>
-    Task AddPracticeAPIBleeding(PracticeAPIBleeding practiceAPIBleeding);
+    /// <param name="practiceAPI">The practice API assessment to add.</param>
+    Task AddPracticeAPI(PracticeAPI practiceAPI);
+
+    /// <summary>
+    /// Adds a practice API assessment.
+    /// </summary>
+    /// <param name="practiceAPI">The practice API assessment to add.</param>
+    Task AddPracticeBleeding(PracticeBleeding practiceBleeding);
 
     /// <summary>
     /// Adds a practice BEWE assessment.

@@ -1,22 +1,16 @@
-﻿using App.Domain.Models.CreditSchema;
+﻿using App.Domain.Models.OralHealthExamination;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace App.Persistence.EfConfigurations.Models.CreditSchema;
+namespace App.Persistence.EfConfigurations.Models.OralHealthExamination;
 
-public class PracticeAPIBleedingConfiguration : IEntityTypeConfiguration<PracticeAPIBleeding>
+public class BleedingConfiguration : IEntityTypeConfiguration<Bleeding>
 {
-    public void Configure(EntityTypeBuilder<PracticeAPIBleeding> builder)
+    public void Configure(EntityTypeBuilder<Bleeding> builder)
     {
         builder.HasKey(k => k.Id);
 
-        builder.Property(e => e.APIResult)
-            .HasColumnType("decimal(18, 2)");
-
-        builder.Property(e => e.BleedingResult)
-            .HasColumnType("decimal(18, 2)");
-
-        builder.Property(e => e.Comments)
+        builder.Property(e => e.Comment)
             .HasMaxLength(500);
 
         builder.OwnsOne(e => e.AssessmentModel, ownedNavigationBuilder =>
