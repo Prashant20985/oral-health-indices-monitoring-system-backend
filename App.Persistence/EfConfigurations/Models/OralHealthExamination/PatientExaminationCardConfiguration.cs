@@ -14,19 +14,22 @@ internal class PatientExaminationCardConfiguration
         builder.Property(e => e.DoctorComment)
             .HasMaxLength(500);
 
+        builder.Property(e => e.TotalScore)
+            .HasColumnType("decimal(5, 2)");
+
         builder.HasOne(e => e.Patient)
             .WithMany(e => e.PatientExaminationCards)
             .HasForeignKey(e => e.PatientId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(e => e.PatientExaminationRegularMode)
-            .WithOne(e => e.PatientExaminationCard)
-            .HasForeignKey<PatientExaminationCard>(e => e.PatientExaminationRegularModeId)
+        builder.HasOne(e => e.Doctor)
+            .WithMany(e => e.PatientExaminationCardDoctorNavigation)
+            .HasForeignKey(e => e.DoctorId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(e => e.PatientExaminationTestMode)
-            .WithOne(e => e.PatientExaminationCard)
-            .HasForeignKey<PatientExaminationCard>(e => e.PatientExaminationTestModeId)
+        builder.HasOne(e => e.Student)
+            .WithMany(e => e.PatientExaminationCardStudentNavigation)
+            .HasForeignKey(e => e.StudentId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasOne(e => e.RiskFactorAssessment)

@@ -127,9 +127,8 @@ public class ApplicationUser : IdentityUser
     public ICollection<Patient> Patients { get; set; } = new List<Patient>();
     public ICollection<ResearchGroup> PatientGroups { get; set; } = new List<ResearchGroup>();
 
-    public ICollection<PatientExaminationTestMode> PatientExaminationTestModeStudentNavigation { get; set; } = new List<PatientExaminationTestMode>();
-    public ICollection<PatientExaminationTestMode> PatientExaminationTestModeDoctorNavigation { get; set; } = new List<PatientExaminationTestMode>();
-    public ICollection<PatientExaminationRegularMode> PatientExaminationRegularModeDoctorNavigation { get; set; } = new List<PatientExaminationRegularMode>();
+    public ICollection<PatientExaminationCard> PatientExaminationCardStudentNavigation { get; set; } = new List<PatientExaminationCard>();
+    public ICollection<PatientExaminationCard> PatientExaminationCardDoctorNavigation { get; set; } = new List<PatientExaminationCard>();
     public ICollection<PracticePatientExaminationCard> PracticePatientExaminationCards { get; set; } = new List<PracticePatientExaminationCard>();
 }
 
