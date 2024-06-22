@@ -3,6 +3,7 @@ using System;
 using App.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace App.Persistence.Migrations
 {
     [DbContext(typeof(OralEhrContext))]
-    partial class OralEhrContextModelSnapshot : ModelSnapshot
+    [Migration("20240620110554_UpdatedExaminationScheam_Added_API_And_Bleeding")]
+    partial class UpdatedExaminationScheam_Added_API_And_Bleeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,12 +85,6 @@ namespace App.Persistence.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<int>("Mandible")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Maxilla")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.ToTable("PracticeAPI", "credit");
@@ -123,12 +120,6 @@ namespace App.Persistence.Migrations
                     b.Property<string>("Comment")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
-
-                    b.Property<int>("Mandible")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Maxilla")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -324,12 +315,6 @@ namespace App.Persistence.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<int>("Mandible")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Maxilla")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.ToTable("API", "oralHealthExamination");
@@ -365,12 +350,6 @@ namespace App.Persistence.Migrations
                     b.Property<string>("Comment")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
-
-                    b.Property<int>("Mandible")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Maxilla")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

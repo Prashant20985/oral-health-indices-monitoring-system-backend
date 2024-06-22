@@ -2,9 +2,10 @@
 
 namespace App.Domain.DTOs.ExamDtos.Request;
 
-public class PracticeAPIBleedingDto
+public class PracticeBleedingDto
 {
-    public decimal APIResult { get; set; }
-    public decimal BleedingResult { get; set; }
+    public int BleedingResult { get; set; }
+    public int Maxilla { get; set; }
+    public int Mandible { get; set; }
     public APIBleedingAssessmentModel AssessmentModel { get; set; }
 }

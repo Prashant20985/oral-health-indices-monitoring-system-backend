@@ -4,19 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.OralHealthExamination;
 
-public class APIBleedingConfiguration : IEntityTypeConfiguration<APIBleeding>
+public class APIConfiguration : IEntityTypeConfiguration<API>
 {
-    public void Configure(EntityTypeBuilder<APIBleeding> builder)
+    public void Configure(EntityTypeBuilder<API> builder)
     {
         builder.HasKey(k => k.Id);
 
-        builder.Property(e => e.APIResult)
-            .HasColumnType("decimal(18, 2)");
-
-        builder.Property(e => e.BleedingResult)
-            .HasColumnType("decimal(18, 2)");
-
-        builder.Property(e => e.Comments)
+        builder.Property(e => e.Comment)
             .HasMaxLength(500);
 
         builder.OwnsOne(e => e.AssessmentModel, ownedNavigationBuilder =>
