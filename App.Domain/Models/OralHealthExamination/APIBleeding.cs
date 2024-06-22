@@ -2,15 +2,14 @@
 
 namespace App.Domain.Models.OralHealthExamination;
 
-public class Bleeding
+public class APIBleeding
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
-    public int BleedingResult { get; private set; }
-    public int Maxilla { get; set; }
-    public int Mandible { get; set; }
-    public string Comment { get; private set; }
+    public decimal APIResult { get; private set; }
+    public decimal BleedingResult { get; private set; }
+    public string Comments { get; private set; }
     public APIBleedingAssessmentModel AssessmentModel { get; set; }
     public PatientExaminationResult PatientExaminationResult { get; set; }
 
-    public void AddComment(string comment) => Comment = comment;
+    public void AddComment(string comment) => Comments = comment;
 }

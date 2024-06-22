@@ -10,8 +10,7 @@ namespace App.Application.StudentExamOperations.StudentOperations.Command.AddPra
 public record PracticePatientExaminationCardInputModel(
     CreatePatientDto PatientDto,
     RiskFactorAssessmentModel RiskFactorAssessmentModel,
-    PracticeAPIDto PracticeAPI,
-    PracticeBleedingDto PracticeBleeding,
+    PracticeAPIBleedingDto PracticeAPIBleeding,
     PracticeBeweDto PracticeBewe,
     PracticeDMFT_DMFSDto PracticeDMFT_DMFS);
 

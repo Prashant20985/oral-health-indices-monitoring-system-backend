@@ -2,9 +2,8 @@
 using App.Application.StudentExamOperations.CommonOperations.Query.ExamsList;
 using App.Application.StudentExamOperations.StudentOperations.Command.AddPracticePatientExmaintionCard;
 using App.Application.StudentExamOperations.StudentOperations.Query;
-using App.Application.StudentExamOperations.TeacherOperations.Command.CommentAPIForm;
+using App.Application.StudentExamOperations.TeacherOperations.Command.CommentAPIBleedingForm;
 using App.Application.StudentExamOperations.TeacherOperations.Command.CommentBeweForm;
-using App.Application.StudentExamOperations.TeacherOperations.Command.CommentBleedingForm;
 using App.Application.StudentExamOperations.TeacherOperations.Command.CommentDMFT_DMFSForm;
 using App.Application.StudentExamOperations.TeacherOperations.Command.CommentPracticeExaminationCard;
 using App.Application.StudentExamOperations.TeacherOperations.Command.DeleteExam;
@@ -70,6 +69,17 @@ public class StudentExamController : BaseController
         HandleOperationResult(await Mediator.Send(new CommentPracticeExaminationCardCommand(cardId, comment)));
 
     /// <summary>
+    /// Adds a comment to an API Bleeding form.
+    /// </summary>
+    /// <param name="cardId">The ID of the examination card.</param>
+    /// <param name="comment">The comment to be added.</param>
+    /// <returns>An ActionResult.</returns>
+    [Authorize(Roles = "Dentist_Teacher_Examiner")]
+    [HttpPut("comment-apiBleedingForm/{cardId}")]
+    public async Task<ActionResult> CommentPracticeAPIBleedingForm(Guid cardId, string comment) =>
+        HandleOperationResult(await Mediator.Send(new CommentAPIBleedingFormCommand(cardId, comment)));
+
+    /// <summary>
     /// Adds a comment to a DMFT/DMFS form.
     /// </summary>
     /// <param name="cardId">The ID of the examination card.</param>
@@ -90,29 +100,6 @@ public class StudentExamController : BaseController
     [HttpPut("comment-beweForm/{cardId}")]
     public async Task<ActionResult> CommentPracticeBeweForm(Guid cardId, string comment) =>
         HandleOperationResult(await Mediator.Send(new CommentBeweFormCommand(cardId, comment)));
-
-    /// <summary>
-    /// Adds a comment to an API form.
-    /// </summary>
-    /// <param name="cardId">The ID of the examination card.</param>
-    /// <param name="comment">The comment to be added.</param>
-    /// <returns>An ActionResult.</returns>
-    [Authorize(Roles = "Dentist_Teacher_Examiner")]
-    [HttpPut("comment-api-form/{cardId}")]
-    public async Task<ActionResult> CommentPracticeApiForm(Guid cardId, string comment) =>
-        HandleOperationResult(await Mediator.Send(new CommentAPIFormCommand(cardId, comment)));
-
-
-    /// <summary>
-    /// Adds a comment to a bleeding form.
-    /// </summary>
-    /// <param name="cardId">The ID of the examination card.</param>
-    /// <param name="comment">The comment to be added.</param>
-    /// <returns>An ActionResult.</returns>
-    [Authorize(Roles = "Dentist_Teacher_Examiner")]
-    [HttpPut("comment-bleeding-form/{cardId}")]
-    public async Task<ActionResult> CommentPracticeBleedingForm(Guid cardId, string comment) =>
-        HandleOperationResult(await Mediator.Send(new CommentBleedingFormCommand(cardId, comment)));
 
     /// <summary>
     /// Marks an exam as graded.

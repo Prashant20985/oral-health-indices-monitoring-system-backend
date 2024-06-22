@@ -56,14 +56,9 @@ public class AddPracticePatientExaminationCardTest
 
         var riskFactorAssessmentModel = new RiskFactorAssessmentModel();
 
-        var PracticeAPI = new PracticeAPIDto
+        var PracticeAPIBleeding = new PracticeAPIBleedingDto
         {
             APIResult = 22,
-            AssessmentModel = new APIBleedingAssessmentModel()
-        };
-
-        var PracticeBleeding = new PracticeBleedingDto
-        {
             BleedingResult = 33,
             AssessmentModel = new APIBleedingAssessmentModel()
         };
@@ -84,10 +79,9 @@ public class AddPracticePatientExaminationCardTest
         var cardInputModel = new PracticePatientExaminationCardInputModel
             (patientDto,
             riskFactorAssessmentModel,
-            PracticeAPI,
-            PracticeBleeding,
-            PracticeBewe,
-            PracticeDMFT_DMFS);
+            PracticeAPIBleeding,
+            PracticeBewe
+            , PracticeDMFT_DMFS);
 
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
@@ -140,14 +134,9 @@ public class AddPracticePatientExaminationCardTest
 
         var riskFactorAssessmentModel = new RiskFactorAssessmentModel();
 
-        var PracticeAPI = new PracticeAPIDto
+        var PracticeAPIBleeding = new PracticeAPIBleedingDto
         {
             APIResult = 22,
-            AssessmentModel = new APIBleedingAssessmentModel()
-        };
-
-        var PracticeBleeding = new PracticeBleedingDto
-        {
             BleedingResult = 33,
             AssessmentModel = new APIBleedingAssessmentModel()
         };
@@ -167,12 +156,10 @@ public class AddPracticePatientExaminationCardTest
 
         var cardInputModel = new PracticePatientExaminationCardInputModel
             (patientDto,
-            riskFactorAssessmentModel,
-            PracticeAPI,
-            PracticeBleeding,
-            PracticeBewe,
-            PracticeDMFT_DMFS);
-
+             riskFactorAssessmentModel,
+             PracticeAPIBleeding,
+             PracticeBewe,
+             PracticeDMFT_DMFS);
 
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
@@ -225,14 +212,9 @@ public class AddPracticePatientExaminationCardTest
 
         var riskFactorAssessmentModel = new RiskFactorAssessmentModel();
 
-        var PracticeAPI = new PracticeAPIDto
+        var PracticeAPIBleeding = new PracticeAPIBleedingDto
         {
             APIResult = 22,
-            AssessmentModel = new APIBleedingAssessmentModel()
-        };
-
-        var PracticeBleeding = new PracticeBleedingDto
-        {
             BleedingResult = 33,
             AssessmentModel = new APIBleedingAssessmentModel()
         };
@@ -251,13 +233,11 @@ public class AddPracticePatientExaminationCardTest
         };
 
         var cardInputModel = new PracticePatientExaminationCardInputModel
-            (patientDto,
-            riskFactorAssessmentModel,
-            PracticeAPI,
-            PracticeBleeding,
-            PracticeBewe,
-            PracticeDMFT_DMFS);
-
+             (patientDto,
+              riskFactorAssessmentModel,
+              PracticeAPIBleeding,
+              PracticeBewe,
+              PracticeDMFT_DMFS);
 
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
@@ -307,14 +287,9 @@ public class AddPracticePatientExaminationCardTest
 
         var riskFactorAssessmentModel = new RiskFactorAssessmentModel();
 
-        var PracticeAPI = new PracticeAPIDto
+        var PracticeAPIBleeding = new PracticeAPIBleedingDto
         {
             APIResult = 22,
-            AssessmentModel = new APIBleedingAssessmentModel()
-        };
-
-        var PracticeBleeding = new PracticeBleedingDto
-        {
             BleedingResult = 33,
             AssessmentModel = new APIBleedingAssessmentModel()
         };
@@ -333,13 +308,11 @@ public class AddPracticePatientExaminationCardTest
         };
 
         var cardInputModel = new PracticePatientExaminationCardInputModel
-            (patientDto,
-            riskFactorAssessmentModel,
-            PracticeAPI,
-            PracticeBleeding,
-            PracticeBewe,
-            PracticeDMFT_DMFS);
-
+             (patientDto,
+              riskFactorAssessmentModel,
+              PracticeAPIBleeding,
+              PracticeBewe,
+              PracticeDMFT_DMFS);
 
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
@@ -394,14 +367,9 @@ public class AddPracticePatientExaminationCardTest
 
         var riskFactorAssessmentModel = new RiskFactorAssessmentModel();
 
-        var PracticeAPI = new PracticeAPIDto
+        var PracticeAPIBleeding = new PracticeAPIBleedingDto
         {
             APIResult = 22,
-            AssessmentModel = new APIBleedingAssessmentModel()
-        };
-
-        var PracticeBleeding = new PracticeBleedingDto
-        {
             BleedingResult = 33,
             AssessmentModel = new APIBleedingAssessmentModel()
         };
@@ -420,13 +388,11 @@ public class AddPracticePatientExaminationCardTest
         };
 
         var cardInputModel = new PracticePatientExaminationCardInputModel
-            (patientDto,
-            riskFactorAssessmentModel,
-            PracticeAPI,
-            PracticeBleeding,
-            PracticeBewe,
-            PracticeDMFT_DMFS);
-
+             (patientDto,
+              riskFactorAssessmentModel,
+              PracticeAPIBleeding,
+              PracticeBewe,
+              PracticeDMFT_DMFS);
 
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {

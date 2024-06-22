@@ -31,13 +31,10 @@ public class AddPracticePatientExaminationCardHandlerTests : TestHelper
         };
         var riskFactorAssesmentModel = new RiskFactorAssessmentModel();
         var practiceBeweDto = new PracticeBeweDto();
-        var practiceApiDto = new PracticeAPIDto
+        var practiceApiBleedingDto = new PracticeAPIBleedingDto
         {
             APIResult = 22,
-        };
-        var practiceApiBleedingDto = new PracticeBleedingDto
-        {
-            BleedingResult = 22,
+            BleedingResult = 22
         };
         var practiceDmftDmfsDto = new PracticeDMFT_DMFSDto();
 
@@ -45,7 +42,6 @@ public class AddPracticePatientExaminationCardHandlerTests : TestHelper
         command = new AddPracticePatientExaminationCardCommand(Guid.NewGuid(), "studentId", new PracticePatientExaminationCardInputModel(
             patientDto,
             riskFactorAssesmentModel,
-            practiceApiDto,
             practiceApiBleedingDto,
             practiceBeweDto,
             practiceDmftDmfsDto
@@ -108,10 +104,7 @@ public class AddPracticePatientExaminationCardHandlerTests : TestHelper
         studentExamRepositoryMock.Setup(x => x.AddPracticePatient(It.IsAny<PracticePatient>()))
             .Returns(Task.CompletedTask);
 
-        studentExamRepositoryMock.Setup(x => x.AddPracticeAPI(It.IsAny<PracticeAPI>()))
-            .Returns(Task.CompletedTask);
-
-        studentExamRepositoryMock.Setup(x => x.AddPracticeBleeding(It.IsAny<PracticeBleeding>()))
+        studentExamRepositoryMock.Setup(x => x.AddPracticeAPIBleeding(It.IsAny<PracticeAPIBleeding>()))
             .Returns(Task.CompletedTask);
 
         studentExamRepositoryMock.Setup(x => x.AddPracticeDMFT_DMFS(It.IsAny<PracticeDMFT_DMFS>()))

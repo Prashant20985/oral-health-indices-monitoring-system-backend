@@ -17,7 +17,7 @@ namespace App.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -69,28 +69,25 @@ namespace App.Persistence.Migrations
                     b.ToTable("Exam", "credit");
                 });
 
-            modelBuilder.Entity("App.Domain.Models.CreditSchema.PracticeAPI", b =>
+            modelBuilder.Entity("App.Domain.Models.CreditSchema.PracticeAPIBleeding", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("APIResult")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("APIResult")
+                        .HasColumnType("decimal(18, 2)");
 
-                    b.Property<string>("Comment")
+                    b.Property<decimal>("BleedingResult")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("Comments")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<int>("Mandible")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Maxilla")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
-                    b.ToTable("PracticeAPI", "credit");
+                    b.ToTable("PracticeAPIBleeding", "credit");
                 });
 
             modelBuilder.Entity("App.Domain.Models.CreditSchema.PracticeBewe", b =>
@@ -109,30 +106,6 @@ namespace App.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PracticeBewe", "credit");
-                });
-
-            modelBuilder.Entity("App.Domain.Models.CreditSchema.PracticeBleeding", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("BleedingResult")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Comment")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<int>("Mandible")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Maxilla")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PracticeBleeding", "credit");
                 });
 
             modelBuilder.Entity("App.Domain.Models.CreditSchema.PracticeDMFT_DMFS", b =>
@@ -271,13 +244,10 @@ namespace App.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("APIId")
+                    b.Property<Guid>("APIBleedingId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("BeweId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("BleedingId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("DMFT_DMFSId")
@@ -285,13 +255,10 @@ namespace App.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("APIId")
+                    b.HasIndex("APIBleedingId")
                         .IsUnique();
 
                     b.HasIndex("BeweId")
-                        .IsUnique();
-
-                    b.HasIndex("BleedingId")
                         .IsUnique();
 
                     b.HasIndex("DMFT_DMFSId")
@@ -311,28 +278,25 @@ namespace App.Persistence.Migrations
                     b.ToTable("PracticeRiskFactorAssessment", "credit");
                 });
 
-            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.API", b =>
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.APIBleeding", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("APIResult")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("APIResult")
+                        .HasColumnType("decimal(18, 2)");
 
-                    b.Property<string>("Comment")
+                    b.Property<decimal>("BleedingResult")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("Comments")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<int>("Mandible")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Maxilla")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
-                    b.ToTable("API", "oralHealthExamination");
+                    b.ToTable("APIBleeding", "oralHealthExamination");
                 });
 
             modelBuilder.Entity("App.Domain.Models.OralHealthExamination.Bewe", b =>
@@ -351,30 +315,6 @@ namespace App.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Bewe", "oralHealthExamination");
-                });
-
-            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.Bleeding", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("BleedingResult")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Comment")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<int>("Mandible")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Maxilla")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Bleeding", "oralHealthExamination");
                 });
 
             modelBuilder.Entity("App.Domain.Models.OralHealthExamination.DMFT_DMFS", b =>
@@ -552,13 +492,10 @@ namespace App.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("APIId")
+                    b.Property<Guid>("APIBleedingId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("BeweId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("BleedingId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("DMFT_DMFSId")
@@ -566,13 +503,10 @@ namespace App.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("APIId")
+                    b.HasIndex("APIBleedingId")
                         .IsUnique();
 
                     b.HasIndex("BeweId")
-                        .IsUnique();
-
-                    b.HasIndex("BleedingId")
                         .IsUnique();
 
                     b.HasIndex("DMFT_DMFSId")
@@ -852,25 +786,25 @@ namespace App.Persistence.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("App.Domain.Models.CreditSchema.PracticeAPI", b =>
+            modelBuilder.Entity("App.Domain.Models.CreditSchema.PracticeAPIBleeding", b =>
                 {
                     b.OwnsOne("App.Domain.Models.Common.APIBleeding.APIBleedingAssessmentModel", "AssessmentModel", b1 =>
                         {
-                            b1.Property<Guid>("PracticeAPIId")
+                            b1.Property<Guid>("PracticeAPIBleedingId")
                                 .HasColumnType("uuid");
 
-                            b1.HasKey("PracticeAPIId");
+                            b1.HasKey("PracticeAPIBleedingId");
 
-                            b1.ToTable("PracticeAPI", "credit");
+                            b1.ToTable("PracticeAPIBleeding", "credit");
 
                             b1.ToJson("AssessmentModel");
 
                             b1.WithOwner()
-                                .HasForeignKey("PracticeAPIId");
+                                .HasForeignKey("PracticeAPIBleedingId");
 
                             b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant1", b2 =>
                                 {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelPracticeAPIId")
+                                    b2.Property<Guid>("APIBleedingAssessmentModelPracticeAPIBleedingId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
@@ -894,17 +828,17 @@ namespace App.Persistence.Migrations
                                     b2.Property<string>("Value7")
                                         .HasColumnType("text");
 
-                                    b2.HasKey("APIBleedingAssessmentModelPracticeAPIId");
+                                    b2.HasKey("APIBleedingAssessmentModelPracticeAPIBleedingId");
 
-                                    b2.ToTable("PracticeAPI", "credit");
+                                    b2.ToTable("PracticeAPIBleeding", "credit");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelPracticeAPIId");
+                                        .HasForeignKey("APIBleedingAssessmentModelPracticeAPIBleedingId");
                                 });
 
                             b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant2", b2 =>
                                 {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelPracticeAPIId")
+                                    b2.Property<Guid>("APIBleedingAssessmentModelPracticeAPIBleedingId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
@@ -928,17 +862,17 @@ namespace App.Persistence.Migrations
                                     b2.Property<string>("Value7")
                                         .HasColumnType("text");
 
-                                    b2.HasKey("APIBleedingAssessmentModelPracticeAPIId");
+                                    b2.HasKey("APIBleedingAssessmentModelPracticeAPIBleedingId");
 
-                                    b2.ToTable("PracticeAPI", "credit");
+                                    b2.ToTable("PracticeAPIBleeding", "credit");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelPracticeAPIId");
+                                        .HasForeignKey("APIBleedingAssessmentModelPracticeAPIBleedingId");
                                 });
 
                             b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant3", b2 =>
                                 {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelPracticeAPIId")
+                                    b2.Property<Guid>("APIBleedingAssessmentModelPracticeAPIBleedingId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
@@ -962,17 +896,17 @@ namespace App.Persistence.Migrations
                                     b2.Property<string>("Value7")
                                         .HasColumnType("text");
 
-                                    b2.HasKey("APIBleedingAssessmentModelPracticeAPIId");
+                                    b2.HasKey("APIBleedingAssessmentModelPracticeAPIBleedingId");
 
-                                    b2.ToTable("PracticeAPI", "credit");
+                                    b2.ToTable("PracticeAPIBleeding", "credit");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelPracticeAPIId");
+                                        .HasForeignKey("APIBleedingAssessmentModelPracticeAPIBleedingId");
                                 });
 
                             b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant4", b2 =>
                                 {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelPracticeAPIId")
+                                    b2.Property<Guid>("APIBleedingAssessmentModelPracticeAPIBleedingId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
@@ -996,12 +930,12 @@ namespace App.Persistence.Migrations
                                     b2.Property<string>("Value7")
                                         .HasColumnType("text");
 
-                                    b2.HasKey("APIBleedingAssessmentModelPracticeAPIId");
+                                    b2.HasKey("APIBleedingAssessmentModelPracticeAPIBleedingId");
 
-                                    b2.ToTable("PracticeAPI", "credit");
+                                    b2.ToTable("PracticeAPIBleeding", "credit");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelPracticeAPIId");
+                                        .HasForeignKey("APIBleedingAssessmentModelPracticeAPIBleedingId");
                                 });
 
                             b1.Navigation("Quadrant1");
@@ -1044,7 +978,7 @@ namespace App.Persistence.Migrations
                                     b2.WithOwner()
                                         .HasForeignKey("BeweAssessmentModelPracticeBeweId");
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_14", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_14", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant1BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1061,7 +995,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant1BeweAssessmentModelPracticeBeweId");
@@ -1072,7 +1006,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant1BeweAssessmentModelPracticeBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_15", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_15", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant1BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1089,7 +1023,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant1BeweAssessmentModelPracticeBeweId");
@@ -1100,7 +1034,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant1BeweAssessmentModelPracticeBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_16", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_16", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant1BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1117,7 +1051,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant1BeweAssessmentModelPracticeBeweId");
@@ -1128,7 +1062,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant1BeweAssessmentModelPracticeBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_17", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_17", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant1BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1145,7 +1079,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant1BeweAssessmentModelPracticeBeweId");
@@ -1352,7 +1286,7 @@ namespace App.Persistence.Migrations
                                     b2.WithOwner()
                                         .HasForeignKey("BeweAssessmentModelPracticeBeweId");
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_24", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_24", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant3BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1369,7 +1303,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant3BeweAssessmentModelPracticeBeweId");
@@ -1380,7 +1314,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant3BeweAssessmentModelPracticeBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_25", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_25", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant3BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1397,7 +1331,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant3BeweAssessmentModelPracticeBeweId");
@@ -1408,7 +1342,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant3BeweAssessmentModelPracticeBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_26", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_26", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant3BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1425,7 +1359,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant3BeweAssessmentModelPracticeBeweId");
@@ -1436,7 +1370,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant3BeweAssessmentModelPracticeBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_27", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_27", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant3BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1453,7 +1387,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant3BeweAssessmentModelPracticeBeweId");
@@ -1485,7 +1419,7 @@ namespace App.Persistence.Migrations
                                     b2.WithOwner()
                                         .HasForeignKey("BeweAssessmentModelPracticeBeweId");
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_34", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_34", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant4BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1502,7 +1436,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant4BeweAssessmentModelPracticeBeweId");
@@ -1513,7 +1447,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant4BeweAssessmentModelPracticeBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_35", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_35", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant4BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1530,7 +1464,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant4BeweAssessmentModelPracticeBeweId");
@@ -1541,7 +1475,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant4BeweAssessmentModelPracticeBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_36", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_36", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant4BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1558,7 +1492,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant4BeweAssessmentModelPracticeBeweId");
@@ -1569,7 +1503,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant4BeweAssessmentModelPracticeBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_37", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_37", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant4BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1586,7 +1520,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant4BeweAssessmentModelPracticeBeweId");
@@ -1793,7 +1727,7 @@ namespace App.Persistence.Migrations
                                     b2.WithOwner()
                                         .HasForeignKey("BeweAssessmentModelPracticeBeweId");
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_44", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_44", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant6BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1810,7 +1744,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant6BeweAssessmentModelPracticeBeweId");
@@ -1821,7 +1755,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant6BeweAssessmentModelPracticeBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_45", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_45", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant6BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1838,7 +1772,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant6BeweAssessmentModelPracticeBeweId");
@@ -1849,7 +1783,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant6BeweAssessmentModelPracticeBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_46", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_46", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant6BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1866,7 +1800,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant6BeweAssessmentModelPracticeBeweId");
@@ -1877,7 +1811,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant6BeweAssessmentModelPracticeBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_47", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_47", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant6BeweAssessmentModelPracticeBeweId")
                                                 .HasColumnType("uuid");
@@ -1894,7 +1828,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant6BeweAssessmentModelPracticeBeweId");
@@ -1925,170 +1859,6 @@ namespace App.Persistence.Migrations
                             b1.Navigation("Sectant5");
 
                             b1.Navigation("Sectant6");
-                        });
-
-                    b.Navigation("AssessmentModel");
-                });
-
-            modelBuilder.Entity("App.Domain.Models.CreditSchema.PracticeBleeding", b =>
-                {
-                    b.OwnsOne("App.Domain.Models.Common.APIBleeding.APIBleedingAssessmentModel", "AssessmentModel", b1 =>
-                        {
-                            b1.Property<Guid>("PracticeBleedingId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("PracticeBleedingId");
-
-                            b1.ToTable("PracticeBleeding", "credit");
-
-                            b1.ToJson("AssessmentModel");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PracticeBleedingId");
-
-                            b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant1", b2 =>
-                                {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelPracticeBleedingId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<string>("Value1")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value2")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value3")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value4")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value5")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value6")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value7")
-                                        .HasColumnType("text");
-
-                                    b2.HasKey("APIBleedingAssessmentModelPracticeBleedingId");
-
-                                    b2.ToTable("PracticeBleeding", "credit");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelPracticeBleedingId");
-                                });
-
-                            b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant2", b2 =>
-                                {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelPracticeBleedingId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<string>("Value1")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value2")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value3")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value4")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value5")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value6")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value7")
-                                        .HasColumnType("text");
-
-                                    b2.HasKey("APIBleedingAssessmentModelPracticeBleedingId");
-
-                                    b2.ToTable("PracticeBleeding", "credit");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelPracticeBleedingId");
-                                });
-
-                            b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant3", b2 =>
-                                {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelPracticeBleedingId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<string>("Value1")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value2")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value3")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value4")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value5")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value6")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value7")
-                                        .HasColumnType("text");
-
-                                    b2.HasKey("APIBleedingAssessmentModelPracticeBleedingId");
-
-                                    b2.ToTable("PracticeBleeding", "credit");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelPracticeBleedingId");
-                                });
-
-                            b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant4", b2 =>
-                                {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelPracticeBleedingId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<string>("Value1")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value2")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value3")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value4")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value5")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value6")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value7")
-                                        .HasColumnType("text");
-
-                                    b2.HasKey("APIBleedingAssessmentModelPracticeBleedingId");
-
-                                    b2.ToTable("PracticeBleeding", "credit");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelPracticeBleedingId");
-                                });
-
-                            b1.Navigation("Quadrant1");
-
-                            b1.Navigation("Quadrant2");
-
-                            b1.Navigation("Quadrant3");
-
-                            b1.Navigation("Quadrant4");
                         });
 
                     b.Navigation("AssessmentModel");
@@ -2152,7 +1922,7 @@ namespace App.Persistence.Migrations
                                     b2.WithOwner()
                                         .HasForeignKey("DMFT_DMFSAssessmentModelPracticeDMFT_DMFSId");
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_31", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_31", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -2180,7 +1950,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_32", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_32", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -2208,7 +1978,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_33", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_33", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -2391,7 +2161,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_41", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_41", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -2419,7 +2189,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_42", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_42", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -2447,7 +2217,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_43", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_43", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -2705,7 +2475,7 @@ namespace App.Persistence.Migrations
                                     b2.WithOwner()
                                         .HasForeignKey("DMFT_DMFSAssessmentModelPracticeDMFT_DMFSId");
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_11", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_11", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -2733,7 +2503,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_12", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_12", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -2761,7 +2531,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_13", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_13", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -2944,7 +2714,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_21", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_21", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -2972,7 +2742,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_22", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_22", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -3000,7 +2770,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_23", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_23", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelPracticeDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -3268,9 +3038,9 @@ namespace App.Persistence.Migrations
 
             modelBuilder.Entity("App.Domain.Models.CreditSchema.PracticePatientExaminationResult", b =>
                 {
-                    b.HasOne("App.Domain.Models.CreditSchema.PracticeAPI", "API")
+                    b.HasOne("App.Domain.Models.CreditSchema.PracticeAPIBleeding", "APIBleeding")
                         .WithOne("PatientExaminationResult")
-                        .HasForeignKey("App.Domain.Models.CreditSchema.PracticePatientExaminationResult", "APIId")
+                        .HasForeignKey("App.Domain.Models.CreditSchema.PracticePatientExaminationResult", "APIBleedingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -3280,23 +3050,15 @@ namespace App.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("App.Domain.Models.CreditSchema.PracticeBleeding", "Bleeding")
-                        .WithOne("PatientExaminationResult")
-                        .HasForeignKey("App.Domain.Models.CreditSchema.PracticePatientExaminationResult", "BleedingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("App.Domain.Models.CreditSchema.PracticeDMFT_DMFS", "DMFT_DMFS")
                         .WithOne("PatientExaminationResult")
                         .HasForeignKey("App.Domain.Models.CreditSchema.PracticePatientExaminationResult", "DMFT_DMFSId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("API");
+                    b.Navigation("APIBleeding");
 
                     b.Navigation("Bewe");
-
-                    b.Navigation("Bleeding");
 
                     b.Navigation("DMFT_DMFS");
                 });
@@ -3371,25 +3133,25 @@ namespace App.Persistence.Migrations
                     b.Navigation("RiskFactorAssessmentModel");
                 });
 
-            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.API", b =>
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.APIBleeding", b =>
                 {
                     b.OwnsOne("App.Domain.Models.Common.APIBleeding.APIBleedingAssessmentModel", "AssessmentModel", b1 =>
                         {
-                            b1.Property<Guid>("APIId")
+                            b1.Property<Guid>("APIBleedingId")
                                 .HasColumnType("uuid");
 
-                            b1.HasKey("APIId");
+                            b1.HasKey("APIBleedingId");
 
-                            b1.ToTable("API", "oralHealthExamination");
+                            b1.ToTable("APIBleeding", "oralHealthExamination");
 
                             b1.ToJson("AssessmentModel");
 
                             b1.WithOwner()
-                                .HasForeignKey("APIId");
+                                .HasForeignKey("APIBleedingId");
 
                             b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant1", b2 =>
                                 {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIId")
+                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
@@ -3413,17 +3175,17 @@ namespace App.Persistence.Migrations
                                     b2.Property<string>("Value7")
                                         .HasColumnType("text");
 
-                                    b2.HasKey("APIBleedingAssessmentModelAPIId");
+                                    b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
 
-                                    b2.ToTable("API", "oralHealthExamination");
+                                    b2.ToTable("APIBleeding", "oralHealthExamination");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelAPIId");
+                                        .HasForeignKey("APIBleedingAssessmentModelAPIBleedingId");
                                 });
 
                             b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant2", b2 =>
                                 {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIId")
+                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
@@ -3447,17 +3209,17 @@ namespace App.Persistence.Migrations
                                     b2.Property<string>("Value7")
                                         .HasColumnType("text");
 
-                                    b2.HasKey("APIBleedingAssessmentModelAPIId");
+                                    b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
 
-                                    b2.ToTable("API", "oralHealthExamination");
+                                    b2.ToTable("APIBleeding", "oralHealthExamination");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelAPIId");
+                                        .HasForeignKey("APIBleedingAssessmentModelAPIBleedingId");
                                 });
 
                             b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant3", b2 =>
                                 {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIId")
+                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
@@ -3481,17 +3243,17 @@ namespace App.Persistence.Migrations
                                     b2.Property<string>("Value7")
                                         .HasColumnType("text");
 
-                                    b2.HasKey("APIBleedingAssessmentModelAPIId");
+                                    b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
 
-                                    b2.ToTable("API", "oralHealthExamination");
+                                    b2.ToTable("APIBleeding", "oralHealthExamination");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelAPIId");
+                                        .HasForeignKey("APIBleedingAssessmentModelAPIBleedingId");
                                 });
 
                             b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant4", b2 =>
                                 {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIId")
+                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
@@ -3515,12 +3277,12 @@ namespace App.Persistence.Migrations
                                     b2.Property<string>("Value7")
                                         .HasColumnType("text");
 
-                                    b2.HasKey("APIBleedingAssessmentModelAPIId");
+                                    b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
 
-                                    b2.ToTable("API", "oralHealthExamination");
+                                    b2.ToTable("APIBleeding", "oralHealthExamination");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelAPIId");
+                                        .HasForeignKey("APIBleedingAssessmentModelAPIBleedingId");
                                 });
 
                             b1.Navigation("Quadrant1");
@@ -3563,7 +3325,7 @@ namespace App.Persistence.Migrations
                                     b2.WithOwner()
                                         .HasForeignKey("BeweAssessmentModelBeweId");
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_14", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_14", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant1BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -3580,7 +3342,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant1BeweAssessmentModelBeweId");
@@ -3591,7 +3353,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant1BeweAssessmentModelBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_15", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_15", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant1BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -3608,7 +3370,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant1BeweAssessmentModelBeweId");
@@ -3619,7 +3381,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant1BeweAssessmentModelBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_16", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_16", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant1BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -3636,7 +3398,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant1BeweAssessmentModelBeweId");
@@ -3647,7 +3409,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant1BeweAssessmentModelBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_17", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_17", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant1BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -3664,7 +3426,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant1BeweAssessmentModelBeweId");
@@ -3871,7 +3633,7 @@ namespace App.Persistence.Migrations
                                     b2.WithOwner()
                                         .HasForeignKey("BeweAssessmentModelBeweId");
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_24", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_24", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant3BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -3888,7 +3650,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant3BeweAssessmentModelBeweId");
@@ -3899,7 +3661,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant3BeweAssessmentModelBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_25", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_25", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant3BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -3916,7 +3678,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant3BeweAssessmentModelBeweId");
@@ -3927,7 +3689,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant3BeweAssessmentModelBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_26", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_26", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant3BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -3944,7 +3706,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant3BeweAssessmentModelBeweId");
@@ -3955,7 +3717,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant3BeweAssessmentModelBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_27", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_27", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant3BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -3972,7 +3734,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant3BeweAssessmentModelBeweId");
@@ -4004,7 +3766,7 @@ namespace App.Persistence.Migrations
                                     b2.WithOwner()
                                         .HasForeignKey("BeweAssessmentModelBeweId");
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_34", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_34", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant4BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -4021,7 +3783,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant4BeweAssessmentModelBeweId");
@@ -4032,7 +3794,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant4BeweAssessmentModelBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_35", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_35", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant4BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -4049,7 +3811,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant4BeweAssessmentModelBeweId");
@@ -4060,7 +3822,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant4BeweAssessmentModelBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_36", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_36", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant4BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -4077,7 +3839,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant4BeweAssessmentModelBeweId");
@@ -4088,7 +3850,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant4BeweAssessmentModelBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_37", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_37", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant4BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -4105,7 +3867,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant4BeweAssessmentModelBeweId");
@@ -4312,7 +4074,7 @@ namespace App.Persistence.Migrations
                                     b2.WithOwner()
                                         .HasForeignKey("BeweAssessmentModelBeweId");
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_44", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_44", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant6BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -4329,7 +4091,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant6BeweAssessmentModelBeweId");
@@ -4340,7 +4102,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant6BeweAssessmentModelBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_45", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_45", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant6BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -4357,7 +4119,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant6BeweAssessmentModelBeweId");
@@ -4368,7 +4130,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant6BeweAssessmentModelBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_46", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_46", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant6BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -4385,7 +4147,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant6BeweAssessmentModelBeweId");
@@ -4396,7 +4158,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("Sectant6BeweAssessmentModelBeweId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothBEWE", "Tooth_47", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_47", b3 =>
                                         {
                                             b3.Property<Guid>("Sectant6BeweAssessmentModelBeweId")
                                                 .HasColumnType("uuid");
@@ -4413,7 +4175,7 @@ namespace App.Persistence.Migrations
                                             b3.Property<string>("M")
                                                 .HasColumnType("text");
 
-                                            b3.Property<string>("O")
+                                            b3.Property<string>("R")
                                                 .HasColumnType("text");
 
                                             b3.HasKey("Sectant6BeweAssessmentModelBeweId");
@@ -4444,170 +4206,6 @@ namespace App.Persistence.Migrations
                             b1.Navigation("Sectant5");
 
                             b1.Navigation("Sectant6");
-                        });
-
-                    b.Navigation("AssessmentModel");
-                });
-
-            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.Bleeding", b =>
-                {
-                    b.OwnsOne("App.Domain.Models.Common.APIBleeding.APIBleedingAssessmentModel", "AssessmentModel", b1 =>
-                        {
-                            b1.Property<Guid>("BleedingId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("BleedingId");
-
-                            b1.ToTable("Bleeding", "oralHealthExamination");
-
-                            b1.ToJson("AssessmentModel");
-
-                            b1.WithOwner()
-                                .HasForeignKey("BleedingId");
-
-                            b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant1", b2 =>
-                                {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelBleedingId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<string>("Value1")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value2")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value3")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value4")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value5")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value6")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value7")
-                                        .HasColumnType("text");
-
-                                    b2.HasKey("APIBleedingAssessmentModelBleedingId");
-
-                                    b2.ToTable("Bleeding", "oralHealthExamination");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelBleedingId");
-                                });
-
-                            b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant2", b2 =>
-                                {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelBleedingId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<string>("Value1")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value2")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value3")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value4")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value5")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value6")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value7")
-                                        .HasColumnType("text");
-
-                                    b2.HasKey("APIBleedingAssessmentModelBleedingId");
-
-                                    b2.ToTable("Bleeding", "oralHealthExamination");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelBleedingId");
-                                });
-
-                            b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant3", b2 =>
-                                {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelBleedingId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<string>("Value1")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value2")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value3")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value4")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value5")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value6")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value7")
-                                        .HasColumnType("text");
-
-                                    b2.HasKey("APIBleedingAssessmentModelBleedingId");
-
-                                    b2.ToTable("Bleeding", "oralHealthExamination");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelBleedingId");
-                                });
-
-                            b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant4", b2 =>
-                                {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelBleedingId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<string>("Value1")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value2")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value3")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value4")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value5")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value6")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value7")
-                                        .HasColumnType("text");
-
-                                    b2.HasKey("APIBleedingAssessmentModelBleedingId");
-
-                                    b2.ToTable("Bleeding", "oralHealthExamination");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelBleedingId");
-                                });
-
-                            b1.Navigation("Quadrant1");
-
-                            b1.Navigation("Quadrant2");
-
-                            b1.Navigation("Quadrant3");
-
-                            b1.Navigation("Quadrant4");
                         });
 
                     b.Navigation("AssessmentModel");
@@ -4671,7 +4269,7 @@ namespace App.Persistence.Migrations
                                     b2.WithOwner()
                                         .HasForeignKey("DMFT_DMFSAssessmentModelDMFT_DMFSId");
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_31", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_31", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -4699,7 +4297,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_32", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_32", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -4727,7 +4325,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_33", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_33", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -4910,7 +4508,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_41", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_41", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -4938,7 +4536,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_42", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_42", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -4966,7 +4564,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_43", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_43", b3 =>
                                         {
                                             b3.Property<Guid>("LowerMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -5224,7 +4822,7 @@ namespace App.Persistence.Migrations
                                     b2.WithOwner()
                                         .HasForeignKey("DMFT_DMFSAssessmentModelDMFT_DMFSId");
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_11", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_11", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -5252,7 +4850,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_12", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_12", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -5280,7 +4878,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_13", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_13", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -5463,7 +5061,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_21", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_21", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -5491,7 +5089,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_22", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_22", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -5519,7 +5117,7 @@ namespace App.Persistence.Migrations
                                                 .HasForeignKey("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId");
                                         });
 
-                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceToothDMFT_DMFS", "Tooth_23", b3 =>
+                                    b2.OwnsOne("App.Domain.Models.Common.Tooth.FiveSurfaceTooth", "Tooth_23", b3 =>
                                         {
                                             b3.Property<Guid>("UpperMouthDMFT_DMFSAssessmentModelDMFT_DMFSId")
                                                 .HasColumnType("uuid");
@@ -5813,9 +5411,9 @@ namespace App.Persistence.Migrations
 
             modelBuilder.Entity("App.Domain.Models.OralHealthExamination.PatientExaminationResult", b =>
                 {
-                    b.HasOne("App.Domain.Models.OralHealthExamination.API", "API")
+                    b.HasOne("App.Domain.Models.OralHealthExamination.APIBleeding", "APIBleeding")
                         .WithOne("PatientExaminationResult")
-                        .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationResult", "APIId")
+                        .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationResult", "APIBleedingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -5825,23 +5423,15 @@ namespace App.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("App.Domain.Models.OralHealthExamination.Bleeding", "Bleeding")
-                        .WithOne("PatientExaminationResult")
-                        .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationResult", "BleedingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("App.Domain.Models.OralHealthExamination.DMFT_DMFS", "DMFT_DMFS")
                         .WithOne("PatientExaminationResult")
                         .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationResult", "DMFT_DMFSId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("API");
+                    b.Navigation("APIBleeding");
 
                     b.Navigation("Bewe");
-
-                    b.Navigation("Bleeding");
 
                     b.Navigation("DMFT_DMFS");
                 });
@@ -6016,17 +5606,12 @@ namespace App.Persistence.Migrations
                     b.Navigation("PracticePatientExaminationCards");
                 });
 
-            modelBuilder.Entity("App.Domain.Models.CreditSchema.PracticeAPI", b =>
+            modelBuilder.Entity("App.Domain.Models.CreditSchema.PracticeAPIBleeding", b =>
                 {
                     b.Navigation("PatientExaminationResult");
                 });
 
             modelBuilder.Entity("App.Domain.Models.CreditSchema.PracticeBewe", b =>
-                {
-                    b.Navigation("PatientExaminationResult");
-                });
-
-            modelBuilder.Entity("App.Domain.Models.CreditSchema.PracticeBleeding", b =>
                 {
                     b.Navigation("PatientExaminationResult");
                 });
@@ -6051,17 +5636,12 @@ namespace App.Persistence.Migrations
                     b.Navigation("PracticePatientExaminationCard");
                 });
 
-            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.API", b =>
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.APIBleeding", b =>
                 {
                     b.Navigation("PatientExaminationResult");
                 });
 
             modelBuilder.Entity("App.Domain.Models.OralHealthExamination.Bewe", b =>
-                {
-                    b.Navigation("PatientExaminationResult");
-                });
-
-            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.Bleeding", b =>
                 {
                     b.Navigation("PatientExaminationResult");
                 });

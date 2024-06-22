@@ -58,11 +58,8 @@ public class MappingProfile : Profile
         // CreateMap<TSource, TDestination> creates a mapping from Bewe to BeweDto
         CreateMap<Bewe, BeweDto>();
 
-        // CreateMap<TSource, TDestination> creates a mapping from API to APIDto
-        CreateMap<API, APIDto>();
-
-        // CreateMap<TSource, TDestination> creates a mapping from Bleeding to BleedingDto
-        CreateMap<Bleeding, BleedingDto>();
+        // CreateMap<TSource, TDestination> creates a mapping from APIBleeding to APIBleedingDto
+        CreateMap<APIBleeding, APIBleedingDto>();
 
         // CreateMap<TSource, TDestination> creates a mapping from DMFT_DMFS to DMFT_DMFSDto
         CreateMap<DMFT_DMFS, DMFT_DMFSDto>();
@@ -99,12 +96,8 @@ public class MappingProfile : Profile
         CreateMap<PracticeDMFT_DMFS, DMFT_DMFSDto>();
 
         // CreateMap<TSource, TDestination> creates a mapping from PracticeAPIBleeding to APIBleedingDto
-        CreateMap<PracticeBleeding, BleedingDto>();
+        CreateMap<PracticeAPIBleeding, APIBleedingDto>();
 
-        // CreateMap<TSource, TDestination> creates a mapping from PracticeAPI to APIDto
-        CreateMap<PracticeAPI, APIDto>();
-
-        // CreateMap<TSource, TDestination> creates a mapping from PracticePatientExaminationResult to PatientExaminationResultDto
         CreateMap<PracticePatientExaminationResult, PatientExaminationResultDto>();
 
         // CreateMap<TSource, TDestination> creates a mapping from PracticePatientExaminationCard to PracticePatientExaminationCardDto
