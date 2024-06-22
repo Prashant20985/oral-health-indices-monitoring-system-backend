@@ -109,12 +109,7 @@ public class OralEhrContext : IdentityDbContext<
     /// <summary>
     /// Gets or sets the set of API bleeding assessments.
     /// </summary>
-    public virtual DbSet<API> APIs { get; set; }
-
-    /// <summary>
-    /// Gets or sets the set of bleeding assessments.
-    /// </summary>
-    public virtual DbSet<Bleeding> Bleedings { get; set; }
+    public virtual DbSet<APIBleeding> APIBleedings { get; set; }
 
     /// <summary>
     /// Gets or sets the set of patient examination results.
@@ -159,12 +154,7 @@ public class OralEhrContext : IdentityDbContext<
     /// <summary>
     /// Gets or sets the set of practice API bleeding assessments.
     /// </summary>
-    public virtual DbSet<PracticeAPI> PracticeAPIs { get; set; }
-
-    /// <summary>
-    /// Gets or sets the set of practice bleeding assessments.
-    /// </summary>
-    public virtual DbSet<PracticeBleeding> PracticeBleedings { get; set; }
+    public virtual DbSet<PracticeAPIBleeding> PracticeAPIBleedings { get; set; }
 
     /// <summary>
     /// Overrides the OnModelCreating method from the base class to provide custom model configuration.
@@ -202,9 +192,7 @@ public class OralEhrContext : IdentityDbContext<
 
         modelBuilder.Entity<DMFT_DMFS>().ToTable(nameof(DMFT_DMFS), "oralHealthExamination");
 
-        modelBuilder.Entity<API>().ToTable(nameof(API), "oralHealthExamination");
-
-        modelBuilder.Entity<Bleeding>().ToTable(nameof(Bleeding), "oralHealthExamination");
+        modelBuilder.Entity<APIBleeding>().ToTable(nameof(APIBleeding), "oralHealthExamination");
 
         modelBuilder.Entity<PatientExaminationResult>().ToTable(nameof(PatientExaminationResult), "oralHealthExamination");
 
@@ -222,9 +210,7 @@ public class OralEhrContext : IdentityDbContext<
 
         modelBuilder.Entity<PracticeDMFT_DMFS>().ToTable(nameof(PracticeDMFT_DMFS), "credit");
 
-        modelBuilder.Entity<PracticeBleeding>().ToTable(nameof(PracticeBleeding), "credit");
-
-        modelBuilder.Entity<PracticeAPI>().ToTable(nameof(PracticeAPI), "credit");
+        modelBuilder.Entity<PracticeAPIBleeding>().ToTable(nameof(PracticeAPIBleeding), "credit");
 
         // Ignores the IdentityUserClaim, IdentityRoleClaim, IdentityUserLogin, and IdentityUserToken entities.
         modelBuilder.Ignore<IdentityUserClaim<string>>();
