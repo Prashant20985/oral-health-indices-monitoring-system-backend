@@ -30,7 +30,10 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
             .ThenInclude(x => x.PracticePatient)
             .Include(x => x.PracticePatientExaminationCards)
             .ThenInclude(x => x.PracticePatientExaminationResult)
-            .ThenInclude(x => x.APIBleeding)
+            .ThenInclude(x => x.API)
+            .Include(x => x.PracticePatientExaminationCards)
+            .ThenInclude(x => x.PracticePatientExaminationResult)
+            .ThenInclude(x => x.Bleeding)
             .Include(x => x.PracticePatientExaminationCards)
             .ThenInclude(x => x.PracticePatientExaminationResult)
             .ThenInclude(x => x.DMFT_DMFS)
@@ -40,9 +43,11 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
             .FirstOrDefaultAsync(x => x.Id == examId);
 
         _context.Exams.Remove(exam);
+        _context.PracticePatientExaminationCards.RemoveRange(exam.PracticePatientExaminationCards);
         _context.PracticePatients.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatient));
         _context.PracticeRiskFactorAssessments.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticeRiskFactorAssessment));
-        _context.PracticeAPIBleedings.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatientExaminationResult.APIBleeding));
+        _context.PracticeAPIs.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatientExaminationResult.API));
+        _context.PracticeBleedings.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatientExaminationResult.Bleeding));
         _context.PracticeDMFT_DMFSs.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatientExaminationResult.DMFT_DMFS));
         _context.PracticeBewes.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatientExaminationResult.Bewe));
 
@@ -89,10 +94,17 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
         .FirstOrDefaultAsync(x => x.Id == practicePatientExaminationCardId);
 
     /// <inheritdoc/>
-    public async Task<PracticeAPIBleeding> GetPracticeAPIBleedingByCardId(Guid practicePatientExaminationCardId) =>
+    public async Task<PracticeAPI> GetPracticeAPIByCardId(Guid practicePatientExaminationCardId) => 
         await _context.PracticePatientExaminationCards
             .Where(x => x.Id == practicePatientExaminationCardId)
-            .Select(x => x.PracticePatientExaminationResult.APIBleeding)
+            .Select(x => x.PracticePatientExaminationResult.API)
+            .FirstOrDefaultAsync();
+
+    /// <inheritdoc/>
+    public async Task<PracticeBleeding> GetPracticeBleedingByCardId(Guid practicePatientExaminationCardId) => 
+        await _context.PracticePatientExaminationCards
+            .Where(x => x.Id == practicePatientExaminationCardId)
+            .Select(x => x.PracticePatientExaminationResult.Bleeding)
             .FirstOrDefaultAsync();
 
     /// <inheritdoc/>
@@ -125,9 +137,11 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
     public async Task AddPracticeDMFT_DMFS(PracticeDMFT_DMFS practiceDMFT_DMFS) =>
         await _context.PracticeDMFT_DMFSs.AddAsync(practiceDMFT_DMFS);
 
-    /// <inheritdoc/>
-    public async Task AddPracticeAPIBleeding(PracticeAPIBleeding practiceAPIBleeding) =>
-        await _context.PracticeAPIBleedings.AddAsync(practiceAPIBleeding);
+    public async Task AddPracticeAPI(PracticeAPI practiceAPI) =>
+        await _context.PracticeAPIs.AddAsync(practiceAPI);
+
+    public async Task AddPracticeBleeding(PracticeBleeding practiceBleeding) =>
+        await _context.PracticeBleedings.AddAsync(practiceBleeding);
 
     /// <inheritdoc/>
     public async Task AddPracticeBewe(PracticeBewe practiceBewe) =>

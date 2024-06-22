@@ -3,6 +3,7 @@ using System;
 using App.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace App.Persistence.Migrations
 {
     [DbContext(typeof(OralEhrContext))]
-    partial class OralEhrContextModelSnapshot : ModelSnapshot
+    [Migration("20240620105405_UpdatedCreditScheam_Added_PracticeAPI_And_PracticeBleeding")]
+    partial class UpdatedCreditScheam_Added_PracticeAPI_And_PracticeBleeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,12 +85,6 @@ namespace App.Persistence.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<int>("Mandible")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Maxilla")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.ToTable("PracticeAPI", "credit");
@@ -123,12 +120,6 @@ namespace App.Persistence.Migrations
                     b.Property<string>("Comment")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
-
-                    b.Property<int>("Mandible")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Maxilla")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -311,28 +302,25 @@ namespace App.Persistence.Migrations
                     b.ToTable("PracticeRiskFactorAssessment", "credit");
                 });
 
-            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.API", b =>
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.APIBleeding", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("APIResult")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("APIResult")
+                        .HasColumnType("decimal(18, 2)");
 
-                    b.Property<string>("Comment")
+                    b.Property<decimal>("BleedingResult")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("Comments")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<int>("Mandible")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Maxilla")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
-                    b.ToTable("API", "oralHealthExamination");
+                    b.ToTable("APIBleeding", "oralHealthExamination");
                 });
 
             modelBuilder.Entity("App.Domain.Models.OralHealthExamination.Bewe", b =>
@@ -351,30 +339,6 @@ namespace App.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Bewe", "oralHealthExamination");
-                });
-
-            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.Bleeding", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("BleedingResult")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Comment")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<int>("Mandible")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Maxilla")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Bleeding", "oralHealthExamination");
                 });
 
             modelBuilder.Entity("App.Domain.Models.OralHealthExamination.DMFT_DMFS", b =>
@@ -552,13 +516,10 @@ namespace App.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("APIId")
+                    b.Property<Guid>("APIBleedingId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("BeweId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("BleedingId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("DMFT_DMFSId")
@@ -566,13 +527,10 @@ namespace App.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("APIId")
+                    b.HasIndex("APIBleedingId")
                         .IsUnique();
 
                     b.HasIndex("BeweId")
-                        .IsUnique();
-
-                    b.HasIndex("BleedingId")
                         .IsUnique();
 
                     b.HasIndex("DMFT_DMFSId")
@@ -3371,25 +3329,25 @@ namespace App.Persistence.Migrations
                     b.Navigation("RiskFactorAssessmentModel");
                 });
 
-            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.API", b =>
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.APIBleeding", b =>
                 {
                     b.OwnsOne("App.Domain.Models.Common.APIBleeding.APIBleedingAssessmentModel", "AssessmentModel", b1 =>
                         {
-                            b1.Property<Guid>("APIId")
+                            b1.Property<Guid>("APIBleedingId")
                                 .HasColumnType("uuid");
 
-                            b1.HasKey("APIId");
+                            b1.HasKey("APIBleedingId");
 
-                            b1.ToTable("API", "oralHealthExamination");
+                            b1.ToTable("APIBleeding", "oralHealthExamination");
 
                             b1.ToJson("AssessmentModel");
 
                             b1.WithOwner()
-                                .HasForeignKey("APIId");
+                                .HasForeignKey("APIBleedingId");
 
                             b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant1", b2 =>
                                 {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIId")
+                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
@@ -3413,17 +3371,17 @@ namespace App.Persistence.Migrations
                                     b2.Property<string>("Value7")
                                         .HasColumnType("text");
 
-                                    b2.HasKey("APIBleedingAssessmentModelAPIId");
+                                    b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
 
-                                    b2.ToTable("API", "oralHealthExamination");
+                                    b2.ToTable("APIBleeding", "oralHealthExamination");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelAPIId");
+                                        .HasForeignKey("APIBleedingAssessmentModelAPIBleedingId");
                                 });
 
                             b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant2", b2 =>
                                 {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIId")
+                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
@@ -3447,17 +3405,17 @@ namespace App.Persistence.Migrations
                                     b2.Property<string>("Value7")
                                         .HasColumnType("text");
 
-                                    b2.HasKey("APIBleedingAssessmentModelAPIId");
+                                    b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
 
-                                    b2.ToTable("API", "oralHealthExamination");
+                                    b2.ToTable("APIBleeding", "oralHealthExamination");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelAPIId");
+                                        .HasForeignKey("APIBleedingAssessmentModelAPIBleedingId");
                                 });
 
                             b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant3", b2 =>
                                 {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIId")
+                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
@@ -3481,17 +3439,17 @@ namespace App.Persistence.Migrations
                                     b2.Property<string>("Value7")
                                         .HasColumnType("text");
 
-                                    b2.HasKey("APIBleedingAssessmentModelAPIId");
+                                    b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
 
-                                    b2.ToTable("API", "oralHealthExamination");
+                                    b2.ToTable("APIBleeding", "oralHealthExamination");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelAPIId");
+                                        .HasForeignKey("APIBleedingAssessmentModelAPIBleedingId");
                                 });
 
                             b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant4", b2 =>
                                 {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIId")
+                                    b2.Property<Guid>("APIBleedingAssessmentModelAPIBleedingId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<string>("Value1")
@@ -3515,12 +3473,12 @@ namespace App.Persistence.Migrations
                                     b2.Property<string>("Value7")
                                         .HasColumnType("text");
 
-                                    b2.HasKey("APIBleedingAssessmentModelAPIId");
+                                    b2.HasKey("APIBleedingAssessmentModelAPIBleedingId");
 
-                                    b2.ToTable("API", "oralHealthExamination");
+                                    b2.ToTable("APIBleeding", "oralHealthExamination");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelAPIId");
+                                        .HasForeignKey("APIBleedingAssessmentModelAPIBleedingId");
                                 });
 
                             b1.Navigation("Quadrant1");
@@ -4444,170 +4402,6 @@ namespace App.Persistence.Migrations
                             b1.Navigation("Sectant5");
 
                             b1.Navigation("Sectant6");
-                        });
-
-                    b.Navigation("AssessmentModel");
-                });
-
-            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.Bleeding", b =>
-                {
-                    b.OwnsOne("App.Domain.Models.Common.APIBleeding.APIBleedingAssessmentModel", "AssessmentModel", b1 =>
-                        {
-                            b1.Property<Guid>("BleedingId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("BleedingId");
-
-                            b1.ToTable("Bleeding", "oralHealthExamination");
-
-                            b1.ToJson("AssessmentModel");
-
-                            b1.WithOwner()
-                                .HasForeignKey("BleedingId");
-
-                            b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant1", b2 =>
-                                {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelBleedingId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<string>("Value1")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value2")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value3")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value4")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value5")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value6")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value7")
-                                        .HasColumnType("text");
-
-                                    b2.HasKey("APIBleedingAssessmentModelBleedingId");
-
-                                    b2.ToTable("Bleeding", "oralHealthExamination");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelBleedingId");
-                                });
-
-                            b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant2", b2 =>
-                                {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelBleedingId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<string>("Value1")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value2")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value3")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value4")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value5")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value6")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value7")
-                                        .HasColumnType("text");
-
-                                    b2.HasKey("APIBleedingAssessmentModelBleedingId");
-
-                                    b2.ToTable("Bleeding", "oralHealthExamination");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelBleedingId");
-                                });
-
-                            b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant3", b2 =>
-                                {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelBleedingId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<string>("Value1")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value2")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value3")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value4")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value5")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value6")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value7")
-                                        .HasColumnType("text");
-
-                                    b2.HasKey("APIBleedingAssessmentModelBleedingId");
-
-                                    b2.ToTable("Bleeding", "oralHealthExamination");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelBleedingId");
-                                });
-
-                            b1.OwnsOne("App.Domain.Models.Common.APIBleeding.Quadrant", "Quadrant4", b2 =>
-                                {
-                                    b2.Property<Guid>("APIBleedingAssessmentModelBleedingId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<string>("Value1")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value2")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value3")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value4")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value5")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value6")
-                                        .HasColumnType("text");
-
-                                    b2.Property<string>("Value7")
-                                        .HasColumnType("text");
-
-                                    b2.HasKey("APIBleedingAssessmentModelBleedingId");
-
-                                    b2.ToTable("Bleeding", "oralHealthExamination");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("APIBleedingAssessmentModelBleedingId");
-                                });
-
-                            b1.Navigation("Quadrant1");
-
-                            b1.Navigation("Quadrant2");
-
-                            b1.Navigation("Quadrant3");
-
-                            b1.Navigation("Quadrant4");
                         });
 
                     b.Navigation("AssessmentModel");
@@ -5813,9 +5607,9 @@ namespace App.Persistence.Migrations
 
             modelBuilder.Entity("App.Domain.Models.OralHealthExamination.PatientExaminationResult", b =>
                 {
-                    b.HasOne("App.Domain.Models.OralHealthExamination.API", "API")
+                    b.HasOne("App.Domain.Models.OralHealthExamination.APIBleeding", "APIBleeding")
                         .WithOne("PatientExaminationResult")
-                        .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationResult", "APIId")
+                        .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationResult", "APIBleedingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -5825,23 +5619,15 @@ namespace App.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("App.Domain.Models.OralHealthExamination.Bleeding", "Bleeding")
-                        .WithOne("PatientExaminationResult")
-                        .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationResult", "BleedingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("App.Domain.Models.OralHealthExamination.DMFT_DMFS", "DMFT_DMFS")
                         .WithOne("PatientExaminationResult")
                         .HasForeignKey("App.Domain.Models.OralHealthExamination.PatientExaminationResult", "DMFT_DMFSId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("API");
+                    b.Navigation("APIBleeding");
 
                     b.Navigation("Bewe");
-
-                    b.Navigation("Bleeding");
 
                     b.Navigation("DMFT_DMFS");
                 });
@@ -6051,17 +5837,12 @@ namespace App.Persistence.Migrations
                     b.Navigation("PracticePatientExaminationCard");
                 });
 
-            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.API", b =>
+            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.APIBleeding", b =>
                 {
                     b.Navigation("PatientExaminationResult");
                 });
 
             modelBuilder.Entity("App.Domain.Models.OralHealthExamination.Bewe", b =>
-                {
-                    b.Navigation("PatientExaminationResult");
-                });
-
-            modelBuilder.Entity("App.Domain.Models.OralHealthExamination.Bleeding", b =>
                 {
                     b.Navigation("PatientExaminationResult");
                 });
