@@ -82,16 +82,6 @@ public class OralEhrContext : IdentityDbContext<
     public virtual DbSet<PatientExaminationCard> PatientExaminationCards { get; set; }
 
     /// <summary>
-    /// Gets or sets the set of patient examination regular modes.
-    /// </summary>
-    public virtual DbSet<PatientExaminationRegularMode> PatientExaminationRegularModes { get; set; }
-
-    /// <summary>
-    /// Gets or sets the set of patient examination test modes.
-    /// </summary>
-    public virtual DbSet<PatientExaminationTestMode> PatientExaminationTestModes { get; set; }
-
-    /// <summary>
     /// Gets or sets the set of risk factor assessments.
     /// </summary>
     public virtual DbSet<RiskFactorAssessment> RiskFactorAssessments { get; set; }
@@ -191,10 +181,6 @@ public class OralEhrContext : IdentityDbContext<
         modelBuilder.Entity<ResearchGroup>().ToTable(nameof(ResearchGroup), "oralHealthExamination");
 
         modelBuilder.Entity<PatientExaminationCard>().ToTable(nameof(PatientExaminationCard), "oralHealthExamination");
-
-        modelBuilder.Entity<PatientExaminationRegularMode>().ToTable(nameof(PatientExaminationRegularMode), "oralHealthExamination");
-
-        modelBuilder.Entity<PatientExaminationTestMode>().ToTable(nameof(PatientExaminationTestMode), "oralHealthExamination");
 
         modelBuilder.Entity<RiskFactorAssessment>().ToTable(nameof(RiskFactorAssessment), "oralHealthExamination");
 

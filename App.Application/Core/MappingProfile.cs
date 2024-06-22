@@ -73,15 +73,6 @@ public class MappingProfile : Profile
         // CreateMap<TSource, TDestination> creates a mapping from PatientExaminationCard to PatientExaminationCardDto
         CreateMap<PatientExaminationCard, PatientExaminationCardDto>();
 
-        // CreateMap<TSource, TDestination> creates a mapping from PatientExaminationRegularMode to PatientExaminationRegularModeDto
-        CreateMap<PatientExaminationRegularMode, PatientExaminationRegularModeDto>()
-            .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"));
-
-        // CreateMap<TSource, TDestination> creates a mapping from PatientExaminationTestMode to PatientExaminationTestModeDto
-        CreateMap<PatientExaminationTestMode, PatientExaminationTestModeDto>()
-            .ForMember(x => x.StudentName, o => o.MapFrom(s => $"{s.Student.FirstName} {s.Student.LastName}"))
-            .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"));
-
         // CreateMap<TSource, TDestination> creates a mapping from Exam to ExamDto
         CreateMap<Exam, ExamDto>()
             .ForMember(x => x.ExamStatus, o => o.MapFrom(s => Enum.GetName(s.ExamStatus)));

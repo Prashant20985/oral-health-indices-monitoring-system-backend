@@ -18,14 +18,19 @@ public class PatientExaminationCardDto
     public string DoctorComment { get; init; }
 
     /// <summary>
-    /// Gets or sets the test mode details associated with the examination card.
+    /// Gets or sets a value indicating whether the examination card is in regular mode or test mode.
     /// </summary>
-    public PatientExaminationTestModeDto PatientExaminationTestMode { get; init; }
+    public bool IsRegularMode { get; init; }
 
     /// <summary>
-    /// Gets or sets the regular mode details associated with the examination card.
+    /// Gets or sets the total score of the examination card.
     /// </summary>
-    public PatientExaminationRegularModeDto PatientExaminationRegularMode { get; init; }
+    public decimal? TotalScore { get; init; }
+
+    /// <summary>
+    /// Gets or sets the date of the examination card.
+    /// </summary>
+    public DateTime DateOfExamination { get; init; }
 
     /// <summary>
     /// Gets or sets the risk factor assessment details associated with the examination card.
