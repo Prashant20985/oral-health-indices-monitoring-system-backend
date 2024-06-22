@@ -21,9 +21,14 @@ internal class PatientExaminationResultConfiguration
             .HasForeignKey<PatientExaminationResult>(x => x.DMFT_DMFSId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(x => x.APIBleeding)
+        builder.HasOne(x => x.API)
             .WithOne(x => x.PatientExaminationResult)
-            .HasForeignKey<PatientExaminationResult>(x => x.APIBleedingId)
+            .HasForeignKey<PatientExaminationResult>(x => x.APIId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(x => x.Bleeding)
+            .WithOne(x => x.PatientExaminationResult)
+            .HasForeignKey<PatientExaminationResult>(x => x.BleedingId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

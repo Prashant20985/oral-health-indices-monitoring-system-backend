@@ -55,15 +55,25 @@ internal sealed class AddPracticePatientExaminationCardHandler(IStudentExamRepos
         // Add practice patient to repository
         await _studentExamRepository.AddPracticePatient(practicePatient);
 
-        // Create practice API bleeding object
-        PracticeAPIBleeding practiceAPIBleeding = new(
-            request.CardInputModel.PracticeAPIBleeding.APIResult,
-            request.CardInputModel.PracticeAPIBleeding.BleedingResult);
+        // Create practice API object
+        PracticeAPI practiceAPI = new(request.CardInputModel.PracticeAPI.APIResult, 
+            request.CardInputModel.PracticeAPI.Maxilla,
+            request.CardInputModel.PracticeAPI.Mandible);
 
-        practiceAPIBleeding.SetAssessmentModel(request.CardInputModel.PracticeAPIBleeding.AssessmentModel);
+        practiceAPI.SetAssessmentModel(request.CardInputModel.PracticeAPI.AssessmentModel);
 
         // Add practice API bleeding to repository
-        await _studentExamRepository.AddPracticeAPIBleeding(practiceAPIBleeding);
+        await _studentExamRepository.AddPracticeAPI(practiceAPI);
+
+        // Create practice bleeding object
+        PracticeBleeding practiceBleeding = new(request.CardInputModel.PracticeBleeding.BleedingResult,
+            request.CardInputModel.PracticeBleeding.Maxilla,
+            request.CardInputModel.PracticeBleeding.Mandible);
+
+        practiceBleeding.SetAssessmentModel(request.CardInputModel.PracticeBleeding.AssessmentModel);
+
+        // Add practice bleeding to repository
+        await _studentExamRepository.AddPracticeBleeding(practiceBleeding);
 
         // Create practice DMFT/DMFS object
         PracticeDMFT_DMFS practiceDMFT_DMFS = new(
@@ -86,7 +96,8 @@ internal sealed class AddPracticePatientExaminationCardHandler(IStudentExamRepos
         PracticePatientExaminationResult practicePatientExamiantionResult = new(
             practiceBewe.Id,
             practiceDMFT_DMFS.Id,
-            practiceAPIBleeding.Id);
+            practiceAPI.Id,
+            practiceBleeding.Id);
 
         // Add practice patient examination result to repository
         await _studentExamRepository.AddPracticePatientExaminationResult(practicePatientExamiantionResult);
