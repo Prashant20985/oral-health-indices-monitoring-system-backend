@@ -39,5 +39,7 @@ public class Quadrant
     /// Gets or sets the seventh value.
     /// </summary>
     public string Value7 { get; set; }
+
+    public string[] ToArray() => [Value1, Value2, Value3, Value4, Value5, Value6, Value7];
 }
 

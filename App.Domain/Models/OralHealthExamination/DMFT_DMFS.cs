@@ -9,9 +9,19 @@ public class DMFT_DMFS
     public decimal DMFSResult { get; private set; }
     public string Comment { get; private set; }
 
-    public DMFT_DMFSAssessmentModel AssessmentModel { get; set; }
+    public DMFT_DMFSAssessmentModel AssessmentModel { get; private set; }
 
-    public PatientExaminationResult PatientExaminationResult { get; set; }
+    public virtual PatientExaminationResult PatientExaminationResult { get; set; }
 
     public void AddComment(string comment) => Comment = comment;
+
+    public void SetDMFTResult(decimal dmftResult) => DMFTResult = dmftResult;
+
+    public void SetDMFSResult(decimal dmfsResult) => DMFSResult = dmfsResult;
+
+    public void SetDMFT_DMFSAssessmentModel(DMFT_DMFSAssessmentModel assessmentModel) => AssessmentModel = assessmentModel;
+
+    // TODO
+    public void CalculateDMFTResult() => DMFTResult = 0;
+    public void CalculateDMFSResult() => DMFSResult = 0;
 }

@@ -23,6 +23,13 @@ public interface IPatientExaminationCardRepository
     Task<Bewe> GetBeweByCardId(Guid cardId);
 
     /// <summary>
+    /// Gets the Risk Factor Assessment associated with a patient examination card.
+    /// </summary>
+    /// <param name="cardId">The unique identifier of the patient examination card.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the Risk Factor Assessment.</returns>
+    Task<RiskFactorAssessment> GetRiskFactorAssessmentByCardId(Guid cardId);
+
+    /// <summary>
     /// Gets the API data associated with a patient examination card.
     /// </summary>
     /// <param name="cardId">The unique identifier of the patient examination card.</param>
@@ -44,10 +51,17 @@ public interface IPatientExaminationCardRepository
     Task<DMFT_DMFS> GetDMFT_DMFSByCardId(Guid cardId);
 
     /// <summary>
+    /// Gets a patient examination card by its unique identifier.
+    /// </summary>
+    /// <param name="cardId">The unique identifier of the patient examination card.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the patient examination card.</returns>
+    Task<PatientExaminationCard> GetPatientExaminationCard(Guid cardId);
+
+    /// <summary>
     /// Adds a patient examination card to the repository.
     /// </summary>
     /// <param name="patientExaminationCard">The patient examination card to add.</param>
-    Task AddPracticePatientExaminationCard(PatientExaminationCard patientExaminationCard);
+    Task AddPatientExaminationCard(PatientExaminationCard patientExaminationCard);
 
     /// <summary>
     /// Adds a risk factor assessment to the repository.
@@ -90,4 +104,18 @@ public interface IPatientExaminationCardRepository
     /// </summary>
     /// <param name="cardId">The unique identifier of the patient examination card to delete.</param>
     Task DeletePatientExaminationCard(Guid cardId);
+
+    /// <summary>
+    /// Fetches all patient examination card data transfer objects in regular mode.
+    /// </summary>
+    /// <param name="patientId">The unique identifier of the patient.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of patient examination card data transfer objects.</returns>
+    Task<List<PatientExaminationCardDto>> GetPatientExaminationCardDtosInRegularModeByPatientId(Guid patientId);
+
+    /// <summary>
+    /// Fetches all patient examination card data transfer objects in test mode.
+    /// </summary>
+    /// <param name="patientId">The unique identifier of the patient.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of patient examination card data transfer objects.</returns>
+    Task<List<PatientExaminationCardDto>> GetPatientExminationCardDtosInTestModeByPatientId(Guid patientId);
 }
