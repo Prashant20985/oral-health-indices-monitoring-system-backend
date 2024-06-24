@@ -36,5 +36,33 @@ public class Sectant2
     /// Gets or sets the tooth at position 23.
     /// </summary>
     public FourSurfaceTooth Tooth_23 { get; set; }
+
+    public int FindMaxValue()
+    {
+        int maxVal = 0;
+        var teeth = new[] { Tooth_11, Tooth_12, Tooth_13, Tooth_21, Tooth_22, Tooth_23 };
+
+        foreach (var tooth in teeth)
+        {
+            if (tooth != null)
+            {
+                maxVal = Math.Max(maxVal, GetIntValue(tooth.B));
+                maxVal = Math.Max(maxVal, GetIntValue(tooth.L));
+            }
+        }
+
+        return maxVal;
+    }
+
+    private static int GetIntValue(string value)
+    {
+        if (value.Equals("x") || string.IsNullOrEmpty(value))
+            return 0;
+
+        if (int.TryParse(value, out int result))
+            return result;
+
+        return 0;
+    }
 }
 

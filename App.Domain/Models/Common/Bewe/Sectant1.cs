@@ -26,5 +26,34 @@ public class Sectant1
     /// Gets or sets the tooth at position 14.
     /// </summary>
     public FiveSurfaceToothBEWE Tooth_14 { get; set; }
+
+    public int FindMaxValue()
+    {
+        int maxVal = 0;
+        var teeth = new[] { Tooth_17, Tooth_16, Tooth_15, Tooth_14 };
+
+        foreach(var tooth in teeth)
+        {
+            if (tooth != null)
+            {
+                maxVal = Math.Max(maxVal, GetIntValue(tooth.B));
+                maxVal = Math.Max(maxVal, GetIntValue(tooth.O));
+                maxVal = Math.Max(maxVal, GetIntValue(tooth.L));
+            }
+        }
+
+        return maxVal;
+    }
+
+    private static int GetIntValue(string value)
+    {
+        if (value.Equals("x") || string.IsNullOrEmpty(value))
+            return 0;
+
+        if (int.TryParse(value, out int result))
+            return result;
+
+        return 0;
+    }
 }
 

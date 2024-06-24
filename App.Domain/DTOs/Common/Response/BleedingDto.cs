@@ -20,6 +20,16 @@ public class BleedingDto
     public int BleedingResult { get; init; }
 
     /// <summary>
+    /// Gets or sets the Maxilla result.
+    /// </summary>
+    public int Maxilla { get; init; }
+
+    /// <summary>
+    /// Gets or sets the Mandible result.
+    /// </summary>
+    public int Mandible { get; init; }
+
+    /// <summary>
     /// Gets or sets comment related to the API and Bleeding assessment.
     /// </summary>
     public string Comment { get; init; }

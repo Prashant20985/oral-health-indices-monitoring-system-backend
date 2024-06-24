@@ -122,6 +122,9 @@ public static class ApplicationExtension
         // Add a scoped dependency for LogService.
         services.AddScoped<LogService>();
 
+        // Add a scoped dependency for ILogRepository with the implementation of LogRepository.
+        services.AddScoped<IPatientExaminationCardRepository, PatientExaminationCardRepository>();
+
         return services;
     }
 }

@@ -24,7 +24,7 @@ public class UpperMouth
 
     /// <summary>
     /// Gets or sets the tooth at position 15 with six surfaces.
-    /// </summary>
+    /// </summary>  
     public SixSurfaceTooth Tooth_15 { get; set; }
 
     /// <summary>
