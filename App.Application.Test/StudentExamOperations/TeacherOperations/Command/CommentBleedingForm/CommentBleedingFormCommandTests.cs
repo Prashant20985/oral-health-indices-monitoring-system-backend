@@ -35,7 +35,7 @@ public class CommentBleedingFormCommandTests : TestHelper
     public async Task Handle_WhenBleedingFormExists_ShouldReturnSucessResult()
     {
         // Arrange
-        var practiceBleeding = new PracticeBleeding(22,22,22);
+        var practiceBleeding = new PracticeBleeding(22, 22, 22);
 
         studentExamRepositoryMock.Setup(x => x.GetPracticeBleedingByCardId(It.IsAny<Guid>()))
             .ReturnsAsync(practiceBleeding);

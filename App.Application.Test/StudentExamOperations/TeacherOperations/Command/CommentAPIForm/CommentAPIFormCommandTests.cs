@@ -35,7 +35,7 @@ public class CommentAPIFormCommandTests : TestHelper
     public async Task Handle_WhenAPIFormExists_ShouldReturnSucessResult()
     {
         // Arrange
-        var practiceAPI = new PracticeAPI(22,22,22);
+        var practiceAPI = new PracticeAPI(22, 22, 22);
 
         studentExamRepositoryMock.Setup(x => x.GetPracticeAPIByCardId(It.IsAny<Guid>()))
             .ReturnsAsync(practiceAPI);

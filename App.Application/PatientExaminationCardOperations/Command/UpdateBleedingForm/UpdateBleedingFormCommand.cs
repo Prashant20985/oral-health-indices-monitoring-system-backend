@@ -10,4 +10,4 @@ namespace App.Application.PatientExaminationCardOperations.Command.UpdateBleedin
 /// </summary>
 [OralEhrContextUnitOfWork]
 public record UpdateBleedingFormCommand(Guid CardId, APIBleedingAssessmentModel AssessmentModel)
-    :IRequest<OperationResult<Unit>>;
+    : IRequest<OperationResult<Unit>>;

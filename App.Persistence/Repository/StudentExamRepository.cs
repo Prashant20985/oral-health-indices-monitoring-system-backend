@@ -94,14 +94,14 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
         .FirstOrDefaultAsync(x => x.Id == practicePatientExaminationCardId);
 
     /// <inheritdoc/>
-    public async Task<PracticeAPI> GetPracticeAPIByCardId(Guid practicePatientExaminationCardId) => 
+    public async Task<PracticeAPI> GetPracticeAPIByCardId(Guid practicePatientExaminationCardId) =>
         await _context.PracticePatientExaminationCards
             .Where(x => x.Id == practicePatientExaminationCardId)
             .Select(x => x.PracticePatientExaminationResult.API)
             .FirstOrDefaultAsync();
 
     /// <inheritdoc/>
-    public async Task<PracticeBleeding> GetPracticeBleedingByCardId(Guid practicePatientExaminationCardId) => 
+    public async Task<PracticeBleeding> GetPracticeBleedingByCardId(Guid practicePatientExaminationCardId) =>
         await _context.PracticePatientExaminationCards
             .Where(x => x.Id == practicePatientExaminationCardId)
             .Select(x => x.PracticePatientExaminationResult.Bleeding)

@@ -86,6 +86,6 @@ public class APIBleedingQuadrantValidator : AbstractValidator<Quadrant>
     /// </summary>
     /// <param name="value">The value to validate</param>
     /// <returns>True if the value is '+' or '-', otherwise false</returns>
-    private bool BePlusOrMinusOrEmpty(string value) => 
+    private bool BePlusOrMinusOrEmpty(string value) =>
         value == "+" || value == "-" || string.IsNullOrEmpty(value);
 }

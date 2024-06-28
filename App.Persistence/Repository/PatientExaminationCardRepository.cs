@@ -20,11 +20,11 @@ public class PatientExaminationCardRepository(OralEhrContext context, IMapper ma
     private readonly IMapper _mapper = mapper;
 
     /// <inheritdoc/>
-    public async Task AddAPI(API api) => 
+    public async Task AddAPI(API api) =>
         await _context.APIs.AddAsync(api);
 
     /// <inheritdoc/>
-    public async Task AddBewe(Bewe bewe) => 
+    public async Task AddBewe(Bewe bewe) =>
         await _context.Bewes.AddAsync(bewe);
 
     /// <inheritdoc/>
@@ -75,7 +75,7 @@ public class PatientExaminationCardRepository(OralEhrContext context, IMapper ma
     }
 
     /// <inheritdoc/>
-    public async Task<API> GetAPIByCardId(Guid cardId) => 
+    public async Task<API> GetAPIByCardId(Guid cardId) =>
         await _context.PatientExaminationCards
             .Where(c => c.Id == cardId)
             .Select(c => c.PatientExaminationResult.API)
@@ -96,14 +96,14 @@ public class PatientExaminationCardRepository(OralEhrContext context, IMapper ma
             .FirstOrDefaultAsync();
 
     /// <inheritdoc/>
-    public async Task<DMFT_DMFS> GetDMFT_DMFSByCardId(Guid cardId) => 
+    public async Task<DMFT_DMFS> GetDMFT_DMFSByCardId(Guid cardId) =>
         await _context.PatientExaminationCards
             .Where(c => c.Id == cardId)
             .Select(c => c.PatientExaminationResult.DMFT_DMFS)
             .FirstOrDefaultAsync();
 
     /// <inheritdoc/>
-    public async Task<PatientExaminationCard> GetPatientExaminationCard(Guid cardId) => 
+    public async Task<PatientExaminationCard> GetPatientExaminationCard(Guid cardId) =>
         await _context.PatientExaminationCards
             .FirstOrDefaultAsync(c => c.Id == cardId);
 
@@ -123,7 +123,7 @@ public class PatientExaminationCardRepository(OralEhrContext context, IMapper ma
             .ToListAsync();
 
     /// <inheritdoc/>
-    public async Task<List<PatientExaminationCardDto>> GetPatientExminationCardDtosInTestModeByPatientId(Guid patientId) => 
+    public async Task<List<PatientExaminationCardDto>> GetPatientExminationCardDtosInTestModeByPatientId(Guid patientId) =>
         await _context.PatientExaminationCards
             .Where(c => c.PatientId == patientId && !c.IsRegularMode)
             .ProjectTo<PatientExaminationCardDto>(_mapper.ConfigurationProvider)
@@ -131,7 +131,7 @@ public class PatientExaminationCardRepository(OralEhrContext context, IMapper ma
             .ToListAsync();
 
     /// <inheritdoc/>
-    public async Task<RiskFactorAssessment> GetRiskFactorAssessmentByCardId(Guid cardId) => 
+    public async Task<RiskFactorAssessment> GetRiskFactorAssessmentByCardId(Guid cardId) =>
         await _context.PatientExaminationCards
             .Where(c => c.Id == cardId)
             .Select(c => c.RiskFactorAssessment)

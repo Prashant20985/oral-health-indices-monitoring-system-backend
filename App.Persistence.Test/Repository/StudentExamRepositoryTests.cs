@@ -1,5 +1,4 @@
 ﻿using App.Domain.DTOs.Common.Response;
-using App.Domain.DTOs.ExamDtos.Request;
 using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.DTOs.PatientDtos.Response;
 using App.Domain.Models.CreditSchema;
@@ -1470,7 +1469,7 @@ public class StudentExamRepositoryTests
         var practiceRiskFactorAssessment = new PracticeRiskFactorAssessment();
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
-        var practiceAPI= new PracticeAPI(22, 10, 10);
+        var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
         var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
 

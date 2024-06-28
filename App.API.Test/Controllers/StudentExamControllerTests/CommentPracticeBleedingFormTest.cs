@@ -1,5 +1,4 @@
 ﻿using App.Application.Core;
-using App.Application.StudentExamOperations.TeacherOperations.Command.CommentAPIForm;
 using App.Application.StudentExamOperations.TeacherOperations.Command.CommentBleedingForm;
 using App.Domain.Models.CreditSchema;
 using MediatR;
@@ -30,11 +29,11 @@ public class CommentPracticeBleedingFormTest
         var studentId = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
-        var practiceAPI = new PracticeAPI(22, 22,22);
+        var practiceAPI = new PracticeAPI(22, 22, 22);
         var practiceBleeding = new PracticeBleeding(22, 22, 22);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id,practiceBleeding.Id);
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
 
         var comment = "This is a test comment.";
 
@@ -58,11 +57,11 @@ public class CommentPracticeBleedingFormTest
         var studentId = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
-        var practiceAPI = new PracticeAPI(22, 22,22);
+        var practiceAPI = new PracticeAPI(22, 22, 22);
         var practiceBleeding = new PracticeBleeding(22, 22, 22);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id,practiceBleeding.Id);
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
 
         var comment = "";
 

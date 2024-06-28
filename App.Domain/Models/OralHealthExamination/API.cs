@@ -48,7 +48,7 @@ public class API
         int totalNumberOfPlusCount = quadrant1PlusCount + quadrant2PlusCount
             + quadrant3PlusCount + quadrant4PlusCount;
 
-        APIResult = (totalNumberOfPlusCount/totalNumberOfSurfacesExamined) * 100;
+        APIResult = (totalNumberOfPlusCount / totalNumberOfSurfacesExamined) * 100;
 
         // Calculate Maxilla
         int totalNumberOfSurfacesExaminedMaxilla = quadrant1PlusCount + quadrant2PlusCount
@@ -56,7 +56,7 @@ public class API
 
         int totalNumberOfPlusCountMaxilla = quadrant1PlusCount + quadrant2PlusCount;
 
-        Maxilla = (totalNumberOfPlusCountMaxilla/totalNumberOfSurfacesExaminedMaxilla) * 100;
+        Maxilla = (totalNumberOfPlusCountMaxilla / totalNumberOfSurfacesExaminedMaxilla) * 100;
 
         // Calculate Mandible
         int totalNumberOfSurfacesExaminedMandible = quadrant3PlusCount + quadrant4PlusCount
@@ -64,6 +64,6 @@ public class API
 
         int totalNumberOfPlusCountMandible = quadrant3PlusCount + quadrant4PlusCount;
 
-        Mandible = (totalNumberOfPlusCountMandible/totalNumberOfSurfacesExaminedMandible) * 100;
+        Mandible = (totalNumberOfPlusCountMandible / totalNumberOfSurfacesExaminedMandible) * 100;
     }
 }

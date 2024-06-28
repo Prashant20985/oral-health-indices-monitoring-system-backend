@@ -30,7 +30,7 @@ internal sealed class FetchPatientExamiantionCardsInRegularModeHandler(
         var checkPatientExists = await _patientRepository.GetPatientById(request.PatientId);
 
         // If patient does not exist, return failure result
-        if (checkPatientExists is null) 
+        if (checkPatientExists is null)
             return OperationResult<List<PatientExaminationCardDto>>.Failure("Patient Not Found");
 
         // Fetch patient examination cards in regular mode

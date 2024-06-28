@@ -32,7 +32,7 @@ public class Sectant1
         int maxVal = 0;
         var teeth = new[] { Tooth_17, Tooth_16, Tooth_15, Tooth_14 };
 
-        foreach(var tooth in teeth)
+        foreach (var tooth in teeth)
         {
             if (tooth != null)
             {

@@ -136,7 +136,7 @@ public class PatientExaminationCardController : BaseController
     /// <returns>An ActionResult of PatientExaminationCardDto</returns>
     [HttpPost("create-patient-examination-card-regular-mode/{patientId}")]
     public async Task<ActionResult<PatientExaminationCardDto>> CreatePatientExaminationCardRegularMode(Guid patientId,
-        [FromBody] CreatePatientExaminationCardRegularModeInputParams inputParams) => 
+        [FromBody] CreatePatientExaminationCardRegularModeInputParams inputParams) =>
             HandleOperationResult(await Mediator.Send(new CreatePatientExaminationCardRegularModeCommand(patientId, inputParams)));
 
     /// <summary>
@@ -147,7 +147,7 @@ public class PatientExaminationCardController : BaseController
     /// <returns>An ActionResult of PatientExaminationCardDto</returns>
     [HttpPost("create-patient-examination-card-test-mode/{patientId}")]
     public async Task<ActionResult<PatientExaminationCardDto>> CreatePatientExaminationCardTestMode(Guid patientId,
-               [FromBody] CreatePatientExaminationCardTestModeInputParams inputParams) => 
+               [FromBody] CreatePatientExaminationCardTestModeInputParams inputParams) =>
             HandleOperationResult(await Mediator.Send(new CreatePatientExaminationCardTestModeCommand(patientId, inputParams)));
 
     /// <summary>

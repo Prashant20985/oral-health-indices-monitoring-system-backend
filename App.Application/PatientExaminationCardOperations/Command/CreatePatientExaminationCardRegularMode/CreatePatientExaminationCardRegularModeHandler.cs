@@ -90,7 +90,7 @@ internal sealed class CreatePatientExaminationCardRegularModeHandler(
 
         // Add risk factor assessment to repository
         await _patientExaminationCardRepository.AddRiskFactorAssessment(riskFactorAssessment);
-        
+
         // Create patient examination card
         var examinationCard = new PatientExaminationCard(request.PatientId);
         examinationCard.SetRegularMode();

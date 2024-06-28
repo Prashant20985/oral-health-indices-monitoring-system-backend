@@ -56,7 +56,7 @@ internal sealed class AddPracticePatientExaminationCardHandler(IStudentExamRepos
         await _studentExamRepository.AddPracticePatient(practicePatient);
 
         // Create practice API object
-        PracticeAPI practiceAPI = new(request.CardInputModel.PracticeAPI.APIResult, 
+        PracticeAPI practiceAPI = new(request.CardInputModel.PracticeAPI.APIResult,
             request.CardInputModel.PracticeAPI.Maxilla,
             request.CardInputModel.PracticeAPI.Mandible);
 

@@ -33,7 +33,7 @@ public class CommentPracticeAPIFormTest
         var practiceBleeding = new PracticeBleeding(22, 22, 22);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id,practiceBleeding.Id);
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
 
         var comment = "This is a test comment.";
 
