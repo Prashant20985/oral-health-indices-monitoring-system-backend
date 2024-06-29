@@ -61,7 +61,7 @@ public class UpperMouthValidator : AbstractValidator<UpperMouth>
             x.Tooth_22,
             x.Tooth_23
         }).SetValidator(new DMFT_DMFSFiveSurfaceToothValidator());
-        
+
         // Validate Tooth_48, Tooth_47, Tooth_46, Tooth_45, Tooth_44, Tooth_34, Tooth_35, Tooth_36, Tooth_37, Tooth_38
         RuleForEach(x => new[]
         {

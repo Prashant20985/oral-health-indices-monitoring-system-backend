@@ -17,13 +17,13 @@ public class LogController(LogService logService) : ControllerBase
 {
     // Represents the LogService instance for accessing the logs.
     private readonly LogService _logService = logService;
-    
+
     /// <summary>
     /// Gets the logs for today.
     /// </summary>
     /// <returns>Returns a list of request logs for today.</returns>
     [HttpGet("today")]
-    public async Task<ActionResult<List<RequestLogDocument>>> GetLogsForTodayAsync() => 
+    public async Task<ActionResult<List<RequestLogDocument>>> GetLogsForTodayAsync() =>
         await _logService.GetLogsForTodayAsync();
 
 
@@ -33,6 +33,6 @@ public class LogController(LogService logService) : ControllerBase
     /// <param name="query">The LogQueryParameters instance for filtering the logs.</param>
     /// <returns>Returns a list of filtered request logs.</returns>
     [HttpGet("filtered-logs")]
-    public async Task<ActionResult<List<RequestLogDocument>>> GetFilteredLogs([FromQuery] LogQueryParameters query) => 
+    public async Task<ActionResult<List<RequestLogDocument>>> GetFilteredLogs([FromQuery] LogQueryParameters query) =>
         await _logService.GetFilteredLogs(query);
 }

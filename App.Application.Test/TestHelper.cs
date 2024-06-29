@@ -2,6 +2,7 @@
 using App.Domain.Models.Users;
 using App.Domain.Repository;
 using App.Domain.UnitOfWork;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Moq;
@@ -79,6 +80,16 @@ public class TestHelper
     protected Mock<IStudentExamRepository> studentExamRepositoryMock;
 
     /// <summary>
+    /// Mock instance for the IPatientExaminationCardRepository interface, used to simulate patientExaminationCardRepository service behavior in tests.
+    /// </summary>
+    protected Mock<IPatientExaminationCardRepository> patientExaminationCardRepositoryMock;
+
+    /// <summary>
+    /// Mock instance for the IMapper interface, used to simulate AutoMapper behavior in tests.
+    /// </summary>
+    protected Mock<IMapper> mapperMock;
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="TestHelper"/> class with default mocked dependencies.
     /// </summary>
     public TestHelper()
@@ -96,6 +107,8 @@ public class TestHelper
         patientRepositoryMock = new Mock<IPatientRepository>();
         researchGroupRepositoryMock = new Mock<IResearchGroupRepository>();
         studentExamRepositoryMock = new Mock<IStudentExamRepository>();
+        patientExaminationCardRepositoryMock = new Mock<IPatientExaminationCardRepository>();
+        mapperMock = new Mock<IMapper>();
     }
 }
 

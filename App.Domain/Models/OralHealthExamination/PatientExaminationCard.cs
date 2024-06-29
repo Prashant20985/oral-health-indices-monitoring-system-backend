@@ -12,7 +12,7 @@ public class PatientExaminationCard(Guid patientId)
 
     public string DoctorComment { get; private set; }
 
-    public decimal? TotalScore { get;  private set; }
+    public decimal? TotalScore { get; private set; }
 
     public Guid PatientId { get; private set; } = patientId;
     public virtual Patient Patient { get; set; }

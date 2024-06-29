@@ -1,5 +1,4 @@
-﻿using App.API.Controllers;
-using App.Application.Core;
+﻿using App.Application.Core;
 using App.Application.StudentExamOperations.CommonOperations.Query.ExamsList;
 using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.Models.CreditSchema;

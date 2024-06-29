@@ -27,7 +27,7 @@ internal sealed class FetchPatientExaminationCardsInTestModeHandler(
     public async Task<OperationResult<List<PatientExaminationCardDto>>> Handle(FetchPatientExaminationCardsInTestModeQuery request, CancellationToken cancellationToken)
     {
         // Check if patient exists
-        var checkPatientExists  = await _patientRepository.GetPatientById(request.PatientId);
+        var checkPatientExists = await _patientRepository.GetPatientById(request.PatientId);
 
         // If patient does not exist, return failure
         if (checkPatientExists is null)

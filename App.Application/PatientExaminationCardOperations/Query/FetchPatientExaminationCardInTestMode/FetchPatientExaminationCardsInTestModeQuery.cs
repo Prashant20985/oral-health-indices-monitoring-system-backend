@@ -7,5 +7,5 @@ namespace App.Application.PatientExaminationCardOperations.Query.FetchPatientExa
 /// <summary>
 /// Query to fetch patient examination cards in test mode
 /// </summary>
-public record FetchPatientExaminationCardsInTestModeQuery(Guid PatientId) 
+public record FetchPatientExaminationCardsInTestModeQuery(Guid PatientId)
     : IRequest<OperationResult<List<PatientExaminationCardDto>>>;

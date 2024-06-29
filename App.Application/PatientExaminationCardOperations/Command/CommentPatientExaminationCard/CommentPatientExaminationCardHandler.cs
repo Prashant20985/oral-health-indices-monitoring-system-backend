@@ -23,7 +23,7 @@ internal sealed class CommentPatientExaminationCardHandler(IPatientExaminationCa
     {
         var patientExaminationCard = await _patientExaminationCardRepository.GetPatientExaminationCard(request.Cardid);
 
-        if(patientExaminationCard is null) 
+        if (patientExaminationCard is null)
             return OperationResult<Unit>.Failure("Patient examination card not found");
 
         patientExaminationCard.AddComment(request.DoctorComment);
