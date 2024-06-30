@@ -160,5 +160,6 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
         await _context.PracticePatientExaminationCards
             .Where(x => x.ExamId == examId && x.StudentId == studentId)
             .ProjectTo<PracticePatientExaminationCardDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
             .FirstOrDefaultAsync();
 }
