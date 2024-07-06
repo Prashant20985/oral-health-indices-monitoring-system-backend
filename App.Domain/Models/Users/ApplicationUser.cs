@@ -1,4 +1,4 @@
-﻿using App.Domain.DTOs;
+﻿using App.Domain.DTOs.ApplicationUserDtos.Request;
 using App.Domain.Models.CreditSchema;
 using App.Domain.Models.OralHealthExamination;
 using Microsoft.AspNetCore.Identity;
@@ -95,7 +95,7 @@ public class ApplicationUser : IdentityUser
     /// Updates user properties based on the provided DTO.
     /// </summary>
     /// <param name="updateApplicationUser">DTO containing updated user information.</param>
-    public void UpdateUser(UpdateApplicationUserDto updateApplicationUser)
+    public void UpdateUser(UpdateApplicationUserRequestDto updateApplicationUser)
     {
         FirstName = updateApplicationUser.FirstName;
         LastName = updateApplicationUser.LastName;

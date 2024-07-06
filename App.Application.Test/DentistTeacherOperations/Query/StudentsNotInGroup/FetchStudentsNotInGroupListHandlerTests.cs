@@ -1,5 +1,5 @@
 ﻿using App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using Moq;
 
 namespace App.Application.Test.DentistTeacherOperations.Query.StudentsNotInGroup;
@@ -11,10 +11,10 @@ public class FetchStudentsNotInGroupListHandlerTests : TestHelper
     {
         // Arrange
         groupRepositoryMock.Setup(repo => repo.GetAllStudentsNotInGroup(It.IsAny<Guid>()))
-            .ReturnsAsync(new List<StudentDto>
+            .ReturnsAsync(new List<StudentResponseDto>
             {
-                new StudentDto { Id = "studentId1", UserName = "Student1" },
-                new StudentDto { Id = "studentId2", UserName = "Student2" }
+                new StudentResponseDto { Id = "studentId1", UserName = "Student1" },
+                new StudentResponseDto { Id = "studentId2", UserName = "Student2" }
             });
 
         var handler = new FetchStudentsNotInGroupListHandler(groupRepositoryMock.Object);
@@ -37,7 +37,7 @@ public class FetchStudentsNotInGroupListHandlerTests : TestHelper
     {
         // Arrange
         groupRepositoryMock.Setup(repo => repo.GetAllStudentsNotInGroup(It.IsAny<Guid>()))
-            .ReturnsAsync(new List<StudentDto>());
+            .ReturnsAsync(new List<StudentResponseDto>());
 
         var handler = new FetchStudentsNotInGroupListHandler(groupRepositoryMock.Object);
 

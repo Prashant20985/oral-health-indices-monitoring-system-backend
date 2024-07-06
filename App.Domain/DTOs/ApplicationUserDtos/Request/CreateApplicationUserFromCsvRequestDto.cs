@@ -1,9 +1,9 @@
-﻿namespace App.Domain.DTOs;
+﻿namespace App.Domain.DTOs.ApplicationUserDtos.Request;
 
 /// <summary>
 /// Data transfer object (DTO) for creating a user from Csv.
 /// </summary>
-public class CreateApplicationUserFromCsvDto
+public class CreateApplicationUserFromCsvRequestDto
 {
     /// <summary>
     /// Gets or sets the first name of the user.

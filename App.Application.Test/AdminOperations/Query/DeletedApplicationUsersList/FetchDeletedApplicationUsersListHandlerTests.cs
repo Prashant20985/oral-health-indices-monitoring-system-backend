@@ -1,6 +1,6 @@
 ﻿using App.Application.AdminOperations.Query.DeletedApplicationUsersList;
 using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MockQueryable.Moq;
 using Moq;
 
@@ -12,28 +12,28 @@ public class FetchDeletedApplicationUsersListHandlerTests : TestHelper
     public async Task Handle_ValidRequest_ReturnsOperationResultWithDeletedUsers()
     {
         // Arrange
-        var user1 = new ApplicationUserDto
+        var user1 = new ApplicationUserResponseDto
         {
             FirstName = "Jhon",
             LastName = "Doe",
             DeleteUserComment = "Test Del"
         };
 
-        var user2 = new ApplicationUserDto
+        var user2 = new ApplicationUserResponseDto
         {
             FirstName = "Bruce",
             LastName = "Wayne",
             DeleteUserComment = "Test Del"
         };
 
-        var users = new List<ApplicationUserDto> { user1, user2 };
-        var filteredUsers = new List<ApplicationUserDto> { user1, user2 };
+        var users = new List<ApplicationUserResponseDto> { user1, user2 };
+        var filteredUsers = new List<ApplicationUserResponseDto> { user1, user2 };
 
         userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery()).Returns(users.AsQueryable().BuildMock());
 
         queryFilterMock.Setup(filter =>
-                filter.ApplyFilters(It.IsAny<IQueryable<ApplicationUserDto>>(), It.IsAny<SearchParams>(), CancellationToken.None))
-            .ReturnsAsync((IQueryable<ApplicationUserDto> query, SearchParams param, CancellationToken ct) =>
+                filter.ApplyFilters(It.IsAny<IQueryable<ApplicationUserResponseDto>>(), It.IsAny<SearchParams>(), CancellationToken.None))
+            .ReturnsAsync((IQueryable<ApplicationUserResponseDto> query, SearchParams param, CancellationToken ct) =>
             {
                 return filteredUsers;
             });

@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Response;
 using App.Domain.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace App.Application.DentistTeacherOperations.Query.ResearchGroups;
 
 internal sealed class FetchResearchGroupsHandler
-    : IRequestHandler<FetchResearchGroupsQuery, OperationResult<List<ResearchGroupDto>>>
+    : IRequestHandler<FetchResearchGroupsQuery, OperationResult<List<ResearchGroupResponseDto>>>
 {
     private readonly IResearchGroupRepository _researchGroupRepository;
 
@@ -16,7 +16,7 @@ internal sealed class FetchResearchGroupsHandler
         _researchGroupRepository = researchGroupRepository;
     }
 
-    public async Task<OperationResult<List<ResearchGroupDto>>> Handle(FetchResearchGroupsQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<List<ResearchGroupResponseDto>>> Handle(FetchResearchGroupsQuery request, CancellationToken cancellationToken)
     {
         var query = _researchGroupRepository.GetAllResearchGroups();
 
@@ -25,6 +25,6 @@ internal sealed class FetchResearchGroupsHandler
 
         var researchGroups = await query.ToListAsync(cancellationToken);
 
-        return OperationResult<List<ResearchGroupDto>>.Success(researchGroups);
+        return OperationResult<List<ResearchGroupResponseDto>>.Success(researchGroups);
     }
 }

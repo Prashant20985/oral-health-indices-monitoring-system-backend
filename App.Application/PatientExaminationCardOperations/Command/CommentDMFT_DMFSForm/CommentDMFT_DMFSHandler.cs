@@ -26,7 +26,7 @@ internal sealed class CommentDMFT_DMFSHandler(IPatientExaminationCardRepository 
         if (dmft_dmfsForm is null)
             return OperationResult<Unit>.Failure("DMFT/DMFS form not found");
 
-        dmft_dmfsForm.AddComment(request.DoctorComment);
+        dmft_dmfsForm.AddDoctorComment(request.DoctorComment);
 
         return OperationResult<Unit>.Success(Unit.Value);
     }

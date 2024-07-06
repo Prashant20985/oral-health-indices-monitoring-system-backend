@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using App.Domain.Repository;
 using MediatR;
 using Microsoft.IdentityModel.Tokens;
@@ -11,7 +11,7 @@ namespace App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
 /// </summary>
 internal sealed class FetchStudentsNotInGroupListHandler
     : IRequestHandler<FetchStudentsNotInGroupListQuery,
-        OperationResult<List<StudentDto>>>
+        OperationResult<List<StudentResponseDto>>>
 {
     private readonly IGroupRepository _groupRepository;
 
@@ -25,17 +25,17 @@ internal sealed class FetchStudentsNotInGroupListHandler
     }
 
     /// <inheritdoc />
-    public async Task<OperationResult<List<StudentDto>>> Handle
+    public async Task<OperationResult<List<StudentResponseDto>>> Handle
         (FetchStudentsNotInGroupListQuery request, CancellationToken cancellationToken)
     {
         // check if students list not in group is empty
         var studentsNotInGroupQuery = await _groupRepository.GetAllStudentsNotInGroup(request.GroupId);
 
         if (studentsNotInGroupQuery.IsNullOrEmpty())
-            return OperationResult<List<StudentDto>>.Failure("Students not found");
+            return OperationResult<List<StudentResponseDto>>.Failure("Students not found");
 
         // Return a success result with no specific data.
-        return OperationResult<List<StudentDto>>.Success(studentsNotInGroupQuery);
+        return OperationResult<List<StudentResponseDto>>.Success(studentsNotInGroupQuery);
     }
 }
 

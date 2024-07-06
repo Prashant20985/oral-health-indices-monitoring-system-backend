@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Response;
 using MediatR;
 
 namespace App.Application.DentistTeacherOperations.Query.PatientsNotInResearchGroups;
@@ -8,4 +8,4 @@ namespace App.Application.DentistTeacherOperations.Query.PatientsNotInResearchGr
 /// Represents a query to fetch patients not in any research group.
 /// </summary>
 public record FetchPatientsNotInResearchGroupsQuery(string PatientName, string Email)
-    : IRequest<OperationResult<List<ResearchGroupPatientDto>>>;
+    : IRequest<OperationResult<List<ResearchGroupPatientResponseDto>>>;

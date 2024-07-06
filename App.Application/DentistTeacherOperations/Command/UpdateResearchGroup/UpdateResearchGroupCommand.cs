@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Request;
 using App.Persistence.Attributes;
 using MediatR;
 
@@ -10,4 +10,4 @@ namespace App.Application.DentistTeacherOperations.Command.UpdateResearchGroup;
 /// </summary>
 [OralEhrContextUnitOfWork]
 public record UpdateResearchGroupCommand(Guid ResearchGroupId,
-    CreateUpdateResearchGroupDto UpdateResearchGroup) : IRequest<OperationResult<Unit>>;
+    CreateUpdateResearchGroupRequestDto UpdateResearchGroup) : IRequest<OperationResult<Unit>>;

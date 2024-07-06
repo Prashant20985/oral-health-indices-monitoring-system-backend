@@ -33,7 +33,7 @@ public class PracticePatientExaminationCardDto
     /// <summary>
     /// Gets or sets the patient details associated with the examination card.
     /// </summary>
-    public PatientDto PracticePatient { get; set; }
+    public PatientResponseDto PracticePatient { get; set; }
 
     /// <summary>
     /// Gets or sets the risk factor assessment details associated with the examination card.
@@ -43,5 +43,5 @@ public class PracticePatientExaminationCardDto
     /// <summary>
     /// Gets or sets the result details associated with the examination card.
     /// </summary>
-    public PatientExaminationResultDto PracticePatientExaminationResult { get; init; }
+    public PracticePatientExaminationResultResponseDto PracticePatientExaminationResult { get; init; }
 }

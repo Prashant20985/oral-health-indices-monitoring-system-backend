@@ -13,7 +13,7 @@ namespace App.Application.PatientOperations.Query.ActivePatients;
 /// Initializes a new instance of the <see cref="FetchAllActivePatientsHandler"/> class.
 /// </remarks>
 /// <param name="patientRepository">The repository for patient-related operations.</param>
-internal sealed class FetchAllActivePatientsHandler(IPatientRepository patientRepository) : IRequestHandler<FetchAllActivePatientsQuery, OperationResult<List<PatientDto>>>
+internal sealed class FetchAllActivePatientsHandler(IPatientRepository patientRepository) : IRequestHandler<FetchAllActivePatientsQuery, OperationResult<List<PatientResponseDto>>>
 {
     private readonly IPatientRepository _patientRepository = patientRepository;
 
@@ -23,7 +23,7 @@ internal sealed class FetchAllActivePatientsHandler(IPatientRepository patientRe
     /// <param name="request">The fetch all active patients query.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>An operation result containing a list of active patient DTOs.</returns>
-    public async Task<OperationResult<List<PatientDto>>> Handle(FetchAllActivePatientsQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<List<PatientResponseDto>>> Handle(FetchAllActivePatientsQuery request, CancellationToken cancellationToken)
     {
         var query = _patientRepository.GetAllActivePatients();
 
@@ -36,7 +36,7 @@ internal sealed class FetchAllActivePatientsHandler(IPatientRepository patientRe
 
         var patients = await query.AsNoTracking().ToListAsync(cancellationToken);
 
-        return OperationResult<List<PatientDto>>.Success(patients);
+        return OperationResult<List<PatientResponseDto>>.Success(patients);
     }
 }
 

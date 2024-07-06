@@ -1,5 +1,5 @@
 ﻿using App.Application.AdminOperations.Query.UserDetails;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using App.Domain.Models.Users;
 using AutoMapper;
 using Moq;
@@ -59,7 +59,7 @@ public class FetchUserDetailsHandlerTests : TestHelper
     {
         return new MapperConfiguration(cfg =>
         {
-            cfg.CreateMap<ApplicationUser, ApplicationUserDto>();
+            cfg.CreateMap<ApplicationUser, ApplicationUserResponseDto>();
         }).CreateMapper();
     }
 }

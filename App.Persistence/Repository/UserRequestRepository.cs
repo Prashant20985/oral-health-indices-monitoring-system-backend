@@ -1,4 +1,4 @@
-﻿using App.Domain.DTOs;
+﻿using App.Domain.DTOs.UserRequestDtos.Response;
 using App.Domain.Models.Enums;
 using App.Domain.Models.Users;
 using App.Domain.Repository;
@@ -45,20 +45,20 @@ public class UserRequestRepository : IUserRequestRepository
     /// <summary>
     /// Retrieves a list of all user requests based on status.
     /// </summary>
-    public IQueryable<UserRequestDto> GetAllRequestsByStatus(RequestStatus requestStatus) =>
+    public IQueryable<UserRequestResponseDto> GetAllRequestsByStatus(RequestStatus requestStatus) =>
         _oralEhrContext.UserRequests
             .Where(x => x.RequestStatus == requestStatus)
-            .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<UserRequestResponseDto>(_mapper.ConfigurationProvider)
             .AsQueryable();
 
     /// <summary>
     /// Retrieves a list of user requests associated with a specific user.
     /// </summary>
-    public IQueryable<UserRequestDto> GetRequestsByUserIdAndStatus(string userId,
+    public IQueryable<UserRequestResponseDto> GetRequestsByUserIdAndStatus(string userId,
         RequestStatus requestStatus) => _oralEhrContext.UserRequests
         .Where(x => x.ApplicationUser.Id.Equals(userId) &&
                 x.RequestStatus == requestStatus)
-        .ProjectTo<UserRequestDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<UserRequestResponseDto>(_mapper.ConfigurationProvider)
         .AsQueryable();
 
 

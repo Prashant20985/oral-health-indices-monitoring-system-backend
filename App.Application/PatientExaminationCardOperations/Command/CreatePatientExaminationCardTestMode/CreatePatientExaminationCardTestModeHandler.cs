@@ -105,12 +105,12 @@ internal sealed class CreatePatientExaminationCardTestModeHandler(
             TotalScore = examinationCard.TotalScore,
             DateOfExamination = examinationCard.DateOfExamination,
             RiskFactorAssessment = _mapper.Map<RiskFactorAssessmentDto>(riskFactorAssessment),
-            PatientExaminationResult = new PatientExaminationResultDto
+            PatientExaminationResult = new PatientExaminationResultDto()
             {
-                DMFT_DMFS = _mapper.Map<DMFT_DMFSDto>(dmft_dmfsForm),
-                API = _mapper.Map<APIDto>(apiForm),
-                Bleeding = _mapper.Map<BleedingDto>(bleedingForm),
-                Bewe = _mapper.Map<BeweDto>(beweForm)
+                DMFT_DMFS = _mapper.Map<DMFT_DMFSResponseDto>(dmft_dmfsForm),
+                API = _mapper.Map<APIResponseDto>(apiForm),
+                Bleeding = _mapper.Map<BleedingResponseDto>(bleedingForm),
+                Bewe = _mapper.Map<BeweResponseDto>(beweForm)
             }
         };
 

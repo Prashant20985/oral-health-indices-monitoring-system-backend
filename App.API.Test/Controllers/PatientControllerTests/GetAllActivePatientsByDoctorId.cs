@@ -26,9 +26,9 @@ public class GetAllActivePatientsByDoctorId
     public async Task GetAllActivePatientsByDoctorId_WithValidData_ShouldReturnOk()
     {
         // Arrange
-        var expectedPatients = new List<PatientDto>
+        var expectedPatients = new List<PatientResponseDto>
     {
-        new PatientDto
+        new PatientResponseDto
         {
             Id = Guid.NewGuid(),
             FirstName = "John",
@@ -44,7 +44,7 @@ public class GetAllActivePatientsByDoctorId
             Location = "Location",
             Age = 20
         },
-        new PatientDto
+        new PatientResponseDto
         {
             Id = Guid.NewGuid(),
             FirstName = "Jane",
@@ -63,7 +63,7 @@ public class GetAllActivePatientsByDoctorId
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchAllActivePatientsByDoctorIdQuery>(), default))
-            .ReturnsAsync(OperationResult<List<PatientDto>>.Success(expectedPatients));
+            .ReturnsAsync(OperationResult<List<PatientResponseDto>>.Success(expectedPatients));
 
         _patientcontroller.ControllerContext = new ControllerContext
         {
@@ -82,9 +82,9 @@ public class GetAllActivePatientsByDoctorId
         var result = await _patientcontroller.FetchAllActivePatientsByDoctorId("John", "john.doe@example.com");
 
         // Assert
-        var okResult = Assert.IsType<ActionResult<List<PatientDto>>>(result);
+        var okResult = Assert.IsType<ActionResult<List<PatientResponseDto>>>(result);
         var okObjectResult = Assert.IsType<OkObjectResult>(okResult.Result);
-        var patients = Assert.IsAssignableFrom<List<PatientDto>>(okObjectResult.Value);
+        var patients = Assert.IsAssignableFrom<List<PatientResponseDto>>(okObjectResult.Value);
         Assert.Equal(expectedPatients.Count, patients.Count);
     }
 
@@ -104,7 +104,7 @@ public class GetAllActivePatientsByDoctorId
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchAllActivePatientsByDoctorIdQuery>(), default))
-            .ReturnsAsync(OperationResult<List<PatientDto>>.Failure("Invalid data provided"));
+            .ReturnsAsync(OperationResult<List<PatientResponseDto>>.Failure("Invalid data provided"));
 
         // Act
         var result = await _patientcontroller.FetchAllActivePatientsByDoctorId("John", "john.doe@example.com");

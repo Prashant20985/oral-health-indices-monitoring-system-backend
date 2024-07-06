@@ -1,4 +1,4 @@
-﻿using App.Domain.DTOs;
+﻿using App.Domain.DTOs.UserRequestDtos.Response;
 using App.Domain.Models.Enums;
 using App.Domain.Models.Users;
 using App.Persistence.Contexts;
@@ -18,7 +18,7 @@ public class UserRequestRepositoryTests
     {
         _mockOralEhrContext = new Mock<OralEhrContext>();
         var mapper = new MapperConfiguration(cfg =>
-            cfg.CreateMap<UserRequest, UserRequestDto>()
+            cfg.CreateMap<UserRequest, UserRequestResponseDto>()
                 .ForMember(x => x.UserName, o => o.MapFrom(s => s.ApplicationUser.UserName))).CreateMapper();
         _userRequestRepository = new UserRequestRepository(mapper, _mockOralEhrContext.Object);
     }
@@ -73,7 +73,7 @@ public class UserRequestRepositoryTests
         var result = _userRequestRepository.GetAllRequestsByStatus(RequestStatus.Submitted);
         // Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<UserRequestDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<UserRequestResponseDto>>(result);
         Assert.Equal(2, result.Count());
         Assert.Equal("Submitted", result.ToList()[0].RequestStatus);
         Assert.Equal("Submitted", result.ToList()[1].RequestStatus);
@@ -98,7 +98,7 @@ public class UserRequestRepositoryTests
         var result = _userRequestRepository.GetAllRequestsByStatus(RequestStatus.In_Progress);
         // Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<UserRequestDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<UserRequestResponseDto>>(result);
         Assert.Equal(1, result.Count());
         Assert.Equal("In_Progress", result.ToList()[0].RequestStatus);
     }
@@ -122,7 +122,7 @@ public class UserRequestRepositoryTests
         var result = _userRequestRepository.GetAllRequestsByStatus(RequestStatus.Completed);
         // Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<UserRequestDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<UserRequestResponseDto>>(result);
         Assert.Equal(1, result.Count());
         Assert.Equal("Completed", result.ToList()[0].RequestStatus);
         Assert.Equal("Completed", result.ToList()[0].AdminComment);
@@ -146,7 +146,7 @@ public class UserRequestRepositoryTests
         var result = _userRequestRepository.GetRequestsByUserIdAndStatus(applicationUser.Id, RequestStatus.Submitted);
         // Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<UserRequestDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<UserRequestResponseDto>>(result);
         Assert.Equal(2, result.Count());
         Assert.Equal("Submitted", result.ToList()[0].RequestStatus);
         Assert.Equal("Submitted", result.ToList()[1].RequestStatus);
@@ -173,7 +173,7 @@ public class UserRequestRepositoryTests
         var result = _userRequestRepository.GetRequestsByUserIdAndStatus(applicationUser.Id, RequestStatus.In_Progress);
         // Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<UserRequestDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<UserRequestResponseDto>>(result);
         Assert.Equal(1, result.Count());
         Assert.Equal("In_Progress", result.ToList()[0].RequestStatus);
         Assert.Equal(applicationUser.UserName, result.ToList()[0].UserName);
@@ -198,7 +198,7 @@ public class UserRequestRepositoryTests
         var result = _userRequestRepository.GetRequestsByUserIdAndStatus(applicationUser.Id, RequestStatus.Completed);
         // Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<UserRequestDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<UserRequestResponseDto>>(result);
         Assert.Equal(1, result.Count());
         Assert.Equal("Completed", result.ToList()[0].RequestStatus);
         Assert.Equal("Completed", result.ToList()[0].AdminComment);

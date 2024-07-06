@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using App.Domain.Repository;
 using AutoMapper;
 using MediatR;
@@ -11,7 +11,7 @@ namespace App.Application.AdminOperations.Query.UserDetails;
 /// </summary>
 internal sealed class FetchUserDetailsHandler
     : IRequestHandler<FetchUserDetailsQuery,
-        OperationResult<ApplicationUserDto>>
+        OperationResult<ApplicationUserResponseDto>>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
@@ -33,7 +33,7 @@ internal sealed class FetchUserDetailsHandler
     /// <param name="request">The query request.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>An operation result containing the details of the user.</returns>
-    public async Task<OperationResult<ApplicationUserDto>> Handle(
+    public async Task<OperationResult<ApplicationUserResponseDto>> Handle(
         FetchUserDetailsQuery request, CancellationToken cancellationToken)
     {
         // Retrieve the user by username or email
@@ -41,12 +41,12 @@ internal sealed class FetchUserDetailsHandler
 
         // If user is not found, return failure result
         if (user is null)
-            return OperationResult<ApplicationUserDto>.Failure("User not found");
+            return OperationResult<ApplicationUserResponseDto>.Failure("User not found");
 
         // Map the user to ApplicationUserDto
-        var mappedUser = _mapper.Map<ApplicationUserDto>(user);
+        var mappedUser = _mapper.Map<ApplicationUserResponseDto>(user);
 
         // Return the mapped user details as a successful operation result
-        return OperationResult<ApplicationUserDto>.Success(mappedUser);
+        return OperationResult<ApplicationUserResponseDto>.Success(mappedUser);
     }
 }

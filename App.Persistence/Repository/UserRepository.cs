@@ -1,4 +1,4 @@
-﻿using App.Domain.DTOs;
+﻿using App.Domain.DTOs.ApplicationUserDtos.Response;
 using App.Domain.Models.Users;
 using App.Domain.Repository;
 using AutoMapper;
@@ -88,8 +88,8 @@ public class UserRepository : IUserRepository
     /// Get an IQueryable of active application users.
     /// </summary>
     /// <returns>An IQueryable of ApplicationUserDto representing active application users.</returns>
-    public IQueryable<ApplicationUserDto> GetActiveApplicationUsersQuery() => _userManager.Users
-        .ProjectTo<ApplicationUserDto>(_mapper.ConfigurationProvider)
+    public IQueryable<ApplicationUserResponseDto> GetActiveApplicationUsersQuery() => _userManager.Users
+        .ProjectTo<ApplicationUserResponseDto>(_mapper.ConfigurationProvider)
         .Where(x => x.IsAccountActive && x.DeletedAt == null)
         .OrderBy(c => c.CreatedAt)
         .AsQueryable();
@@ -99,8 +99,8 @@ public class UserRepository : IUserRepository
     /// Get an IQueryable of deactivated application users.
     /// </summary>
     /// <returns>An IQueryable of ApplicationUserDto representing deactivated application users.</returns>
-    public IQueryable<ApplicationUserDto> GetDeactivatedApplicationUsersQuery() => _userManager.Users
-        .ProjectTo<ApplicationUserDto>(_mapper.ConfigurationProvider)
+    public IQueryable<ApplicationUserResponseDto> GetDeactivatedApplicationUsersQuery() => _userManager.Users
+        .ProjectTo<ApplicationUserResponseDto>(_mapper.ConfigurationProvider)
         .Where(x => !x.IsAccountActive && x.DeletedAt == null)
         .OrderBy(c => c.CreatedAt)
         .AsQueryable();
@@ -110,8 +110,8 @@ public class UserRepository : IUserRepository
     /// Get an IQueryable of deleted application users.
     /// </summary>
     /// <returns>An IQueryable of ApplicationUserDto representing deleted application users.</returns>
-    public IQueryable<ApplicationUserDto> GetDeletedApplicationUsersQuery() => _userManager.Users
-        .ProjectTo<ApplicationUserDto>(_mapper.ConfigurationProvider)
+    public IQueryable<ApplicationUserResponseDto> GetDeletedApplicationUsersQuery() => _userManager.Users
+        .ProjectTo<ApplicationUserResponseDto>(_mapper.ConfigurationProvider)
         .Where(x => x.DeletedAt != null || !string.IsNullOrWhiteSpace(x.DeleteUserComment))
         .OrderBy(c => c.CreatedAt)
         .AsQueryable();

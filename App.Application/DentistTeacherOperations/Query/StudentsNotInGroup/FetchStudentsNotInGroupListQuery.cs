@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MediatR;
 
 namespace App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
@@ -10,4 +10,4 @@ namespace App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
 /// <param name="Params"></param>
 public record FetchStudentsNotInGroupListQuery(
         Guid GroupId)
-            : IRequest<OperationResult<List<StudentDto>>>;
+            : IRequest<OperationResult<List<StudentResponseDto>>>;

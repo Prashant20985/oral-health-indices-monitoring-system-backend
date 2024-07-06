@@ -1,6 +1,7 @@
 ﻿using App.Application.Core;
 using App.Application.DentistTeacherOperations.Query.Groups;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
+using App.Domain.DTOs.StudentGroupDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,12 +31,12 @@ public class GetAllGroupsTest
             new Claim(ClaimTypes.Name, "Dentist_Teacher_Researcher")
         }));
 
-        var expectedGroups = new List<GroupDto>
+        var expectedGroups = new List<StudentGroupResponseDto>
         {
             new()
             {
                 Id = Guid.NewGuid(),
-                Students = new List<StudentDto>
+                Students = new List<StudentResponseDto>
                 {
                     new()
                     {
@@ -50,7 +51,7 @@ public class GetAllGroupsTest
         };
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchGroupsQuery>(), default))
-            .ReturnsAsync(OperationResult<List<GroupDto>>.Success(expectedGroups));
+            .ReturnsAsync(OperationResult<List<StudentGroupResponseDto>>.Success(expectedGroups));
 
         _dentistTeacherController.ControllerContext = new ControllerContext
         {
@@ -61,9 +62,9 @@ public class GetAllGroupsTest
         var result = await _dentistTeacherController.GetAllGroups();
 
         // Assert
-        Assert.IsType<ActionResult<List<GroupDto>>>(result);
+        Assert.IsType<ActionResult<List<StudentGroupResponseDto>>>(result);
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var returnedGroups = Assert.IsAssignableFrom<List<GroupDto>>(okResult.Value);
+        var returnedGroups = Assert.IsAssignableFrom<List<StudentGroupResponseDto>>(okResult.Value);
         Assert.Equal(expectedGroups, returnedGroups);
 
         _mediatorMock.Verify(x => x.Send(It.IsAny<FetchGroupsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -79,7 +80,7 @@ public class GetAllGroupsTest
         }));
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchGroupsQuery>(), default))
-            .ReturnsAsync(OperationResult<List<GroupDto>>.Failure("Failed to fetch groups"));
+            .ReturnsAsync(OperationResult<List<StudentGroupResponseDto>>.Failure("Failed to fetch groups"));
 
         _dentistTeacherController.ControllerContext = new ControllerContext
         {
@@ -90,7 +91,7 @@ public class GetAllGroupsTest
         var result = await _dentistTeacherController.GetAllGroups();
 
         // Assert
-        var actionResult = Assert.IsType<ActionResult<List<GroupDto>>>(result);
+        var actionResult = Assert.IsType<ActionResult<List<StudentGroupResponseDto>>>(result);
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
         Assert.Equal("Failed to fetch groups", badRequestResult.Value);
 

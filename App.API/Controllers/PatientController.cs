@@ -72,7 +72,7 @@ public class PatientController : BaseController
     /// <param name="email">Email filter.</param>
     [Authorize(Roles = "Admin")]
     [HttpGet("active-patients")]
-    public async Task<ActionResult<List<PatientDto>>> FetchAllActivePatients([FromQuery] string name, [FromQuery] string email) =>
+    public async Task<ActionResult<List<PatientResponseDto>>> FetchAllActivePatients([FromQuery] string name, [FromQuery] string email) =>
         HandleOperationResult(await Mediator.Send(new FetchAllActivePatientsQuery(name, email)));
 
     /// <summary>
@@ -82,7 +82,7 @@ public class PatientController : BaseController
     /// <param name="email">Email filter.</param>
     [Authorize(Roles = "Admin")]
     [HttpGet("archived-patients")]
-    public async Task<ActionResult<List<PatientDto>>> FetchAllArchivedPatients([FromQuery] string name, [FromQuery] string email) =>
+    public async Task<ActionResult<List<PatientResponseDto>>> FetchAllArchivedPatients([FromQuery] string name, [FromQuery] string email) =>
         HandleOperationResult(await Mediator.Send(new FetchAllArchivedPatientsQuery(name, email)));
 
     /// <summary>
@@ -92,7 +92,7 @@ public class PatientController : BaseController
     /// <param name="email">Email filter.</param>
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     [HttpGet("active-patients-by-doctorId")]
-    public async Task<ActionResult<List<PatientDto>>> FetchAllActivePatientsByDoctorId([FromQuery] string name, [FromQuery] string email) =>
+    public async Task<ActionResult<List<PatientResponseDto>>> FetchAllActivePatientsByDoctorId([FromQuery] string name, [FromQuery] string email) =>
         HandleOperationResult(await Mediator.Send(new FetchAllActivePatientsByDoctorIdQuery(User.FindFirstValue(ClaimTypes.NameIdentifier), name, email)));
 
     /// <summary>
@@ -102,7 +102,7 @@ public class PatientController : BaseController
     /// <param name="email">Email filter.</param>
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     [HttpGet("archived-patients-by-doctorId")]
-    public async Task<ActionResult<List<PatientDto>>> FetchAllArchivedPatientsByDoctorId([FromQuery] string name, [FromQuery] string email) =>
+    public async Task<ActionResult<List<PatientResponseDto>>> FetchAllArchivedPatientsByDoctorId([FromQuery] string name, [FromQuery] string email) =>
         HandleOperationResult(await Mediator.Send(new FetchAllArchivedPatientsByDoctorIdQuery(User.FindFirstValue(ClaimTypes.NameIdentifier), name, email)));
 
     /// <summary>
@@ -111,7 +111,7 @@ public class PatientController : BaseController
     /// <param name="patientId">ID of the patient to fetch details for.</param>
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     [HttpGet("patient-details/{patientId}")]
-    public async Task<ActionResult<PatientDto>> FetchPatientDetails(Guid patientId) =>
+    public async Task<ActionResult<PatientResponseDto>> FetchPatientDetails(Guid patientId) =>
         HandleOperationResult(await Mediator.Send(new FetchPatientDetailsQuery(patientId)));
 
 }

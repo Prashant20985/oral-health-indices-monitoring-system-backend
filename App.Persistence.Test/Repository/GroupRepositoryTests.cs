@@ -1,4 +1,5 @@
-﻿using App.Domain.DTOs;
+﻿using App.Domain.DTOs.ApplicationUserDtos.Response;
+using App.Domain.DTOs.StudentGroupDtos.Response;
 using App.Domain.Models.Users;
 using App.Persistence.Contexts;
 using App.Persistence.Repository;
@@ -18,7 +19,7 @@ public class GroupRepositoryTests
         _mockOralEhrContext = new Mock<OralEhrContext>();
         var mapperConfig = new MapperConfiguration(cfg =>
         {
-            cfg.CreateMap<ApplicationUser, StudentDto>()
+            cfg.CreateMap<ApplicationUser, StudentResponseDto>()
                 .ForMember(x => x.Groups, o => o.MapFrom(s => s.StudentGroups
                 .Select(x => x.Group.GroupName).ToList()));
         });
@@ -244,7 +245,7 @@ public class GroupRepositoryTests
         var result = await _groupRepository.GetAllStudentsNotInGroup(groupId);
 
         // Assert
-        Assert.IsType<List<StudentDto>>(result);
+        Assert.IsType<List<StudentResponseDto>>(result);
         Assert.Single(result);
         Assert.Equal("test2", result[0].UserName);
         Assert.Equal("Test2", result[0].FirstName);
@@ -306,7 +307,7 @@ public class GroupRepositoryTests
         var result = await _groupRepository.GetAllGroupsWithStudentsList(teacherId);
 
         // Assert
-        Assert.IsType<List<GroupDto>>(result);
+        Assert.IsType<List<StudentGroupResponseDto>>(result);
         Assert.Single(result);
         Assert.Equal("Group 1", result[0].GroupName);
         Assert.Equal(2, result[0].Students.Count);

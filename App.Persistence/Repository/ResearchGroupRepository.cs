@@ -1,4 +1,4 @@
-﻿using App.Domain.DTOs;
+﻿using App.Domain.DTOs.ResearchGroupDtos.Response;
 using App.Domain.Models.OralHealthExamination;
 using App.Domain.Repository;
 using App.Persistence.Contexts;
@@ -25,17 +25,17 @@ public class ResearchGroupRepository : IResearchGroupRepository
     public void DeleteResearchGroup(ResearchGroup research) =>
         _oralEhrContext.ResearchGroups.Remove(research);
 
-    public IQueryable<ResearchGroupPatientDto> GetAllPatientsNotInAnyResearchGroup() =>
+    public IQueryable<ResearchGroupPatientResponseDto> GetAllPatientsNotInAnyResearchGroup() =>
         _oralEhrContext.Patients
             .Where(rg => rg.ResearchGroupId.Equals(Guid.Empty))
             .OrderByDescending(rg => rg.CreatedAt)
-            .ProjectTo<ResearchGroupPatientDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<ResearchGroupPatientResponseDto>(_mapper.ConfigurationProvider)
             .AsQueryable();
 
-    public IQueryable<ResearchGroupDto> GetAllResearchGroups() =>
+    public IQueryable<ResearchGroupResponseDto> GetAllResearchGroups() =>
         _oralEhrContext.ResearchGroups
             .OrderByDescending(rg => rg.CreatedAt)
-            .ProjectTo<ResearchGroupDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<ResearchGroupResponseDto>(_mapper.ConfigurationProvider)
             .AsQueryable();
 
     public async Task<ResearchGroup> GetResearchGroupById(Guid researchGroupId) =>
@@ -46,8 +46,8 @@ public class ResearchGroupRepository : IResearchGroupRepository
         await _oralEhrContext.ResearchGroups
             .FirstOrDefaultAsync(rg => rg.GroupName.Equals(groupName));
 
-    public async Task<ResearchGroupDto> GetResearchGroupDetailsById(Guid researchGroupId) => await
+    public async Task<ResearchGroupResponseDto> GetResearchGroupDetailsById(Guid researchGroupId) => await
         _oralEhrContext.ResearchGroups
-        .ProjectTo<ResearchGroupDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<ResearchGroupResponseDto>(_mapper.ConfigurationProvider)
         .FirstOrDefaultAsync(rg => rg.Id.Equals(researchGroupId));
 }

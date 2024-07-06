@@ -13,7 +13,7 @@ namespace App.Application.PatientOperations.Query.PatientDetails;
 /// </remarks>
 /// <param name="patientRepository">The repository for patient-related operations.</param>
 internal sealed class FetchPatientDetailsHandler(IPatientRepository patientRepository)
-        : IRequestHandler<FetchPatientDetailsQuery, OperationResult<PatientDto>>
+        : IRequestHandler<FetchPatientDetailsQuery, OperationResult<PatientResponseDto>>
 {
     private readonly IPatientRepository _patientRepository = patientRepository;
 
@@ -24,13 +24,13 @@ internal sealed class FetchPatientDetailsHandler(IPatientRepository patientRepos
     /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
     /// <param name="request">The FetchPatientDetailsQuery containing the patient ID.</param>
     /// <returns>An operation result containing the patient examination DTO.</returns>
-    public async Task<OperationResult<PatientDto>> Handle(FetchPatientDetailsQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<PatientResponseDto>> Handle(FetchPatientDetailsQuery request, CancellationToken cancellationToken)
     {
         var patientDetails = await _patientRepository.GetPatientDetails(request.PatientId);
 
         if (patientDetails is null)
-            return OperationResult<PatientDto>.Failure("Patient Not Found");
+            return OperationResult<PatientResponseDto>.Failure("Patient Not Found");
 
-        return OperationResult<PatientDto>.Success(patientDetails);
+        return OperationResult<PatientResponseDto>.Success(patientDetails);
     }
 }

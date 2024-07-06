@@ -14,6 +14,9 @@ internal class PatientExaminationCardConfiguration
         builder.Property(e => e.DoctorComment)
             .HasMaxLength(500);
 
+        builder.Property(e => e.StudentComment)
+            .HasMaxLength(500);
+
         builder.Property(e => e.TotalScore)
             .HasColumnType("decimal(5, 2)");
 

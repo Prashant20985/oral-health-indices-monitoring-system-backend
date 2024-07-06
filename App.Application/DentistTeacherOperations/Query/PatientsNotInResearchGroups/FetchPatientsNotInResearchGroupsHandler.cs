@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Response;
 using App.Domain.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,7 @@ namespace App.Application.DentistTeacherOperations.Query.PatientsNotInResearchGr
 /// Handler for fetching patients not in any research group.
 /// </summary>
 internal sealed class FetchPatientsNotInResearchGroupsHandler
-    : IRequestHandler<FetchPatientsNotInResearchGroupsQuery, OperationResult<List<ResearchGroupPatientDto>>>
+    : IRequestHandler<FetchPatientsNotInResearchGroupsQuery, OperationResult<List<ResearchGroupPatientResponseDto>>>
 {
     private readonly IResearchGroupRepository _researchGroupRepository;
 
@@ -29,7 +29,7 @@ internal sealed class FetchPatientsNotInResearchGroupsHandler
     /// <param name="request">The query to fetch patients not in any research group.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>An operation result containing the list of patients not in any research group.</returns>
-    public async Task<OperationResult<List<ResearchGroupPatientDto>>> Handle(FetchPatientsNotInResearchGroupsQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<List<ResearchGroupPatientResponseDto>>> Handle(FetchPatientsNotInResearchGroupsQuery request, CancellationToken cancellationToken)
     {
         // Get the initial query of all patients not in any research group.
         var query = _researchGroupRepository.GetAllPatientsNotInAnyResearchGroup();
@@ -45,7 +45,7 @@ internal sealed class FetchPatientsNotInResearchGroupsHandler
         var patients = await query.ToListAsync(cancellationToken);
 
         // Return the result encapsulated in an OperationResult.
-        return OperationResult<List<ResearchGroupPatientDto>>.Success(patients);
+        return OperationResult<List<ResearchGroupPatientResponseDto>>.Success(patients);
     }
 }
 

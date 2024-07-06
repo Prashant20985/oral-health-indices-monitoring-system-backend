@@ -1,4 +1,4 @@
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using App.Domain.Models.Users;
 using App.Persistence.Repository;
 using AutoMapper;
@@ -16,7 +16,7 @@ public class UserRepositoryTests
 
     public UserRepositoryTests()
     {
-        var mapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, ApplicationUserDto>());
+        var mapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, ApplicationUserResponseDto>());
         var mapper = mapperConfig.CreateMapper();
         userManagerMock = GetUserManagerMock();
         userRepository = new UserRepository(userManagerMock.Object, mapper);

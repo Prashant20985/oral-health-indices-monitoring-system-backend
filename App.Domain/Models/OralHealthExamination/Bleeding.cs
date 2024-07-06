@@ -8,13 +8,16 @@ public class Bleeding
     public int BleedingResult { get; private set; }
     public int Maxilla { get; private set; }
     public int Mandible { get; private set; }
-    public string Comment { get; private set; }
+    public string DoctorComment { get; private set; }
+    public string StudentComment { get; private set; }
     public APIBleedingAssessmentModel AssessmentModel { get; private set; }
     public virtual PatientExaminationResult PatientExaminationResult { get; set; }
 
     public void SetAssessmentModel(APIBleedingAssessmentModel assessmentModel) => AssessmentModel = assessmentModel;
 
-    public void AddComment(string comment) => Comment = comment;
+    public void AddDoctorComment(string comment) => DoctorComment = comment;
+
+    public void AddStudentComment(string comment) => StudentComment = comment;
 
     public void SetBleedingResult(int bleedingResult) => BleedingResult = bleedingResult;
 

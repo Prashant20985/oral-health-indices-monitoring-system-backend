@@ -1,8 +1,8 @@
 ﻿using App.Domain.DTOs.ExamDtos.Response;
 
-namespace App.Domain.DTOs;
+namespace App.Domain.DTOs.StudentGroupDtos.Response;
 
-public class GroupWithExamsListDto
+public class StudentGroupWithExamsListResponseDto
 {
     /// <summary>
     /// Gets or sets the group id.

@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Response;
 using App.Domain.Repository;
 using MediatR;
 
@@ -9,7 +9,7 @@ namespace App.Application.DentistTeacherOperations.Query.ResearchGroupDetailsByI
 /// Handler for fetching research group details by ID.
 /// </summary>
 internal sealed class FetchResearchGroupDetailsByIdHandler
-    : IRequestHandler<FetchResearchGroupDetailsByIdQuery, OperationResult<ResearchGroupDto>>
+    : IRequestHandler<FetchResearchGroupDetailsByIdQuery, OperationResult<ResearchGroupResponseDto>>
 {
     private readonly IResearchGroupRepository _researchGroupRepository;
 
@@ -28,7 +28,7 @@ internal sealed class FetchResearchGroupDetailsByIdHandler
     /// <param name="request">The query to fetch research group details by ID.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>An operation result containing the research group details.</returns>
-    public async Task<OperationResult<ResearchGroupDto>> Handle
+    public async Task<OperationResult<ResearchGroupResponseDto>> Handle
         (FetchResearchGroupDetailsByIdQuery request, CancellationToken cancellationToken)
     {
         // Get the research group details by ID.
@@ -36,10 +36,10 @@ internal sealed class FetchResearchGroupDetailsByIdHandler
 
         // Return the result encapsulated in an OperationResult.
         if (researchGroup is null)
-            return OperationResult<ResearchGroupDto>.Failure("Research group not found");
+            return OperationResult<ResearchGroupResponseDto>.Failure("Research group not found");
 
         // Return the result encapsulated in an OperationResult.
-        return OperationResult<ResearchGroupDto>.Success(researchGroup);
+        return OperationResult<ResearchGroupResponseDto>.Success(researchGroup);
     }
 }
 

@@ -320,7 +320,7 @@ namespace App.Persistence.Migrations
                     b.Property<int>("APIResult")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Comment")
+                    b.Property<string>("DoctorComment")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
@@ -329,6 +329,10 @@ namespace App.Persistence.Migrations
 
                     b.Property<int>("Maxilla")
                         .HasColumnType("integer");
+
+                    b.Property<string>("StudentComment")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.HasKey("Id");
 
@@ -344,7 +348,11 @@ namespace App.Persistence.Migrations
                     b.Property<decimal>("BeweResult")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Comment")
+                    b.Property<string>("DoctorComment")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("StudentComment")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
@@ -362,7 +370,7 @@ namespace App.Persistence.Migrations
                     b.Property<int>("BleedingResult")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Comment")
+                    b.Property<string>("DoctorComment")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
@@ -371,6 +379,10 @@ namespace App.Persistence.Migrations
 
                     b.Property<int>("Maxilla")
                         .HasColumnType("integer");
+
+                    b.Property<string>("StudentComment")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.HasKey("Id");
 
@@ -383,15 +395,19 @@ namespace App.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Comment")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
                     b.Property<decimal>("DMFSResult")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("DMFTResult")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("DoctorComment")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("StudentComment")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.HasKey("Id");
 
@@ -510,6 +526,10 @@ namespace App.Persistence.Migrations
 
                     b.Property<Guid>("RiskFactorAssesmentId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("StudentComment")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<string>("StudentId")
                         .HasColumnType("text");

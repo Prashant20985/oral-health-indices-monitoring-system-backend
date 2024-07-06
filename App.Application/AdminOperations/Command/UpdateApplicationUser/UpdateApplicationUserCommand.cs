@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Request;
 using App.Persistence.Attributes;
 using MediatR;
 
@@ -12,4 +12,4 @@ namespace App.Application.AdminOperations.Command.UpdateApplicationUser;
 /// </summary>
 [OralEhrContextUnitOfWork]
 public record UpdateApplicationUserCommand(string UserName,
-    UpdateApplicationUserDto UpdateApplicationUser) : IRequest<OperationResult<Unit>>;
+    UpdateApplicationUserRequestDto UpdateApplicationUser) : IRequest<OperationResult<Unit>>;

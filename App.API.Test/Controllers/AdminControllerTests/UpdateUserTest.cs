@@ -1,6 +1,7 @@
 ﻿using App.Application.AdminOperations.Command.UpdateApplicationUser;
 using App.Application.Core;
 using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Request;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -24,7 +25,7 @@ namespace App.API.Test.Controllers.AdminControllerTests
         {
             // Arrange
             var userName = "testuser";
-            var updateApplicationUserDto = new UpdateApplicationUserDto
+            var updateApplicationUserDto = new UpdateApplicationUserRequestDto
             {
                 FirstName = "Updated",
                 LastName = "User",

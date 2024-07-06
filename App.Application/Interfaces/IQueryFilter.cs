@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 
 namespace App.Application.Interfaces;
 
@@ -8,8 +8,8 @@ namespace App.Application.Interfaces;
 /// </summary>
 public interface IQueryFilter
 {
-    Task<List<ApplicationUserDto>> ApplyFilters(
-        IQueryable<ApplicationUserDto> query,
+    Task<List<ApplicationUserResponseDto>> ApplyFilters(
+        IQueryable<ApplicationUserResponseDto> query,
         SearchParams pagingAndSearchParams,
         CancellationToken cancellationToken);
 }

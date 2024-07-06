@@ -1,4 +1,4 @@
-﻿using App.Domain.DTOs;
+﻿using App.Domain.DTOs.ApplicationUserDtos.Request;
 using Microsoft.AspNetCore.Http;
 
 namespace App.Application.Interfaces;
@@ -8,5 +8,5 @@ namespace App.Application.Interfaces;
 /// </summary>
 public interface IReadCsv
 {
-    List<CreateApplicationUserFromCsvDto> ReadApplicationUsersFromCsv(IFormFile file);
+    List<CreateApplicationUserFromCsvRequestDto> ReadApplicationUsersFromCsv(IFormFile file);
 }

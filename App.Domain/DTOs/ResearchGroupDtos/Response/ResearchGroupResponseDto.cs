@@ -1,10 +1,10 @@
-﻿namespace App.Domain.DTOs;
+﻿namespace App.Domain.DTOs.ResearchGroupDtos.Response;
 
-public class ResearchGroupDto
+public class ResearchGroupResponseDto
 {
     public Guid Id { get; private set; }
     public string GroupName { get; set; }
     public string Description { get; set; }
     public string CreatedBy { get; set; }
-    public List<ResearchGroupPatientDto> Patients { get; set; }
+    public List<ResearchGroupPatientResponseDto> Patients { get; set; }
 }

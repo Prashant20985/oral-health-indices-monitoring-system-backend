@@ -25,9 +25,9 @@ public class GetAllActivePatientsTest
     public async Task GetAllActivePatients_WithValidData_ShouldReturnOk()
     {
         // Arrange
-        var expectedPatients = new List<PatientDto>
+        var expectedPatients = new List<PatientResponseDto>
         {
-        new PatientDto {
+        new PatientResponseDto {
             Id = Guid.NewGuid(),
             FirstName = "John",
             LastName = "Doe",
@@ -42,7 +42,7 @@ public class GetAllActivePatientsTest
             Location = "Location",
             Age = 20
         },
-        new PatientDto {
+        new PatientResponseDto {
             Id = Guid.NewGuid(),
             FirstName = "Jane",
             LastName = "Doe",
@@ -60,7 +60,7 @@ public class GetAllActivePatientsTest
     };
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchAllActivePatientsQuery>(), default))
-            .ReturnsAsync(OperationResult<List<PatientDto>>
+            .ReturnsAsync(OperationResult<List<PatientResponseDto>>
             .Success(expectedPatients));
 
         // Act
@@ -68,7 +68,7 @@ public class GetAllActivePatientsTest
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var actualPatients = Assert.IsAssignableFrom<List<PatientDto>>(okResult.Value);
+        var actualPatients = Assert.IsAssignableFrom<List<PatientResponseDto>>(okResult.Value);
         Assert.Equal(expectedPatients.Count, actualPatients.Count);
     }
 
@@ -76,9 +76,9 @@ public class GetAllActivePatientsTest
     public async Task GetAllActivePatients_WhenFetchFails_ShouldReturnBadRequest()
     {
         // Arrange
-        var expectedPatients = new List<PatientDto>
+        var expectedPatients = new List<PatientResponseDto>
     {
-        new PatientDto {
+        new PatientResponseDto {
             Id = Guid.NewGuid(),
             FirstName = "Jane",
             LastName = "Doe",
@@ -96,7 +96,7 @@ public class GetAllActivePatientsTest
     };
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchAllActivePatientsQuery>(), default))
-            .ReturnsAsync(OperationResult<List<PatientDto>>
+            .ReturnsAsync(OperationResult<List<PatientResponseDto>>
             .Failure("Failed to fetch patients"));
 
         // Act

@@ -8,5 +8,5 @@ namespace App.Application.PatientOperations.Query.ArchivedPatients;
 /// Represents a query to fetch all archived patients with optional name and email filters.
 /// </summary>
 public record FetchAllArchivedPatientsQuery(string Name, string Email)
-    : IRequest<OperationResult<List<PatientDto>>>;
+    : IRequest<OperationResult<List<PatientResponseDto>>>;
 

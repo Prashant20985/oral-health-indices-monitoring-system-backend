@@ -13,9 +13,29 @@ public class PatientExaminationCardDto
     public Guid Id { get; init; }
 
     /// <summary>
+    /// Gets or sets the doctor's name associated with the examination card.
+    /// </summary>
+    public string DoctorName { get; init; }
+
+    /// <summary>
+    /// Gets or sets the student's name associated with the examination card.
+    /// </summary>
+    public string StudentName { get; init; }
+
+    /// <summary>
+    /// Gets or sets the patient's name associated with the examination card.
+    /// </summary>
+    public string PatientName { get; init; }
+
+    /// <summary>
     /// Gets or sets the doctor's comment related to the examination card.
     /// </summary>
     public string DoctorComment { get; init; }
+
+    /// <summary>
+    /// Gets or sets the student's comment related to the examination card.
+    /// </summary>
+    public string StudentComment { get; init; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the examination card is in regular mode or test mode.

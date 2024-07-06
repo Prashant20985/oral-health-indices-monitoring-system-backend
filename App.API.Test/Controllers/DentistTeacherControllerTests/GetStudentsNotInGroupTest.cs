@@ -1,6 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -24,7 +24,7 @@ public class GetStudentsNoInGroupTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var expectedStudents = new List<StudentDto>
+        var expectedStudents = new List<StudentResponseDto>
         {
             new()
             {
@@ -47,14 +47,14 @@ public class GetStudentsNoInGroupTest
         };
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchStudentsNotInGroupListQuery>(), default))
-            .ReturnsAsync(OperationResult<List<StudentDto>>.Success(expectedStudents));
+            .ReturnsAsync(OperationResult<List<StudentResponseDto>>.Success(expectedStudents));
 
         // Act
         var result = await _dentistTeacherController.GetStudentsNotInGroup(groupId);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnedStudents = Assert.IsAssignableFrom<List<StudentDto>>(okResult.Value);
+        var returnedStudents = Assert.IsAssignableFrom<List<StudentResponseDto>>(okResult.Value);
         Assert.Equal(expectedStudents, returnedStudents);
 
         _mediatorMock.Verify(x => x.Send(It.Is<FetchStudentsNotInGroupListQuery>(q => q.GroupId == groupId), It.IsAny<CancellationToken>()), Times.Once);
@@ -67,7 +67,7 @@ public class GetStudentsNoInGroupTest
         var groupId = Guid.NewGuid();
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchStudentsNotInGroupListQuery>(), default))
-            .ReturnsAsync(OperationResult<List<StudentDto>>.Failure("Failed to fetch students"));
+            .ReturnsAsync(OperationResult<List<StudentResponseDto>>.Failure("Failed to fetch students"));
 
         // Act
         var result = await _dentistTeacherController.GetStudentsNotInGroup(groupId);

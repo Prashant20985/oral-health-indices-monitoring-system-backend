@@ -46,6 +46,6 @@ public class CommentAPIFormHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.Equal(Unit.Value, result.ResultValue);
-        Assert.Contains(command.DoctorComment, apiForm.Comment);
+        Assert.Contains(command.DoctorComment, apiForm.DoctorComment);
     }
 }

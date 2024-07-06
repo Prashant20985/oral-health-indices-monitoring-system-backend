@@ -1,5 +1,5 @@
 ﻿using App.Application.AdminOperations.Command.UpdateApplicationUser;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Request;
 using App.Domain.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Moq;
@@ -8,13 +8,13 @@ namespace App.Application.Test.AdminOperations.Command.UpdateApplicationUser;
 
 public class UpdateApplicationUserCommandHandlerTests : TestHelper
 {
-    private readonly UpdateApplicationUserDto updateApplicationUserDto;
+    private readonly UpdateApplicationUserRequestDto updateApplicationUserDto;
     private readonly UpdateApplicationUserCommand command;
     private readonly UpdateApplicationUserCommandHandler handler;
     private readonly ApplicationUser applicationUser;
     public UpdateApplicationUserCommandHandlerTests()
     {
-        updateApplicationUserDto = new UpdateApplicationUserDto()
+        updateApplicationUserDto = new UpdateApplicationUserRequestDto()
         {
             FirstName = "Test",
             LastName = "User",

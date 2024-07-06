@@ -2,7 +2,7 @@
 
 namespace App.Domain.DTOs.Common.Response;
 
-public class BleedingDto
+public class PracticeAPIResponseDto
 {
     /// <summary>
     /// Gets or sets the unique identifier for the API and Bleeding assessment.
@@ -12,7 +12,7 @@ public class BleedingDto
     /// <summary>
     /// Gets or sets the API (Assessment of Periodontal Inflammation) result.
     /// </summary>
-    public int BleedingResult { get; init; }
+    public int APIResult { get; init; }
 
     /// <summary>
     /// Gets or sets the Maxilla result.

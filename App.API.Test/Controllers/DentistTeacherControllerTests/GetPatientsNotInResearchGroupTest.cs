@@ -1,6 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.DentistTeacherOperations.Query.PatientsNotInResearchGroups;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +30,7 @@ public class GetPatientsNotInResearchGroupTest
             new Claim(ClaimTypes.Name, "Dentist_Teacher_Researcher")
         }));
 
-        var expectedPatients = new List<ResearchGroupPatientDto>
+        var expectedPatients = new List<ResearchGroupPatientResponseDto>
         {
             new()
             {
@@ -49,7 +49,7 @@ public class GetPatientsNotInResearchGroupTest
         };
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchPatientsNotInResearchGroupsQuery>(), default))
-            .ReturnsAsync(OperationResult<List<ResearchGroupPatientDto>>.Success(expectedPatients));
+            .ReturnsAsync(OperationResult<List<ResearchGroupPatientResponseDto>>.Success(expectedPatients));
 
         _dentistTeacherController.ControllerContext = new ControllerContext
         {
@@ -60,9 +60,9 @@ public class GetPatientsNotInResearchGroupTest
         var result = await _dentistTeacherController.GetPatientsNotInResearchGroup("John", "john.doe@test.com");
 
         // Assert
-        Assert.IsType<ActionResult<List<ResearchGroupPatientDto>>>(result);
+        Assert.IsType<ActionResult<List<ResearchGroupPatientResponseDto>>>(result);
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var returnedPatients = Assert.IsAssignableFrom<List<ResearchGroupPatientDto>>(okResult.Value);
+        var returnedPatients = Assert.IsAssignableFrom<List<ResearchGroupPatientResponseDto>>(okResult.Value);
         Assert.Equal(expectedPatients, returnedPatients);
     }
 
@@ -76,7 +76,7 @@ public class GetPatientsNotInResearchGroupTest
         }));
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchPatientsNotInResearchGroupsQuery>(), default))
-            .ReturnsAsync(OperationResult<List<ResearchGroupPatientDto>>.Failure("Error"));
+            .ReturnsAsync(OperationResult<List<ResearchGroupPatientResponseDto>>.Failure("Error"));
 
         _dentistTeacherController.ControllerContext = new ControllerContext
         {
@@ -87,7 +87,7 @@ public class GetPatientsNotInResearchGroupTest
         var result = await _dentistTeacherController.GetPatientsNotInResearchGroup("John", "John.doe@test.com");
 
         // Assert
-        Assert.IsType<ActionResult<List<ResearchGroupPatientDto>>>(result);
+        Assert.IsType<ActionResult<List<ResearchGroupPatientResponseDto>>>(result);
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
         Assert.Equal("Error", badRequestResult.Value);
     }

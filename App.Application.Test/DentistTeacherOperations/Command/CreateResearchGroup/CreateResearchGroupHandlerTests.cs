@@ -1,5 +1,5 @@
 ﻿using App.Application.DentistTeacherOperations.Command.CreateResearchGroup;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Request;
 using App.Domain.Models.OralHealthExamination;
 using MediatR;
 using Moq;
@@ -19,7 +19,7 @@ public class CreateResearchGroupHandlerTests : TestHelper
     public async Task Handle_WithValidCommand_ShouldCreateResearchGroup()
     {
         // Arrange
-        var researchGroup = new CreateUpdateResearchGroupDto
+        var researchGroup = new CreateUpdateResearchGroupRequestDto
         {
             GroupName = "test",
             Description = "test"
@@ -44,7 +44,7 @@ public class CreateResearchGroupHandlerTests : TestHelper
     public async Task Handle_WithExistingResearchGroup_ShouldReturnFailureResult()
     {
         // Arrange
-        var researchGroup = new CreateUpdateResearchGroupDto
+        var researchGroup = new CreateUpdateResearchGroupRequestDto
         {
             GroupName = "test",
             Description = "test"

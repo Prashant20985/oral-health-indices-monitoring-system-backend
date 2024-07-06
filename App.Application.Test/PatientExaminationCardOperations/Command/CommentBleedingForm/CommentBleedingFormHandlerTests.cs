@@ -45,6 +45,6 @@ public class CommentBleedingFormHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.Equal(Unit.Value, result.ResultValue);
-        Assert.Contains(command.DoctorComment, bleedingForm.Comment);
+        Assert.Contains(command.DoctorComment, bleedingForm.DoctorComment);
     }
 }

@@ -1,4 +1,5 @@
-﻿using App.Domain.DTOs;
+﻿using App.Domain.DTOs.ApplicationUserDtos.Response;
+using App.Domain.DTOs.StudentGroupDtos.Response;
 using App.Domain.Models.Users;
 
 namespace App.Domain.Repository;
@@ -61,28 +62,28 @@ public interface IGroupRepository
     /// Gets a list of students not in a specific group.
     /// </summary>
     /// <param name="groupId">The identifier of the group.</param>
-    Task<List<StudentDto>> GetAllStudentsNotInGroup(Guid groupId);
+    Task<List<StudentResponseDto>> GetAllStudentsNotInGroup(Guid groupId);
 
     /// <summary>
     /// Gets a list of groups with associated students, grouped by a teacher.
     /// </summary>
     /// <param name="teacherId">The identifier of the teacher.</param>
     /// <returns>A list of GroupDto objects representing groups and their associated students.</returns>
-    Task<List<GroupDto>> GetAllGroupsWithStudentsList(string teacherId);
+    Task<List<StudentGroupResponseDto>> GetAllGroupsWithStudentsList(string teacherId);
 
     /// <summary>
     /// Gets the details of a group with a list of students.
     /// </summary>
     /// <param name="groupId">The identifier of the group.</param>
     /// <returns>A GroupDto object representing the group and its associated students.</returns>
-    Task<GroupDto> GetGroupDetailsWithStudentList(Guid groupId);
+    Task<StudentGroupResponseDto> GetGroupDetailsWithStudentList(Guid groupId);
 
     /// <summary>
     /// Gets a list of groups with associated exams, by student identifier.
     /// </summary>
     /// <param name="studentId">The identifier of the student.</param>
     /// <returns>A list of GroupWithExamsListDto objects representing groups and their associated exams.</returns>
-    Task<List<GroupWithExamsListDto>> GetAllGroupsByStudentIdWithExamsList(string studentId);
+    Task<List<StudentGroupWithExamsListResponseDto>> GetAllGroupsByStudentIdWithExamsList(string studentId);
 
     /// <summary>
     /// Gets the details of a group with a list of exams, by group and student identifier.
@@ -90,5 +91,5 @@ public interface IGroupRepository
     /// <param name="groupId">The identifier of the group.</param>
     /// <param name="studentId">The identifier of the student.</param>
     /// <returns>A GroupWithExamsListDto object representing the group and its associated exams.</returns>
-    Task<GroupWithExamsListDto> GetGroupDetailsWithExamsListByGroupIdAndStudentId(Guid groupId, string studentId);
+    Task<StudentGroupWithExamsListResponseDto> GetGroupDetailsWithExamsListByGroupIdAndStudentId(Guid groupId, string studentId);
 }

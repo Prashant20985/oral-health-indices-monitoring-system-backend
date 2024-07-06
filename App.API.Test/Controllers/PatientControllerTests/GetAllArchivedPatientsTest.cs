@@ -25,9 +25,9 @@ public class GetAllArchivedPatientsTest
     public async Task GetAllArchivedPatients_WithValidData_ShouldReturnOk()
     {
         // Arrange
-        var expectedPatients = new List<PatientDto>
+        var expectedPatients = new List<PatientResponseDto>
     {
-        new PatientDto {
+        new PatientResponseDto {
             Id = Guid.NewGuid(),
             FirstName = "John",
             LastName = "Doe",
@@ -43,7 +43,7 @@ public class GetAllArchivedPatientsTest
             Age = 20,
             IsArchived = true
         },
-        new PatientDto {
+        new PatientResponseDto {
             Id = Guid.NewGuid(),
             FirstName = "Jane",
             LastName = "Doe",
@@ -62,7 +62,7 @@ public class GetAllArchivedPatientsTest
     };
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchAllArchivedPatientsQuery>(), default))
-            .ReturnsAsync(OperationResult<List<PatientDto>>
+            .ReturnsAsync(OperationResult<List<PatientResponseDto>>
             .Success(expectedPatients));
 
         // Act
@@ -70,7 +70,7 @@ public class GetAllArchivedPatientsTest
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var patients = Assert.IsAssignableFrom<List<PatientDto>>(okResult.Value);
+        var patients = Assert.IsAssignableFrom<List<PatientResponseDto>>(okResult.Value);
         Assert.Equal(expectedPatients.Count, patients.Count);
     }
 
@@ -78,9 +78,9 @@ public class GetAllArchivedPatientsTest
     public async Task GetAllArchivedPatients_WhenFetchFails_ShouldReturnBadRequest()
     {
         // Arrange
-        var expectedPatients = new List<PatientDto>
+        var expectedPatients = new List<PatientResponseDto>
     {
-        new PatientDto {
+        new PatientResponseDto {
             Id = Guid.NewGuid(),
             FirstName = "Jane",
             LastName = "Doe",
@@ -99,7 +99,7 @@ public class GetAllArchivedPatientsTest
     };
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchAllArchivedPatientsQuery>(), default))
-            .ReturnsAsync(OperationResult<List<PatientDto>>
+            .ReturnsAsync(OperationResult<List<PatientResponseDto>>
                        .Failure("Failed to fetch archived patients"));
 
         // Act
