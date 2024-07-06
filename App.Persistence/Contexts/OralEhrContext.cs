@@ -67,6 +67,11 @@ public class OralEhrContext : IdentityDbContext<
     public virtual DbSet<UserRequest> UserRequests { get; set; }
 
     /// <summary>
+    /// Represents the database table for the Supervise entities.
+    /// </summary>
+    public virtual DbSet<Supervise> Supervises { get; set; }
+
+    /// <summary>
     /// Gets or sets the set of patients.
     /// </summary>
     public virtual DbSet<Patient> Patients { get; set; }
@@ -175,6 +180,8 @@ public class OralEhrContext : IdentityDbContext<
         modelBuilder.Entity<StudentGroup>().ToTable(nameof(StudentGroup), "user");
 
         modelBuilder.Entity<UserRequest>().ToTable(nameof(UserRequests), "user");
+
+        modelBuilder.Entity<Supervise>().ToTable(nameof(Supervise), "user");
 
         modelBuilder.Entity<Patient>().ToTable(nameof(Patient), "oralHealthExamination");
 
