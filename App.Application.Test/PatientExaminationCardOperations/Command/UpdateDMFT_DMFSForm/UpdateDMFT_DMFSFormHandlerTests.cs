@@ -1,4 +1,6 @@
-﻿using App.Application.PatientExaminationCardOperations.Command.UpdateDMFT_DMFSForm;
+﻿using App.Application.Core;
+using App.Application.PatientExaminationCardOperations.Command.UpdateDMFT_DMFSForm;
+using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Common.DMFT_DMFS;
 using App.Domain.Models.OralHealthExamination;
 using MediatR;
@@ -53,7 +55,7 @@ public class UpdateDMFT_DMFSFormHandlerTests : TestHelper
 
         // Assert
         Assert.True(result.IsSuccessful);
-        Assert.Equal(Unit.Value, result.ResultValue);
+        Assert.IsType<OperationResult<DMFT_DMFSResultResponseDto>>(result);
         Assert.Equal(dmft_dmfs.AssessmentModel, command.AssessmentModel);
     }
 }

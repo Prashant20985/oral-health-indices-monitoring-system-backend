@@ -1,4 +1,5 @@
 ﻿using App.Application.Core;
+using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Common.APIBleeding;
 using App.Persistence.Attributes;
 using MediatR;
@@ -10,4 +11,4 @@ namespace App.Application.PatientExaminationCardOperations.Command.UpdateAPIForm
 /// </summary>
 [OralEhrContextUnitOfWork]
 public record UpdateAPIFormCommand(Guid CardId, APIBleedingAssessmentModel AssessmentModel)
-    : IRequest<OperationResult<Unit>>;
+    : IRequest<OperationResult<APIResultResponseDto>>;
