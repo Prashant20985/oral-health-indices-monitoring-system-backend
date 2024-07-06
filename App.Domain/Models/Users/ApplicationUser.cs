@@ -122,13 +122,45 @@ public class ApplicationUser : IdentityUser
     /// Gets or sets the collection of student-group relationships associated with the user.
     /// </summary>
     public ICollection<StudentGroup> StudentGroups { get; set; } = new List<StudentGroup>();
+
+    /// <summary>
+    /// Gets or sets the collection of user requests associated with the user.
+    /// </summary>
     public ICollection<UserRequest> UserRequests { get; set; } = new List<UserRequest>();
 
+    /// <summary>
+    /// Gets or sets the collection of patients associated with the user.
+    /// </summary>
     public ICollection<Patient> Patients { get; set; } = new List<Patient>();
+
+    /// <summary>
+    /// Gets or sets the collection of Resarch groups associated with the user.
+    /// </summary>
     public ICollection<ResearchGroup> PatientGroups { get; set; } = new List<ResearchGroup>();
 
+    /// <summary>
+    /// Gets or sets the collection of patient examination cards associated with the Student.
+    /// </summary>
     public ICollection<PatientExaminationCard> PatientExaminationCardStudentNavigation { get; set; } = new List<PatientExaminationCard>();
+
+    /// <summary>
+    /// Gets or sets the collection of patient examination cards associated with the Doctor.
+    /// </summary>
     public ICollection<PatientExaminationCard> PatientExaminationCardDoctorNavigation { get; set; } = new List<PatientExaminationCard>();
+
+    /// <summary>
+    /// Gets or sets the collection of practice patient examination cards associated with the user.
+    /// </summary>
     public ICollection<PracticePatientExaminationCard> PracticePatientExaminationCards { get; set; } = new List<PracticePatientExaminationCard>();
+
+    /// <summary>
+    /// Gets or sets the collection of Supervise relationships where the user is the doctor.
+    /// </summary>
+    public ICollection<Supervise> SuperviseDoctorNavigation { get; set; } = new List<Supervise>();
+
+    /// <summary>
+    /// Gets or sets the collection of Supervise relationships where the user is the student.
+    /// </summary>
+    public ICollection<Supervise> SuperviseStudentNavigation { get; set; } = new List<Supervise>();
 }
 
