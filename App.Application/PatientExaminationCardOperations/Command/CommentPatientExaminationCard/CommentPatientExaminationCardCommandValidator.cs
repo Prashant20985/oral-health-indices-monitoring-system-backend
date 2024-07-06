@@ -15,7 +15,7 @@ public class CommentPatientExaminationCardCommandValidator : AbstractValidator<C
         RuleFor(command => command.Cardid)
             .NotEmpty();
 
-        RuleFor(command => command.DoctorComment)
+        RuleFor(command => command.Comment)
             .NotEmpty()
             .MaximumLength(500);
     }

@@ -8,5 +8,5 @@ namespace App.Application.PatientExaminationCardOperations.Command.CommentAPIFor
 /// Command for adding comment to the patient examination card
 /// </summary>
 [OralEhrContextUnitOfWork]
-public record CommentAPIFormCommnand(Guid CardId, string DoctorComment)
+public record CommentAPIFormCommnand(Guid CardId, string Comment, bool IsStudent)
     : IRequest<OperationResult<Unit>>;

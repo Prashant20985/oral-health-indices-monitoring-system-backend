@@ -8,5 +8,5 @@ namespace App.Application.PatientExaminationCardOperations.Command.CommentBeweFo
 /// Command to add a comment to the BEWE form
 /// </summary>
 [OralEhrContextUnitOfWork]
-public record CommentBeweFormCommand(Guid CardId, string DoctorComment)
+public record CommentBeweFormCommand(Guid CardId, string Comment, bool IsStudent)
     : IRequest<OperationResult<Unit>>;

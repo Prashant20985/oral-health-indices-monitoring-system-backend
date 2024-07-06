@@ -13,7 +13,7 @@ public class CommentDMFT_DMFSHandlerTests : TestHelper
     public CommentDMFT_DMFSHandlerTests()
     {
         handler = new CommentDMFT_DMFSHandler(patientExaminationCardRepositoryMock.Object);
-        command = new CommentDMFT_DMFSCommand(Guid.NewGuid(), "Doctor comment");
+        command = new CommentDMFT_DMFSCommand(Guid.NewGuid(), "Doctor comment", false);
     }
 
     [Fact]
@@ -45,6 +45,6 @@ public class CommentDMFT_DMFSHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.Equal(Unit.Value, result.ResultValue);
-        Assert.Contains(command.DoctorComment, dmft_dmfsForm.DoctorComment);
+        Assert.Contains(command.Comment, dmft_dmfsForm.DoctorComment);
     }
 }

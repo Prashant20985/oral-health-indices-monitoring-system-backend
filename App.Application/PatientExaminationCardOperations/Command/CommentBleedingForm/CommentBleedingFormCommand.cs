@@ -8,5 +8,5 @@ namespace App.Application.PatientExaminationCardOperations.Command.CommentBleedi
 /// Command for adding a comment to the bleeding form
 /// </summary>
 [OralEhrContextUnitOfWork]
-public record CommentBleedingFormCommand(Guid CardId, string DoctorComment)
+public record CommentBleedingFormCommand(Guid CardId, string Comment, bool IsStudent)
     : IRequest<OperationResult<Unit>>;

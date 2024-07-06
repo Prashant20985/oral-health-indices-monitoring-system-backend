@@ -8,6 +8,6 @@ namespace App.Application.PatientExaminationCardOperations.Command.CommentPatien
 /// Command to comment on a patient examination card
 /// </summary>
 [OralEhrContextUnitOfWork]
-public record CommentPatientExaminationCardCommand(Guid Cardid, string DoctorComment)
+public record CommentPatientExaminationCardCommand(Guid Cardid, string Comment, bool IsStudent)
     : IRequest<OperationResult<Unit>>;
 
