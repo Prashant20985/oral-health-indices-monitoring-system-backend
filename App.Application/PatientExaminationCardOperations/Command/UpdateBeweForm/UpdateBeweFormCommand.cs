@@ -10,5 +10,5 @@ namespace App.Application.PatientExaminationCardOperations.Command.UpdateBeweFor
 /// </summary>
 [OralEhrContextUnitOfWork]
 public record UpdateBeweFormCommand(Guid CardId, BeweAssessmentModel AssessmentModel)
-    : IRequest<OperationResult<Unit>>;
+    : IRequest<OperationResult<decimal>>;
 

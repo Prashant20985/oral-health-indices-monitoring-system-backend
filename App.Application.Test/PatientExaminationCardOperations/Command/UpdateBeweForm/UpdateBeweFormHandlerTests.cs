@@ -1,4 +1,5 @@
-﻿using App.Application.PatientExaminationCardOperations.Command.UpdateBeweForm;
+﻿using App.Application.Core;
+using App.Application.PatientExaminationCardOperations.Command.UpdateBeweForm;
 using App.Domain.Models.Common.Bewe;
 using App.Domain.Models.Common.Tooth;
 using App.Domain.Models.OralHealthExamination;
@@ -102,7 +103,7 @@ public class UpdateBeweFormHandlerTests : TestHelper
 
         // Assert
         Assert.True(result.IsSuccessful);
-        Assert.Equal(Unit.Value, result.ResultValue);
+        Assert.IsType<OperationResult<decimal>>(result);
         Assert.Equal(bewe.AssessmentModel, command.AssessmentModel);
     }
 }

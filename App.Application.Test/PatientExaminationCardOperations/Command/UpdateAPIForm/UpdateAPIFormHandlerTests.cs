@@ -1,7 +1,8 @@
-﻿using App.Application.PatientExaminationCardOperations.Command.UpdateAPIForm;
+﻿using App.Application.Core;
+using App.Application.PatientExaminationCardOperations.Command.UpdateAPIForm;
+using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Common.APIBleeding;
 using App.Domain.Models.OralHealthExamination;
-using MediatR;
 using Moq;
 
 namespace App.Application.Test.PatientExaminationCardOperations.Command.UpdateAPIForm;
@@ -95,7 +96,7 @@ public class UpdateAPIFormHandlerTests : TestHelper
 
         // Assert
         Assert.True(result.IsSuccessful);
-        Assert.Equal(Unit.Value, result.ResultValue);
+        Assert.IsType<OperationResult<APIResultResponseDto>>(result);
         Assert.Equal(command.AssessmentModel, api.AssessmentModel);
     }
 }

@@ -15,6 +15,7 @@ using App.Application.PatientExaminationCardOperations.Query.FetchPatientExamina
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardInTestMode;
 using App.Application.StudentExamOperations.TeacherOperations.Command.CommentAPIForm;
 using App.Application.StudentExamOperations.TeacherOperations.Command.CommentDMFT_DMFSForm;
+using App.Domain.DTOs.Common.Response;
 using App.Domain.DTOs.PatientDtos.Response;
 using App.Domain.Models.Common.APIBleeding;
 using App.Domain.Models.Common.Bewe;
@@ -83,9 +84,9 @@ public class PatientExaminationCardController : BaseController
     /// </summary>
     /// <param name="cardId">Unique identifier of the card</param>
     /// <param name="assessmentModel">API form model</param>
-    /// <returns>An IActionResult</returns>
+    /// <returns>An ActionResult of APIResultResponseDto</returns>
     [HttpPut("update-api-form/{cardId}")]
-    public async Task<IActionResult> UpdateAPIForm(Guid cardId, [FromBody] APIBleedingAssessmentModel assessmentModel) =>
+    public async Task<ActionResult<APIResultResponseDto>> UpdateAPIForm(Guid cardId, [FromBody] APIBleedingAssessmentModel assessmentModel) =>
         HandleOperationResult(await Mediator.Send(new UpdateAPIFormCommand(cardId, assessmentModel)));
 
     /// <summary>
@@ -93,9 +94,9 @@ public class PatientExaminationCardController : BaseController
     /// </summary>
     /// <param name="cardId">Unique identifier of the card</param>
     /// <param name="assessmentModel">DMFT/DMFS form model</param>
-    /// <returns>An IActionResult</returns>
+    /// <returns>An ActionResult of DMFT_DMFSResultResponseDto</returns>
     [HttpPut("update-dmft-dmfs-form/{cardId}")]
-    public async Task<IActionResult> UpdateDMFTDMFSForm(Guid cardId, [FromBody] DMFT_DMFSAssessmentModel assessmentModel) =>
+    public async Task<ActionResult<DMFT_DMFSResultResponseDto>> UpdateDMFTDMFSForm(Guid cardId, [FromBody] DMFT_DMFSAssessmentModel assessmentModel) =>
         HandleOperationResult(await Mediator.Send(new UpdateDMFT_DMFSFormCommand(cardId, assessmentModel)));
 
     /// <summary>
@@ -103,9 +104,9 @@ public class PatientExaminationCardController : BaseController
     /// </summary>
     /// <param name="cardId">Unique identifier of the card</param>
     /// <param name="assessmentModel">Bleeding form model</param>
-    /// <returns>An IActionResult</returns>
+    /// <returns>An ActionResult of BleedingResultResponseDto</returns>
     [HttpPut("update-bleeding-form/{cardId}")]
-    public async Task<IActionResult> UpdateBleedingForm(Guid cardId, [FromBody] APIBleedingAssessmentModel assessmentModel) =>
+    public async Task<ActionResult<BleedingResultResponseDto>> UpdateBleedingForm(Guid cardId, [FromBody] APIBleedingAssessmentModel assessmentModel) =>
         HandleOperationResult(await Mediator.Send(new UpdateBleedingFormCommand(cardId, assessmentModel)));
 
     /// <summary>
@@ -113,9 +114,9 @@ public class PatientExaminationCardController : BaseController
     /// </summary>
     /// <param name="cardId">Unique identifier of the card</param>
     /// <param name="assessmentModel">BEWE form model</param>
-    /// <returns>An IActionResult</returns>
+    /// <returns>An ActionResult of decimal</returns>
     [HttpPut("update-bewe-form/{cardId}")]
-    public async Task<IActionResult> UpdateBeweForm(Guid cardId, [FromBody] BeweAssessmentModel assessmentModel) =>
+    public async Task<ActionResult<decimal>> UpdateBeweForm(Guid cardId, [FromBody] BeweAssessmentModel assessmentModel) =>
         HandleOperationResult(await Mediator.Send(new UpdateBeweFormCommand(cardId, assessmentModel)));
 
     /// <summary>

@@ -1,4 +1,6 @@
-﻿using App.Application.PatientExaminationCardOperations.Command.UpdateBleedingForm;
+﻿using App.Application.Core;
+using App.Application.PatientExaminationCardOperations.Command.UpdateBleedingForm;
+using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Common.APIBleeding;
 using App.Domain.Models.OralHealthExamination;
 using MediatR;
@@ -95,7 +97,7 @@ public class UpdateBleedingFormHandlerTests : TestHelper
 
         // Assert
         Assert.True(result.IsSuccessful);
-        Assert.Equal(Unit.Value, result.ResultValue);
+        Assert.IsType<OperationResult<BleedingResultResponseDto>>(result);
         Assert.Equal(bleeding.AssessmentModel, command.AssessmentModel);
     }
 }
