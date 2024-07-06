@@ -1,5 +1,5 @@
 ﻿using App.Application.DentistTeacherOperations.Query.PatientsNotInResearchGroups;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Response;
 using MockQueryable.Moq;
 
 namespace App.Application.Test.DentistTeacherOperations.Query.PatientsNotInResearchGroups;
@@ -19,16 +19,16 @@ public class FetchPatientsNotInResearchGroupsHandlerTests : TestHelper
     public async Task Handle_WithValidQuery_ShouldReturnListOfPatientDtos()
     {
         // Arrange
-        var patients = new List<ResearchGroupPatientDto>
+        var patients = new List<ResearchGroupPatientResponseDto>
             {
-               new ResearchGroupPatientDto
+               new ResearchGroupPatientResponseDto
                {
                    Id = Guid.NewGuid(),
                    FirstName = "Patient",
                    LastName = "Patient1",
                    Email = "test@test.com"
                },
-               new ResearchGroupPatientDto
+               new ResearchGroupPatientResponseDto
                {
                    Id = Guid.NewGuid(),
                    FirstName = "Patient",
@@ -56,7 +56,7 @@ public class FetchPatientsNotInResearchGroupsHandlerTests : TestHelper
     {
         // Arrange
         researchGroupRepositoryMock.Setup(repo => repo.GetAllPatientsNotInAnyResearchGroup())
-            .Returns(new List<ResearchGroupPatientDto>().AsQueryable().BuildMockDbSet().Object);
+            .Returns(new List<ResearchGroupPatientResponseDto>().AsQueryable().BuildMockDbSet().Object);
 
         // Act
         var result = await handler.Handle(query, CancellationToken.None);

@@ -1,9 +1,9 @@
-﻿namespace App.Domain.DTOs;
+﻿namespace App.Domain.DTOs.ApplicationUserDtos.Request;
 
 /// <summary>
-/// Data transfer object (DTO) for updating a user.
+/// Data transfer object (DTO) for creating a user.
 /// </summary>
-public class UpdateApplicationUserDto
+public class CreateApplicationUserRequestDto
 {
     /// <summary>
     /// Gets or sets the first name of the user.
@@ -14,6 +14,11 @@ public class UpdateApplicationUserDto
     /// Gets or sets the last name of the user.
     /// </summary>
     public string LastName { get; set; }
+
+    /// <summary>
+    /// Gets or sets the email of the user.
+    /// </summary>
+    public string Email { get; set; }
 
     /// <summary>
     /// Gets or sets the phone number of the user.
@@ -27,7 +32,7 @@ public class UpdateApplicationUserDto
     public string GuestUserComment { get; set; }
 
     /// <summary>
-    /// Gets or sets a Role for a user.
+    /// Gets or sets the role of the user.
     /// </summary>
     public string Role { get; set; }
 }

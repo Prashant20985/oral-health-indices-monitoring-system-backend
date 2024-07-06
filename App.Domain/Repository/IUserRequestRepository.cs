@@ -1,4 +1,4 @@
-﻿using App.Domain.DTOs;
+﻿using App.Domain.DTOs.UserRequestDtos.Response;
 using App.Domain.Models.Enums;
 using App.Domain.Models.Users;
 
@@ -24,13 +24,13 @@ public interface IUserRequestRepository
     /// <summary>
     /// Retrieves a list of all user requests based on request status.
     /// </summary>
-    IQueryable<UserRequestDto> GetAllRequestsByStatus(RequestStatus requestStatus);
+    IQueryable<UserRequestResponseDto> GetAllRequestsByStatus(RequestStatus requestStatus);
 
     /// <summary>
     /// Retrieves a list of user requests associated with a specific user.
     /// </summary>
     /// <param name="userId">The identifier of the user.</param>
-    IQueryable<UserRequestDto> GetRequestsByUserIdAndStatus(string userId, RequestStatus requestStatus);
+    IQueryable<UserRequestResponseDto> GetRequestsByUserIdAndStatus(string userId, RequestStatus requestStatus);
 
     /// <summary>
     /// Retrieves a user request by its unique identifier.

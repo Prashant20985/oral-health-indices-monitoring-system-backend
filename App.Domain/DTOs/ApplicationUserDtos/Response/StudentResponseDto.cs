@@ -1,9 +1,9 @@
-﻿namespace App.Domain.DTOs;
+﻿namespace App.Domain.DTOs.ApplicationUserDtos.Response;
 
 /// <summary>
 /// Data transfer object representing a student.
 /// </summary>
-public class StudentDto
+public class StudentResponseDto
 {
     /// <summary>
     /// Gets or sets the Id of the user.

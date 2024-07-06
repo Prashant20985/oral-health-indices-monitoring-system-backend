@@ -24,13 +24,13 @@ public class StudentExamRepositoryTests
         {
             cfg.CreateMap<Exam, ExamDto>()
             .ForMember(x => x.ExamStatus, o => o.MapFrom(s => Enum.GetName(s.ExamStatus)));
-            cfg.CreateMap<PracticePatient, PatientDto>();
+            cfg.CreateMap<PracticePatient, PatientResponseDto>();
             cfg.CreateMap<PracticeRiskFactorAssessment, RiskFactorAssessmentDto>();
-            cfg.CreateMap<PracticeBewe, BeweDto>();
-            cfg.CreateMap<PracticeDMFT_DMFS, DMFT_DMFSDto>();
-            cfg.CreateMap<PracticeAPI, APIDto>();
-            cfg.CreateMap<PracticeBleeding, BleedingDto>();
-            cfg.CreateMap<PracticePatientExaminationResult, PatientExaminationResultDto>();
+            cfg.CreateMap<PracticeBewe, PracticeBeweResponseDto>();
+            cfg.CreateMap<PracticeDMFT_DMFS, PracticeDMFT_DMFSRespnseDto>();
+            cfg.CreateMap<PracticeAPI, PracticeAPIResponseDto>();
+            cfg.CreateMap<PracticeBleeding, PracticeBleedingResponseDto>();
+            cfg.CreateMap<PracticePatientExaminationResult, PracticePatientExaminationResultResponseDto>();
             cfg.CreateMap<PracticePatientExaminationCard, PracticePatientExaminationCardDto>();
         });
         var mapper = mapperConfig.CreateMapper();

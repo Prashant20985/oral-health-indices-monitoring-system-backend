@@ -1,7 +1,7 @@
 ﻿using App.Application.AdminOperations.Command.CreateApplicationUser;
 using App.Application.Core;
 using App.Application.Interfaces;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Request;
 using AutoMapper;
 using MediatR;
 
@@ -40,7 +40,7 @@ internal sealed class CreateApplicationUsersFromCsvHandler
     /// <returns>An operation result indicating the success or failure of the operation.</returns>
     public async Task<OperationResult<string>> Handle(CreateApplicationUsersFromCsvCommand request, CancellationToken cancellationToken)
     {
-        List<CreateApplicationUserFromCsvDto> applicationUserToCreate;
+        List<CreateApplicationUserFromCsvRequestDto> applicationUserToCreate;
 
         try
         {
@@ -62,7 +62,7 @@ internal sealed class CreateApplicationUsersFromCsvHandler
         // Loop through each application user data read from the CSV file.
         foreach (var applicationUser in applicationUserToCreate)
         {
-            var user = _mapper.Map<CreateApplicationUserDto>(applicationUser);
+            var user = _mapper.Map<CreateApplicationUserRequestDto>(applicationUser);
 
             // Send a command to create an application user using the mediator.
             var result = await _mediator.Send(new CreateApplicationUserCommand(user), cancellationToken);

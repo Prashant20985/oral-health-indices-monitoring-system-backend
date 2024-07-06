@@ -26,9 +26,9 @@ public class GetAllArchivedPatientsByDoctorIdTest
     public async Task GetAllArchivedPatientsByDoctorId_WithValidData_ShouldReturnOk()
     {
         // Arrange
-        var expectedPatients = new List<PatientDto>
+        var expectedPatients = new List<PatientResponseDto>
         {
-        new PatientDto {
+        new PatientResponseDto {
             Id = Guid.NewGuid(),
             FirstName = "John",
             LastName = "Doe",
@@ -44,7 +44,7 @@ public class GetAllArchivedPatientsByDoctorIdTest
             Age = 20,
             IsArchived = true
         },
-        new PatientDto {
+        new PatientResponseDto {
             Id = Guid.NewGuid(),
             FirstName = "Jane",
             LastName = "Doe",
@@ -63,7 +63,7 @@ public class GetAllArchivedPatientsByDoctorIdTest
     };
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchAllArchivedPatientsByDoctorIdQuery>(), default))
-            .ReturnsAsync(OperationResult<List<PatientDto>>
+            .ReturnsAsync(OperationResult<List<PatientResponseDto>>
                        .Success(expectedPatients));
 
         _patientcontroller.ControllerContext = new ControllerContext
@@ -84,7 +84,7 @@ public class GetAllArchivedPatientsByDoctorIdTest
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var patients = Assert.IsType<List<PatientDto>>(okResult.Value);
+        var patients = Assert.IsType<List<PatientResponseDto>>(okResult.Value);
         Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
         Assert.Equal(expectedPatients.Count, patients.Count);
         Assert.Equal(expectedPatients.First().Id, patients.First().Id);
@@ -96,7 +96,7 @@ public class GetAllArchivedPatientsByDoctorIdTest
     {
         // Arrange
         _mediator.Setup(x => x.Send(It.IsAny<FetchAllArchivedPatientsByDoctorIdQuery>(), default))
-            .ReturnsAsync(OperationResult<List<PatientDto>>
+            .ReturnsAsync(OperationResult<List<PatientResponseDto>>
                                   .Failure("Failed to fetch archived patients"));
 
         var userClaims = new ClaimsPrincipal(new ClaimsIdentity(new[]

@@ -1,6 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.UserRequestOperations.Query.RequestsListByUserId;
-using App.Domain.DTOs;
+using App.Domain.DTOs.UserRequestDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +25,7 @@ public class GetRequestsByUserIdTest
     public async Task GetRequestsByUserId_Returns_OkResult()
     {
         //Arrange
-        var userRequest = new UserRequestDto
+        var userRequest = new UserRequestResponseDto
         {
             Id = Guid.NewGuid(),
             RequestTitle = "test",
@@ -40,7 +40,7 @@ public class GetRequestsByUserIdTest
         }));
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<FetchRequestsListByUserIdQuery>(), default))
-            .ReturnsAsync(OperationResult<List<UserRequestDto>>.Success(new List<UserRequestDto> { userRequest }));
+            .ReturnsAsync(OperationResult<List<UserRequestResponseDto>>.Success(new List<UserRequestResponseDto> { userRequest }));
 
         _userRequestController.ControllerContext = new ControllerContext
         {
@@ -52,7 +52,7 @@ public class GetRequestsByUserIdTest
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        Assert.IsType<List<UserRequestDto>>(((OkObjectResult)result).Value);
+        Assert.IsType<List<UserRequestResponseDto>>(((OkObjectResult)result).Value);
         Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
     }
 
@@ -60,7 +60,7 @@ public class GetRequestsByUserIdTest
     public async Task GetRequestsByUserId_Returns_BadRequestResult()
     {
         //Arrange
-        var userRequest = new UserRequestDto
+        var userRequest = new UserRequestResponseDto
         {
             Id = Guid.NewGuid(),
             RequestTitle = "test",
@@ -75,7 +75,7 @@ public class GetRequestsByUserIdTest
         }));
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<FetchRequestsListByUserIdQuery>(), default))
-            .ReturnsAsync(OperationResult<List<UserRequestDto>>.Failure("test"));
+            .ReturnsAsync(OperationResult<List<UserRequestResponseDto>>.Failure("test"));
 
         _userRequestController.ControllerContext = new ControllerContext
         {

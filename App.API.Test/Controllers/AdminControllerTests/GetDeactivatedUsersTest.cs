@@ -1,6 +1,6 @@
 ﻿using App.Application.AdminOperations.Query.DeactivatedApplicationUsersList;
 using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -23,9 +23,9 @@ namespace App.API.Test.Controllers.AdminControllerTests
         public async Task GetDeactivatedUsers_Returns_OkResult()
         {
             //Arrange
-            var deactivatedUsers = new List<ApplicationUserDto>()
+            var deactivatedUsers = new List<ApplicationUserResponseDto>()
         {
-            new ApplicationUserDto
+            new ApplicationUserResponseDto
             {
                 FirstName = "Test",
                 LastName = "Test",
@@ -35,7 +35,7 @@ namespace App.API.Test.Controllers.AdminControllerTests
                 UserName = "test",
                 IsAccountActive = false,
             },
-            new ApplicationUserDto
+            new ApplicationUserResponseDto
             {
                 FirstName = "Test",
                 LastName = "Test",
@@ -50,15 +50,15 @@ namespace App.API.Test.Controllers.AdminControllerTests
             var searchParams = new SearchParams();
 
             _mediatorMock.Setup(m => m.Send(It.IsAny<FetchDeactivatedApplicationUsersListQuery>(), default))
-                .ReturnsAsync(OperationResult<List<ApplicationUserDto>>.Success(deactivatedUsers));
+                .ReturnsAsync(OperationResult<List<ApplicationUserResponseDto>>.Success(deactivatedUsers));
 
             // Act
             var result = await _adminController.GetDeactivatedUsers(searchParams);
 
             // Assert
-            var actionResult = Assert.IsType<ActionResult<List<ApplicationUserDto>>>(result);
+            var actionResult = Assert.IsType<ActionResult<List<ApplicationUserResponseDto>>>(result);
             var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-            var model = Assert.IsType<List<ApplicationUserDto>>(okObjectResult.Value);
+            var model = Assert.IsType<List<ApplicationUserResponseDto>>(okObjectResult.Value);
             Assert.Equal(deactivatedUsers.Count, model.Count);
         }
 

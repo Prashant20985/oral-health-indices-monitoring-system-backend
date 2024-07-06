@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.StudentGroupDtos.Response;
 using App.Domain.Repository;
 using MediatR;
 
@@ -10,7 +10,7 @@ namespace App.Application.DentistTeacherOperations.Query.StudentGroupDetails;
 /// </summary>
 /// <param name="groupRepository">The repository for managing groups and related operations.</param>
 internal sealed class FetchStudentGroupHandler(IGroupRepository groupRepository)
-        : IRequestHandler<FetchStudentGroupQuery, OperationResult<GroupDto>>
+        : IRequestHandler<FetchStudentGroupQuery, OperationResult<StudentGroupResponseDto>>
 {
     private readonly IGroupRepository _groupRepository = groupRepository;
 
@@ -20,13 +20,13 @@ internal sealed class FetchStudentGroupHandler(IGroupRepository groupRepository)
     /// <param name="request">The request to fetch a student group.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The result of the operation.</returns>
-    public async Task<OperationResult<GroupDto>> Handle(FetchStudentGroupQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<StudentGroupResponseDto>> Handle(FetchStudentGroupQuery request, CancellationToken cancellationToken)
     {
         var group = await _groupRepository.GetGroupDetailsWithStudentList(request.GroupId);
 
         if (group is null)
-            return OperationResult<GroupDto>.Failure("Group not found.");
+            return OperationResult<StudentGroupResponseDto>.Failure("Group not found.");
 
-        return OperationResult<GroupDto>.Success(group);
+        return OperationResult<StudentGroupResponseDto>.Success(group);
     }
 }

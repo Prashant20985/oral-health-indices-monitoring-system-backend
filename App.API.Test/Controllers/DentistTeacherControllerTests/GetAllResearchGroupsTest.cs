@@ -1,6 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.DentistTeacherOperations.Query.ResearchGroups;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,9 +30,9 @@ public class GetAllResearchGroupsTest
             new Claim(ClaimTypes.Name, "Dentist_Teacher_Researcher")
         }));
 
-        var expectedGroups = new List<ResearchGroupDto>
+        var expectedGroups = new List<ResearchGroupResponseDto>
         {
-            new ResearchGroupDto
+            new ResearchGroupResponseDto
             {
                 GroupName = "Group 1",
                 Description = "Description 1",
@@ -41,7 +41,7 @@ public class GetAllResearchGroupsTest
         };
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchResearchGroupsQuery>(), default))
-            .ReturnsAsync(OperationResult<List<ResearchGroupDto>>.Success(expectedGroups));
+            .ReturnsAsync(OperationResult<List<ResearchGroupResponseDto>>.Success(expectedGroups));
 
         _dentistTeacherController.ControllerContext = new ControllerContext
         {
@@ -52,9 +52,9 @@ public class GetAllResearchGroupsTest
         var result = await _dentistTeacherController.GetAllResearchGroups("Group 1");
 
         // Assert
-        Assert.IsType<ActionResult<List<ResearchGroupDto>>>(result);
+        Assert.IsType<ActionResult<List<ResearchGroupResponseDto>>>(result);
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var returnedGroups = Assert.IsAssignableFrom<List<ResearchGroupDto>>(okResult.Value);
+        var returnedGroups = Assert.IsAssignableFrom<List<ResearchGroupResponseDto>>(okResult.Value);
         Assert.Equal(expectedGroups, returnedGroups);
     }
 
@@ -68,7 +68,7 @@ public class GetAllResearchGroupsTest
         }));
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchResearchGroupsQuery>(), default))
-            .ReturnsAsync(OperationResult<List<ResearchGroupDto>>.Failure("Fetch failed"));
+            .ReturnsAsync(OperationResult<List<ResearchGroupResponseDto>>.Failure("Fetch failed"));
 
         _dentistTeacherController.ControllerContext = new ControllerContext
         {
@@ -79,7 +79,7 @@ public class GetAllResearchGroupsTest
         var result = await _dentistTeacherController.GetAllResearchGroups("Group 1");
 
         // Assert
-        Assert.IsType<ActionResult<List<ResearchGroupDto>>>(result);
+        Assert.IsType<ActionResult<List<ResearchGroupResponseDto>>>(result);
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
         Assert.Equal("Fetch failed", badRequestResult.Value);
     }

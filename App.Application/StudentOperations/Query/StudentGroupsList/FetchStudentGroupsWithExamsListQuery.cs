@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.StudentGroupDtos.Response;
 using MediatR;
 
 namespace App.Application.StudentOperations.Query.StudentGroupsList;
@@ -8,4 +8,4 @@ namespace App.Application.StudentOperations.Query.StudentGroupsList;
 /// Fetches all groups with exams for the student.
 /// </summary>
 public record FetchStudentGroupsWithExamsListQuery(string StudentId)
-    : IRequest<OperationResult<List<GroupWithExamsListDto>>>;
+    : IRequest<OperationResult<List<StudentGroupWithExamsListResponseDto>>>;

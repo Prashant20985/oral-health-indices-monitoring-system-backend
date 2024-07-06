@@ -1,9 +1,11 @@
-﻿namespace App.Domain.DTOs;
+﻿using App.Domain.DTOs.ApplicationUserDtos.Response;
+
+namespace App.Domain.DTOs.StudentGroupDtos.Response;
 
 /// <summary>
 /// Data transfer object representing a group.
 /// </summary>
-public class GroupDto
+public class StudentGroupResponseDto
 {
     /// <summary>
     /// Gets or sets the Id of the user.
@@ -18,5 +20,5 @@ public class GroupDto
     /// <summary>
     /// Gets or sets a list of students names in which group is associated
     /// </summary>
-    public List<StudentDto> Students { get; set; }
+    public List<StudentResponseDto> Students { get; set; }
 }

@@ -1,5 +1,5 @@
 ﻿using App.Application.DentistTeacherOperations.Query.ResearchGroups;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Response;
 using MockQueryable.Moq;
 
 namespace App.Application.Test.DentistTeacherOperations.Query.ResearchGroups;
@@ -19,9 +19,9 @@ public class FetchResearchGroupsHandlerTests : TestHelper
     public async Task Handle_WithValidQuery_ShouldReturnResearchGroupDto()
     {
         // Arrange
-        var researchGroups = new List<ResearchGroupDto>
+        var researchGroups = new List<ResearchGroupResponseDto>
         {
-            new ResearchGroupDto
+            new ResearchGroupResponseDto
             {
                 GroupName = "Research group",
                 Description = "Research Group Description"
@@ -45,7 +45,7 @@ public class FetchResearchGroupsHandlerTests : TestHelper
     public async Task Handle_WithInvalidQuery_ShouldReturnEmpty()
     {
         // Arrange
-        var researchGroups = new List<ResearchGroupDto>
+        var researchGroups = new List<ResearchGroupResponseDto>
         {
 
         }.AsQueryable().BuildMockDbSet();

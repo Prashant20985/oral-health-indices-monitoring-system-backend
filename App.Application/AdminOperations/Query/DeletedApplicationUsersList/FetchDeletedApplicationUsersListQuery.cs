@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MediatR;
 
 namespace App.Application.AdminOperations.Query.DeletedApplicationUsersList;
@@ -9,4 +9,4 @@ namespace App.Application.AdminOperations.Query.DeletedApplicationUsersList;
 /// </summary>
 public record FetchDeletedApplicationUsersListQuery(
     SearchParams Params)
-        : IRequest<OperationResult<List<ApplicationUserDto>>>;
+        : IRequest<OperationResult<List<ApplicationUserResponseDto>>>;

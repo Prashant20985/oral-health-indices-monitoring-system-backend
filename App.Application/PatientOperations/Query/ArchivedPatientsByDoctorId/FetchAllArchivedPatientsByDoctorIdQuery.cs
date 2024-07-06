@@ -9,4 +9,4 @@ namespace App.Application.PatientOperations.Query.ArchivedPatientsByDoctorId;
 /// Represents a query to fetch all archived patients by doctor ID, with optional name and email filters.
 /// </summary>
 public record FetchAllArchivedPatientsByDoctorIdQuery(string DoctorId, string Name, string Email)
-    : IRequest<OperationResult<List<PatientDto>>>;
+    : IRequest<OperationResult<List<PatientResponseDto>>>;

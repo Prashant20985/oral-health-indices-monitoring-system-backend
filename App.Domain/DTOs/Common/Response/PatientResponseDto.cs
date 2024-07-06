@@ -4,7 +4,7 @@
 /// <summary>
 /// Data transfer object representing information about a patient.
 /// </summary>
-public class PatientDto
+public class PatientResponseDto
 {
     /// <summary>
     /// Gets or sets the unique identifier for the patient examination.

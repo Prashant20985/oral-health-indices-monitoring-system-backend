@@ -1,5 +1,5 @@
 ﻿using App.Application.DentistTeacherOperations.Command.UpdateResearchGroup;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Request;
 using App.Domain.Models.OralHealthExamination;
 using Moq;
 
@@ -19,7 +19,7 @@ public class UpdateResearchGroupNameHandlerTests : TestHelper
     {
         // Arrange
         var researchGroupId = Guid.NewGuid();
-        var UpdateResearchGroup = new CreateUpdateResearchGroupDto
+        var UpdateResearchGroup = new CreateUpdateResearchGroupRequestDto
         {
             GroupName = "Updated Group Name",
             Description = "Updated Description"
@@ -45,7 +45,7 @@ public class UpdateResearchGroupNameHandlerTests : TestHelper
     {
         // Arrange
         var researchGroupId = Guid.NewGuid();
-        var UpdateResearchGroup = new CreateUpdateResearchGroupDto
+        var UpdateResearchGroup = new CreateUpdateResearchGroupRequestDto
         {
             GroupName = "Updated Group Name",
             Description = "Updated Description"

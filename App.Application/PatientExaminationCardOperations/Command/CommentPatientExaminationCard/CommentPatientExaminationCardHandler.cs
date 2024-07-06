@@ -26,7 +26,7 @@ internal sealed class CommentPatientExaminationCardHandler(IPatientExaminationCa
         if (patientExaminationCard is null)
             return OperationResult<Unit>.Failure("Patient examination card not found");
 
-        patientExaminationCard.AddComment(request.DoctorComment);
+        patientExaminationCard.AddDoctorComment(request.DoctorComment);
 
         return OperationResult<Unit>.Success(Unit.Value);
     }

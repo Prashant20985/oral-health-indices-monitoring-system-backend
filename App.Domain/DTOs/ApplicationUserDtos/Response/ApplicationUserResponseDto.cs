@@ -1,9 +1,9 @@
-﻿namespace App.Domain.DTOs;
+﻿namespace App.Domain.DTOs.ApplicationUserDtos.Response;
 
 /// <summary>
 /// Data transfer object (DTO) for user details.
 /// </summary>
-public class ApplicationUserDto
+public class ApplicationUserResponseDto
 {
     /// <summary>
     /// Gets or sets the first name of the user.

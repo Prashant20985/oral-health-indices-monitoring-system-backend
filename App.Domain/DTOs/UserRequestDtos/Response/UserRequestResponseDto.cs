@@ -1,9 +1,9 @@
-﻿namespace App.Domain.DTOs;
+﻿namespace App.Domain.DTOs.UserRequestDtos.Response;
 
 /// <summary>
 /// Data Transfer Object (DTO) representing a user request.
 /// </summary>
-public class UserRequestDto
+public class UserRequestResponseDto
 {
     /// <summary>
     /// Gets or sets the unique identifier of the user request.

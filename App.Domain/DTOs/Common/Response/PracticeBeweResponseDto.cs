@@ -5,7 +5,7 @@ namespace App.Domain.DTOs.Common.Response;
 /// <summary>
 /// Data transfer object representing information about BEWE (Basic Erosive Wear Examination) assessment.
 /// </summary>
-public class BeweDto
+public class PracticeBeweResponseDto
 {
     /// <summary>
     /// Gets or sets the unique identifier for the BEWE assessment.

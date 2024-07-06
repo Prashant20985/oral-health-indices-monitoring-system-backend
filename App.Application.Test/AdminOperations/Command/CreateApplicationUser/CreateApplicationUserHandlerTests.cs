@@ -1,7 +1,7 @@
 ﻿using App.Application.AdminOperations.Command.CreateApplicationUser;
 using App.Application.Interfaces;
 using App.Application.NotificationOperations;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Request;
 using App.Domain.Models.Enums;
 using App.Domain.Models.Users;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +11,7 @@ namespace App.Application.Test.AdminOperations.Command.CreateApplicationUser;
 
 public class CreateApplicationUserHandlerTests : TestHelper
 {
-    private readonly CreateApplicationUserDto createApplicationUserDto;
+    private readonly CreateApplicationUserRequestDto createApplicationUserDto;
     private readonly ApplicationUser applicationUser;
     private readonly Mock<IGeneratePassword> generatePasswordMock;
     private readonly CreateApplicationUserCommand createApplicationUserCommand;
@@ -19,7 +19,7 @@ public class CreateApplicationUserHandlerTests : TestHelper
 
     public CreateApplicationUserHandlerTests()
     {
-        createApplicationUserDto = new CreateApplicationUserDto
+        createApplicationUserDto = new CreateApplicationUserRequestDto
         {
             FirstName = "Jhon",
             LastName = "Doe",

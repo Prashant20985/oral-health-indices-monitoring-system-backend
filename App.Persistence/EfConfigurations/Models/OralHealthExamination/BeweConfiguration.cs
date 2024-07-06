@@ -14,7 +14,10 @@ internal class BeweConfiguration : IEntityTypeConfiguration<Bewe>
         builder.Property(x => x.BeweResult)
             .HasColumnType("decimal(18,2)");
 
-        builder.Property(x => x.Comment)
+        builder.Property(x => x.DoctorComment)
+            .HasMaxLength(500);
+
+        builder.Property(x => x.StudentComment)
             .HasMaxLength(500);
 
         builder.OwnsOne(x => x.AssessmentModel, ownedNavigationBuilder =>

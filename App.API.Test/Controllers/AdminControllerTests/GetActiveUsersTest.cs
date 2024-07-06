@@ -1,6 +1,6 @@
 ﻿using App.Application.AdminOperations.Query.ActiveApplicationUsersList;
 using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -23,9 +23,9 @@ public class GetActiveUsersTest
     public async Task GetActiveUsers_Returns_OkResult()
     {
         //Arrange
-        var activeUsers = new List<ApplicationUserDto>()
+        var activeUsers = new List<ApplicationUserResponseDto>()
         {
-            new ApplicationUserDto
+            new ApplicationUserResponseDto
             {
                 FirstName = "Test",
                 LastName = "Test",
@@ -35,7 +35,7 @@ public class GetActiveUsersTest
                 UserName = "test",
                 IsAccountActive = true,
             },
-            new ApplicationUserDto
+            new ApplicationUserResponseDto
             {
                 FirstName = "Test",
                 LastName = "Test",
@@ -50,15 +50,15 @@ public class GetActiveUsersTest
         var searchParams = new SearchParams();
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<FetchActiveApplicationUsersListQuery>(), default))
-            .ReturnsAsync(OperationResult<List<ApplicationUserDto>>.Success(activeUsers));
+            .ReturnsAsync(OperationResult<List<ApplicationUserResponseDto>>.Success(activeUsers));
 
         // Act
         var result = await _adminController.GetActiveUsers(searchParams);
 
         // Assert
-        var actionResult = Assert.IsType<ActionResult<List<ApplicationUserDto>>>(result);
+        var actionResult = Assert.IsType<ActionResult<List<ApplicationUserResponseDto>>>(result);
         var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-        var model = Assert.IsType<List<ApplicationUserDto>>(okObjectResult.Value);
+        var model = Assert.IsType<List<ApplicationUserResponseDto>>(okObjectResult.Value);
         Assert.Equal(activeUsers.Count, model.Count);
     }
 
@@ -70,13 +70,13 @@ public class GetActiveUsersTest
         var searchParams = new SearchParams();
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<FetchActiveApplicationUsersListQuery>(), default))
-            .ReturnsAsync(OperationResult<List<ApplicationUserDto>>.Failure("Failed to fetch active users"));
+            .ReturnsAsync(OperationResult<List<ApplicationUserResponseDto>>.Failure("Failed to fetch active users"));
 
         // Act
         var result = await _adminController.GetActiveUsers(searchParams);
 
         // Assert
-        var actionResult = Assert.IsType<ActionResult<List<ApplicationUserDto>>>(result);
+        var actionResult = Assert.IsType<ActionResult<List<ApplicationUserResponseDto>>>(result);
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(actionResult.Result);
         Assert.Equal("Failed to fetch active users", badRequestResult.Value);
     }

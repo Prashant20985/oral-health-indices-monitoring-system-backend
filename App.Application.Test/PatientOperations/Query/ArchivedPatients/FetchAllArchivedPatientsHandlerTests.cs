@@ -20,10 +20,10 @@ public class FetchAllArchivedPatientsHandlerTests : TestHelper
     public async Task Handle_WithValidQuery_ShouldFetchArchivedPatients()
     {
         // Arrange
-        var archivedPatients = new List<PatientDto>
+        var archivedPatients = new List<PatientResponseDto>
         {
-                new PatientDto { Id = Guid.NewGuid(), FirstName = "test", LastName = "test", Email = "test@test.com"},
-                new PatientDto { Id = Guid.NewGuid(), FirstName = "test", LastName = "test", Email = "test@test.com"}
+                new PatientResponseDto { Id = Guid.NewGuid(), FirstName = "test", LastName = "test", Email = "test@test.com"},
+                new PatientResponseDto { Id = Guid.NewGuid(), FirstName = "test", LastName = "test", Email = "test@test.com"}
         }.AsQueryable().BuildMock();
 
         patientRepositoryMock.Setup(repo => repo.GetAllArchivedPatients())
@@ -35,7 +35,7 @@ public class FetchAllArchivedPatientsHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.Null(result.ErrorMessage);
-        var fetchedPatients = Assert.IsType<List<PatientDto>>(result.ResultValue);
+        var fetchedPatients = Assert.IsType<List<PatientResponseDto>>(result.ResultValue);
         Assert.Equal(archivedPatients.Count(), fetchedPatients.Count);
         patientRepositoryMock.Verify(repo => repo.GetAllArchivedPatients(), Times.Once);
     }

@@ -1,5 +1,5 @@
 using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.UserRequestDtos.Response;
 using App.Domain.Models.Enums;
 using App.Domain.Repository;
 using MediatR;
@@ -11,7 +11,7 @@ namespace App.Application.UserRequestOperations.Query.RequestsListByUserId;
 /// Handler for fetching a list of user requests by user ID.
 /// </summary>
 internal sealed class FetchRequestsListByUserIdHandler
-    : IRequestHandler<FetchRequestsListByUserIdQuery, OperationResult<List<UserRequestDto>>>
+    : IRequestHandler<FetchRequestsListByUserIdQuery, OperationResult<List<UserRequestResponseDto>>>
 {
     private readonly IUserRequestRepository _userRequestRepository;
 
@@ -28,7 +28,7 @@ internal sealed class FetchRequestsListByUserIdHandler
     /// <param name="request">The query to fetch user requests by user ID.</param>
     /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
     /// <returns>An operation result containing a list of user request DTOs or a failure message.</returns>
-    public async Task<OperationResult<List<UserRequestDto>>> Handle
+    public async Task<OperationResult<List<UserRequestResponseDto>>> Handle
         (FetchRequestsListByUserIdQuery request, CancellationToken cancellationToken)
     {
         var status = Enum.Parse<RequestStatus>(request.RequestStatus);
@@ -40,6 +40,6 @@ internal sealed class FetchRequestsListByUserIdHandler
             requestsByUserIdQuery = requestsByUserIdQuery
                 .Where(x => x.DateSubmitted.Date == request.DateSubmitted.Value.Date);
 
-        return OperationResult<List<UserRequestDto>>.Success(await requestsByUserIdQuery.ToListAsync());
+        return OperationResult<List<UserRequestResponseDto>>.Success(await requestsByUserIdQuery.ToListAsync());
     }
 }

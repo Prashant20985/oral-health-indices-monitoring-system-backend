@@ -14,7 +14,7 @@ namespace App.Application.PatientOperations.Query.ActivePatientsByDoctorId;
 /// </remarks>
 /// <param name="patientRepository">The repository for patient-related operations.</param>
 internal sealed class FetchAllActivePatientsByDoctorIdHandler(IPatientRepository patientRepository)
-    : IRequestHandler<FetchAllActivePatientsByDoctorIdQuery, OperationResult<List<PatientDto>>>
+    : IRequestHandler<FetchAllActivePatientsByDoctorIdQuery, OperationResult<List<PatientResponseDto>>>
 {
     private readonly IPatientRepository _patientRepository = patientRepository;
 
@@ -24,7 +24,7 @@ internal sealed class FetchAllActivePatientsByDoctorIdHandler(IPatientRepository
     /// <param name="request">The fetch all active patients by doctor ID query.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>An operation result containing a list of active patient examination DTOs.</returns>
-    public async Task<OperationResult<List<PatientDto>>> Handle(FetchAllActivePatientsByDoctorIdQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<List<PatientResponseDto>>> Handle(FetchAllActivePatientsByDoctorIdQuery request, CancellationToken cancellationToken)
     {
         var query = _patientRepository.GetAllActivePatientsByDoctorId(request.DoctorId);
 
@@ -37,6 +37,6 @@ internal sealed class FetchAllActivePatientsByDoctorIdHandler(IPatientRepository
 
         var patients = await query.AsNoTracking().ToListAsync(cancellationToken);
 
-        return OperationResult<List<PatientDto>>.Success(patients);
+        return OperationResult<List<PatientResponseDto>>.Success(patients);
     }
 }

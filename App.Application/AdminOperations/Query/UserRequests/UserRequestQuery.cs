@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.UserRequestDtos.Response;
 using MediatR;
 
 namespace App.Application.AdminOperations.Query.UserRequests;
@@ -8,4 +8,4 @@ namespace App.Application.AdminOperations.Query.UserRequests;
 /// A query record to retrieve user requests based on their status.
 /// </summary>
 public record UserRequestQuery(string RequestStatus, DateTime? DateSubmitted)
-    : IRequest<OperationResult<List<UserRequestDto>>>;
+    : IRequest<OperationResult<List<UserRequestResponseDto>>>;

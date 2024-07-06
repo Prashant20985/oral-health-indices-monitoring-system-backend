@@ -1,6 +1,6 @@
 ﻿using App.Application.AdminOperations.Command.ChangeActivationStatus;
 using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -23,7 +23,7 @@ namespace App.API.Test.Controllers.AdminControllerTests
         public async Task ChangeActivationStatus_Returns_OkResult()
         {
             // Arrange
-            var user = new ApplicationUserDto
+            var user = new ApplicationUserResponseDto
             {
                 FirstName = "Test",
                 LastName = "Test",

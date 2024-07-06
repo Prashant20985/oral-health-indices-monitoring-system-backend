@@ -1,6 +1,6 @@
 ﻿using App.Application.AdminOperations.Query.UserDetails;
 using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -23,7 +23,7 @@ namespace App.API.Test.Controllers.AdminControllerTests
         public async Task GetUserDetails_Returns_OkResult()
         {
             //Arrange
-            var user = new ApplicationUserDto
+            var user = new ApplicationUserResponseDto
             {
                 FirstName = "Test",
                 LastName = "Test",
@@ -38,15 +38,15 @@ namespace App.API.Test.Controllers.AdminControllerTests
             var userName = "test";
 
             _mediatorMock.Setup(m => m.Send(It.IsAny<FetchUserDetailsQuery>(), default))
-                .ReturnsAsync(OperationResult<ApplicationUserDto>.Success(user));
+                .ReturnsAsync(OperationResult<ApplicationUserResponseDto>.Success(user));
 
             // Act
             var result = await _adminController.GetUserDetails(userName);
 
             // Assert
-            var actionResult = Assert.IsType<ActionResult<ApplicationUserDto>>(result);
+            var actionResult = Assert.IsType<ActionResult<ApplicationUserResponseDto>>(result);
             var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-            var model = Assert.IsType<ApplicationUserDto>(okObjectResult.Value);
+            var model = Assert.IsType<ApplicationUserResponseDto>(okObjectResult.Value);
 
             Assert.Equal(user.FirstName, model.FirstName);
             Assert.Equal(user.LastName, model.LastName);

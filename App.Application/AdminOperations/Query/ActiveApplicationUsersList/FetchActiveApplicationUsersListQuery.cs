@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MediatR;
 
 namespace App.Application.AdminOperations.Query.ActiveApplicationUsersList;
@@ -9,5 +9,5 @@ namespace App.Application.AdminOperations.Query.ActiveApplicationUsersList;
 /// </summary>
 public record FetchActiveApplicationUsersListQuery(
     SearchParams Params)
-        : IRequest<OperationResult<List<ApplicationUserDto>>>;
+        : IRequest<OperationResult<List<ApplicationUserResponseDto>>>;
 

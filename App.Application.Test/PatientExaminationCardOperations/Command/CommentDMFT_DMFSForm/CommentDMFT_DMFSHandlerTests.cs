@@ -45,6 +45,6 @@ public class CommentDMFT_DMFSHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.Equal(Unit.Value, result.ResultValue);
-        Assert.Contains(command.DoctorComment, dmft_dmfsForm.Comment);
+        Assert.Contains(command.DoctorComment, dmft_dmfsForm.DoctorComment);
     }
 }

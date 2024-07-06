@@ -1,5 +1,5 @@
 ﻿using App.Application.UserRequestOperations.Query.RequestsListByUserId;
-using App.Domain.DTOs;
+using App.Domain.DTOs.UserRequestDtos.Response;
 using App.Domain.Models.Enums;
 using MockQueryable.Moq;
 
@@ -19,9 +19,9 @@ public class FetchRequestsListByUserIdHandlerTests : TestHelper
 
         var query = new FetchRequestsListByUserIdQuery(userId, requestStatus, dateSubmitted);
 
-        var userRequests = new List<UserRequestDto>
+        var userRequests = new List<UserRequestResponseDto>
         {
-            new UserRequestDto
+            new UserRequestResponseDto
             {
                 Id = Guid.NewGuid(),
                 UserName = "User 1",
@@ -30,7 +30,7 @@ public class FetchRequestsListByUserIdHandlerTests : TestHelper
                 RequestStatus = RequestStatus.Submitted.ToString(),
                 DateSubmitted = DateTime.Now
             },
-            new UserRequestDto
+            new UserRequestResponseDto
             {
                 Id = Guid.NewGuid(),
                 UserName = "User 1",

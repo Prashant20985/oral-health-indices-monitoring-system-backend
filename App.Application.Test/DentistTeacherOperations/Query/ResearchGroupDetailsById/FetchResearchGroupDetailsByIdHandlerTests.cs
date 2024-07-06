@@ -1,5 +1,5 @@
 ﻿using App.Application.DentistTeacherOperations.Query.ResearchGroupDetailsById;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Response;
 using Moq;
 
 namespace App.Application.Test.DentistTeacherOperations.Query.ResearchGroupDetailsById;
@@ -19,7 +19,7 @@ public class FetchResearchGroupDetailsByIdHandlerTests : TestHelper
     public async Task Handle_WithValidQuery_ShouldReturnResearchGroupDto()
     {
         // Arrange
-        var researchGroup = new ResearchGroupDto
+        var researchGroup = new ResearchGroupResponseDto
         {
             GroupName = "Research Group",
             Description = "Research Group Description"

@@ -25,27 +25,27 @@ public class PatientRepository : IPatientRepository
     public void DeletePatient(Patient patient) =>
         _oralEhrContext.Patients.Remove(patient);
 
-    public IQueryable<PatientDto> GetAllActivePatients() => _oralEhrContext.Patients
+    public IQueryable<PatientResponseDto> GetAllActivePatients() => _oralEhrContext.Patients
         .Where(patient => !patient.IsArchived)
-        .ProjectTo<PatientDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<PatientResponseDto>(_mapper.ConfigurationProvider)
         .OrderByDescending(x => x.CreatedAt)
         .AsQueryable();
 
-    public IQueryable<PatientDto> GetAllArchivedPatients() => _oralEhrContext.Patients
+    public IQueryable<PatientResponseDto> GetAllArchivedPatients() => _oralEhrContext.Patients
         .Where(patient => patient.IsArchived)
-        .ProjectTo<PatientDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<PatientResponseDto>(_mapper.ConfigurationProvider)
         .OrderBy(x => x.CreatedAt)
         .AsQueryable();
 
-    public IQueryable<PatientDto> GetAllActivePatientsByDoctorId(string doctorId) => _oralEhrContext.Patients
+    public IQueryable<PatientResponseDto> GetAllActivePatientsByDoctorId(string doctorId) => _oralEhrContext.Patients
         .Where(patient => patient.IsArchived == false && patient.DoctorId.Equals(doctorId))
-        .ProjectTo<PatientDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<PatientResponseDto>(_mapper.ConfigurationProvider)
         .OrderBy(x => x.CreatedAt)
         .AsQueryable();
 
-    public IQueryable<PatientDto> GetAllArchivedPatientsByDoctorId(string doctorId) => _oralEhrContext.Patients
+    public IQueryable<PatientResponseDto> GetAllArchivedPatientsByDoctorId(string doctorId) => _oralEhrContext.Patients
         .Where(patient => patient.IsArchived == true && patient.DoctorId.Equals(doctorId))
-        .ProjectTo<PatientDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<PatientResponseDto>(_mapper.ConfigurationProvider)
         .OrderBy(x => x.CreatedAt)
         .AsQueryable();
 
@@ -55,9 +55,9 @@ public class PatientRepository : IPatientRepository
     public async Task<Patient> GetPatientByEmail(string email) => await _oralEhrContext.Patients
         .FirstOrDefaultAsync(patient => patient.Email.Equals(email));
 
-    public async Task<PatientDto> GetPatientDetails(Guid patientId) => await _oralEhrContext.Patients
+    public async Task<PatientResponseDto> GetPatientDetails(Guid patientId) => await _oralEhrContext.Patients
         .Where(patient => patient.Id.Equals(patientId))
-        .ProjectTo<PatientDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<PatientResponseDto>(_mapper.ConfigurationProvider)
         .FirstOrDefaultAsync();
 
 }

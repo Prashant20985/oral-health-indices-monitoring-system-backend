@@ -1,6 +1,6 @@
 ﻿using App.Application.AdminOperations.Query.UserRequests;
 using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.UserRequestDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +24,7 @@ public class GetUserRequestByStatusTest
     public async Task GetUserRequestByStatus_Returns_OkResult()
     {
         //Arrange
-        var userRequest = new UserRequestDto
+        var userRequest = new UserRequestResponseDto
         {
             Id = Guid.NewGuid(),
             RequestTitle = "test",
@@ -34,15 +34,15 @@ public class GetUserRequestByStatusTest
         };
         ;
         _mediatorMock.Setup(m => m.Send(It.IsAny<UserRequestQuery>(), default))
-            .ReturnsAsync(OperationResult<List<UserRequestDto>>.Success(new List<UserRequestDto>()));
+            .ReturnsAsync(OperationResult<List<UserRequestResponseDto>>.Success(new List<UserRequestResponseDto>()));
 
         // Act
         var result = await _userRequestController.GetUserRequestByStatus(userRequest.RequestStatus, userRequest.DateSubmitted);
 
         // Assert
-        Assert.IsType<ActionResult<List<UserRequestDto>>>(result);
+        Assert.IsType<ActionResult<List<UserRequestResponseDto>>>(result);
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        Assert.IsAssignableFrom<List<UserRequestDto>>(((OkObjectResult)result.Result).Value);
+        Assert.IsAssignableFrom<List<UserRequestResponseDto>>(((OkObjectResult)result.Result).Value);
         Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
     }
 
@@ -50,7 +50,7 @@ public class GetUserRequestByStatusTest
     public async Task GetUserRequestByStatus_Returns_BadRequestResult()
     {
         //Arrange
-        var userRequest = new UserRequestDto
+        var userRequest = new UserRequestResponseDto
         {
             Id = Guid.NewGuid(),
             RequestTitle = "test",
@@ -60,13 +60,13 @@ public class GetUserRequestByStatusTest
         };
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<UserRequestQuery>(), default))
-            .ReturnsAsync(OperationResult<List<UserRequestDto>>.Failure("test"));
+            .ReturnsAsync(OperationResult<List<UserRequestResponseDto>>.Failure("test"));
 
         // Act
         var result = await _userRequestController.GetUserRequestByStatus(userRequest.RequestStatus, userRequest.DateSubmitted);
 
         // Assert
-        Assert.IsType<ActionResult<List<UserRequestDto>>>(result);
+        Assert.IsType<ActionResult<List<UserRequestResponseDto>>>(result);
         var badResult = Assert.IsType<BadRequestObjectResult>(result.Result);
         Assert.IsAssignableFrom<string>(((BadRequestObjectResult)result.Result).Value);
         Assert.Equal(StatusCodes.Status400BadRequest, badResult.StatusCode);

@@ -1,6 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.DentistTeacherOperations.Query.ResearchGroupDetailsById;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,14 +30,14 @@ public class GetResearchGroupDetailsByIdTest
             new Claim(ClaimTypes.Name, "Dentist_Teacher_Researcher")
         }));
 
-        var researchGroup = new ResearchGroupDto
+        var researchGroup = new ResearchGroupResponseDto
         {
             GroupName = "Test Group",
             Description = "Test Description"
         };
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchResearchGroupDetailsByIdQuery>(), default))
-            .ReturnsAsync(OperationResult<ResearchGroupDto>.Success(researchGroup));
+            .ReturnsAsync(OperationResult<ResearchGroupResponseDto>.Success(researchGroup));
 
         _dentistTeacherController.ControllerContext = new ControllerContext
         {
@@ -63,7 +63,7 @@ public class GetResearchGroupDetailsByIdTest
         }));
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchResearchGroupDetailsByIdQuery>(), default))
-            .ReturnsAsync(OperationResult<ResearchGroupDto>.Failure("test"));
+            .ReturnsAsync(OperationResult<ResearchGroupResponseDto>.Failure("test"));
 
         _dentistTeacherController.ControllerContext = new ControllerContext
         {

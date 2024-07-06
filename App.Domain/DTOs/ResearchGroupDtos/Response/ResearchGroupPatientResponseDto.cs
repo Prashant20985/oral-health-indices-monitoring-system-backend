@@ -1,8 +1,8 @@
 ﻿using App.Domain.Models.Enums;
 
-namespace App.Domain.DTOs;
+namespace App.Domain.DTOs.ResearchGroupDtos.Response;
 
-public class ResearchGroupPatientDto
+public class ResearchGroupPatientResponseDto
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }

@@ -8,7 +8,8 @@ using App.Application.AdminOperations.Query.DeactivatedApplicationUsersList;
 using App.Application.AdminOperations.Query.DeletedApplicationUsersList;
 using App.Application.AdminOperations.Query.UserDetails;
 using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Request;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +25,7 @@ public class AdminController : BaseController
     /// <returns>A paged list of active users.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("active-users")]
-    public async Task<ActionResult<List<ApplicationUserDto>>> GetActiveUsers(
+    public async Task<ActionResult<List<ApplicationUserResponseDto>>> GetActiveUsers(
         [FromQuery] SearchParams pagingAndSearchParams) => HandleOperationResult(
             await Mediator.Send(new FetchActiveApplicationUsersListQuery(pagingAndSearchParams)));
 
@@ -36,7 +37,7 @@ public class AdminController : BaseController
     /// <returns>A paged list of deactivated users.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("deactivated-users")]
-    public async Task<ActionResult<List<ApplicationUserDto>>> GetDeactivatedUsers(
+    public async Task<ActionResult<List<ApplicationUserResponseDto>>> GetDeactivatedUsers(
         [FromQuery] SearchParams pagingAndSearchParams) => HandleOperationResult(
             await Mediator.Send(new FetchDeactivatedApplicationUsersListQuery(pagingAndSearchParams)));
 
@@ -48,7 +49,7 @@ public class AdminController : BaseController
     /// <returns>A paged list of deleted users.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("deleted-users")]
-    public async Task<ActionResult<List<ApplicationUserDto>>> GetDeletedUsers(
+    public async Task<ActionResult<List<ApplicationUserResponseDto>>> GetDeletedUsers(
         [FromQuery] SearchParams pagingAndSearchParams) => HandleOperationResult(
             await Mediator.Send(new FetchDeletedApplicationUsersListQuery(pagingAndSearchParams)));
 
@@ -60,7 +61,7 @@ public class AdminController : BaseController
     /// <returns>Details of the specified user.</returns>
     [Authorize]
     [HttpGet("user-details/{userName}")]
-    public async Task<ActionResult<ApplicationUserDto>> GetUserDetails(string userName) => HandleOperationResult(
+    public async Task<ActionResult<ApplicationUserResponseDto>> GetUserDetails(string userName) => HandleOperationResult(
             await Mediator.Send(new FetchUserDetailsQuery(userName)));
 
 
@@ -95,7 +96,7 @@ public class AdminController : BaseController
     [Authorize(Roles = "Admin")]
     [HttpPost("create-user")]
     public async Task<IActionResult> CreateUser(
-        [FromBody] CreateApplicationUserDto createApplicationUser) => HandleOperationResult(
+        [FromBody] CreateApplicationUserRequestDto createApplicationUser) => HandleOperationResult(
             await Mediator.Send(new CreateApplicationUserCommand(createApplicationUser)));
 
 
@@ -108,7 +109,7 @@ public class AdminController : BaseController
     [Authorize(Roles = "Admin")]
     [HttpPut("update-user/{userName}")]
     public async Task<ActionResult> UpdateUser(string userName,
-        UpdateApplicationUserDto updateApplicationUser) => HandleOperationResult(
+        UpdateApplicationUserRequestDto updateApplicationUser) => HandleOperationResult(
             await Mediator.Send(new UpdateApplicationUserCommand(userName, updateApplicationUser)));
 
 

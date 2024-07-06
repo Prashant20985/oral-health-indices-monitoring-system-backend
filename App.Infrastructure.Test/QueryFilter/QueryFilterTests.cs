@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MockQueryable.Moq;
 
 namespace App.Infrastructure.Test.QueryFilter;
@@ -7,28 +7,28 @@ namespace App.Infrastructure.Test.QueryFilter;
 public class QueryFilterTests
 {
     private readonly Infrastructure.QueryFilter.QueryFilter queryFilter;
-    private readonly IQueryable<ApplicationUserDto> users;
+    private readonly IQueryable<ApplicationUserResponseDto> users;
 
     public QueryFilterTests()
     {
         queryFilter = new Infrastructure.QueryFilter.QueryFilter();
-        users = new List<ApplicationUserDto>
+        users = new List<ApplicationUserResponseDto>
         {
-            new ApplicationUserDto
+            new ApplicationUserResponseDto
             {
                 UserName = "batman",
                 FirstName = "Bruce",
                 Role = "Admin",
                 UserType = "RegularUser"
             },
-            new ApplicationUserDto
+            new ApplicationUserResponseDto
             {
                 UserName = "superman",
                 FirstName = "Clark",
                 Role = "Student",
                 UserType = "RegularUser"
             },
-            new ApplicationUserDto
+            new ApplicationUserResponseDto
             {
                 UserName = "spiderman",
                 FirstName = "Peter",

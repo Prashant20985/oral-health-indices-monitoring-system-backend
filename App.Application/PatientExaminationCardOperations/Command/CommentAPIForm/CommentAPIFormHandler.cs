@@ -26,7 +26,7 @@ internal sealed class CommentAPIFormHandler(IPatientExaminationCardRepository pa
         if (apiForm is null)
             return OperationResult<Unit>.Failure("API Form not found");
 
-        apiForm.AddComment(request.DoctorComment);
+        apiForm.AddDoctorComment(request.DoctorComment);
 
         return OperationResult<Unit>.Success(Unit.Value);
     }

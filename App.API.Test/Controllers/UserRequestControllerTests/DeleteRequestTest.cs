@@ -1,6 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.UserRequestOperations.Command.DeleteRequest;
-using App.Domain.DTOs;
+using App.Domain.DTOs.UserRequestDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +24,7 @@ public class DeleteRequestTest
     public async Task DeleteRequest_Returns_OkResult()
     {
         //Arrange
-        var userRequest = new UserRequestDto
+        var userRequest = new UserRequestResponseDto
         {
             Id = Guid.NewGuid(),
             RequestTitle = "test",
@@ -48,7 +48,7 @@ public class DeleteRequestTest
     public async Task DeleteRequest_Returns_BadRequestResult()
     {
         //Arrange
-        var userRequest = new UserRequestDto
+        var userRequest = new UserRequestResponseDto
         {
             Id = Guid.NewGuid(),
             RequestTitle = "test",

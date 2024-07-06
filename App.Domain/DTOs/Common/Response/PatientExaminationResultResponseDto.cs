@@ -8,21 +8,21 @@ public class PatientExaminationResultDto
     /// <summary>
     /// Gets or sets the result of the BEWE (Basic Erosive Wear Examination) assessment.
     /// </summary>
-    public BeweDto Bewe { get; init; }
+    public BeweResponseDto Bewe { get; set; }
 
     /// <summary>
     /// Gets or sets the result of the DMFT (Decayed, Missing, Filled Teeth) and DMFS (Decayed, Missing, Filled Surfaces) assessment.
     /// </summary>
-    public DMFT_DMFSDto DMFT_DMFS { get; init; }
+    public DMFT_DMFSResponseDto DMFT_DMFS { get; set; }
 
     /// <summary>
     /// Gets or sets the result of the API (Assessment of Periodontal Inflammation) assessment.
     /// </summary>
-    public APIDto API { get; init; }
+    public APIResponseDto API { get; set; }
 
     /// <summary>
     /// Gets or sets the result of the bleeding assessment.
     /// </summary>
-    public BleedingDto Bleeding { get; init; }
+    public BleedingResponseDto Bleeding { get; set; }
 }
 

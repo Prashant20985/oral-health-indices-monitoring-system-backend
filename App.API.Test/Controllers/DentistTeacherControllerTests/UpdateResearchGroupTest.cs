@@ -1,6 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.DentistTeacherOperations.Command.UpdateResearchGroup;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Request;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +30,7 @@ public class UpdateResearchGroupTest
             new Claim(ClaimTypes.Name, "Dentist_Teacher_Researcher")
         }));
 
-        var expectedGroup = new CreateUpdateResearchGroupDto
+        var expectedGroup = new CreateUpdateResearchGroupRequestDto
         {
             GroupName = "Group 1",
             Description = "Description 1",
@@ -60,7 +60,7 @@ public class UpdateResearchGroupTest
             new Claim(ClaimTypes.Name, "Dentist_Teacher_Researcher")
         }));
 
-        var expectedGroup = new CreateUpdateResearchGroupDto
+        var expectedGroup = new CreateUpdateResearchGroupRequestDto
         {
             GroupName = "Group 1",
             Description = "Description 1",

@@ -1,4 +1,4 @@
-﻿using App.Domain.DTOs;
+﻿using App.Domain.DTOs.ApplicationUserDtos.Response;
 using App.Domain.Models.Users;
 using Microsoft.AspNetCore.Identity;
 
@@ -62,19 +62,19 @@ public interface IUserRepository
     /// Get an IQueryable of active application users.
     /// </summary>
     /// <returns>An IQueryable of ApplicationUserDto representing active application users.</returns>
-    IQueryable<ApplicationUserDto> GetActiveApplicationUsersQuery();
+    IQueryable<ApplicationUserResponseDto> GetActiveApplicationUsersQuery();
 
     /// <summary>
     /// Get an IQueryable of deactivated application users.
     /// </summary>
     /// <returns>An IQueryable of ApplicationUserDto representing deactivated application users.</returns>
-    IQueryable<ApplicationUserDto> GetDeactivatedApplicationUsersQuery();
+    IQueryable<ApplicationUserResponseDto> GetDeactivatedApplicationUsersQuery();
 
     /// <summary>
     /// Get an IQueryable of deleted application users.
     /// </summary>
     /// <returns>An IQueryable of ApplicationUserDto representing deleted application users.</returns>
-    IQueryable<ApplicationUserDto> GetDeletedApplicationUsersQuery();
+    IQueryable<ApplicationUserResponseDto> GetDeletedApplicationUsersQuery();
 
     /// <summary>
     /// Create a new application user asynchronously.

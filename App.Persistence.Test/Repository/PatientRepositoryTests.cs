@@ -19,7 +19,7 @@ public class PatientRepositoryTests
         _mockOralEhrContext = new Mock<OralEhrContext>();
         var mapperConfig = new MapperConfiguration(cfg =>
         {
-            cfg.CreateMap<Patient, PatientDto>();
+            cfg.CreateMap<Patient, PatientResponseDto>();
         });
         var mapper = mapperConfig.CreateMapper();
         _patientRepository = new PatientRepository(_mockOralEhrContext.Object, mapper);
@@ -131,7 +131,7 @@ public class PatientRepositoryTests
 
         //Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<PatientDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<PatientResponseDto>>(result);
         Assert.Equal(2, result.Count());
         Assert.Equal(patient2.Id, result.First().Id);
         Assert.Equal(patient2.FirstName, result.First().FirstName);
@@ -154,7 +154,7 @@ public class PatientRepositoryTests
 
         //Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<PatientDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<PatientResponseDto>>(result);
         Assert.Empty(result);
     }
 
@@ -180,7 +180,7 @@ public class PatientRepositoryTests
 
         //Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<PatientDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<PatientResponseDto>>(result);
         Assert.Equal(2, result.Count());
         Assert.Equal(patient1.Id, result.First().Id);
         Assert.Equal(patient1.FirstName, result.First().FirstName);
@@ -208,7 +208,7 @@ public class PatientRepositoryTests
 
         //Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<PatientDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<PatientResponseDto>>(result);
         Assert.Empty(result);
     }
 
@@ -230,7 +230,7 @@ public class PatientRepositoryTests
 
         //Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<PatientDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<PatientResponseDto>>(result);
         Assert.Equal(2, result.Count());
         Assert.Equal(patient1.Id, result.First().Id);
         Assert.Equal(patient1.FirstName, result.First().FirstName);
@@ -256,7 +256,7 @@ public class PatientRepositoryTests
 
         //Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<PatientDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<PatientResponseDto>>(result);
         Assert.Empty(result);
     }
 
@@ -282,7 +282,7 @@ public class PatientRepositoryTests
 
         //Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<PatientDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<PatientResponseDto>>(result);
         Assert.Equal(2, result.Count());
         Assert.Equal(patient1.Id, result.First().Id);
         Assert.Equal(patient1.FirstName, result.First().FirstName);
@@ -309,7 +309,7 @@ public class PatientRepositoryTests
 
         //Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IQueryable<PatientDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<PatientResponseDto>>(result);
         Assert.Empty(result);
     }
 

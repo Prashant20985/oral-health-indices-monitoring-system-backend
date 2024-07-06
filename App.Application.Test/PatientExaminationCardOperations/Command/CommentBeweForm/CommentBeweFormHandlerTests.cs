@@ -45,6 +45,6 @@ public class CommentBeweFormHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.Equal(Unit.Value, result.ResultValue);
-        Assert.Contains(command.DoctorComment, beweForm.Comment);
+        Assert.Contains(command.DoctorComment, beweForm.DoctorComment);
     }
 }

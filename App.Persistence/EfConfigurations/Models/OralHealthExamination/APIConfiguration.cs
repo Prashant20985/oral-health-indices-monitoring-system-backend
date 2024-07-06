@@ -10,7 +10,10 @@ public class APIConfiguration : IEntityTypeConfiguration<API>
     {
         builder.HasKey(k => k.Id);
 
-        builder.Property(e => e.Comment)
+        builder.Property(e => e.DoctorComment)
+            .HasMaxLength(500);
+
+        builder.Property(e => e.StudentComment)
             .HasMaxLength(500);
 
         builder.OwnsOne(e => e.AssessmentModel, ownedNavigationBuilder =>

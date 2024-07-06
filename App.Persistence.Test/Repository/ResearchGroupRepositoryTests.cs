@@ -1,4 +1,4 @@
-﻿using App.Domain.DTOs;
+﻿using App.Domain.DTOs.ResearchGroupDtos.Response;
 using App.Domain.Models.Enums;
 using App.Domain.Models.OralHealthExamination;
 using App.Persistence.Contexts;
@@ -20,8 +20,8 @@ public class ResearchGroupRepositoryTests
         var mapperConfig = new MapperConfiguration(
             cfg =>
             {
-                cfg.CreateMap<ResearchGroup, ResearchGroupDto>();
-                cfg.CreateMap<Patient, ResearchGroupPatientDto>();
+                cfg.CreateMap<ResearchGroup, ResearchGroupResponseDto>();
+                cfg.CreateMap<Patient, ResearchGroupPatientResponseDto>();
             }
          );
         var mapper = mapperConfig.CreateMapper();

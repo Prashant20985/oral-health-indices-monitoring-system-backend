@@ -1,6 +1,6 @@
 ﻿using App.Application.AdminOperations.Command.CreateApplicationUser;
 using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ApplicationUserDtos.Request;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -23,7 +23,7 @@ namespace App.API.Test.Controllers.AdminControllerTests
         public async Task CreateUser_Returns_OkResult()
         {
             //Arrange
-            var createUser = new CreateApplicationUserDto
+            var createUser = new CreateApplicationUserRequestDto
             {
                 FirstName = "Test",
                 LastName = "Test",

@@ -1,5 +1,5 @@
 using App.Application.Core;
-using App.Domain.DTOs;
+using App.Domain.DTOs.UserRequestDtos.Response;
 using MediatR;
 
 namespace App.Application.UserRequestOperations.Query.RequestsListByUserId;
@@ -9,4 +9,4 @@ namespace App.Application.UserRequestOperations.Query.RequestsListByUserId;
 /// </summary>
 public record FetchRequestsListByUserIdQuery(
         string UserId, string RequestStatus, DateTime? DateSubmitted)
-    : IRequest<OperationResult<List<UserRequestDto>>>;
+    : IRequest<OperationResult<List<UserRequestResponseDto>>>;

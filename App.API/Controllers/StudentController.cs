@@ -1,7 +1,7 @@
 ﻿using App.Application.StudentExamOperations.StudentOperations.Query.ExamEligbility;
 using App.Application.StudentOperations.Query.StudentGroupDetails;
 using App.Application.StudentOperations.Query.StudentGroupsList;
-using App.Domain.DTOs;
+using App.Domain.DTOs.StudentGroupDtos.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -16,7 +16,7 @@ public class StudentController : BaseController
     /// </summary>
     /// <returns>List of student groups with exams.</returns>
     [HttpGet("student-groups")]
-    public async Task<ActionResult<List<GroupWithExamsListDto>>> GetStudentGroupsWithExams() =>
+    public async Task<ActionResult<List<StudentGroupWithExamsListResponseDto>>> GetStudentGroupsWithExams() =>
         HandleOperationResult(await Mediator.Send(new FetchStudentGroupsWithExamsListQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
 
     /// <summary>
@@ -24,7 +24,7 @@ public class StudentController : BaseController
     /// </summary>
     /// <returns>Details of a student group with exams.</returns>
     [HttpGet("student-group-details/{groupId}")]
-    public async Task<ActionResult<GroupWithExamsListDto>> GetStudentGroupDetails(Guid groupId) =>
+    public async Task<ActionResult<StudentGroupWithExamsListResponseDto>> GetStudentGroupDetails(Guid groupId) =>
         HandleOperationResult(await Mediator.Send(
             new FetchStudentGroupDetailsWithExamsQuery(User.FindFirstValue(ClaimTypes.NameIdentifier), groupId)));
 

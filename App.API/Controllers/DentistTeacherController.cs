@@ -14,7 +14,9 @@ using App.Application.DentistTeacherOperations.Query.ResearchGroupDetailsById;
 using App.Application.DentistTeacherOperations.Query.ResearchGroups;
 using App.Application.DentistTeacherOperations.Query.StudentGroupDetails;
 using App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
-using App.Domain.DTOs;
+using App.Domain.DTOs.ResearchGroupDtos.Request;
+using App.Domain.DTOs.ResearchGroupDtos.Response;
+using App.Domain.DTOs.StudentGroupDtos.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -95,7 +97,7 @@ public class DentistTeacherController : BaseController
     /// <returns>An HTTP response indicating the result of the operation.</returns>
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
     [HttpGet("groups")]
-    public async Task<ActionResult<List<GroupDto>>> GetAllGroups() => HandleOperationResult(
+    public async Task<ActionResult<List<StudentGroupResponseDto>>> GetAllGroups() => HandleOperationResult(
         await Mediator.Send(new FetchGroupsQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
 
     /// <summary>
@@ -104,7 +106,7 @@ public class DentistTeacherController : BaseController
     /// <returns>An HTTP response indicating the result of the operation.</returns>
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
     [HttpGet("group-details/{groupId}")]
-    public async Task<ActionResult<GroupDto>> GetGroupDetails(Guid groupId) => HandleOperationResult(
+    public async Task<ActionResult<StudentGroupResponseDto>> GetGroupDetails(Guid groupId) => HandleOperationResult(
                await Mediator.Send(new FetchStudentGroupQuery(groupId)));
 
     /// <summary>
@@ -114,7 +116,7 @@ public class DentistTeacherController : BaseController
     /// <returns>An HTTP response indicating the result of the operation.</returns>
     [Authorize(Roles = "Dentist_Teacher_Researcher")]
     [HttpGet("research-groups")]
-    public async Task<ActionResult<List<ResearchGroupDto>>> GetAllResearchGroups(string groupName) => HandleOperationResult(
+    public async Task<ActionResult<List<ResearchGroupResponseDto>>> GetAllResearchGroups(string groupName) => HandleOperationResult(
         await Mediator.Send(new FetchResearchGroupsQuery(groupName)));
 
     /// <summary>
@@ -125,7 +127,7 @@ public class DentistTeacherController : BaseController
     /// <returns>An HTTP response indicating the result of the operation.</returns>
     [Authorize(Roles = "Dentist_Teacher_Researcher")]
     [HttpGet("patients-not-in-research-group")]
-    public async Task<ActionResult<List<ResearchGroupPatientDto>>> GetPatientsNotInResearchGroup(string patientName,
+    public async Task<ActionResult<List<ResearchGroupPatientResponseDto>>> GetPatientsNotInResearchGroup(string patientName,
         string email) => HandleOperationResult(
                   await Mediator.Send(new FetchPatientsNotInResearchGroupsQuery(patientName, email)));
 
@@ -137,7 +139,7 @@ public class DentistTeacherController : BaseController
     [Authorize(Roles = "Dentist_Teacher_Researcher")]
     [HttpPost("create-research-group")]
     public async Task<ActionResult> AddResearchGroup(
-        [FromBody] CreateUpdateResearchGroupDto createResearchGroupDto) => HandleOperationResult(
+        [FromBody] CreateUpdateResearchGroupRequestDto createResearchGroupDto) => HandleOperationResult(
                   await Mediator.Send(new CreateResearchGroupCommand(createResearchGroupDto, User.FindFirstValue(ClaimTypes.NameIdentifier))));
 
     /// <summary>
@@ -159,7 +161,7 @@ public class DentistTeacherController : BaseController
     [Authorize(Roles = "Dentist_Teacher_Researcher")]
     [HttpPut("update-research-group/{researchGroupId}")]
     public async Task<ActionResult> UpdateResearchGroup(Guid researchGroupId,
-        [FromBody] CreateUpdateResearchGroupDto updateResearchGroup) => HandleOperationResult(
+        [FromBody] CreateUpdateResearchGroupRequestDto updateResearchGroup) => HandleOperationResult(
                   await Mediator.Send(new UpdateResearchGroupCommand(researchGroupId, updateResearchGroup)));
 
     /// <summary>

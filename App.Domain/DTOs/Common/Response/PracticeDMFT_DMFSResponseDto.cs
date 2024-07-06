@@ -5,7 +5,7 @@ namespace App.Domain.DTOs.Common.Response;
 /// <summary>
 /// Data transfer object representing information about DMFT (Decayed, Missing, Filled Teeth) and DMFS (Decayed, Missing, Filled Surfaces) assessment.
 /// </summary>
-public class DMFT_DMFSDto
+public class PracticeDMFT_DMFSRespnseDto
 {
     /// <summary>
     /// Gets or sets the unique identifier for the DMFT and DMFS assessment.

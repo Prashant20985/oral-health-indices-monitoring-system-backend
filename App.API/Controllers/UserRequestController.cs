@@ -5,7 +5,7 @@ using App.Application.UserRequestOperations.Command.CreateRequest;
 using App.Application.UserRequestOperations.Command.DeleteRequest;
 using App.Application.UserRequestOperations.Command.UpdateRequest;
 using App.Application.UserRequestOperations.Query.RequestsListByUserId;
-using App.Domain.DTOs;
+using App.Domain.DTOs.UserRequestDtos.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -57,7 +57,7 @@ public class UserRequestController : BaseController
     /// <returns>A list of user requests with the specified status.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("user-requests")]
-    public async Task<ActionResult<List<UserRequestDto>>>
+    public async Task<ActionResult<List<UserRequestResponseDto>>>
         GetUserRequestByStatus(string requestStatus, DateTime? dateSubmitted) =>
         HandleOperationResult(await Mediator.Send(new UserRequestQuery(requestStatus, dateSubmitted)));
 
