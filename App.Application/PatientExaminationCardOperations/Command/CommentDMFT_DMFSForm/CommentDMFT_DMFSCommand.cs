@@ -8,5 +8,5 @@ namespace App.Application.PatientExaminationCardOperations.Command.CommentDMFT_D
 /// Command for adding a comment to the DMFT_DMFS form
 /// </summary>
 [OralEhrContextUnitOfWork]
-public record CommentDMFT_DMFSCommand(Guid CardId, string DoctorComment)
+public record CommentDMFT_DMFSCommand(Guid CardId, string Comment, bool IsStudent)
     : IRequest<OperationResult<Unit>>;

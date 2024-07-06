@@ -13,7 +13,7 @@ public class CommentBeweFormHandlerTests : TestHelper
     public CommentBeweFormHandlerTests()
     {
         handler = new CommentBeweFormHandler(patientExaminationCardRepositoryMock.Object);
-        command = new CommentBeweFormCommand(Guid.NewGuid(), "Doctor comment");
+        command = new CommentBeweFormCommand(Guid.NewGuid(), "Doctor comment", false);
     }
 
     [Fact]
@@ -45,6 +45,6 @@ public class CommentBeweFormHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.Equal(Unit.Value, result.ResultValue);
-        Assert.Contains(command.DoctorComment, beweForm.DoctorComment);
+        Assert.Contains(command.Comment, beweForm.DoctorComment);
     }
 }

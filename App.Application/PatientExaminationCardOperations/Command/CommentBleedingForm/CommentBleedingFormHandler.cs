@@ -26,7 +26,10 @@ internal sealed class CommentBleedingFormHandler(IPatientExaminationCardReposito
         if (bleedingForm is null)
             return OperationResult<Unit>.Failure("Bleeding form not found");
 
-        bleedingForm.AddDoctorComment(request.DoctorComment);
+        if (request.IsStudent)
+            bleedingForm.AddStudentComment(request.Comment);
+        else
+            bleedingForm.AddDoctorComment(request.Comment);
 
         return OperationResult<Unit>.Success(Unit.Value);
     }

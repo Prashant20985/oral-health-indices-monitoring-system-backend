@@ -13,7 +13,7 @@ public class CommentAPIFormHandlerTests : TestHelper
     public CommentAPIFormHandlerTests()
     {
         handler = new CommentAPIFormHandler(patientExaminationCardRepositoryMock.Object);
-        command = new CommentAPIFormCommnand(Guid.NewGuid(), "Doctor comment");
+        command = new CommentAPIFormCommnand(Guid.NewGuid(), "Doctor comment", false);
     }
 
     [Fact]
@@ -46,6 +46,6 @@ public class CommentAPIFormHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.Equal(Unit.Value, result.ResultValue);
-        Assert.Contains(command.DoctorComment, apiForm.DoctorComment);
+        Assert.Contains(command.Comment, apiForm.DoctorComment);
     }
 }

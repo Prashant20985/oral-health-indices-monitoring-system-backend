@@ -13,7 +13,7 @@ public class CommentBleedingFormHandlerTests : TestHelper
     public CommentBleedingFormHandlerTests()
     {
         handler = new CommentBleedingFormHandler(patientExaminationCardRepositoryMock.Object);
-        command = new CommentBleedingFormCommand(Guid.NewGuid(), "Doctor comment");
+        command = new CommentBleedingFormCommand(Guid.NewGuid(), "Doctor comment", false);
     }
 
     [Fact]
@@ -45,6 +45,6 @@ public class CommentBleedingFormHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.Equal(Unit.Value, result.ResultValue);
-        Assert.Contains(command.DoctorComment, bleedingForm.DoctorComment);
+        Assert.Contains(command.Comment, bleedingForm.DoctorComment);
     }
 }

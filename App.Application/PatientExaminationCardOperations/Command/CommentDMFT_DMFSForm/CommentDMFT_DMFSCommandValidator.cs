@@ -15,7 +15,7 @@ public class CommentDMFT_DMFSCommandValidator : AbstractValidator<CommentDMFT_DM
         RuleFor(x => x.CardId)
             .NotEmpty();
 
-        RuleFor(x => x.DoctorComment)
+        RuleFor(x => x.Comment)
             .NotEmpty()
             .MaximumLength(500);
     }

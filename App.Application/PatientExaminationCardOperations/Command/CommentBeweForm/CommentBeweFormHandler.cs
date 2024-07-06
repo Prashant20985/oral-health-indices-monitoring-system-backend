@@ -26,7 +26,10 @@ internal sealed class CommentBeweFormHandler(IPatientExaminationCardRepository p
         if (beweForm is null)
             return OperationResult<Unit>.Failure("Bewe form not found");
 
-        beweForm.AddDoctorComment(request.DoctorComment);
+        if (request.IsStudent)
+            beweForm.AddStudentComment(request.Comment);
+        else
+            beweForm.AddDoctorComment(request.Comment);
 
         return OperationResult<Unit>.Success(Unit.Value);
     }

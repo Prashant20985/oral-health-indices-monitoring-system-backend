@@ -14,7 +14,7 @@ public class CommentPatientExaminationCardHandlerTests : TestHelper
     public CommentPatientExaminationCardHandlerTests()
     {
         handler = new CommentPatientExaminationCardHandler(patientExaminationCardRepositoryMock.Object);
-        command = new CommentPatientExaminationCardCommand(Guid.NewGuid(), "Doctor comment");
+        command = new CommentPatientExaminationCardCommand(Guid.NewGuid(), "Doctor comment", false);
     }
 
     [Fact]
@@ -47,6 +47,6 @@ public class CommentPatientExaminationCardHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.Equal(Unit.Value, result.ResultValue);
-        Assert.Contains(command.DoctorComment, patientExaminationCard.DoctorComment);
+        Assert.Contains(command.Comment, patientExaminationCard.DoctorComment);
     }
 }

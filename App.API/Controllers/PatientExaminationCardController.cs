@@ -1,5 +1,7 @@
-﻿using App.Application.PatientExaminationCardOperations.Command.CommentBeweForm;
+﻿using App.Application.PatientExaminationCardOperations.Command.CommentAPIForm;
+using App.Application.PatientExaminationCardOperations.Command.CommentBeweForm;
 using App.Application.PatientExaminationCardOperations.Command.CommentBleedingForm;
+using App.Application.PatientExaminationCardOperations.Command.CommentDMFT_DMFSForm;
 using App.Application.PatientExaminationCardOperations.Command.CommentPatientExaminationCard;
 using App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardRegularMode;
 using App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardTestMode;
@@ -13,8 +15,6 @@ using App.Application.PatientExaminationCardOperations.Command.UpdateRiskFactorA
 using App.Application.PatientExaminationCardOperations.Query.FetchAllPatientExaminationCardsInRegualrMode;
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardDetails;
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardInTestMode;
-using App.Application.StudentExamOperations.TeacherOperations.Command.CommentAPIForm;
-using App.Application.StudentExamOperations.TeacherOperations.Command.CommentDMFT_DMFSForm;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.DTOs.PatientDtos.Response;
 using App.Domain.Models.Common.APIBleeding;
@@ -36,8 +36,8 @@ public class PatientExaminationCardController : BaseController
     /// <param name="doctorComment">Comment of the doctor</param>
     /// <returns>An IActionResult</returns>
     [HttpPut("comment-patient-examination-card/{cardId}")]
-    public async Task<IActionResult> CommentPatientExaminationCard(Guid cardId, string doctorComment) =>
-        HandleOperationResult(await Mediator.Send(new CommentPatientExaminationCardCommand(cardId, doctorComment)));
+    public async Task<IActionResult> CommentPatientExaminationCard(Guid cardId, string comment) =>
+        HandleOperationResult(await Mediator.Send(new CommentPatientExaminationCardCommand(cardId, comment, User.IsInRole("Student"))));
 
     /// <summary>
     /// Add comment to API form
@@ -46,8 +46,8 @@ public class PatientExaminationCardController : BaseController
     /// <param name="doctorComment">Comment of the doctor</param>
     /// <returns>An IActionResult</returns>
     [HttpPut("comment-api-form/{cardId}")]
-    public async Task<IActionResult> CommentAPIForm(Guid cardId, string doctorComment) =>
-        HandleOperationResult(await Mediator.Send(new CommentAPIFormCommand(cardId, doctorComment)));
+    public async Task<IActionResult> CommentAPIForm(Guid cardId, string comment) =>
+        HandleOperationResult(await Mediator.Send(new CommentAPIFormCommnand(cardId, comment, User.IsInRole("Student"))));
 
     /// <summary>
     /// Add comment to DMFT_DMFS form
@@ -56,8 +56,8 @@ public class PatientExaminationCardController : BaseController
     /// <param name="doctorComment">Comment of the doctor</param>
     /// <returns>An IActionResult</returns>
     [HttpPut("comment-bewe-form/{cardId}")]
-    public async Task<IActionResult> CommentBeweForm(Guid cardId, string doctorComment) =>
-        HandleOperationResult(await Mediator.Send(new CommentBeweFormCommand(cardId, doctorComment)));
+    public async Task<IActionResult> CommentBeweForm(Guid cardId, string comment) =>
+        HandleOperationResult(await Mediator.Send(new CommentBeweFormCommand(cardId, comment, User.IsInRole("Student"))));
 
     /// <summary>
     /// Add comment to bleeding form
@@ -66,8 +66,8 @@ public class PatientExaminationCardController : BaseController
     /// <param name="doctorComment">Comment of the doctor</param>
     /// <returns>An IActionResult</returns>
     [HttpPut("comment-bleeding-form/{cardId}")]
-    public async Task<IActionResult> CommentBleedingForm(Guid cardId, string doctorComment) =>
-        HandleOperationResult(await Mediator.Send(new CommentBleedingFormCommand(cardId, doctorComment)));
+    public async Task<IActionResult> CommentBleedingForm(Guid cardId, string comment) =>
+        HandleOperationResult(await Mediator.Send(new CommentBleedingFormCommand(cardId, comment, User.IsInRole("Student"))));
 
     /// <summary>
     /// Add comment to DMFT_DMFS form
@@ -76,8 +76,8 @@ public class PatientExaminationCardController : BaseController
     /// <param name="doctorComment">Comment of the doctor</param>
     /// <returns>An IActionResult</returns>
     [HttpPut("comment-dmft-dmfs-form/{cardId}")]
-    public async Task<IActionResult> CommentDMFTDMFSForm(Guid cardId, string doctorComment) =>
-        HandleOperationResult(await Mediator.Send(new CommentDMFT_DMFSFormCommand(cardId, doctorComment)));
+    public async Task<IActionResult> CommentDMFTDMFSForm(Guid cardId, string comment) =>
+        HandleOperationResult(await Mediator.Send(new CommentDMFT_DMFSCommand(cardId, comment, User.IsInRole("Student"))));
 
     /// <summary>
     /// Update API form
