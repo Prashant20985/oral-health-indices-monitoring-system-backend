@@ -7,10 +7,12 @@ using MediatR;
 namespace App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardRegularMode;
 
 /// <summary>
-/// Command for creating patient examination card in regular mode
+/// Command for creating patient examination card in regular mode for patient by student or doctor
 /// </summary>
 [OralEhrContextUnitOfWork]
 public record CreatePatientExaminationCardRegularModeCommand(
     Guid PatientId,
+    string UserId,
+    bool IsStudent,
     CreatePatientExaminationCardRegularModeInputParams InputParams)
         : IRequest<OperationResult<PatientExaminationCardDto>>;

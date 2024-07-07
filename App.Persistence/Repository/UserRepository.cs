@@ -94,6 +94,16 @@ public class UserRepository : IUserRepository
         .OrderBy(c => c.CreatedAt)
         .AsQueryable();
 
+    /// <summary>
+    /// Get ApplicationUser by Id with roles
+    /// </summary>
+    /// <param name="userId">Unique identifier of the user</param>
+    /// <returns>ApplicationUser with roles</returns>
+    public async Task<ApplicationUser> GetApplicationUserWithRolesById(string userId) => await 
+        _userManager.Users
+            .Include(x => x.ApplicationUserRoles)
+            .ThenInclude(x => x.ApplicationRole)
+            .FirstOrDefaultAsync(x => x.Id == userId);
 
     /// <summary>
     /// Get an IQueryable of deactivated application users.

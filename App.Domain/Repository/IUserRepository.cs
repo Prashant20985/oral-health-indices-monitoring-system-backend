@@ -99,4 +99,6 @@ public interface IUserRepository
     /// <param name="applicationUserRoles">A list of roles from which the user should be removed.</param>
     /// <returns>An IdentityResult indicating the result of the role removal operation.</returns>
     Task<IdentityResult> RemoveApplicationUserFromRolesAsync(ApplicationUser applicationUser, List<string> applicationUserRoles);
+
+    Task<ApplicationUser> GetApplicationUserWithRolesById(string userId);
 }

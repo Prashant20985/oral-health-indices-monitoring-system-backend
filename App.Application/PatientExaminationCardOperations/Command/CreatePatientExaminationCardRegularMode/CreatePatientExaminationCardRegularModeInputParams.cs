@@ -1,6 +1,4 @@
-﻿using App.Domain.Models.Common.APIBleeding;
-using App.Domain.Models.Common.Bewe;
-using App.Domain.Models.Common.DMFT_DMFS;
+﻿using App.Domain.DTOs.Common.Request;
 using App.Domain.Models.Common.RiskFactorAssessment;
 
 namespace App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardRegularMode;
@@ -8,16 +6,18 @@ namespace App.Application.PatientExaminationCardOperations.Command.CreatePatient
 /// <summary>
 /// Input parameters for creating patient examination card in regular mode
 /// </summary>
-/// <param name="DoctorId">Doctor ID</param>
-/// <param name="RiskFactorAssessmentModel">Risk factor assessment model</param>
-/// <param name="DMFT_DMFSAssessmentModel">DMFT_DMFS assessment model</param>
-/// <param name="BeweAssessmentModel">Bewe assessment model</param>
-/// <param name="APIAssessmentModel">API assessment model</param>
-/// <param name="BleedingAssessmentModel">Bleeding assessment model</param>
+/// <param name="AssignedDoctorId">The assigned doctor id</param>
+/// <param name="PatientExaminationCardComment">The patient examination card comment</param>
+/// <param name="RiskFactorAssessmentModel">The risk factor assessment model</param>
+/// <param name="CreateDMFT_DMFSRequest">The create DMFT/DMFS request</param>
+/// <param name="CreateBeweRequest">The create BEWE request</param>
+/// <param name="CreateAPIRequest">The create API request</param>
+/// <param name="CreateBleedingRequest">The create bleeding request</param>
 public record CreatePatientExaminationCardRegularModeInputParams(
-    string DoctorId,
+    string AssignedDoctorId,
+    string PatientExaminationCardComment,
     RiskFactorAssessmentModel RiskFactorAssessmentModel,
-    DMFT_DMFSAssessmentModel DMFT_DMFSAssessmentModel,
-    BeweAssessmentModel BeweAssessmentModel,
-    APIBleedingAssessmentModel APIAssessmentModel,
-    APIBleedingAssessmentModel BleedingAssessmentModel);
+    CreateDMFT_DMFSRegularModeRequestDto CreateDMFT_DMFSRequest,
+    CreateBeweRegularModeRequestDto CreateBeweRequest,
+    CreateAPIRegularModeRequestDto CreateAPIRequest,
+    CreateBleedingRegularModeRequestDto CreateBleedingRequest);

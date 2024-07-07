@@ -11,6 +11,7 @@ namespace App.Application.PatientExaminationCardOperations.Command.CreatePatient
 [OralEhrContextUnitOfWork]
 public record CreatePatientExaminationCardTestModeCommand(
     Guid PatientId,
+    string StudentId,
     CreatePatientExaminationCardTestModeInputParams InputParams)
         : IRequest<OperationResult<PatientExaminationCardDto>>;
 
