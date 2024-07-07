@@ -9,20 +9,24 @@ using MediatR;
 namespace App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardRegularMode;
 
 /// <summary>
-/// Handles the creation of patient examination card in regular mode
+/// Handles the creation of patient examination card in regular mode by a student or a doctor user.
 /// </summary>
 /// <param name="patientExaminationCardRepository">The patient examination card repository</param>
 /// <param name="patientRepository">The patient repository</param>
+/// <param name="userRepository">The user repository</param>
 /// <param name="mapper">The mapper</param>
 internal sealed class CreatePatientExaminationCardRegularModeHandler(
     IPatientExaminationCardRepository patientExaminationCardRepository,
     IPatientRepository patientRepository,
+    IUserRepository userRepository, 
     IMapper mapper)
     : IRequestHandler<CreatePatientExaminationCardRegularModeCommand, OperationResult<PatientExaminationCardDto>>
 {
     private readonly IPatientExaminationCardRepository _patientExaminationCardRepository = patientExaminationCardRepository;
 
     private readonly IPatientRepository _patientRepository = patientRepository;
+
+    private readonly IUserRepository _userRepository = userRepository;
 
     private readonly IMapper _mapper = mapper;
 
@@ -41,35 +45,81 @@ internal sealed class CreatePatientExaminationCardRegularModeHandler(
         if (checkIfPatientExists is null)
             return OperationResult<PatientExaminationCardDto>.Failure("Patient not found");
 
+        // Check if User exists
+        var user = await _userRepository.GetApplicationUserWithRolesById(request.UserId);
+
+        // If User does not exist, return failure
+        if (user is null)
+            return OperationResult<PatientExaminationCardDto>.Failure("User not found");
+
+        // Verify Assigned Doctor
+        if (!string.IsNullOrEmpty(request.InputParams.AssignedDoctorId))
+        {
+            var doctor = await _userRepository.GetApplicationUserWithRolesById(request.InputParams.AssignedDoctorId);
+
+            // If doctor does not exist, return failure
+            if (doctor is null)
+                return OperationResult<PatientExaminationCardDto>.Failure("Doctor not found");
+
+            // If doctor is not a dentist teacher examiner or researcher, return failure
+            if (!doctor.ApplicationUserRoles.Any(x => x.ApplicationRole.Name.Equals("Dentist_Teacher_Examiner") 
+                    || x.ApplicationRole.Name.Equals("Dentist_Teacher_Researcher")))
+                return OperationResult<PatientExaminationCardDto>.Failure("Assigned user is not a doctor");
+        }
+
         // Create Bewe form
         var beweForm = new Bewe();
-        beweForm.SetAssessmentModel(request.InputParams.BeweAssessmentModel);
+        beweForm.SetAssessmentModel(request.InputParams.CreateBeweRequest.BeweAssessmentModel);
         beweForm.CalculateBeweResult();
+
+        // Add comment to Bewe form
+        if (request.IsStudent) 
+            beweForm.AddStudentComment(request.InputParams.CreateBeweRequest.Comment);
+        else
+            beweForm.AddDoctorComment(request.InputParams.CreateBeweRequest.Comment);
 
         // Add Bewe form to repository
         await _patientExaminationCardRepository.AddBewe(beweForm);
 
         // Create API form
         var apiForm = new API();
-        apiForm.SetAssessmentModel(request.InputParams.APIAssessmentModel);
+        apiForm.SetAssessmentModel(request.InputParams.CreateAPIRequest.APIAssessmentModel);
         apiForm.CalculateAPIResult();
+
+        // Add comment to API form
+        if(request.IsStudent)
+            apiForm.AddStudentComment(request.InputParams.CreateAPIRequest.Comment);
+        else
+            apiForm.AddDoctorComment(request.InputParams.CreateAPIRequest.Comment);
 
         // Add API form to repository
         await _patientExaminationCardRepository.AddAPI(apiForm);
 
         // Create Bleeding form
         var bleedingForm = new Bleeding();
-        bleedingForm.SetAssessmentModel(request.InputParams.BleedingAssessmentModel);
+        bleedingForm.SetAssessmentModel(request.InputParams.CreateBleedingRequest.BleedingAssessmentModel);
         bleedingForm.CalculateBleedingResult();
+        
+        // Add comment to bleeding form
+        if(request.IsStudent)
+            bleedingForm.AddStudentComment(request.InputParams.CreateBleedingRequest.Comment);
+        else
+            bleedingForm.AddDoctorComment(request.InputParams.CreateBleedingRequest.Comment);
 
         // Add Bleeding form to repository
         await _patientExaminationCardRepository.AddBleeding(bleedingForm);
 
         // Create DMFT_DMFS form
         var dmft_dmfsForm = new DMFT_DMFS();
-        dmft_dmfsForm.SetDMFT_DMFSAssessmentModel(request.InputParams.DMFT_DMFSAssessmentModel);
+        dmft_dmfsForm.SetDMFT_DMFSAssessmentModel(request.InputParams.CreateDMFT_DMFSRequest.DMFT_DMFSAssessmentModel);
         dmft_dmfsForm.CalculateDMFSResult();
         dmft_dmfsForm.CalculateDMFTResult();
+
+        // Add comment to DMFT_DMFS form
+        if(request.IsStudent)
+            dmft_dmfsForm.AddStudentComment(request.InputParams.CreateDMFT_DMFSRequest.Comment);
+        else
+            dmft_dmfsForm.AddDoctorComment(request.InputParams.CreateDMFT_DMFSRequest.Comment);
 
         // Add DMFT_DMFS form to repository
         await _patientExaminationCardRepository.AddDMFT_DMFS(dmft_dmfsForm);
@@ -94,28 +144,48 @@ internal sealed class CreatePatientExaminationCardRegularModeHandler(
         // Create patient examination card
         var examinationCard = new PatientExaminationCard(request.PatientId);
         examinationCard.SetRegularMode();
-        examinationCard.SetDcotorId(request.InputParams.DoctorId);
         examinationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
         examinationCard.SetRiskFactorAssesmentId(riskFactorAssessment.Id);
+
+        if (request.IsStudent)
+        {
+            // Set student id and doctor id
+            examinationCard.SetStudentId(user.Id);
+            examinationCard.SetDoctorId(request.InputParams.AssignedDoctorId);
+
+            // Add student comment
+            examinationCard.AddStudentComment(request.InputParams.PatientExaminationCardComment);
+        }
+        else
+        {
+            // Set doctor id
+            examinationCard.SetDoctorId(user.Id);
+
+            // Add doctor comment
+            examinationCard.AddDoctorComment(request.InputParams.PatientExaminationCardComment);
+        }
 
         // Add patient examination card to repository
         await _patientExaminationCardRepository.AddPatientExaminationCard(examinationCard);
 
         // Create DTO to return
-        PatientExaminationCardDto cardToReturn = new()
+        var cardToReturn = new PatientExaminationCardDto()
         {
             Id = examinationCard.Id,
-            DoctorComment = examinationCard.DoctorComment,
-            IsRegularMode = examinationCard.IsRegularMode,
-            TotalScore = examinationCard.TotalScore,
+            DoctorName = $"{user.FirstName} {user.LastName} ({user.Email})",
+            StudentName = request.IsStudent ? $"{user.FirstName} {user.LastName} ({user.Email})" : null,
+            PatientName = $"{checkIfPatientExists.FirstName} {checkIfPatientExists.LastName} ({checkIfPatientExists.Email})",
             DateOfExamination = examinationCard.DateOfExamination,
+            DoctorComment = examinationCard.DoctorComment,
+            StudentComment = examinationCard.StudentComment,
+            IsRegularMode = examinationCard.IsRegularMode,
             RiskFactorAssessment = _mapper.Map<RiskFactorAssessmentDto>(riskFactorAssessment),
-            PatientExaminationResult = new PatientExaminationResultDto
+            PatientExaminationResult = new PatientExaminationResultDto()
             {
-                DMFT_DMFS = _mapper.Map<DMFT_DMFSResponseDto>(dmft_dmfsForm),
+                Bewe = _mapper.Map<BeweResponseDto>(beweForm),
                 API = _mapper.Map<APIResponseDto>(apiForm),
                 Bleeding = _mapper.Map<BleedingResponseDto>(bleedingForm),
-                Bewe = _mapper.Map<BeweResponseDto>(beweForm)
+                DMFT_DMFS = _mapper.Map<DMFT_DMFSResponseDto>(dmft_dmfsForm)
             }
         };
 

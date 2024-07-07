@@ -35,7 +35,7 @@ public class PatientExaminationCard(Guid patientId)
 
     public void SetRegularMode() => IsRegularMode = true;
 
-    public void SetDcotorId(string doctorId) => DoctorId = doctorId;
+    public void SetDoctorId(string doctorId) => DoctorId = doctorId;
 
     public void SetStudentId(string studentId) => StudentId = studentId;
 

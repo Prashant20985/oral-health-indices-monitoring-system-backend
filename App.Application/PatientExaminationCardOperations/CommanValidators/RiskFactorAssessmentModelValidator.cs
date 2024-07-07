@@ -27,7 +27,7 @@ public class RiskFactorAssessmentModelValidator : AbstractValidator<RiskFactorAs
         "Overhanging fills, no contact points",
         "Fixed braces",
         "Xerostomy",
-        "Caries risk factors assessment"
+        "Caries risk factor assessment"
     ];
 
     /// <summary>
@@ -81,15 +81,15 @@ public class AnswerValidator : AbstractValidator<RiskFactorAssessmentAnswerModel
     {
         // Validate LowRisk
         RuleFor(x => x.LowRisk)
-            .NotEmpty().WithMessage("LowRisk must not be empty.");
+            .NotNull().WithMessage("LowRisk must not be null.");
 
         // Validate ModerateRisk
         RuleFor(x => x.ModerateRisk)
-            .NotEmpty().WithMessage("ModerateRisk must not be empty.");
+            .NotNull().WithMessage("ModerateRisk must not be null.");
 
         // Validate HighRisk
         RuleFor(x => x.HighRisk)
-            .NotEmpty().WithMessage("HighRisk must not be empty.");
+            .NotNull().WithMessage("HighRisk must not be null.");
     }
 }
 

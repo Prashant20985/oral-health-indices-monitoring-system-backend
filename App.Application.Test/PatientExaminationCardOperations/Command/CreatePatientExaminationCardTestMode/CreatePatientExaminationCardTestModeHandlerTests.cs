@@ -1,4 +1,6 @@
-﻿using App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardTestMode;
+﻿using App.Application.Core;
+using App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardTestMode;
+using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.PatientDtos.Response;
 using App.Domain.Models.Common.APIBleeding;
 using App.Domain.Models.Common.Bewe;
@@ -6,6 +8,8 @@ using App.Domain.Models.Common.DMFT_DMFS;
 using App.Domain.Models.Common.RiskFactorAssessment;
 using App.Domain.Models.Enums;
 using App.Domain.Models.OralHealthExamination;
+using App.Domain.Models.Users;
+using AutoMapper;
 using Moq;
 
 namespace App.Application.Test.PatientExaminationCardOperations.Command.CreatePatientExaminationCardTestMode;
@@ -14,26 +18,78 @@ public class CreatePatientExaminationCardTestModeHandlerTests : TestHelper
 {
     private readonly CreatePatientExaminationCardTestModeHandler handler;
     private readonly CreatePatientExaminationCardTestModeCommand command;
+    private ApplicationUser ApplicationUserDoctor;
+    private ApplicationUser ApplicationUserStudent;
 
     public CreatePatientExaminationCardTestModeHandlerTests()
     {
-        var doctorId = Guid.NewGuid().ToString();
-        var studentId = Guid.NewGuid().ToString();
-        var APIResult = 1;
-        var BleedingResult = 1;
-        var BeweResult = 1;
-        var DMFT_Result = 1;
-        var DMFS_Result = 1;
+        MapperConfiguration mapperConfig = new(cfg => cfg.AddProfile<MappingProfile>());
+        IMapper mapper = mapperConfig.CreateMapper();
+
+        var applicationRoleDoctor = new ApplicationRole { Name = "Dentist_Teacher_Examiner" };
+        var applicationRoleStudent = new ApplicationRole { Name = "Student" };
+
+        ApplicationUserDoctor = new ApplicationUser("test@test.com", "Jhon", "Doe", "741852963", null)
+        {
+            ApplicationUserRoles = [new ApplicationUserRole { ApplicationRole = applicationRoleDoctor }]
+        };
+
+        ApplicationUserStudent = new ApplicationUser("test2@test.com", "Jhon", "Doe", "741852963", null)
+        {
+            ApplicationUserRoles = [new ApplicationUserRole { ApplicationRole = applicationRoleStudent }]
+        };
+
         var riskFactorAssessmentModel = new RiskFactorAssessmentModel();
-        var dMFT_DMFSAssessmentModel = new DMFT_DMFSAssessmentModel();
-        var beweAssessmentModel = new BeweAssessmentModel();
-        var aPIAssessmentModel = new APIBleedingAssessmentModel();
-        var bleedingAssessmentModel = new APIBleedingAssessmentModel();
+        var createDMFT_DMFSRequest = new CreateDMFT_DMFSTestModeRequestDto
+        {
+            StudentComment = "test",
+            DMFSResult = 10M,
+            DMFTResult = 10M,
+            DMFT_DMFSAssessmentModel = new DMFT_DMFSAssessmentModel(),
+        };
+        var createBeweRequest = new CreateBeweTestModeRequestDto
+        {
+            StudentComment = "test",
+            BeweResult = 10M,
+            BeweAssessmentModel = new BeweAssessmentModel(),
+        };
+        var createAPIRequest = new CreateAPITestModeRequestDto
+        {
+            StudentComment = "test",
+            APIResult = 10,
+            Maxilla = 10,
+            Mandible = 10,
+            APIAssessmentModel = new APIBleedingAssessmentModel(),
+        };
+        var createBleedingRequest = new CreateBleedingTestModeRequestDto
+        {
+            StudentComment = "test",
+            BleedingResult = 10,
+            Maxilla = 10,
+            Mandible = 10,
+            BleedingAssessmentModel = new APIBleedingAssessmentModel(),
+        };
 
-        var createPatientExaminationCardTestModeInputParams = new CreatePatientExaminationCardTestModeInputParams(doctorId, studentId, APIResult, BleedingResult, BeweResult, DMFT_Result, DMFS_Result, riskFactorAssessmentModel, dMFT_DMFSAssessmentModel, beweAssessmentModel, aPIAssessmentModel, bleedingAssessmentModel);
+        var createPatientExaminationCardTestModeInputParams = 
+            new CreatePatientExaminationCardTestModeInputParams(
+                ApplicationUserDoctor.Id,
+                "Test Comment",
+                riskFactorAssessmentModel,
+                createDMFT_DMFSRequest,
+                createBeweRequest,
+                createAPIRequest,
+                createBleedingRequest);
 
-        handler = new CreatePatientExaminationCardTestModeHandler(patientExaminationCardRepositoryMock.Object, patientRepositoryMock.Object, mapperMock.Object);
-        command = new CreatePatientExaminationCardTestModeCommand(Guid.NewGuid(), createPatientExaminationCardTestModeInputParams);
+        handler = new CreatePatientExaminationCardTestModeHandler(
+            patientExaminationCardRepositoryMock.Object,
+            patientRepositoryMock.Object,
+            userRepositoryMock.Object,
+            mapper);
+
+        command = new CreatePatientExaminationCardTestModeCommand(
+            Guid.NewGuid(),
+            ApplicationUserStudent.Id,
+            createPatientExaminationCardTestModeInputParams);
     }
 
     [Fact]
@@ -59,6 +115,20 @@ public class CreatePatientExaminationCardTestModeHandlerTests : TestHelper
 
         patientRepositoryMock.Setup(x => x.GetPatientById(It.IsAny<Guid>()))
             .ReturnsAsync(patient);
+
+        userRepositoryMock.Setup(x => x.GetApplicationUserWithRolesById(ApplicationUserStudent.Id))
+            .ReturnsAsync(ApplicationUserStudent);
+
+        userRepositoryMock.Setup(x => x.GetApplicationUserWithRolesById(ApplicationUserDoctor.Id))
+            .ReturnsAsync(ApplicationUserDoctor);
+
+        patientExaminationCardRepositoryMock.Setup(x => x.AddBewe(It.IsAny<Bewe>()));
+        patientExaminationCardRepositoryMock.Setup(x => x.AddAPI(It.IsAny<API>()));
+        patientExaminationCardRepositoryMock.Setup(x => x.AddBleeding(It.IsAny<Bleeding>()));
+        patientExaminationCardRepositoryMock.Setup(x => x.AddDMFT_DMFS(It.IsAny<DMFT_DMFS>()));
+        patientExaminationCardRepositoryMock.Setup(x => x.AddPatientExaminationResult(It.IsAny<PatientExaminationResult>()));
+        patientExaminationCardRepositoryMock.Setup(x => x.AddRiskFactorAssessment(It.IsAny<RiskFactorAssessment>()));
+        patientExaminationCardRepositoryMock.Setup(x => x.AddPatientExaminationCard(It.IsAny<PatientExaminationCard>()));
 
         // Act
         var result = await handler.Handle(command, CancellationToken.None);

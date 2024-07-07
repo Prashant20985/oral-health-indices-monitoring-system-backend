@@ -19,60 +19,92 @@ public class CreatePatientExaminationCardTestModeCommandValidator
             .NotNull()
             .NotEmpty();
 
+        // Validate the StudentId
+        RuleFor(x => x.StudentId)
+            .NotNull()
+            .NotEmpty();
+
         // Validate the InputParams
         // Validate the DoctorId
         RuleFor(x => x.InputParams.DoctorId)
             .NotNull()
             .NotEmpty();
 
-        // Validate the StudentId
-        RuleFor(x => x.InputParams.StudentId)
-            .NotNull()
-            .NotEmpty();
-
-        // Validate the BeweResult
-        RuleFor(x => x.InputParams.BeweResult)
-            .NotNull();
-
-        // Validate the DMFT_Result
-        RuleFor(x => x.InputParams.DMFT_Result)
-            .NotNull();
-
-        // Validate the DMFS_Result
-        RuleFor(x => x.InputParams.DMFS_Result)
-            .NotNull();
-
-        // Validate the APIResult
-        RuleFor(x => x.InputParams.APIResult)
-            .NotNull();
-
-        // Validate the BleedingResult
-        RuleFor(x => x.InputParams.BleedingResult)
-            .NotNull();
-
         // Validate the RiskFactorAssessmentModel
         RuleFor(x => x.InputParams.RiskFactorAssessmentModel)
             .NotNull()
             .SetValidator(new RiskFactorAssessmentModelValidator());
 
-        // Validate the DMFT_DMFSAssessmentModel
-        RuleFor(x => x.InputParams.DMFT_DMFSAssessmentModel)
+        // Validate the CreateDMFT_DMFSRequest
+        RuleFor(x => x.InputParams.CreateDMFT_DMFSRequest.DMFT_DMFSAssessmentModel)
             .NotNull()
             .SetValidator(new DMFT_DMFSAssessmentModelValidator());
 
-        // Validate the BeweAssessmentModel
-        RuleFor(x => x.InputParams.BeweAssessmentModel)
+        RuleFor(x => x.InputParams.CreateDMFT_DMFSRequest.DMFTResult)
+            .NotNull()
+            .NotEmpty();
+
+        RuleFor(x => x.InputParams.CreateDMFT_DMFSRequest.DMFSResult)
+            .NotNull()
+            .NotEmpty();
+
+        RuleFor(x => x.InputParams.CreateDMFT_DMFSRequest.StudentComment)
+            .NotNull()
+            .MaximumLength(500);
+
+        // Validate the CreateBeweRequest
+        RuleFor(x => x.InputParams.CreateBeweRequest.BeweAssessmentModel)
             .NotNull()
             .SetValidator(new BeweAssessmentModelValidator());
 
-        // Validate the APIAssessmentModel
-        RuleFor(x => x.InputParams.APIAssessmentModel)
+        RuleFor(x => x.InputParams.CreateBeweRequest.BeweResult)
+            .NotNull()
+            .NotEmpty();
+
+        RuleFor(x => x.InputParams.CreateBeweRequest.StudentComment)
+            .NotNull()
+            .MaximumLength(500);
+
+        // Validate the CreateAPIRequest
+        RuleFor(x => x.InputParams.CreateAPIRequest.APIAssessmentModel)
             .NotNull()
             .SetValidator(new APIBleedingAssessmentModelValidator());
 
-        // Validate the BleedingAssessmentModel
-        RuleFor(x => x.InputParams.BleedingAssessmentModel)
+        RuleFor(x => x.InputParams.CreateAPIRequest.APIResult)
+            .NotNull()
+            .NotEmpty();
+
+        RuleFor(x => x.InputParams.CreateAPIRequest.Maxilla)
+            .NotEmpty()
+            .NotNull();
+
+        RuleFor(x => x.InputParams.CreateAPIRequest.Mandible)
+            .NotEmpty()
+            .NotNull();
+
+        RuleFor(x => x.InputParams.CreateAPIRequest.StudentComment)
+            .NotNull()
+            .MaximumLength(500);
+
+        // Validate the CreateBleedingRequest
+        RuleFor(x => x.InputParams.CreateBleedingRequest.BleedingAssessmentModel)
             .NotNull()
             .SetValidator(new APIBleedingAssessmentModelValidator());
+
+        RuleFor(x => x.InputParams.CreateBleedingRequest.BleedingResult)
+            .NotNull()
+            .NotEmpty();
+
+        RuleFor(x => x.InputParams.CreateBleedingRequest.Maxilla)
+            .NotEmpty()
+            .NotNull();
+
+        RuleFor(x => x.InputParams.CreateBleedingRequest.Mandible)
+            .NotEmpty()
+            .NotNull();
+
+        RuleFor(x => x.InputParams.CreateBleedingRequest.StudentComment)
+            .NotNull()
+            .MaximumLength(500);
     }
 }

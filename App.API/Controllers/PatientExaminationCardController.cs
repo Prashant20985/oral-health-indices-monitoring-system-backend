@@ -23,10 +23,10 @@ using App.Domain.Models.Common.DMFT_DMFS;
 using App.Domain.Models.Common.RiskFactorAssessment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace App.API.Controllers;
 
-[Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
 public class PatientExaminationCardController : BaseController
 {
     /// <summary>
@@ -36,6 +36,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="doctorComment">Comment of the doctor</param>
     /// <returns>An IActionResult</returns>
     [HttpPut("comment-patient-examination-card/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<IActionResult> CommentPatientExaminationCard(Guid cardId, string comment) =>
         HandleOperationResult(await Mediator.Send(new CommentPatientExaminationCardCommand(cardId, comment, User.IsInRole("Student"))));
 
@@ -46,6 +47,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="doctorComment">Comment of the doctor</param>
     /// <returns>An IActionResult</returns>
     [HttpPut("comment-api-form/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<IActionResult> CommentAPIForm(Guid cardId, string comment) =>
         HandleOperationResult(await Mediator.Send(new CommentAPIFormCommnand(cardId, comment, User.IsInRole("Student"))));
 
@@ -56,6 +58,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="doctorComment">Comment of the doctor</param>
     /// <returns>An IActionResult</returns>
     [HttpPut("comment-bewe-form/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<IActionResult> CommentBeweForm(Guid cardId, string comment) =>
         HandleOperationResult(await Mediator.Send(new CommentBeweFormCommand(cardId, comment, User.IsInRole("Student"))));
 
@@ -66,6 +69,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="doctorComment">Comment of the doctor</param>
     /// <returns>An IActionResult</returns>
     [HttpPut("comment-bleeding-form/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<IActionResult> CommentBleedingForm(Guid cardId, string comment) =>
         HandleOperationResult(await Mediator.Send(new CommentBleedingFormCommand(cardId, comment, User.IsInRole("Student"))));
 
@@ -76,6 +80,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="doctorComment">Comment of the doctor</param>
     /// <returns>An IActionResult</returns>
     [HttpPut("comment-dmft-dmfs-form/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<IActionResult> CommentDMFTDMFSForm(Guid cardId, string comment) =>
         HandleOperationResult(await Mediator.Send(new CommentDMFT_DMFSCommand(cardId, comment, User.IsInRole("Student"))));
 
@@ -86,6 +91,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="assessmentModel">API form model</param>
     /// <returns>An ActionResult of APIResultResponseDto</returns>
     [HttpPut("update-api-form/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<ActionResult<APIResultResponseDto>> UpdateAPIForm(Guid cardId, [FromBody] APIBleedingAssessmentModel assessmentModel) =>
         HandleOperationResult(await Mediator.Send(new UpdateAPIFormCommand(cardId, assessmentModel)));
 
@@ -96,6 +102,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="assessmentModel">DMFT/DMFS form model</param>
     /// <returns>An ActionResult of DMFT_DMFSResultResponseDto</returns>
     [HttpPut("update-dmft-dmfs-form/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<ActionResult<DMFT_DMFSResultResponseDto>> UpdateDMFTDMFSForm(Guid cardId, [FromBody] DMFT_DMFSAssessmentModel assessmentModel) =>
         HandleOperationResult(await Mediator.Send(new UpdateDMFT_DMFSFormCommand(cardId, assessmentModel)));
 
@@ -106,6 +113,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="assessmentModel">Bleeding form model</param>
     /// <returns>An ActionResult of BleedingResultResponseDto</returns>
     [HttpPut("update-bleeding-form/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<ActionResult<BleedingResultResponseDto>> UpdateBleedingForm(Guid cardId, [FromBody] APIBleedingAssessmentModel assessmentModel) =>
         HandleOperationResult(await Mediator.Send(new UpdateBleedingFormCommand(cardId, assessmentModel)));
 
@@ -116,6 +124,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="assessmentModel">BEWE form model</param>
     /// <returns>An ActionResult of decimal</returns>
     [HttpPut("update-bewe-form/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<ActionResult<decimal>> UpdateBeweForm(Guid cardId, [FromBody] BeweAssessmentModel assessmentModel) =>
         HandleOperationResult(await Mediator.Send(new UpdateBeweFormCommand(cardId, assessmentModel)));
 
@@ -126,6 +135,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="assessmentModel">Ris factor assessment form model</param>
     /// <returns>An IActionResult</returns>
     [HttpPut("update-risk-factor-assessment/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<IActionResult> UpdateRiskFactorAssessment(Guid cardId, [FromBody] RiskFactorAssessmentModel assessmentModel) =>
         HandleOperationResult(await Mediator.Send(new UpdateRiskFactorAssessmentFormCommand(cardId, assessmentModel)));
 
@@ -136,9 +146,14 @@ public class PatientExaminationCardController : BaseController
     /// <param name="inputParams">Input parameters</param>
     /// <returns>An ActionResult of PatientExaminationCardDto</returns>
     [HttpPost("create-patient-examination-card-regular-mode/{patientId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<ActionResult<PatientExaminationCardDto>> CreatePatientExaminationCardRegularMode(Guid patientId,
         [FromBody] CreatePatientExaminationCardRegularModeInputParams inputParams) =>
-            HandleOperationResult(await Mediator.Send(new CreatePatientExaminationCardRegularModeCommand(patientId, inputParams)));
+            HandleOperationResult(await Mediator.Send(new CreatePatientExaminationCardRegularModeCommand(
+                        patientId,
+                        User.FindFirstValue(ClaimTypes.NameIdentifier),
+                        User.IsInRole("Student"),
+                        inputParams)));
 
     /// <summary>
     /// Create patient examination card in test mode
@@ -147,9 +162,10 @@ public class PatientExaminationCardController : BaseController
     /// <param name="inputParams">Input parameters</param>
     /// <returns>An ActionResult of PatientExaminationCardDto</returns>
     [HttpPost("create-patient-examination-card-test-mode/{patientId}")]
+    [Authorize(Roles = "Student")]
     public async Task<ActionResult<PatientExaminationCardDto>> CreatePatientExaminationCardTestMode(Guid patientId,
                [FromBody] CreatePatientExaminationCardTestModeInputParams inputParams) =>
-            HandleOperationResult(await Mediator.Send(new CreatePatientExaminationCardTestModeCommand(patientId, inputParams)));
+            HandleOperationResult(await Mediator.Send(new CreatePatientExaminationCardTestModeCommand(patientId, User.FindFirstValue(ClaimTypes.NameIdentifier), inputParams)));
 
     /// <summary>
     /// Delete patient examination card
@@ -157,6 +173,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="cardId">Unique identifier of the card</param>
     /// <returns>An IActionResult</returns>
     [HttpDelete("delete-patient-examination-card/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<IActionResult> DeletePatientExaminationCard(Guid cardId) =>
         HandleOperationResult(await Mediator.Send(new DeletePatientExaminationCardCommand(cardId)));
 
@@ -167,6 +184,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="totalScore">Total score of the card</param>
     /// <returns>An IActionResult</returns>
     [HttpPut("grade-patient-examination-card/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
     public async Task<IActionResult> GradePatientExaminationCard(Guid cardId, decimal totalScore) =>
         HandleOperationResult(await Mediator.Send(new GradePatientExaminationCardCommand(cardId, totalScore)));
 
@@ -176,6 +194,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="cardId">Unique identifier of the card</param>
     /// <returns>An ActionResult of PatientExaminationCardDto</returns>
     [HttpGet("get-patient-examination-card/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<ActionResult<PatientExaminationCardDto>> GetPatientExaminationCardDetails(Guid cardId) =>
         HandleOperationResult(await Mediator.Send(new FetchPatientExaminationCardDetailsQuery(cardId)));
 
@@ -185,6 +204,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="patientId">Unique identifier of the patient</param>
     /// <returns>An ActionResult of List of PatientExaminationCardDto</returns>
     [HttpGet("get-patient-examination-cards-regular-mode-by-patient/{patientId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
     public async Task<ActionResult<List<PatientExaminationCardDto>>> GetPatientExaminationCardsRegularModeByPatient(Guid patientId) =>
         HandleOperationResult(await Mediator.Send(new FetchPatientExaminationCardsInRegularModeQuery(patientId)));
 
@@ -194,6 +214,7 @@ public class PatientExaminationCardController : BaseController
     /// <param name="patientId">Unique identifier of the patient</param>
     /// <returns>An ActionResult of List of PatientExaminationCardDto</returns>
     [HttpGet("get-patient-examination-cards-test-mode-by-patient/{patientId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<ActionResult<List<PatientExaminationCardDto>>> GetPatientExaminationCardsTestModeByPatient(Guid patientId) =>
         HandleOperationResult(await Mediator.Send(new FetchPatientExaminationCardsInTestModeQuery(patientId)));
 }

@@ -21,10 +21,12 @@ public class Bleeding
 
     public void SetBleedingResult(int bleedingResult) => BleedingResult = bleedingResult;
 
+    public void SetMaxilla(int maxilla) => Maxilla = maxilla;
+
+    public void SetMandible(int mandible) => Mandible = mandible;
+
     public void CalculateBleedingResult()
     {
-        if (AssessmentModel is null) return;
-
         int GetCount(string[] quadrant, string value) => quadrant.Count(q => q.Equals(value));
 
         var quadrant1 = AssessmentModel.Quadrant1.ToArray();
@@ -51,7 +53,8 @@ public class Bleeding
         int totalNumberOfPlusCount = quadrant1PlusCount + quadrant2PlusCount
             + quadrant3PlusCount + quadrant4PlusCount;
 
-        BleedingResult = (totalNumberOfPlusCount / totalNumberOfSurfacesExamined) * 100;
+        decimal bleedingResult = (decimal)totalNumberOfPlusCount / totalNumberOfSurfacesExamined * 100;
+        SetBleedingResult((int)Math.Round(bleedingResult));
 
         // Calculate Maxilla
         int totalNumberOfSurfacesExaminedMaxilla = quadrant1PlusCount + quadrant2PlusCount
@@ -59,7 +62,8 @@ public class Bleeding
 
         int totalNumberOfPlusCountMaxilla = quadrant1PlusCount + quadrant2PlusCount;
 
-        Maxilla = (totalNumberOfPlusCountMaxilla / totalNumberOfSurfacesExaminedMaxilla) * 100;
+        decimal maxilla = (decimal)totalNumberOfPlusCountMaxilla / totalNumberOfSurfacesExaminedMaxilla * 100;
+        SetMaxilla((int)Math.Round(maxilla));
 
         // Calculate Mandible
         int totalNumberOfSurfacesExaminedMandible = quadrant3PlusCount + quadrant4PlusCount
@@ -67,6 +71,7 @@ public class Bleeding
 
         int totalNumberOfPlusCountMandible = quadrant3PlusCount + quadrant4PlusCount;
 
-        Mandible = (totalNumberOfPlusCountMandible / totalNumberOfSurfacesExaminedMandible) * 100;
+        decimal mandible = (decimal)totalNumberOfPlusCountMandible / totalNumberOfSurfacesExaminedMandible * 100;
+        SetMandible((int)Math.Round(mandible));
     }
 }
