@@ -4,6 +4,7 @@ using App.Domain.DTOs.Common.Response;
 using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.DTOs.PatientDtos.Response;
 using App.Domain.DTOs.ResearchGroupDtos.Response;
+using App.Domain.DTOs.SuperviseDtos.Response;
 using App.Domain.DTOs.UserRequestDtos.Response;
 using App.Domain.Models.CreditSchema;
 using App.Domain.Models.Enums;
@@ -108,5 +109,10 @@ public class MappingProfile : Profile
         CreateMap<PracticePatientExaminationCard, PracticePatientExaminationCardDto>()
             .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Exam.Group.Teacher.FirstName} {s.Exam.Group.Teacher.LastName} ({s.Exam.Group.Teacher.Email})"))
             .ForMember(x => x.StudentName, o => o.MapFrom(s => $"{s.Student.FirstName} {s.Student.LastName} ({s.Student.Email})"));
+
+        // CreateMap<TSource, TDestination> creates a mapping from ApplicationUser to SupervisingDoctorResponseDto
+        CreateMap<ApplicationUser, SupervisingDoctorResponseDto>()
+            .ForMember(x => x.Id, o => o.MapFrom(s => s.Id))
+            .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.FirstName} {s.LastName}"));
     }
 }
