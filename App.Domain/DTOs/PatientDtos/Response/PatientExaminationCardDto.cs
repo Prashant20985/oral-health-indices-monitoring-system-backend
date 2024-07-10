@@ -53,6 +53,26 @@ public class PatientExaminationCardDto
     public DateTime DateOfExamination { get; init; }
 
     /// <summary>
+    /// Gets or sets the need for dental interventions associated with the examination card.
+    /// </summary>
+    public string NeedForDentalIntervetions { get; init; }
+
+    /// <summary>
+    /// Gets or sets the proposed treatment associated with the examination card.
+    /// </summary>
+    public string ProposedTreatment { get; init; }
+
+    /// <summary>
+    /// Gets or sets the description associated with the examination card.
+    /// </summary>
+    public string Description { get; init; }
+
+    /// <summary>
+    /// Gets or sets the patient recommendations associated with the examination card.
+    /// </summary>
+    public string PatientRecommendations { get; init; }
+
+    /// <summary>
     /// Gets or sets the risk factor assessment details associated with the examination card.
     /// </summary>
     public RiskFactorAssessmentDto RiskFactorAssessment { get; init; }

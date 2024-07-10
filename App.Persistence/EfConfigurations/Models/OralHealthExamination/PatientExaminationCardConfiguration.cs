@@ -20,6 +20,18 @@ internal class PatientExaminationCardConfiguration
         builder.Property(e => e.TotalScore)
             .HasColumnType("decimal(5, 2)");
 
+        builder.Property(e => e.NeedForDentalInterventions)
+            .HasMaxLength(500);
+
+        builder.Property(e => e.ProposedTreatment)
+            .HasMaxLength(500);
+
+        builder.Property(e => e.Description)
+            .HasMaxLength(500);
+
+        builder.Property(e => e.PatientRecommendations)
+            .HasMaxLength(500);
+
         builder.HasOne(e => e.Patient)
             .WithMany(e => e.PatientExaminationCards)
             .HasForeignKey(e => e.PatientId)

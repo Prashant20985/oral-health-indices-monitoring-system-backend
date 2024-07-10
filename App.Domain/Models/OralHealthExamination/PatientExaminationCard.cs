@@ -16,6 +16,14 @@ public class PatientExaminationCard(Guid patientId)
 
     public decimal? TotalScore { get; private set; }
 
+    public string NeedForDentalInterventions { get; private set; }
+
+    public string ProposedTreatment { get; private set; }
+
+    public string Description { get; private set; }
+
+    public string PatientRecommendations { get; private set; }
+
     public Guid PatientId { get; private set; } = patientId;
     public virtual Patient Patient { get; set; }
 

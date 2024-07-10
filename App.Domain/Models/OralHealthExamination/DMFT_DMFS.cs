@@ -9,7 +9,7 @@ public class DMFT_DMFS
     public decimal DMFSResult { get; private set; }
     public string DoctorComment { get; private set; }
     public string StudentComment { get; private set; }
-
+    public string ProstheticStatus { get; private set; }
     public DMFT_DMFSAssessmentModel AssessmentModel { get; private set; }
 
     public virtual PatientExaminationResult PatientExaminationResult { get; set; }

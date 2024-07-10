@@ -20,6 +20,9 @@ public class PracticeDMFT_DMFSConfiguration
         builder.Property(x => x.Comment)
             .HasMaxLength(500);
 
+        builder.Property(x => x.ProstheticStatus)
+            .HasMaxLength(500);
+
         builder.OwnsOne(x => x.AssessmentModel, ownedNavigationBuilder =>
         {
             ownedNavigationBuilder.ToJson();

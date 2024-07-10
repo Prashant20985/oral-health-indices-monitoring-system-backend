@@ -17,6 +17,18 @@ public class PracticePatientExaminationCardConfiguration
         builder.Property(x => x.DoctorComment)
             .HasMaxLength(500);
 
+        builder.Property(x => x.NeedForDentalInterventions)
+            .HasMaxLength(500);
+
+        builder.Property(x => x.ProposedTreatment)
+            .HasMaxLength(500);
+
+        builder.Property(x => x.Description)
+            .HasMaxLength(500);
+
+        builder.Property(x => x.PatientRecommendations)
+            .HasMaxLength(500);
+
         builder.HasOne(e => e.PracticeRiskFactorAssessment)
             .WithOne(e => e.PracticePatientExaminationCard)
             .HasForeignKey<PracticePatientExaminationCard>(e => e.RiskFactorAssessmentId)
