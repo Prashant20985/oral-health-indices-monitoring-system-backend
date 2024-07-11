@@ -49,4 +49,19 @@ public class SuperviseRepository(OralEhrContext oralEhrContext, IMapper mapper) 
     /// <inheritdoc />
     public void RemoveSupervise(Supervise supervise) =>
         _oralEhrContext.Supervises.Remove(supervise);
+
+    /// <inheritdoc />
+    public async Task<Supervise> GetSuperviseByDoctorIdAndStudentId(string doctorId, string studentId) =>
+        await _oralEhrContext.Supervises
+            .FirstOrDefaultAsync(s => s.DoctorId == doctorId && s.StudentId == studentId);
+
+    /// <inheritdoc />
+    public async Task<List<StudentResponseDto>> GetAllStudentsNotUnderSupervisionByDoctorId(string doctorId) =>
+        await _oralEhrContext.Users
+            .Where(x => x.SuperviseStudentNavigation.Any(s => s.DoctorId != doctorId)
+            && x.ApplicationUserRoles.Any(r => r.ApplicationRole.Name.Equals("Student"))
+            && x.IsAccountActive && x.DeletedAt == null)
+        .ProjectTo<StudentResponseDto>(_mapper.ConfigurationProvider)
+        .OrderBy(s => s.UserName)
+        .ToListAsync();
 }

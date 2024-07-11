@@ -1,7 +1,9 @@
 ﻿using App.Application.StudentExamOperations.StudentOperations.Query.ExamEligbility;
 using App.Application.StudentOperations.Query.StudentGroupDetails;
 using App.Application.StudentOperations.Query.StudentGroupsList;
+using App.Application.StudentOperations.Query.SupervisingDoctors;
 using App.Domain.DTOs.StudentGroupDtos.Response;
+using App.Domain.DTOs.SuperviseDtos.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -35,4 +37,12 @@ public class StudentController : BaseController
     [HttpGet("exam-eligibility/{examId}")]
     public async Task<ActionResult<bool>> CheckExamEligibility(Guid examId) =>
         HandleOperationResult(await Mediator.Send(new ExamEligibiltyQuery(examId, User.FindFirstValue(ClaimTypes.NameIdentifier))));
+
+    /// <summary>
+    /// Gets the supervising doctors of the student.
+    /// </summary>
+    /// <returns>List of supervising doctors of the student.</returns>
+    [HttpGet("spervisors")]
+    public async Task<ActionResult<List<SupervisingDoctorResponseDto>>> GetSupervisingDoctors() =>
+               HandleOperationResult(await Mediator.Send(new FetchSupervisingDoctorsQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
 }
