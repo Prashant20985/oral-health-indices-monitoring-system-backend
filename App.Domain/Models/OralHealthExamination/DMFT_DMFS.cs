@@ -23,8 +23,4 @@ public class DMFT_DMFS
     public void SetDMFSResult(decimal dmfsResult) => DMFSResult = dmfsResult;
 
     public void SetDMFT_DMFSAssessmentModel(DMFT_DMFSAssessmentModel assessmentModel) => AssessmentModel = assessmentModel;
-
-    // TODO
-    public void CalculateDMFTResult() => DMFTResult = 0;
-    public void CalculateDMFSResult() => DMFSResult = 0;
 }

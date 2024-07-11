@@ -5,12 +5,22 @@ namespace App.Domain.DTOs.Common.Request;
 /// <summary>
 /// Create DMFT-DMFS Regular Mode Request DTO
 /// </summary>
-public class CreateDMFT_DMFSRegularModeRequestDto
+public class CreateDMFT_DMFSRequestDto
 {
     /// <summary>
     /// Gets or initializes the comment
     /// </summary>
     public string Comment { get; init; }
+
+    /// <summary>
+    /// Gets or initializes the DMFT result
+    /// </summary>
+    public decimal DMFTResult { get; set; }
+
+    /// <summary>
+    /// Gets or initializes the DMFS result
+    /// </summary>
+    public decimal DMFSResult { get; set; }
 
     /// <summary>
     /// Gets or initializes the DMFT-DMFS assessment model

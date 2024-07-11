@@ -5,7 +5,7 @@ namespace App.Domain.DTOs.Common.Request;
 /// <summary>
 /// Create Bleeding Regular Mode Request DTO
 /// </summary>
-public class CreateBleedingRegularModeRequestDto
+public class CreateBleedingRequestDto
 {
     /// <summary>
     /// Gets or initializes the comment

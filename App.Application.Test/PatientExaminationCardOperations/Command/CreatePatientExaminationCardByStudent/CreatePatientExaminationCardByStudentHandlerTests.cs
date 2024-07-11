@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardRegularMode;
+using App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardByStudent;
 using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.PatientDtos.Response;
 using App.Domain.Models.Common.APIBleeding;
@@ -13,25 +13,29 @@ using App.Domain.Models.Users;
 using AutoMapper;
 using Moq;
 
-namespace App.Application.Test.PatientExaminationCardOperations.Command.CreatePatientExaminationCardRegularMode;
+namespace App.Application.Test.PatientExaminationCardOperations.Command.CreatePatientExaminationCardByStudent;
 
-public class CreatePatientExaminationCardRegularModeHandlerTests : TestHelper
+public class CreatePatientExaminationCardByStudentHandlerTests : TestHelper
 {
-    private readonly CreatePatientExaminationCardRegularModeHandler handler;
-    private readonly CreatePatientExaminationCardRegularModeCommand command;
+    private readonly CreatePatientExaminationCardByStudentCommand command;
+    private readonly CreatePatientExaminationCardByStudentHandler handler;
 
-    public CreatePatientExaminationCardRegularModeHandlerTests()
+    public CreatePatientExaminationCardByStudentHandlerTests()
     {
-        MapperConfiguration mapperConfig = new(cfg => cfg.AddProfile<MappingProfile>());
-        IMapper mapper = mapperConfig.CreateMapper();
+        MapperConfiguration mapperConfiguration = new(cfg => cfg.AddProfile<MappingProfile>());
+        IMapper mapper = mapperConfiguration.CreateMapper();
 
         var riskFactorAssesmentModel = new RiskFactorAssessmentModel();
-        var createDMFT_DMFSRequest = new CreateDMFT_DMFSRegularModeRequestDto
+
+        CreateDMFT_DMFSRequestDto dmft_dmfs = new()
         {
-            Comment = "test",
+            Comment = "Comment",
+            DMFSResult = 10,
+            DMFTResult = 10,
             DMFT_DMFSAssessmentModel = new DMFT_DMFSAssessmentModel()
         };
-        var createBeweRequest = new CreateBeweRegularModeRequestDto
+
+        CreateBeweRequestDto bewe = new()
         {
             Comment = "test",
             BeweAssessmentModel = new BeweAssessmentModel
@@ -85,7 +89,7 @@ public class CreatePatientExaminationCardRegularModeHandlerTests : TestHelper
             }
         };
 
-        var createAPIRequest = new CreateAPIRegularModeRequestDto
+        CreateAPIRequestDto api = new()
         {
             Comment = "test",
             APIAssessmentModel = new APIBleedingAssessmentModel
@@ -134,7 +138,7 @@ public class CreatePatientExaminationCardRegularModeHandlerTests : TestHelper
             }
         };
 
-        var createBleedingRequest = new CreateBleedingRegularModeRequestDto
+        CreateBleedingRequestDto bleeding = new()
         {
             Comment = "test",
             BleedingAssessmentModel = new APIBleedingAssessmentModel
@@ -182,26 +186,25 @@ public class CreatePatientExaminationCardRegularModeHandlerTests : TestHelper
             }
         };
 
-        var createPatientExaminationCardRegularModeInputParams = new CreatePatientExaminationCardRegularModeInputParams(
-            null,
+        CreatePatientExaminationCardByStudentInputParams inputParams = new(
+            "doctorId",
             "Test Comment",
             riskFactorAssesmentModel,
-            createDMFT_DMFSRequest,
-            createBeweRequest,
-            createAPIRequest,
-            createBleedingRequest);
+            dmft_dmfs,
+            bewe,
+            api,
+            bleeding);
 
-        handler = new CreatePatientExaminationCardRegularModeHandler(
+        command = new CreatePatientExaminationCardByStudentCommand(
+            Guid.NewGuid(),
+            "studentId",
+            inputParams);
+
+        handler = new CreatePatientExaminationCardByStudentHandler(
             patientExaminationCardRepositoryMock.Object,
             patientRepositoryMock.Object,
             userRepositoryMock.Object,
             mapper);
-
-        command = new CreatePatientExaminationCardRegularModeCommand(
-            Guid.NewGuid(),
-            "doctorId",
-            false,
-            createPatientExaminationCardRegularModeInputParams);
     }
 
     [Fact]
@@ -224,17 +227,25 @@ public class CreatePatientExaminationCardRegularModeHandlerTests : TestHelper
     {
         // Arrange
         var patient = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 18, "test", "test", "test", "test", 1, "doctorId");
-        var applicationRole = new ApplicationRole { Name = "Dentist_Teacher_Examiner" };
-        var applicationUser = new ApplicationUser("test@test.com", "Jhon", "Doe", "741852963", null)
+        var applicationRoleStudent = new ApplicationRole { Name = "Student" };
+        var applicationRoleDoctor = new ApplicationRole { Name = "Dentist_Teacher_Researcher" };
+        var applicationUserStudent = new ApplicationUser("test@test.com", "Jhon", "Doe", "741852963", null)
         {
-            ApplicationUserRoles = [new ApplicationUserRole { ApplicationRole = applicationRole}]
+            ApplicationUserRoles = [new ApplicationUserRole { ApplicationRole = applicationRoleStudent }]
+        };
+        var applicationUserDoctor = new ApplicationUser("test2@test.com", "Jhon", "Doe", "741852863", null)
+        {
+            ApplicationUserRoles = [new ApplicationUserRole { ApplicationRole = applicationRoleDoctor }]
         };
 
         patientRepositoryMock.Setup(x => x.GetPatientById(It.IsAny<Guid>()))
             .ReturnsAsync(patient);
 
         userRepositoryMock.Setup(x => x.GetApplicationUserWithRolesById(It.IsAny<string>()))
-            .ReturnsAsync(applicationUser);
+            .ReturnsAsync(applicationUserStudent);
+
+        userRepositoryMock.Setup(x => x.GetApplicationUserWithRolesById(It.IsAny<string>()))
+            .ReturnsAsync(applicationUserDoctor);
 
         patientExaminationCardRepositoryMock.Setup(x => x.AddBewe(It.IsAny<Bewe>()));
         patientExaminationCardRepositoryMock.Setup(x => x.AddAPI(It.IsAny<API>()));

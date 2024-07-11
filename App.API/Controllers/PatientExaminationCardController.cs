@@ -3,8 +3,8 @@ using App.Application.PatientExaminationCardOperations.Command.CommentBeweForm;
 using App.Application.PatientExaminationCardOperations.Command.CommentBleedingForm;
 using App.Application.PatientExaminationCardOperations.Command.CommentDMFT_DMFSForm;
 using App.Application.PatientExaminationCardOperations.Command.CommentPatientExaminationCard;
-using App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardRegularMode;
-using App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardTestMode;
+using App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardByDoctor;
+using App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardByStudent;
 using App.Application.PatientExaminationCardOperations.Command.DeletePatientExaminationCard;
 using App.Application.PatientExaminationCardOperations.Command.GradePatientExaminationCard;
 using App.Application.PatientExaminationCardOperations.Command.UpdateAPIForm;
@@ -140,32 +140,36 @@ public class PatientExaminationCardController : BaseController
         HandleOperationResult(await Mediator.Send(new UpdateRiskFactorAssessmentFormCommand(cardId, assessmentModel)));
 
     /// <summary>
-    /// Create patient examination card in regular mode
+    /// Create patient examination card in regular mode by doctor
     /// </summary>
     /// <param name="patientId">Unique identifier of the patient</param>
     /// <param name="inputParams">Input parameters</param>
     /// <returns>An ActionResult of PatientExaminationCardDto</returns>
-    [HttpPost("create-patient-examination-card-regular-mode/{patientId}")]
-    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
-    public async Task<ActionResult<PatientExaminationCardDto>> CreatePatientExaminationCardRegularMode(Guid patientId,
-        [FromBody] CreatePatientExaminationCardRegularModeInputParams inputParams) =>
-            HandleOperationResult(await Mediator.Send(new CreatePatientExaminationCardRegularModeCommand(
+    [HttpPost("create-patient-examination-card-by-doctor/{patientId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    public async Task<ActionResult<PatientExaminationCardDto>> CreatePatientExaminationCardByDoctor(
+        Guid patientId,
+        [FromBody] CreatePatientExaminationCardByDoctorInputParams inputParams) =>
+            HandleOperationResult(await Mediator.Send(new CreatePatientExaminationCardByDoctorCommand(
                         patientId,
                         User.FindFirstValue(ClaimTypes.NameIdentifier),
-                        User.IsInRole("Student"),
                         inputParams)));
 
     /// <summary>
-    /// Create patient examination card in test mode
+    /// Create patient examination card in test mode by student
     /// </summary>
-    /// <param name="patientId">Unique identifier of the patient</param>
-    /// <param name="inputParams">Input parameters</param>
-    /// <returns>An ActionResult of PatientExaminationCardDto</returns>
-    [HttpPost("create-patient-examination-card-test-mode/{patientId}")]
+    /// <param name="patientId"></param>
+    /// <param name="inputParams"></param>
+    /// <returns></returns>
+    [HttpPost("create-patient-examination-card-by-student/{patientId}")]
     [Authorize(Roles = "Student")]
-    public async Task<ActionResult<PatientExaminationCardDto>> CreatePatientExaminationCardTestMode(Guid patientId,
-               [FromBody] CreatePatientExaminationCardTestModeInputParams inputParams) =>
-            HandleOperationResult(await Mediator.Send(new CreatePatientExaminationCardTestModeCommand(patientId, User.FindFirstValue(ClaimTypes.NameIdentifier), inputParams)));
+    public async Task<ActionResult<PatientExaminationCardDto>> CreatePatientExaminationCardByStudent(
+        Guid patientId,
+        [FromBody] CreatePatientExaminationCardByStudentInputParams inputParams) =>
+            HandleOperationResult(await Mediator.Send(new CreatePatientExaminationCardByStudentCommand(
+                        patientId,
+                        User.FindFirstValue(ClaimTypes.NameIdentifier),
+                        inputParams)));
 
     /// <summary>
     /// Delete patient examination card

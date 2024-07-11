@@ -5,7 +5,7 @@ namespace App.Domain.DTOs.Common.Request;
 /// <summary>
 /// Create API Regular Mode Request DTO
 /// </summary>
-public class CreateAPIRegularModeRequestDto
+public class CreateAPIRequestDto
 {
     /// <summary>
     /// Gets or initializes the comment.

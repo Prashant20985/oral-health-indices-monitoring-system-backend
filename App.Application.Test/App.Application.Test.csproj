@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="PatientExaminationCardOperations\Command\CreatePatientExaminationCardRegularMode\CreatePatientExaminationCardRegularModeCommandTests.cs~RF11dc0ee6.TMP" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="ILogger.Moq" Version="1.1.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
     <PackageReference Include="MockQueryable.Moq" Version="7.0.1" />
