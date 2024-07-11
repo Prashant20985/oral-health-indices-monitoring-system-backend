@@ -6,21 +6,21 @@ using App.Domain.Repository;
 using AutoMapper;
 using MediatR;
 
-namespace App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardRegularMode;
+namespace App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardByStudent;
 
 /// <summary>
-/// Handles the creation of patient examination card in regular mode by a student or a doctor user.
+/// Handler for creating patient examination card by student
 /// </summary>
+/// <param name="mapper">The mapper</param>
 /// <param name="patientExaminationCardRepository">The patient examination card repository</param>
 /// <param name="patientRepository">The patient repository</param>
 /// <param name="userRepository">The user repository</param>
-/// <param name="mapper">The mapper</param>
-internal sealed class CreatePatientExaminationCardRegularModeHandler(
+internal sealed class CreatePatientExaminationCardByStudentHandler(
     IPatientExaminationCardRepository patientExaminationCardRepository,
     IPatientRepository patientRepository,
-    IUserRepository userRepository, 
+    IUserRepository userRepository,
     IMapper mapper)
-    : IRequestHandler<CreatePatientExaminationCardRegularModeCommand, OperationResult<PatientExaminationCardDto>>
+    : IRequestHandler<CreatePatientExaminationCardByStudentCommand, OperationResult<PatientExaminationCardDto>>
 {
     private readonly IPatientExaminationCardRepository _patientExaminationCardRepository = patientExaminationCardRepository;
 
@@ -30,13 +30,7 @@ internal sealed class CreatePatientExaminationCardRegularModeHandler(
 
     private readonly IMapper _mapper = mapper;
 
-    /// <summary>
-    /// Handles the creation of patient examination card in regular mode
-    /// </summary>
-    /// <param name="request">The request</param>
-    /// <param name="cancellationToken">The cancellation token</param>
-    /// <returns>The operation result</returns>
-    public async Task<OperationResult<PatientExaminationCardDto>> Handle(CreatePatientExaminationCardRegularModeCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<PatientExaminationCardDto>> Handle(CreatePatientExaminationCardByStudentCommand request, CancellationToken cancellationToken)
     {
         // Check if patient exists
         var checkIfPatientExists = await _patientRepository.GetPatientById(request.PatientId);
@@ -45,81 +39,65 @@ internal sealed class CreatePatientExaminationCardRegularModeHandler(
         if (checkIfPatientExists is null)
             return OperationResult<PatientExaminationCardDto>.Failure("Patient not found");
 
-        // Check if User exists
-        var user = await _userRepository.GetApplicationUserWithRolesById(request.UserId);
+        // Check if student exists
+        var student = await _userRepository.GetApplicationUserWithRolesById(request.StudentId);
 
-        // If User does not exist, return failure
-        if (user is null)
-            return OperationResult<PatientExaminationCardDto>.Failure("User not found");
+        // If User student not exist, return failure
+        if (student is null)
+            return OperationResult<PatientExaminationCardDto>.Failure("Student not found");
 
-        // Verify Assigned Doctor
-        if (!string.IsNullOrEmpty(request.InputParams.AssignedDoctorId))
-        {
-            var doctor = await _userRepository.GetApplicationUserWithRolesById(request.InputParams.AssignedDoctorId);
+        var doctor = await _userRepository.GetApplicationUserWithRolesById(request.InputParams.AssignedDoctorId);
 
-            // If doctor does not exist, return failure
-            if (doctor is null)
-                return OperationResult<PatientExaminationCardDto>.Failure("Doctor not found");
+        // If User doctor not exist, return failure
+        if (doctor is null)
+            return OperationResult<PatientExaminationCardDto>.Failure("Doctor not found");
 
-            // If doctor is not a dentist teacher examiner or researcher, return failure
-            if (!doctor.ApplicationUserRoles.Any(x => x.ApplicationRole.Name.Equals("Dentist_Teacher_Examiner") 
-                    || x.ApplicationRole.Name.Equals("Dentist_Teacher_Researcher")))
-                return OperationResult<PatientExaminationCardDto>.Failure("Assigned user is not a doctor");
-        }
+        // check if doctor is doctor
+        if (!doctor.ApplicationUserRoles.Any(x => x.ApplicationRole.Name.Equals("Dentist_Teacher_Examiner")
+                || x.ApplicationRole.Name.Equals("Dentist_Teacher_Researcher")))
+            return OperationResult<PatientExaminationCardDto>.Failure("Invalid User");
 
         // Create Bewe form
         var beweForm = new Bewe();
-        beweForm.SetAssessmentModel(request.InputParams.CreateBeweRequest.BeweAssessmentModel);
+        beweForm.SetAssessmentModel(request.InputParams.Bewe.BeweAssessmentModel);
         beweForm.CalculateBeweResult();
 
         // Add comment to Bewe form
-        if (request.IsStudent) 
-            beweForm.AddStudentComment(request.InputParams.CreateBeweRequest.Comment);
-        else
-            beweForm.AddDoctorComment(request.InputParams.CreateBeweRequest.Comment);
+        beweForm.AddStudentComment(request.InputParams.Bewe.Comment);
 
         // Add Bewe form to repository
         await _patientExaminationCardRepository.AddBewe(beweForm);
 
         // Create API form
         var apiForm = new API();
-        apiForm.SetAssessmentModel(request.InputParams.CreateAPIRequest.APIAssessmentModel);
+        apiForm.SetAssessmentModel(request.InputParams.API.APIAssessmentModel);
         apiForm.CalculateAPIResult();
 
         // Add comment to API form
-        if(request.IsStudent)
-            apiForm.AddStudentComment(request.InputParams.CreateAPIRequest.Comment);
-        else
-            apiForm.AddDoctorComment(request.InputParams.CreateAPIRequest.Comment);
+        apiForm.AddStudentComment(request.InputParams.API.Comment);
 
         // Add API form to repository
         await _patientExaminationCardRepository.AddAPI(apiForm);
 
         // Create Bleeding form
         var bleedingForm = new Bleeding();
-        bleedingForm.SetAssessmentModel(request.InputParams.CreateBleedingRequest.BleedingAssessmentModel);
+        bleedingForm.SetAssessmentModel(request.InputParams.Bleeding.BleedingAssessmentModel);
         bleedingForm.CalculateBleedingResult();
-        
+
         // Add comment to bleeding form
-        if(request.IsStudent)
-            bleedingForm.AddStudentComment(request.InputParams.CreateBleedingRequest.Comment);
-        else
-            bleedingForm.AddDoctorComment(request.InputParams.CreateBleedingRequest.Comment);
+        bleedingForm.AddStudentComment(request.InputParams.Bleeding.Comment);
 
         // Add Bleeding form to repository
         await _patientExaminationCardRepository.AddBleeding(bleedingForm);
 
         // Create DMFT_DMFS form
         var dmft_dmfsForm = new DMFT_DMFS();
-        dmft_dmfsForm.SetDMFT_DMFSAssessmentModel(request.InputParams.CreateDMFT_DMFSRequest.DMFT_DMFSAssessmentModel);
-        dmft_dmfsForm.CalculateDMFSResult();
-        dmft_dmfsForm.CalculateDMFTResult();
+        dmft_dmfsForm.SetDMFT_DMFSAssessmentModel(request.InputParams.DMFT_DMFS.DMFT_DMFSAssessmentModel);
+        dmft_dmfsForm.SetDMFTResult(request.InputParams.DMFT_DMFS.DMFTResult);
+        dmft_dmfsForm.SetDMFSResult(request.InputParams.DMFT_DMFS.DMFSResult);
 
         // Add comment to DMFT_DMFS form
-        if(request.IsStudent)
-            dmft_dmfsForm.AddStudentComment(request.InputParams.CreateDMFT_DMFSRequest.Comment);
-        else
-            dmft_dmfsForm.AddDoctorComment(request.InputParams.CreateDMFT_DMFSRequest.Comment);
+        dmft_dmfsForm.AddStudentComment(request.InputParams.DMFT_DMFS.Comment);
 
         // Add DMFT_DMFS form to repository
         await _patientExaminationCardRepository.AddDMFT_DMFS(dmft_dmfsForm);
@@ -143,40 +121,31 @@ internal sealed class CreatePatientExaminationCardRegularModeHandler(
 
         // Create patient examination card
         var examinationCard = new PatientExaminationCard(request.PatientId);
-        examinationCard.SetRegularMode();
+        examinationCard.SetTestMode();
         examinationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
         examinationCard.SetRiskFactorAssesmentId(riskFactorAssessment.Id);
 
-        if (request.IsStudent)
-        {
-            // Set student id and doctor id
-            examinationCard.SetStudentId(user.Id);
-            examinationCard.SetDoctorId(request.InputParams.AssignedDoctorId);
+        // Set doctor id
+        examinationCard.SetDoctorId(doctor.Id);
 
-            // Add student comment
-            examinationCard.AddStudentComment(request.InputParams.PatientExaminationCardComment);
-        }
-        else
-        {
-            // Set doctor id
-            examinationCard.SetDoctorId(user.Id);
+        // Set Student id
+        examinationCard.SetStudentId(student.Id);
 
-            // Add doctor comment
-            examinationCard.AddDoctorComment(request.InputParams.PatientExaminationCardComment);
-        }
+        // Add doctor comment
+        examinationCard.AddStudentComment(request.InputParams.PatientExaminationCardComment);
 
         // Add patient examination card to repository
         await _patientExaminationCardRepository.AddPatientExaminationCard(examinationCard);
 
-        // Create DTO to return
         var cardToReturn = new PatientExaminationCardDto()
         {
             Id = examinationCard.Id,
-            DoctorName = $"{user.FirstName} {user.LastName} ({user.Email})",
-            StudentName = request.IsStudent ? $"{user.FirstName} {user.LastName} ({user.Email})" : null,
+            DoctorName = $"{doctor.FirstName} {doctor.LastName} ({doctor.Email})",
+            StudentName = $"{student.FirstName} {student.LastName} ({student.Email})",
             PatientName = $"{checkIfPatientExists.FirstName} {checkIfPatientExists.LastName} ({checkIfPatientExists.Email})",
             DateOfExamination = examinationCard.DateOfExamination,
             DoctorComment = examinationCard.DoctorComment,
+            TotalScore = examinationCard.TotalScore,
             StudentComment = examinationCard.StudentComment,
             IsRegularMode = examinationCard.IsRegularMode,
             RiskFactorAssessment = _mapper.Map<RiskFactorAssessmentDto>(riskFactorAssessment),

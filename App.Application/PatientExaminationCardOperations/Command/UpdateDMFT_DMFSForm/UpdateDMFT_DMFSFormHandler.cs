@@ -33,8 +33,8 @@ internal sealed class UpdateDMFT_DMFSFormHandler(IPatientExaminationCardReposito
         dmft_dmfsForm.SetDMFT_DMFSAssessmentModel(request.AssessmentModel);
 
         // Calculate the DMFT/DMFS form result
-        dmft_dmfsForm.CalculateDMFTResult();
-        dmft_dmfsForm.CalculateDMFSResult();
+        // dmft_dmfsForm.CalculateDMFTResult();
+        // dmft_dmfsForm.CalculateDMFSResult();
 
         return OperationResult<DMFT_DMFSResultResponseDto>.Success(new DMFT_DMFSResultResponseDto
         {
