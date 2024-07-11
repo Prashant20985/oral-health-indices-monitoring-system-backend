@@ -43,4 +43,19 @@ public interface ISuperviseRepository
     /// <param name="studentId">The ID of the student.</param>
     /// <returns>A list of doctors supervising the student.</returns>
     Task<List<SupervisingDoctorResponseDto>> GetAllSupervisingDoctorsByStudentId(string studentId);
+
+    /// <summary>
+    /// Retrieves a supervise relationship by the IDs of the doctor and the student.
+    /// </summary>
+    /// <param name="doctorId">The ID of the doctor.</param>
+    /// <param name="studentId">The ID of the student.</param>
+    /// <returns>The supervise relationship.</returns>
+    Task<Supervise> GetSuperviseByDoctorIdAndStudentId(string doctorId, string studentId);
+
+    /// <summary>
+    /// Retrieves all students not under the supervision of a doctor.
+    /// </summary>
+    /// <param name="doctorId">The ID of the doctor.</param>
+    /// <returns>A list of students not under the supervision of the doctor.</returns>
+    Task<List<StudentResponseDto>> GetAllStudentsNotUnderSupervisionByDoctorId(string doctorId);
 }

@@ -6,6 +6,8 @@ using App.Application.DentistTeacherOperations.Command.DeleteGroup;
 using App.Application.DentistTeacherOperations.Command.DeleteResearchGroup;
 using App.Application.DentistTeacherOperations.Command.RemovePatientFromResearchGroup;
 using App.Application.DentistTeacherOperations.Command.RemoveStudentFromGroup;
+using App.Application.DentistTeacherOperations.Command.SuperviseStudent;
+using App.Application.DentistTeacherOperations.Command.UnsuperviseStudent;
 using App.Application.DentistTeacherOperations.Command.UpdateGroupName;
 using App.Application.DentistTeacherOperations.Command.UpdateResearchGroup;
 using App.Application.DentistTeacherOperations.Query.Groups;
@@ -14,6 +16,9 @@ using App.Application.DentistTeacherOperations.Query.ResearchGroupDetailsById;
 using App.Application.DentistTeacherOperations.Query.ResearchGroups;
 using App.Application.DentistTeacherOperations.Query.StudentGroupDetails;
 using App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
+using App.Application.DentistTeacherOperations.Query.StudentsNotSupervised;
+using App.Application.DentistTeacherOperations.Query.StudentsSupervised;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using App.Domain.DTOs.ResearchGroupDtos.Request;
 using App.Domain.DTOs.ResearchGroupDtos.Response;
 using App.Domain.DTOs.StudentGroupDtos.Response;
@@ -195,5 +200,43 @@ public class DentistTeacherController : BaseController
     [HttpGet("research-group-details/{researchGroupId}")]
     public async Task<ActionResult> GetResearchGroupDetailsById(Guid researchGroupId) => HandleOperationResult(
                      await Mediator.Send(new FetchResearchGroupDetailsByIdQuery(researchGroupId)));
+
+    /// <summary>
+    /// Supervises a student.
+    /// </summary>
+    /// <param name="studentId">The identifier of the student to supervise.</param>
+    /// <returns>An HTTP response indicating the result of the operation.</returns>
+    [Authorize(Roles= "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [HttpPost("supervise-student/{studentId}")]
+    public async Task<ActionResult> SuperviseStudent(string studentId) => HandleOperationResult(
+               await Mediator.Send(new SuperviseStudentCommand(User.FindFirstValue(ClaimTypes.NameIdentifier), studentId)));
+
+    /// <summary>
+    /// Unsupervises a student.
+    /// </summary>
+    /// <param name="studentId">The identifier of the student to unsupervise.</param>
+    /// <returns>An HTTP response indicating the result of the operation.</returns>
+    [Authorize (Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [HttpDelete("unsupervise-student/{studentId}")]
+    public async Task<ActionResult> UnsuperviseStudent(string studentId) => HandleOperationResult(
+               await Mediator.Send(new UnsuperviseStudentCommand(User.FindFirstValue(ClaimTypes.NameIdentifier), studentId)));
+
+    /// <summary>
+    /// Gets a list of students not supervised by the currently authenticated teacher.
+    /// </summary>
+    /// <returns>A list of students not supervised by the currently authenticated teacher.</returns>
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [HttpGet("students-not-supervised")]
+    public async Task<ActionResult<List<StudentResponseDto>>> GetStudentsNotSupervised() => HandleOperationResult(
+                await Mediator.Send(new FetchStudentsNotSupervisedQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
+
+    /// <summary>
+    /// Gets a list of students supervised by the currently authenticated teacher.
+    /// </summary>
+    /// <returns>A list of students supervised by the currently authenticated teacher.</returns>
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [HttpGet("students-supervised")]
+    public async Task<ActionResult<List<StudentResponseDto>>> GetStudentsSupervised() => HandleOperationResult(
+                await Mediator.Send(new FetchStudentsSupervisedQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
 
 }
