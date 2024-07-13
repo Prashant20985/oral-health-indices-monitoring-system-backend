@@ -1,4 +1,5 @@
-﻿using App.Domain.DTOs.ExamDtos.Request;
+﻿using App.Domain.DTOs.Common.Request;
+using App.Domain.DTOs.ExamDtos.Request;
 using App.Domain.DTOs.PatientDtos.Request;
 using App.Domain.Models.Common.RiskFactorAssessment;
 
@@ -9,6 +10,7 @@ namespace App.Application.StudentExamOperations.StudentOperations.Command.AddPra
 /// </summary>
 public record PracticePatientExaminationCardInputModel(
     CreatePatientDto PatientDto,
+    SummaryRequestDto Summary,
     RiskFactorAssessmentModel RiskFactorAssessmentModel,
     PracticeAPIDto PracticeAPI,
     PracticeBleedingDto PracticeBleeding,

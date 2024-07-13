@@ -24,6 +24,11 @@ public class CreatePatientExaminationCardByDoctorCommandValidator
             .NotNull()
             .NotEmpty();
 
+        // Validate Summary
+        RuleFor(x => x.InputParams.Summary)
+            .NotNull()
+            .SetValidator(new SummaryValidator());
+
         // Validate RiskFactorAssessmentModel
         RuleFor(x => x.InputParams.RiskFactorAssessmentModel)
             .NotNull()
@@ -38,6 +43,13 @@ public class CreatePatientExaminationCardByDoctorCommandValidator
         RuleFor(x => x.InputParams.DMFT_DMFS.DMFT_DMFSAssessmentModel)
             .NotNull()
             .SetValidator(new DMFT_DMFSAssessmentModelValidator());
+
+        // Validate CreateDMFT_DMFSRequest ProstheticStatus
+        string[] prostheticStatusValues = ["x", "0", "1", "2"];
+        RuleFor(x => x.InputParams.DMFT_DMFS.ProstheticStatus)
+            .NotEmpty()
+            .Must(x => prostheticStatusValues.Contains(x)).WithMessage("Invalid Value.")
+            .MaximumLength(1);
 
         // Validate CreateBeweRequest Comment
         RuleFor(x => x.InputParams.Bewe.Comment)

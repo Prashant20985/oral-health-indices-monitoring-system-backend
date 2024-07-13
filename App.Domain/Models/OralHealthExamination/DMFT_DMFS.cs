@@ -9,6 +9,7 @@ public class DMFT_DMFS
     public decimal DMFSResult { get; private set; }
     public string DoctorComment { get; private set; }
     public string StudentComment { get; private set; }
+    public string ProstheticStatus { get; private set; }
 
     public DMFT_DMFSAssessmentModel AssessmentModel { get; private set; }
 
@@ -23,4 +24,6 @@ public class DMFT_DMFS
     public void SetDMFSResult(decimal dmfsResult) => DMFSResult = dmfsResult;
 
     public void SetDMFT_DMFSAssessmentModel(DMFT_DMFSAssessmentModel assessmentModel) => AssessmentModel = assessmentModel;
+
+    public void SetProstheticStatus(string prostheticStatus) => ProstheticStatus = prostheticStatus;
 }

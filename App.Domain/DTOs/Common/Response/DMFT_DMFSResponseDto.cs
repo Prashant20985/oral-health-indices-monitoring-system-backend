@@ -33,6 +33,11 @@ public class DMFT_DMFSResponseDto
     public string StudentComment { get; init; }
 
     /// <summary>
+    /// Gets Prosthetic status related to the DMFT and DMFS assessment.
+    /// </summary>
+    public string ProstheticStatus { get; init; }
+
+    /// <summary>
     /// Gets or sets the assessment model used for the DMFT and DMFS assessment.
     /// </summary>
     public DMFT_DMFSAssessmentModel AssessmentModel { get; init; }

@@ -16,6 +16,14 @@ public class PatientExaminationCard(Guid patientId)
 
     public decimal? TotalScore { get; private set; }
 
+    public string NeedForDentalInterventions { get; private set; }
+
+    public string ProposedTreatment { get; private set; }
+
+    public string Description { get; private set; }
+
+    public string PatientRecommendations { get; private set; }
+
     public Guid PatientId { get; private set; } = patientId;
     public virtual Patient Patient { get; set; }
 
@@ -47,4 +55,13 @@ public class PatientExaminationCard(Guid patientId)
 
     public void AddDoctorComment(string comment) => DoctorComment = comment;
     public void AddStudentComment(string comment) => StudentComment = comment;
+
+    public void SetNeedForDentalInterventions(string needForDentalInterventions) => NeedForDentalInterventions = needForDentalInterventions;
+
+    public void SetProposedTreatment(string proposedTreatment) => ProposedTreatment = proposedTreatment;
+
+    public void SetDescription(string description) => Description = description;
+
+    public void SetPatientRecommendations(string patientRecommendations) => PatientRecommendations = patientRecommendations;
+
 }

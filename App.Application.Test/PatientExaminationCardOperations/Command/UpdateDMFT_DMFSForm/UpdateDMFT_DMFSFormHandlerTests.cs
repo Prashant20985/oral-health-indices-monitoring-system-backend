@@ -18,7 +18,7 @@ public class UpdateDMFT_DMFSFormHandlerTests : TestHelper
         var dmft_dmfsAssessmentModel = new DMFT_DMFSAssessmentModel();
 
         handler = new UpdateDMFT_DMFSFormHandler(patientExaminationCardRepositoryMock.Object);
-        command = new UpdateDMFT_DMFSFormCommand(Guid.NewGuid(), dmft_dmfsAssessmentModel);
+        command = new UpdateDMFT_DMFSFormCommand(Guid.NewGuid(),"1", dmft_dmfsAssessmentModel);
     }
 
     [Fact]

@@ -15,11 +15,11 @@ using App.Application.PatientExaminationCardOperations.Command.UpdateRiskFactorA
 using App.Application.PatientExaminationCardOperations.Query.FetchAllPatientExaminationCardsInRegualrMode;
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardDetails;
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardInTestMode;
+using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.DTOs.PatientDtos.Response;
 using App.Domain.Models.Common.APIBleeding;
 using App.Domain.Models.Common.Bewe;
-using App.Domain.Models.Common.DMFT_DMFS;
 using App.Domain.Models.Common.RiskFactorAssessment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -103,8 +103,8 @@ public class PatientExaminationCardController : BaseController
     /// <returns>An ActionResult of DMFT_DMFSResultResponseDto</returns>
     [HttpPut("update-dmft-dmfs-form/{cardId}")]
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
-    public async Task<ActionResult<DMFT_DMFSResultResponseDto>> UpdateDMFTDMFSForm(Guid cardId, [FromBody] DMFT_DMFSAssessmentModel assessmentModel) =>
-        HandleOperationResult(await Mediator.Send(new UpdateDMFT_DMFSFormCommand(cardId, assessmentModel)));
+    public async Task<ActionResult<DMFT_DMFSResultResponseDto>> UpdateDMFTDMFSForm(Guid cardId,string prostheticStatus, [FromBody] UpdateDMFT_DMFSRequestDto updateDMFT_DMFS) =>
+        HandleOperationResult(await Mediator.Send(new UpdateDMFT_DMFSFormCommand(cardId, updateDMFT_DMFS)));
 
     /// <summary>
     /// Update bleeding form

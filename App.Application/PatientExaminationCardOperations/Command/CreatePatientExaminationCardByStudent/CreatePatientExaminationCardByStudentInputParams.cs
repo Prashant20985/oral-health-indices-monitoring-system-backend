@@ -16,6 +16,7 @@ namespace App.Application.PatientExaminationCardOperations.Command.CreatePatient
 public record CreatePatientExaminationCardByStudentInputParams(
     string AssignedDoctorId,
     string PatientExaminationCardComment,
+    SummaryRequestDto Summary,
     RiskFactorAssessmentModel RiskFactorAssessmentModel,
     CreateDMFT_DMFSRequestDto DMFT_DMFS,
     CreateBeweRequestDto Bewe,

@@ -138,6 +138,14 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
             }
         };
 
+        var summaryRequestDto = new SummaryRequestDto
+        {
+            NeedForDentalInterventions = "1",
+            PatientRecommendations = "test",
+            ProposedTreatment = "test",
+            Description = "test"
+        };
+
         CreateBleedingRequestDto bleeding = new()
         {
             Comment = "test",
@@ -188,6 +196,7 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
 
         CreatePatientExaminationCardByDoctorInputParams inputParams = new(
             "Test Comment",
+            summaryRequestDto,
             riskFactorAssesmentModel,
             dmft_dmfs,
             bewe,

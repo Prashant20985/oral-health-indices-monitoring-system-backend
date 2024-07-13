@@ -14,6 +14,7 @@ namespace App.Application.PatientExaminationCardOperations.Command.CreatePatient
 /// <param name="Bleeding">The create bleeding request</param>
 public record CreatePatientExaminationCardByDoctorInputParams(
     string PatientExaminationCardComment,
+    SummaryRequestDto Summary,
     RiskFactorAssessmentModel RiskFactorAssessmentModel,
     CreateDMFT_DMFSRequestDto DMFT_DMFS,
     CreateBeweRequestDto Bewe,

@@ -29,6 +29,11 @@ public class PracticeDMFT_DMFS(decimal dMFTResult, decimal dMFSResult)
     public string Comment { get; private set; }
 
     /// <summary>
+    /// Gets or sets the prosthetic status of the patient.
+    /// </summary>
+    public string ProstheticStatus { get; private set; }
+
+    /// <summary>
     /// Gets or sets the assessment model for DMFT_DMFS assessment.
     /// </summary>
     public DMFT_DMFSAssessmentModel AssessmentModel { get; private set; }
@@ -45,5 +50,7 @@ public class PracticeDMFT_DMFS(decimal dMFTResult, decimal dMFSResult)
     public void AddComment(string comment) => Comment = comment;
 
     public void SetAssessmentModel(DMFT_DMFSAssessmentModel assessmentModel) => AssessmentModel = assessmentModel;
+
+    public void SetProstheticStatus(string prostheticStatus) => ProstheticStatus = prostheticStatus;
 }
 

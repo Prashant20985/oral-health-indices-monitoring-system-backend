@@ -19,6 +19,21 @@ public class AddPracticePatientExaminationCardCommandValidator : AbstractValidat
         RuleFor(x => x.StudentId).NotEmpty();
 
         RuleFor(x => x.CardInputModel.PatientDto).SetValidator(new PracticePatientValidator());
+
+        RuleFor(x => x.CardInputModel.Summary.NeedForDentalInterventions)
+            .MaximumLength(1);
+
+        RuleFor(x => x.CardInputModel.Summary.Description)
+            .MaximumLength(500);
+
+        RuleFor(x => x.CardInputModel.Summary.ProposedTreatment)
+            .MaximumLength(500);
+
+        RuleFor(x => x.CardInputModel.Summary.PatientRecommendations)
+            .MaximumLength(500);
+
+        RuleFor(x => x.CardInputModel.PracticeDMFT_DMFS.ProstheticStatus)
+            .MaximumLength(1);
     }
 }
 

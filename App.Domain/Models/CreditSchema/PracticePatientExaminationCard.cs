@@ -23,6 +23,26 @@ public class PracticePatientExaminationCard(Guid examId, string studentId)
     public string DoctorComment { get; private set; }
 
     /// <summary>
+    /// Gets or sets the need for dental interventions identified during the examination.
+    /// </summary>
+    public string NeedForDentalInterventions { get; private set; }
+
+    /// <summary>
+    /// Gets or sets the proposed treatment for the patient based on the examination.
+    /// </summary>
+    public string ProposedTreatment { get; private set; }
+
+    /// <summary>
+    /// Gets or sets the description of the examination.
+    /// </summary>
+    public string Description { get; private set; }
+
+    /// <summary>
+    /// Gets or sets the recommendations provided to the patient based on the examination.
+    /// </summary>
+    public string PatientRecommendations { get; private set; }
+
+    /// <summary>
     /// Gets or sets the unique identifier of the risk factor assessment associated with this examination.
     /// </summary>
     public Guid RiskFactorAssessmentId { get; private set; }
@@ -79,5 +99,9 @@ public class PracticePatientExaminationCard(Guid examId, string studentId)
     public void SetRiskFactorAssessmentId(Guid riskFactorAssessmentId) => RiskFactorAssessmentId = riskFactorAssessmentId;
     public void SetPracticePatientExaminationResult(PracticePatientExaminationResult practicePatientExaminationResult) => PracticePatientExaminationResult = practicePatientExaminationResult;
     public void SetStudent(ApplicationUser student) => Student = student;
+    public void SetDescription(string description) => Description = description;
+    public void SetPatientRecommendations(string patientRecommendations) => PatientRecommendations = patientRecommendations;
+    public void SetNeedForDentalInterventions(string needForDentalInterventions) => NeedForDentalInterventions = needForDentalInterventions;
+    public void SetProposedTreatment(string proposedTreatment) => ProposedTreatment = proposedTreatment;
 }
 

@@ -92,6 +92,7 @@ internal sealed class CreatePatientExaminationCardByStudentHandler(
 
         // Create DMFT_DMFS form
         var dmft_dmfsForm = new DMFT_DMFS();
+        dmft_dmfsForm.SetProstheticStatus(request.InputParams.DMFT_DMFS.ProstheticStatus);
         dmft_dmfsForm.SetDMFT_DMFSAssessmentModel(request.InputParams.DMFT_DMFS.DMFT_DMFSAssessmentModel);
         dmft_dmfsForm.SetDMFTResult(request.InputParams.DMFT_DMFS.DMFTResult);
         dmft_dmfsForm.SetDMFSResult(request.InputParams.DMFT_DMFS.DMFSResult);
@@ -134,6 +135,18 @@ internal sealed class CreatePatientExaminationCardByStudentHandler(
         // Add doctor comment
         examinationCard.AddStudentComment(request.InputParams.PatientExaminationCardComment);
 
+        // Set Need For Dental Interventions
+        examinationCard.SetNeedForDentalInterventions(request.InputParams.Summary.NeedForDentalInterventions);
+        
+        // Set Proposed Treatment
+        examinationCard.SetProposedTreatment(request.InputParams.Summary.ProposedTreatment);
+
+        // Set Description
+        examinationCard.SetDescription(request.InputParams.Summary.Description);
+
+        // Set Patient Recommendations
+        examinationCard.SetPatientRecommendations(request.InputParams.Summary.PatientRecommendations);
+
         // Add patient examination card to repository
         await _patientExaminationCardRepository.AddPatientExaminationCard(examinationCard);
 
@@ -148,6 +161,7 @@ internal sealed class CreatePatientExaminationCardByStudentHandler(
             TotalScore = examinationCard.TotalScore,
             StudentComment = examinationCard.StudentComment,
             IsRegularMode = examinationCard.IsRegularMode,
+            Summary = _mapper.Map<SummaryResponseDto>(request.InputParams.Summary),
             RiskFactorAssessment = _mapper.Map<RiskFactorAssessmentDto>(riskFactorAssessment),
             PatientExaminationResult = new PatientExaminationResultDto()
             {

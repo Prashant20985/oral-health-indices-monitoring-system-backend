@@ -81,6 +81,7 @@ internal sealed class AddPracticePatientExaminationCardHandler(IStudentExamRepos
             request.CardInputModel.PracticeDMFT_DMFS.DMFSResult);
 
         practiceDMFT_DMFS.SetAssessmentModel(request.CardInputModel.PracticeDMFT_DMFS.AssessmentModel);
+        practiceDMFT_DMFS.SetProstheticStatus(request.CardInputModel.PracticeDMFT_DMFS.ProstheticStatus);
 
         // Add practice DMFT/DMFS to repository
         await _studentExamRepository.AddPracticeDMFT_DMFS(practiceDMFT_DMFS);
@@ -114,6 +115,11 @@ internal sealed class AddPracticePatientExaminationCardHandler(IStudentExamRepos
         practicePatientExaminationCard.SetPatientId(practicePatient.Id);
         practicePatientExaminationCard.SetPatientExaminationResultId(practicePatientExamiantionResult.Id);
         practicePatientExaminationCard.SetRiskFactorAssessmentId(riskFactorAssessment.Id);
+
+        practicePatientExaminationCard.SetPatientRecommendations(request.CardInputModel.Summary.PatientRecommendations);
+        practicePatientExaminationCard.SetDescription(request.CardInputModel.Summary.Description);
+        practicePatientExaminationCard.SetNeedForDentalInterventions(request.CardInputModel.Summary.NeedForDentalInterventions);
+        practicePatientExaminationCard.SetProposedTreatment(request.CardInputModel.Summary.ProposedTreatment);
 
         // Add practice patient examination card to repository
         await _studentExamRepository.AddPracticePatientExaminationCard(practicePatientExaminationCard);
