@@ -13,6 +13,11 @@ public class CreateDMFT_DMFSRequestDto
     public string Comment { get; init; }
 
     /// <summary>
+    /// Gets or initializes the prosthetic status
+    /// </summary>
+    public string ProstheticStatus { get; init; }
+
+    /// <summary>
     /// Gets or initializes the DMFT result
     /// </summary>
     public decimal DMFTResult { get; set; }

@@ -1,5 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.StudentExamOperations.StudentOperations.Command.AddPracticePatientExmaintionCard;
+using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.ExamDtos.Request;
 using App.Domain.DTOs.PatientDtos.Request;
 using App.Domain.Models.Common.APIBleeding;
@@ -81,8 +82,11 @@ public class AddPracticePatientExaminationCardTest
             AssessmentModel = new DMFT_DMFSAssessmentModel()
         };
 
+        var summary = new SummaryRequestDto();
+
         var cardInputModel = new PracticePatientExaminationCardInputModel
             (patientDto,
+            summary,
             riskFactorAssessmentModel,
             PracticeAPI,
             PracticeBleeding,
@@ -165,8 +169,11 @@ public class AddPracticePatientExaminationCardTest
             AssessmentModel = new DMFT_DMFSAssessmentModel()
         };
 
+        var summary = new SummaryRequestDto();
+
         var cardInputModel = new PracticePatientExaminationCardInputModel
             (patientDto,
+            summary,
             riskFactorAssessmentModel,
             PracticeAPI,
             PracticeBleeding,
@@ -250,8 +257,11 @@ public class AddPracticePatientExaminationCardTest
             AssessmentModel = new DMFT_DMFSAssessmentModel()
         };
 
+        var summary = new SummaryRequestDto();
+
         var cardInputModel = new PracticePatientExaminationCardInputModel
             (patientDto,
+            summary,
             riskFactorAssessmentModel,
             PracticeAPI,
             PracticeBleeding,
@@ -332,8 +342,11 @@ public class AddPracticePatientExaminationCardTest
             AssessmentModel = new DMFT_DMFSAssessmentModel()
         };
 
+        var summary = new SummaryRequestDto();
+
         var cardInputModel = new PracticePatientExaminationCardInputModel
             (patientDto,
+            summary,
             riskFactorAssessmentModel,
             PracticeAPI,
             PracticeBleeding,
@@ -419,8 +432,11 @@ public class AddPracticePatientExaminationCardTest
             AssessmentModel = new DMFT_DMFSAssessmentModel()
         };
 
+        var summary = new SummaryRequestDto();
+
         var cardInputModel = new PracticePatientExaminationCardInputModel
             (patientDto,
+            summary,
             riskFactorAssessmentModel,
             PracticeAPI,
             PracticeBleeding,

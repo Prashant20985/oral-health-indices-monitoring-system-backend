@@ -1,5 +1,6 @@
 ﻿using App.Domain.DTOs.ApplicationUserDtos.Request;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
+using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.DTOs.PatientDtos.Response;
@@ -76,9 +77,16 @@ public class MappingProfile : Profile
 
         // CreateMap<TSource, TDestination> creates a mapping from PatientExaminationCard to PatientExaminationCardDto
         CreateMap<PatientExaminationCard, PatientExaminationCardDto>()
+            .ForMember(x => x.Summary, o => o.MapFrom(s => new SummaryResponseDto
+            {
+                Description = s.Description,
+                NeedForDentalInterventions = s.NeedForDentalInterventions,
+                PatientRecommendations = s.PatientRecommendations,
+                ProposedTreatment = s.ProposedTreatment
+            }))
             .ForMember(x => x.PatientName, o => o.MapFrom(s => $"{s.Patient.FirstName} {s.Patient.LastName}"))
             .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName} ({s.Doctor.Email})"))
-            .ForMember(x => x.StudentName, o => o.MapFrom(s => $"{s.Student.FirstName} {s.Student.LastName} ({s.Student.Email})"));
+            .ForMember(x => x.StudentName, o => o.MapFrom(s => s.Student != null ? $"{s.Student.FirstName} {s.Student.LastName} ({s.Student.Email})" : ""));
 
         // CreateMap<TSource, TDestination> creates a mapping from Exam to ExamDto
         CreateMap<Exam, ExamDto>()
@@ -105,8 +113,18 @@ public class MappingProfile : Profile
         // CreateMap<TSource, TDestination> creates a mapping from PracticePatientExaminationResult to PatientExaminationResultDto
         CreateMap<PracticePatientExaminationResult, PracticePatientExaminationResultResponseDto>();
 
+        // CreateMap<TSource, TDestination> creates a mapping from SummaryRequestDto to SummaryResponseDto
+        CreateMap<SummaryRequestDto, SummaryResponseDto>();
+
         // CreateMap<TSource, TDestination> creates a mapping from PracticePatientExaminationCard to PracticePatientExaminationCardDto
         CreateMap<PracticePatientExaminationCard, PracticePatientExaminationCardDto>()
+            .ForMember(x => x.Summary, o => o.MapFrom(s => new SummaryResponseDto
+            {
+                Description = s.Description,
+                NeedForDentalInterventions = s.NeedForDentalInterventions,
+                PatientRecommendations = s.PatientRecommendations,
+                ProposedTreatment = s.ProposedTreatment
+            }))
             .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Exam.Group.Teacher.FirstName} {s.Exam.Group.Teacher.LastName} ({s.Exam.Group.Teacher.Email})"))
             .ForMember(x => x.StudentName, o => o.MapFrom(s => $"{s.Student.FirstName} {s.Student.LastName} ({s.Student.Email})"));
 

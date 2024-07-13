@@ -30,16 +30,19 @@ internal sealed class UpdateDMFT_DMFSFormHandler(IPatientExaminationCardReposito
             return OperationResult<DMFT_DMFSResultResponseDto>.Failure("DMFT/DMFS form not found");
 
         // Update the DMFT/DMFS form AssessmentModel
-        dmft_dmfsForm.SetDMFT_DMFSAssessmentModel(request.AssessmentModel);
+        dmft_dmfsForm.SetDMFT_DMFSAssessmentModel(request.UpdateDMFT_DMFS.AssessmentModel);
 
-        // Calculate the DMFT/DMFS form result
-        // dmft_dmfsForm.CalculateDMFTResult();
-        // dmft_dmfsForm.CalculateDMFSResult();
+        // Add the DMFT/DMFS form to the repository
+        dmft_dmfsForm.SetDMFSResult(request.UpdateDMFT_DMFS.DMFSResult);
+        dmft_dmfsForm.SetDMFTResult(request.UpdateDMFT_DMFS.DMFTResult);
+
+        // Update the DMFT/DMFS form ProstheticStatus
+        dmft_dmfsForm.SetProstheticStatus(request.UpdateDMFT_DMFS.ProstheticStatus);
 
         return OperationResult<DMFT_DMFSResultResponseDto>.Success(new DMFT_DMFSResultResponseDto
         {
             DMFSResult = dmft_dmfsForm.DMFSResult,
-            DMFTResult = dmft_dmfsForm.DMFTResult
+            DMFTResult = dmft_dmfsForm.DMFTResult,
         });
     }
 }

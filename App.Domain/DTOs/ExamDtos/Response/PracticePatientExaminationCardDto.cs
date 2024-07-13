@@ -31,6 +31,11 @@ public class PracticePatientExaminationCardDto
     public string StudentName { get; set; }
 
     /// <summary>
+    /// Gets or sets the Summary details associated with the examination card.
+    /// </summary>
+    public SummaryResponseDto Summary { get; set; }
+
+    /// <summary>
     /// Gets or sets the patient details associated with the examination card.
     /// </summary>
     public PatientResponseDto PracticePatient { get; set; }

@@ -22,6 +22,9 @@ internal class DMFT_DMFSConfiguration : IEntityTypeConfiguration<DMFT_DMFS>
         builder.Property(x => x.StudentComment)
             .HasMaxLength(500);
 
+        builder.Property(x => x.ProstheticStatus)
+            .HasMaxLength(1);
+
         builder.OwnsOne(x => x.AssessmentModel, ownedNavigationBuilder =>
         {
             ownedNavigationBuilder.ToJson();

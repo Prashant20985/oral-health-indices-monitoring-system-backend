@@ -1,4 +1,5 @@
 ﻿using App.Application.StudentExamOperations.StudentOperations.Command.AddPracticePatientExmaintionCard;
+using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.ExamDtos.Request;
 using App.Domain.DTOs.PatientDtos.Request;
 using App.Domain.Models.Common.RiskFactorAssessment;
@@ -41,9 +42,12 @@ public class AddPracticePatientExaminationCardHandlerTests : TestHelper
         };
         var practiceDmftDmfsDto = new PracticeDMFT_DMFSDto();
 
+        var summary = new SummaryRequestDto();
+
         handler = new AddPracticePatientExaminationCardHandler(studentExamRepositoryMock.Object);
         command = new AddPracticePatientExaminationCardCommand(Guid.NewGuid(), "studentId", new PracticePatientExaminationCardInputModel(
             patientDto,
+            summary,
             riskFactorAssesmentModel,
             practiceApiDto,
             practiceApiBleedingDto,

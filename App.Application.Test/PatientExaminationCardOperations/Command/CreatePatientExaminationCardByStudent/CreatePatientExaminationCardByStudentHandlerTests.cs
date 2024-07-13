@@ -186,9 +186,18 @@ public class CreatePatientExaminationCardByStudentHandlerTests : TestHelper
             }
         };
 
+        var summary = new SummaryRequestDto
+        {
+            NeedForDentalInterventions = "1",
+            Description = "test",
+            ProposedTreatment = "test",
+            PatientRecommendations = "test"
+        };
+
         CreatePatientExaminationCardByStudentInputParams inputParams = new(
             "doctorId",
             "Test Comment",
+            summary,
             riskFactorAssesmentModel,
             dmft_dmfs,
             bewe,

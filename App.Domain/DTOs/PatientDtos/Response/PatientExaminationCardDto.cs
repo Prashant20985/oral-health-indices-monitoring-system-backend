@@ -52,6 +52,8 @@ public class PatientExaminationCardDto
     /// </summary>
     public DateTime DateOfExamination { get; init; }
 
+    public SummaryResponseDto Summary { get; set; }
+
     /// <summary>
     /// Gets or sets the risk factor assessment details associated with the examination card.
     /// </summary>
