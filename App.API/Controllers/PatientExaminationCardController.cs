@@ -11,6 +11,7 @@ using App.Application.PatientExaminationCardOperations.Command.UpdateAPIForm;
 using App.Application.PatientExaminationCardOperations.Command.UpdateBeweForm;
 using App.Application.PatientExaminationCardOperations.Command.UpdateBleedingForm;
 using App.Application.PatientExaminationCardOperations.Command.UpdateDMFT_DMFSForm;
+using App.Application.PatientExaminationCardOperations.Command.UpdatePatientExaminationCardSummary;
 using App.Application.PatientExaminationCardOperations.Command.UpdateRiskFactorAssessmentForm;
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardDetails;
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardsAssignedToDoctor;
@@ -226,5 +227,16 @@ public class PatientExaminationCardController : BaseController
         int year,
         int month) => HandleOperationResult(
             await Mediator.Send(new FetchPatientExaminationCardsAssignedToDoctorQuery(User.FindFirstValue(ClaimTypes.NameIdentifier), studentId, year, month)));
+
+    /// <summary>
+    /// Update patient examination card summary
+    /// </summary>
+    /// <param name="cardId">Unique identifier of the card</param>
+    /// <param name="summary">Summary of the card</param>
+    /// <returns>An ActionResult</returns>
+    [HttpPut("update-patient-examination-card-summary/{cardId}")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
+    public async Task<ActionResult> UpdatePatientExaminationCardSummary(Guid cardId, [FromBody] SummaryRequestDto summary) =>
+        HandleOperationResult(await Mediator.Send(new UpdatePatientExaminationCardSummaryCommand(cardId, summary)));
 
 }
