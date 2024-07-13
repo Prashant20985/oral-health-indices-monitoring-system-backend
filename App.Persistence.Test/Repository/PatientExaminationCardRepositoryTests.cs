@@ -617,7 +617,7 @@ public class PatientExaminationCardRepositoryTests
     }
 
     [Fact]
-    public async Task GetPatientExaminationCardDtosInRegularModeByPatientId_WhenCardExists_ShouldReturnCardDtos()
+    public async Task GetPatientExaminationCardDtosByPatientId_WhenCardExists_ShouldReturnCardDtos()
     {
         var patientId = Guid.NewGuid();
         var patientExaminationCard = new PatientExaminationCard(patientId);
@@ -640,108 +640,12 @@ public class PatientExaminationCardRepositoryTests
         _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
 
         // Act
-        var result = await _patientExaminationCardRepository.GetPatientExaminationCardDtosInRegularModeByPatientId(patientId);
+        var result = await _patientExaminationCardRepository.GetPatientExaminationCardDtosByPatientId(patientId);
 
         // Assert
         Assert.IsType<List<PatientExaminationCardDto>>(result);
         Assert.NotNull(result);
         Assert.NotEmpty(result);
-    }
-
-    [Fact]
-    public async Task GetPatientExaminationCardDtosInRegularModeByPatientId_WhenCardDoesNotExist_ShouldReturnEmptyList()
-    {
-        var patientId = Guid.NewGuid();
-        var patientExaminationCard = new PatientExaminationCard(patientId);
-
-        patientExaminationCard.SetRegularMode();
-
-        var patientExaminationCardDto = new PatientExaminationCardDto
-        {
-            Id = patientExaminationCard.Id,
-        };
-
-        var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-        .AsQueryable()
-        .BuildMockDbSet();
-
-        var patientExaminationCardDtos = new List<PatientExaminationCardDto> { patientExaminationCardDto }
-        .AsQueryable()
-        .BuildMockDbSet();
-
-        _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
-
-        // Act
-        var result = await _patientExaminationCardRepository.GetPatientExaminationCardDtosInRegularModeByPatientId(Guid.NewGuid());
-
-        // Assert
-        Assert.IsType<List<PatientExaminationCardDto>>(result);
-        Assert.NotNull(result);
-        Assert.Empty(result);
-    }
-
-    [Fact]
-    public async Task GetPatientExminationCardDtosInTestModeByPatientId_WhenCardExists_ShouldReturnCardDtos()
-    {
-        var patientId = Guid.NewGuid();
-        var patientExaminationCard = new PatientExaminationCard(patientId);
-
-        patientExaminationCard.SetTestMode();
-
-        var patientExaminationCardDto = new PatientExaminationCardDto
-        {
-            Id = patientExaminationCard.Id,
-        };
-
-        var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-        .AsQueryable()
-        .BuildMockDbSet();
-
-        var patientExaminationCardDtos = new List<PatientExaminationCardDto> { patientExaminationCardDto }
-        .AsQueryable()
-        .BuildMockDbSet();
-
-        _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
-
-        // Act
-        var result = await _patientExaminationCardRepository.GetPatientExminationCardDtosInTestModeByPatientId(patientId);
-
-        // Assert
-        Assert.IsType<List<PatientExaminationCardDto>>(result);
-        Assert.NotNull(result);
-        Assert.NotEmpty(result);
-    }
-
-    [Fact]
-    public async Task GetPatientExminationCardDtosInTestModeByPatientId_WhenCardDoesNotExist_ShouldReturnEmptyList()
-    {
-        var patientId = Guid.NewGuid();
-        var patientExaminationCard = new PatientExaminationCard(patientId);
-
-        patientExaminationCard.SetTestMode();
-
-        var patientExaminationCardDto = new PatientExaminationCardDto
-        {
-            Id = patientExaminationCard.Id,
-        };
-
-        var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-        .AsQueryable()
-        .BuildMockDbSet();
-
-        var patientExaminationCardDtos = new List<PatientExaminationCardDto> { patientExaminationCardDto }
-        .AsQueryable()
-        .BuildMockDbSet();
-
-        _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
-
-        // Act
-        var result = await _patientExaminationCardRepository.GetPatientExminationCardDtosInTestModeByPatientId(Guid.NewGuid());
-
-        // Assert
-        Assert.IsType<List<PatientExaminationCardDto>>(result);
-        Assert.NotNull(result);
-        Assert.Empty(result);
     }
 
     [Fact]

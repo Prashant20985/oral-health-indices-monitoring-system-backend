@@ -1,20 +1,20 @@
-﻿using App.Application.PatientExaminationCardOperations.Query.FetchAllPatientExaminationCardsInRegualrMode;
+﻿using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCards;
 using App.Domain.DTOs.PatientDtos.Response;
 using App.Domain.Models.Enums;
 using App.Domain.Models.OralHealthExamination;
 using Moq;
 
-namespace App.Application.Test.PatientExaminationCardOperations.Query.FetchPatientExaminationCardsInRegularMode;
+namespace App.Application.Test.PatientExaminationCardOperations.Query.FetchPatientExaminationCards;
 
-public class FetchPatientExamiantionCardsInRegularModeHandlerTests : TestHelper
+public class FetchPatientExamiantionCardsHandlerTests : TestHelper
 {
-    private readonly FetchPatientExamiantionCardsInRegularModeHandler handler;
-    private readonly FetchPatientExaminationCardsInRegularModeQuery query;
+    private readonly FetchPatientExamiantionCardsHandler handler;
+    private readonly FetchPatientExaminationCardsQuery query;
 
-    public FetchPatientExamiantionCardsInRegularModeHandlerTests()
+    public FetchPatientExamiantionCardsHandlerTests()
     {
-        handler = new FetchPatientExamiantionCardsInRegularModeHandler(patientExaminationCardRepositoryMock.Object, patientRepositoryMock.Object);
-        query = new FetchPatientExaminationCardsInRegularModeQuery(Guid.NewGuid());
+        handler = new FetchPatientExamiantionCardsHandler(patientExaminationCardRepositoryMock.Object, patientRepositoryMock.Object);
+        query = new FetchPatientExaminationCardsQuery(Guid.NewGuid());
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class FetchPatientExamiantionCardsInRegularModeHandlerTests : TestHelper
         patientRepositoryMock.Setup(x => x.GetPatientById(It.IsAny<Guid>()))
             .ReturnsAsync(patient);
 
-        patientExaminationCardRepositoryMock.Setup(x => x.GetPatientExaminationCardDtosInRegularModeByPatientId(It.IsAny<Guid>()))
+        patientExaminationCardRepositoryMock.Setup(x => x.GetPatientExaminationCardDtosByPatientId(It.IsAny<Guid>()))
             .ReturnsAsync(new List<PatientExaminationCardDto> { patientExaminationCard });
 
         // Act

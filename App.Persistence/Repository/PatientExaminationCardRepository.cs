@@ -115,17 +115,9 @@ public class PatientExaminationCardRepository(OralEhrContext context, IMapper ma
             .FirstOrDefaultAsync(c => c.Id == cardId);
 
     /// <inheritdoc/>
-    public async Task<List<PatientExaminationCardDto>> GetPatientExaminationCardDtosInRegularModeByPatientId(Guid patientId) =>
+    public async Task<List<PatientExaminationCardDto>> GetPatientExaminationCardDtosByPatientId(Guid patientId) =>
         await _context.PatientExaminationCards
-            .Where(c => c.PatientId == patientId && c.IsRegularMode)
-            .ProjectTo<PatientExaminationCardDto>(_mapper.ConfigurationProvider)
-            .AsNoTracking()
-            .ToListAsync();
-
-    /// <inheritdoc/>
-    public async Task<List<PatientExaminationCardDto>> GetPatientExminationCardDtosInTestModeByPatientId(Guid patientId) =>
-        await _context.PatientExaminationCards
-            .Where(c => c.PatientId == patientId && !c.IsRegularMode)
+            .Where(c => c.PatientId == patientId)
             .ProjectTo<PatientExaminationCardDto>(_mapper.ConfigurationProvider)
             .AsNoTracking()
             .ToListAsync();

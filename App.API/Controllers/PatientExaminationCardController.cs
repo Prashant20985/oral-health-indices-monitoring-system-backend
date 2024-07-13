@@ -12,9 +12,7 @@ using App.Application.PatientExaminationCardOperations.Command.UpdateBeweForm;
 using App.Application.PatientExaminationCardOperations.Command.UpdateBleedingForm;
 using App.Application.PatientExaminationCardOperations.Command.UpdateDMFT_DMFSForm;
 using App.Application.PatientExaminationCardOperations.Command.UpdateRiskFactorAssessmentForm;
-using App.Application.PatientExaminationCardOperations.Query.FetchAllPatientExaminationCardsInRegualrMode;
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardDetails;
-using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardInTestMode;
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardsAssignedToDoctor;
 using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.Common.Response;
@@ -198,7 +196,7 @@ public class PatientExaminationCardController : BaseController
     /// </summary>
     /// <param name="cardId">Unique identifier of the card</param>
     /// <returns>An ActionResult of PatientExaminationCardDto</returns>
-    [HttpGet("get-patient-examination-card/{cardId}")]
+    [HttpGet("patient-examination-card/{cardId}")]
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<ActionResult<PatientExaminationCardDto>> GetPatientExaminationCardDetails(Guid cardId) =>
         HandleOperationResult(await Mediator.Send(new FetchPatientExaminationCardDetailsQuery(cardId)));
@@ -208,21 +206,10 @@ public class PatientExaminationCardController : BaseController
     /// </summary>
     /// <param name="patientId">Unique identifier of the patient</param>
     /// <returns>An ActionResult of List of PatientExaminationCardDto</returns>
-    [HttpGet("get-patient-examination-cards-regular-mode-by-patient/{patientId}")]
-    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
-    public async Task<ActionResult<List<PatientExaminationCardDto>>> GetPatientExaminationCardsRegularModeByPatient(Guid patientId) =>
-        HandleOperationResult(await Mediator.Send(new FetchPatientExaminationCardsInRegularModeQuery(patientId)));
-
-    /// <summary>
-    /// Gets all patient examination cards in test mode
-    /// </summary>
-    /// <param name="patientId">Unique identifier of the patient</param>
-    /// <returns>An ActionResult of List of PatientExaminationCardDto</returns>
-    [HttpGet("get-patient-examination-cards-test-mode-by-patient/{patientId}")]
+    [HttpGet("patient-examination-cards/{patientId}")]
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
-    public async Task<ActionResult<List<PatientExaminationCardDto>>> GetPatientExaminationCardsTestModeByPatient(Guid patientId) =>
-        HandleOperationResult(await Mediator.Send(new FetchPatientExaminationCardsInTestModeQuery(patientId)));
-
+    public async Task<ActionResult<List<PatientExaminationCardDto>>> GetPatientExaminationCards(Guid patientId) =>
+        HandleOperationResult(await Mediator.Send(new FetchPatientExaminationCardDetailsQuery(patientId)));
 
     /// <summary>
     /// Gets all patient examination cards assigned to doctor
