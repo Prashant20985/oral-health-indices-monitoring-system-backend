@@ -37,18 +37,6 @@ public class PatientRepository : IPatientRepository
         .OrderBy(x => x.CreatedAt)
         .AsQueryable();
 
-    public IQueryable<PatientResponseDto> GetAllActivePatientsByDoctorId(string doctorId) => _oralEhrContext.Patients
-        .Where(patient => patient.IsArchived == false && patient.DoctorId.Equals(doctorId))
-        .ProjectTo<PatientResponseDto>(_mapper.ConfigurationProvider)
-        .OrderBy(x => x.CreatedAt)
-        .AsQueryable();
-
-    public IQueryable<PatientResponseDto> GetAllArchivedPatientsByDoctorId(string doctorId) => _oralEhrContext.Patients
-        .Where(patient => patient.IsArchived == true && patient.DoctorId.Equals(doctorId))
-        .ProjectTo<PatientResponseDto>(_mapper.ConfigurationProvider)
-        .OrderBy(x => x.CreatedAt)
-        .AsQueryable();
-
     public async Task<Patient> GetPatientById(Guid id) => await _oralEhrContext.Patients
         .FirstOrDefaultAsync(patient => patient.Id.Equals(id));
 

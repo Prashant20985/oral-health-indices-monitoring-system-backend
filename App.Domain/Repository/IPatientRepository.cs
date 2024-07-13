@@ -9,10 +9,6 @@ public interface IPatientRepository
 
     IQueryable<PatientResponseDto> GetAllArchivedPatients();
 
-    IQueryable<PatientResponseDto> GetAllActivePatientsByDoctorId(string doctorId);
-
-    IQueryable<PatientResponseDto> GetAllArchivedPatientsByDoctorId(string doctorId);
-
     Task CreatePatient(Patient patient);
 
     Task<Patient> GetPatientById(Guid id);
