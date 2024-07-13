@@ -1,5 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.PatientExaminationCardOperations.Command.UpdateDMFT_DMFSForm;
+using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Common.DMFT_DMFS;
 using App.Domain.Models.OralHealthExamination;
@@ -17,8 +18,16 @@ public class UpdateDMFT_DMFSFormHandlerTests : TestHelper
     {
         var dmft_dmfsAssessmentModel = new DMFT_DMFSAssessmentModel();
 
+        var updateDMFT_DMFSRequest = new UpdateDMFT_DMFSRequestDto
+        {
+            ProstheticStatus = "x",
+            DMFSResult = 50,
+            DMFTResult = 50,
+            AssessmentModel = new DMFT_DMFSAssessmentModel()
+        };
+
         handler = new UpdateDMFT_DMFSFormHandler(patientExaminationCardRepositoryMock.Object);
-        command = new UpdateDMFT_DMFSFormCommand(Guid.NewGuid(),"1", dmft_dmfsAssessmentModel);
+        command = new UpdateDMFT_DMFSFormCommand(Guid.NewGuid(), updateDMFT_DMFSRequest);
     }
 
     [Fact]
@@ -56,6 +65,6 @@ public class UpdateDMFT_DMFSFormHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.IsType<OperationResult<DMFT_DMFSResultResponseDto>>(result);
-        Assert.Equal(dmft_dmfs.AssessmentModel, command.AssessmentModel);
+        Assert.Equal(dmft_dmfs.AssessmentModel, command.UpdateDMFT_DMFS.AssessmentModel);
     }
 }
