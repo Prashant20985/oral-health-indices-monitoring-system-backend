@@ -15,6 +15,7 @@ using App.Application.PatientExaminationCardOperations.Command.UpdateRiskFactorA
 using App.Application.PatientExaminationCardOperations.Query.FetchAllPatientExaminationCardsInRegualrMode;
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardDetails;
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardInTestMode;
+using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardsAssignedToDoctor;
 using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.DTOs.PatientDtos.Response;
@@ -221,4 +222,22 @@ public class PatientExaminationCardController : BaseController
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<ActionResult<List<PatientExaminationCardDto>>> GetPatientExaminationCardsTestModeByPatient(Guid patientId) =>
         HandleOperationResult(await Mediator.Send(new FetchPatientExaminationCardsInTestModeQuery(patientId)));
+
+
+    /// <summary>
+    /// Gets all patient examination cards assigned to doctor
+    /// </summary>
+    /// <param name="doctorId">Unique identifier of the doctor</param>
+    /// <param name="studentId">Unique identifier of the student</param>
+    /// <param name="year">Year of the examination card</param>
+    /// <param name="month">Month of the examination card</param>
+    /// <returns>An ActionResult of List of PatientExaminationCardWithPatientDetailsDto</returns>
+    [HttpGet("patient-examination-cards-assigned-to-doctor")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    public async Task<ActionResult<List<PatientDetailsWithExaminationCards>>> GetPatientExaminationCardsAssignedToDoctor(
+        string studentId,
+        int year,
+        int month) => HandleOperationResult(
+            await Mediator.Send(new FetchPatientExaminationCardsAssignedToDoctorQuery(User.FindFirstValue(ClaimTypes.NameIdentifier), studentId, year, month)));
+
 }
