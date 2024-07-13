@@ -136,4 +136,10 @@ public class PatientExaminationCardRepository(OralEhrContext context, IMapper ma
             .Where(c => c.Id == cardId)
             .Select(c => c.RiskFactorAssessment)
             .FirstOrDefaultAsync();
+
+    /// <inheritdoc/>
+    public IQueryable<PatientExaminationCard> GetPatientExaminationCardAssignedToDoctor(string doctorId) =>
+        _context.PatientExaminationCards
+            .Where(x => x.DoctorId.Equals(doctorId) && !x.IsRegularMode)
+            .AsQueryable();
 }
