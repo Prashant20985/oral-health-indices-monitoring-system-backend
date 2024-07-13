@@ -110,14 +110,7 @@ public interface IPatientExaminationCardRepository
     /// </summary>
     /// <param name="patientId">The unique identifier of the patient.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of patient examination card data transfer objects.</returns>
-    Task<List<PatientExaminationCardDto>> GetPatientExaminationCardDtosInRegularModeByPatientId(Guid patientId);
-
-    /// <summary>
-    /// Fetches all patient examination card data transfer objects in test mode.
-    /// </summary>
-    /// <param name="patientId">The unique identifier of the patient.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of patient examination card data transfer objects.</returns>
-    Task<List<PatientExaminationCardDto>> GetPatientExminationCardDtosInTestModeByPatientId(Guid patientId);
+    Task<List<PatientExaminationCardDto>> GetPatientExaminationCardDtosByPatientId(Guid patientId);
 
     /// <summary>
     /// IQueryable method to get all patient examination cards assigned to a doctor.
