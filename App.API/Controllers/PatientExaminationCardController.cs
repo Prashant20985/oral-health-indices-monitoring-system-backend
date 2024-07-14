@@ -14,6 +14,7 @@ using App.Application.PatientExaminationCardOperations.Command.UpdateDMFT_DMFSFo
 using App.Application.PatientExaminationCardOperations.Command.UpdatePatientExaminationCardSummary;
 using App.Application.PatientExaminationCardOperations.Command.UpdateRiskFactorAssessmentForm;
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardDetails;
+using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCards;
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardsAssignedToDoctor;
 using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.Common.Response;
@@ -210,7 +211,7 @@ public class PatientExaminationCardController : BaseController
     [HttpGet("patient-examination-cards/{patientId}")]
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
     public async Task<ActionResult<List<PatientExaminationCardDto>>> GetPatientExaminationCards(Guid patientId) =>
-        HandleOperationResult(await Mediator.Send(new FetchPatientExaminationCardDetailsQuery(patientId)));
+        HandleOperationResult(await Mediator.Send(new FetchPatientExaminationCardsQuery(patientId)));
 
     /// <summary>
     /// Gets all patient examination cards assigned to doctor
