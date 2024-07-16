@@ -90,6 +90,11 @@ public class TestHelper
     protected Mock<IMapper> mapperMock;
 
     /// <summary>
+    /// Mock instance for the ISuperviseRepository interface, used to simulate superviseRepository service behavior in tests.
+    /// </summary>
+    protected Mock<ISuperviseRepository> superviseRepositoryMock;
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="TestHelper"/> class with default mocked dependencies.
     /// </summary>
     public TestHelper()
@@ -109,6 +114,7 @@ public class TestHelper
         studentExamRepositoryMock = new Mock<IStudentExamRepository>();
         patientExaminationCardRepositoryMock = new Mock<IPatientExaminationCardRepository>();
         mapperMock = new Mock<IMapper>();
+        superviseRepositoryMock = new Mock<ISuperviseRepository>();
     }
 }
 
