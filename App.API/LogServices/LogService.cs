@@ -7,7 +7,7 @@ namespace App.API.LogServices;
 /// <summary>
 /// Represents a service for logging requests.
 /// </summary>
-public class LogService
+public class LogService : ILogService
 {
     // Represents the collection of request logs.
     private readonly IMongoCollection<RequestLogDocument> _logCollection;
