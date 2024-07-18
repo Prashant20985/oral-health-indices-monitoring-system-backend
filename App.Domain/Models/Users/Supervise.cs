@@ -31,4 +31,5 @@ public class Supervise(string doctorId, string studentId)
     /// Gets or sets the student.
     /// </summary>
     public ApplicationUser Student { get; set; }
+    
 }
