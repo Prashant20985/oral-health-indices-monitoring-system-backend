@@ -24,7 +24,7 @@ public class FetchSupervisingDoctorsHandlerTests : TestHelper
         {
             new SupervisingDoctorResponseDto
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 DoctorName = "doctor"
             }
         };
