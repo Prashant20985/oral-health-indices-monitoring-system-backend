@@ -238,5 +238,4 @@ public class DentistTeacherController : BaseController
     [HttpGet("students-supervised")]
     public async Task<ActionResult<List<StudentResponseDto>>> GetStudentsSupervised() => HandleOperationResult(
                 await Mediator.Send(new FetchStudentsSupervisedQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
-
 }
