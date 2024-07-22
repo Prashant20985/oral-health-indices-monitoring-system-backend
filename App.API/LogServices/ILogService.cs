@@ -1,10 +1,10 @@
-﻿using App.Domain.Models.Logs;
-using Microsoft.AspNetCore.Mvc;
+﻿using App.Domain.DTOs.Common.Response;
+using App.Domain.Models.Logs;
 
 namespace App.API.LogServices;
 
 public interface ILogService
 {
-    Task<List<RequestLogDocument>> GetFilteredLogs(LogQueryParameters query);
+    Task<LogResponseDto> GetFilteredLogs(LogQueryParameters query);
     Task<List<RequestLogDocument>> GetLogsForTodayAsync();
 }

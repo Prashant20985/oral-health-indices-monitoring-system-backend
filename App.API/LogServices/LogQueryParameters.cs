@@ -24,5 +24,15 @@ public class LogQueryParameters
     /// Gets or sets the log level for the log query.
     /// </summary>
     public string Level { get; set; }
+
+    /// <summary>
+    /// Gets or sets the page number for the log query.
+    /// </summary>
+    public int PageNumber { get; set; } = 1;
+
+    /// <summary>
+    /// Gets or sets the page size for the log query.
+    /// </summary>
+    public int PageSize { get; set; } = 50;
 }
 
