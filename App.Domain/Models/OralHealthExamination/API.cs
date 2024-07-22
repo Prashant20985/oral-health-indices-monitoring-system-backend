@@ -28,7 +28,7 @@ public class API
     public void CalculateAPIResult()
     {
         if (AssessmentModel is null) return;
-         
+
         int GetCount(string[] quadrant, string value) => quadrant.Count(q => q.Equals(value));
 
         var quadrant1 = AssessmentModel.Quadrant1.ToArray();
@@ -55,8 +55,18 @@ public class API
         int totalNumberOfPlusCount = quadrant1PlusCount + quadrant2PlusCount
             + quadrant3PlusCount + quadrant4PlusCount;
 
-        decimal apiResult = (decimal)totalNumberOfPlusCount / totalNumberOfSurfacesExamined * 100;
-        SetAPIResult((int)Math.Round(apiResult));
+        if (totalNumberOfSurfacesExamined == 0)
+        {
+            SetAPIResult(0);
+            SetMaxilla(0);
+            SetMandible(0);
+            return;
+        }
+        else
+        {
+            decimal apiResult = (decimal)totalNumberOfPlusCount / totalNumberOfSurfacesExamined * 100;
+            SetAPIResult((int)Math.Round(apiResult));
+        }
 
         // Calculate Maxilla
         int totalNumberOfSurfacesExaminedMaxilla = quadrant1PlusCount + quadrant2PlusCount
@@ -64,8 +74,16 @@ public class API
 
         int totalNumberOfPlusCountMaxilla = quadrant1PlusCount + quadrant2PlusCount;
 
-        decimal maxilla = (decimal)totalNumberOfPlusCountMaxilla / totalNumberOfSurfacesExaminedMaxilla * 100;
-        SetMaxilla((int)Math.Round(maxilla));
+        if (totalNumberOfSurfacesExaminedMaxilla == 0)
+        {
+            SetMaxilla(0);
+        }
+        else
+        {
+            decimal maxilla = (decimal)totalNumberOfPlusCountMaxilla / totalNumberOfSurfacesExaminedMaxilla * 100;
+            SetMaxilla((int)Math.Round(maxilla));
+        }
+
 
         // Calculate Mandible
         int totalNumberOfSurfacesExaminedMandible = quadrant3PlusCount + quadrant4PlusCount
@@ -73,7 +91,14 @@ public class API
 
         int totalNumberOfPlusCountMandible = quadrant3PlusCount + quadrant4PlusCount;
 
-        decimal mandible = (decimal)totalNumberOfPlusCountMandible / totalNumberOfSurfacesExaminedMandible * 100;
-        SetMandible((int)Math.Round(mandible));
+        if (totalNumberOfSurfacesExaminedMandible == 0)
+        {
+            SetMandible(0);
+        }
+        else
+        {
+            decimal mandible = (decimal)totalNumberOfPlusCountMandible / totalNumberOfSurfacesExaminedMandible * 100;
+            SetMandible((int)Math.Round(mandible));
+        }
     }
 }

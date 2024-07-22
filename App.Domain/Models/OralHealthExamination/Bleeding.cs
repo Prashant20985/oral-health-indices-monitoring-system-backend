@@ -53,8 +53,18 @@ public class Bleeding
         int totalNumberOfPlusCount = quadrant1PlusCount + quadrant2PlusCount
             + quadrant3PlusCount + quadrant4PlusCount;
 
-        decimal bleedingResult = (decimal)totalNumberOfPlusCount / totalNumberOfSurfacesExamined * 100;
-        SetBleedingResult((int)Math.Round(bleedingResult));
+        if (totalNumberOfSurfacesExamined == 0)
+        {
+            SetBleedingResult(0);
+            SetMaxilla(0);
+            SetMandible(0);
+            return;
+        }
+        else
+        {
+            decimal bleedingResult = (decimal)totalNumberOfPlusCount / totalNumberOfSurfacesExamined * 100;
+            SetBleedingResult((int)Math.Round(bleedingResult));
+        }
 
         // Calculate Maxilla
         int totalNumberOfSurfacesExaminedMaxilla = quadrant1PlusCount + quadrant2PlusCount
@@ -62,8 +72,16 @@ public class Bleeding
 
         int totalNumberOfPlusCountMaxilla = quadrant1PlusCount + quadrant2PlusCount;
 
-        decimal maxilla = (decimal)totalNumberOfPlusCountMaxilla / totalNumberOfSurfacesExaminedMaxilla * 100;
-        SetMaxilla((int)Math.Round(maxilla));
+        if (totalNumberOfSurfacesExaminedMaxilla == 0)
+        {
+            SetMaxilla(0);
+        }
+        else
+        {
+            decimal maxilla = (decimal)totalNumberOfPlusCountMaxilla / totalNumberOfSurfacesExaminedMaxilla * 100;
+            SetMaxilla((int)Math.Round(maxilla));
+        }
+
 
         // Calculate Mandible
         int totalNumberOfSurfacesExaminedMandible = quadrant3PlusCount + quadrant4PlusCount
@@ -71,7 +89,14 @@ public class Bleeding
 
         int totalNumberOfPlusCountMandible = quadrant3PlusCount + quadrant4PlusCount;
 
-        decimal mandible = (decimal)totalNumberOfPlusCountMandible / totalNumberOfSurfacesExaminedMandible * 100;
-        SetMandible((int)Math.Round(mandible));
+        if (totalNumberOfSurfacesExaminedMandible == 0)
+        {
+            SetMandible(0);
+        }
+        else
+        {
+            decimal mandible = (decimal)totalNumberOfPlusCountMandible / totalNumberOfSurfacesExaminedMandible * 100;
+            SetMandible((int)Math.Round(mandible));
+        }
     }
 }
