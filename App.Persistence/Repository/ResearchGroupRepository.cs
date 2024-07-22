@@ -27,7 +27,7 @@ public class ResearchGroupRepository : IResearchGroupRepository
 
     public IQueryable<ResearchGroupPatientResponseDto> GetAllPatientsNotInAnyResearchGroup() =>
         _oralEhrContext.Patients
-            .Where(rg => rg.ResearchGroupId.Equals == null)
+            .Where(rg => rg.ResearchGroupId == null)
             .OrderByDescending(rg => rg.CreatedAt)
             .ProjectTo<ResearchGroupPatientResponseDto>(_mapper.ConfigurationProvider)
             .AsQueryable();
