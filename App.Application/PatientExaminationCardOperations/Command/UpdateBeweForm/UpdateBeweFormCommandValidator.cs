@@ -1,4 +1,4 @@
-﻿using App.Application.PatientExaminationCardOperations.CommanValidators;
+﻿using App.Application.PatientExaminationCardOperations.CommandValidators;
 using FluentValidation;
 
 namespace App.Application.PatientExaminationCardOperations.Command.UpdateBeweForm;
@@ -20,6 +20,7 @@ public class UpdateBeweFormCommandValidator : AbstractValidator<UpdateBeweFormCo
         // Validates AssessmentModel property
         RuleFor(x => x.AssessmentModel)
             .NotNull()
-            .SetValidator(new BeweAssessmentModelValidator());
+            .SetValidator(new BeweAssessmentModelValidator())
+            .OverridePropertyName("BEWE");
     }
 }

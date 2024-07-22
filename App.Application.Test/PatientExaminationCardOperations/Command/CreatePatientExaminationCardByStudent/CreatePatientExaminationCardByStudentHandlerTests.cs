@@ -32,13 +32,13 @@ public class CreatePatientExaminationCardByStudentHandlerTests : TestHelper
             Comment = "Comment",
             DMFSResult = 10,
             DMFTResult = 10,
-            DMFT_DMFSAssessmentModel = new DMFT_DMFSAssessmentModel()
+            AssessmentModel = new DMFT_DMFSAssessmentModel()
         };
 
         CreateBeweRequestDto bewe = new()
         {
             Comment = "test",
-            BeweAssessmentModel = new BeweAssessmentModel
+            AssessmentModel = new BeweAssessmentModel
             {
                 Sectant1 = new Sectant1
                 {
@@ -92,7 +92,7 @@ public class CreatePatientExaminationCardByStudentHandlerTests : TestHelper
         CreateAPIRequestDto api = new()
         {
             Comment = "test",
-            APIAssessmentModel = new APIBleedingAssessmentModel
+            AssessmentModel = new APIBleedingAssessmentModel
 
             {
                 Quadrant1 = new Quadrant
@@ -141,7 +141,7 @@ public class CreatePatientExaminationCardByStudentHandlerTests : TestHelper
         CreateBleedingRequestDto bleeding = new()
         {
             Comment = "test",
-            BleedingAssessmentModel = new APIBleedingAssessmentModel
+            AssessmentModel = new APIBleedingAssessmentModel
             {
                 Quadrant1 = new Quadrant
                 {

@@ -59,7 +59,7 @@ internal sealed class CreatePatientExaminationCardByStudentHandler(
 
         // Create Bewe form
         var beweForm = new Bewe();
-        beweForm.SetAssessmentModel(request.InputParams.Bewe.BeweAssessmentModel);
+        beweForm.SetAssessmentModel(request.InputParams.Bewe.AssessmentModel);
         beweForm.CalculateBeweResult();
 
         // Add comment to Bewe form
@@ -70,7 +70,7 @@ internal sealed class CreatePatientExaminationCardByStudentHandler(
 
         // Create API form
         var apiForm = new API();
-        apiForm.SetAssessmentModel(request.InputParams.API.APIAssessmentModel);
+        apiForm.SetAssessmentModel(request.InputParams.API.AssessmentModel);
         apiForm.CalculateAPIResult();
 
         // Add comment to API form
@@ -81,7 +81,7 @@ internal sealed class CreatePatientExaminationCardByStudentHandler(
 
         // Create Bleeding form
         var bleedingForm = new Bleeding();
-        bleedingForm.SetAssessmentModel(request.InputParams.Bleeding.BleedingAssessmentModel);
+        bleedingForm.SetAssessmentModel(request.InputParams.Bleeding.AssessmentModel);
         bleedingForm.CalculateBleedingResult();
 
         // Add comment to bleeding form
@@ -93,7 +93,7 @@ internal sealed class CreatePatientExaminationCardByStudentHandler(
         // Create DMFT_DMFS form
         var dmft_dmfsForm = new DMFT_DMFS();
         dmft_dmfsForm.SetProstheticStatus(request.InputParams.DMFT_DMFS.ProstheticStatus);
-        dmft_dmfsForm.SetDMFT_DMFSAssessmentModel(request.InputParams.DMFT_DMFS.DMFT_DMFSAssessmentModel);
+        dmft_dmfsForm.SetDMFT_DMFSAssessmentModel(request.InputParams.DMFT_DMFS.AssessmentModel);
         dmft_dmfsForm.SetDMFTResult(request.InputParams.DMFT_DMFS.DMFTResult);
         dmft_dmfsForm.SetDMFSResult(request.InputParams.DMFT_DMFS.DMFSResult);
 

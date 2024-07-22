@@ -15,5 +15,5 @@ public class CreateBeweRequestDto
     /// <summary>
     /// Gets or initializes the Bewe Assessment model.
     /// </summary>
-    public BeweAssessmentModel BeweAssessmentModel { get; init; }
+    public BeweAssessmentModel AssessmentModel { get; init; }
 }

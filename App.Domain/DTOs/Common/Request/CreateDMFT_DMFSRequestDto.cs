@@ -30,5 +30,5 @@ public class CreateDMFT_DMFSRequestDto
     /// <summary>
     /// Gets or initializes the DMFT-DMFS assessment model
     /// </summary>
-    public DMFT_DMFSAssessmentModel DMFT_DMFSAssessmentModel { get; init; }
+    public DMFT_DMFSAssessmentModel AssessmentModel { get; init; }
 }

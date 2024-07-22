@@ -1,4 +1,4 @@
-﻿using App.Application.PatientExaminationCardOperations.CommanValidators;
+﻿using App.Application.PatientExaminationCardOperations.CommandValidators;
 using FluentValidation;
 
 namespace App.Application.PatientExaminationCardOperations.Command.UpdateBleedingForm;
@@ -20,6 +20,7 @@ public class UpdateBleedingFormCommandValidator : AbstractValidator<UpdateBleedi
         // Validate the AssessmentModel property
         RuleFor(x => x.AssessmentModel)
             .NotNull().WithMessage("Assessment Model must not be null.")
-            .SetValidator(new APIBleedingAssessmentModelValidator());
+            .SetValidator(new APIBleedingAssessmentModelValidator())
+            .OverridePropertyName("Bleeding");
     }
 }
