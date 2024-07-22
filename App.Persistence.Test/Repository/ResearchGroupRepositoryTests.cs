@@ -82,8 +82,6 @@ public class ResearchGroupRepositoryTests
         var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1", "test1", "test1", "test1", 1, "test1");
         var patient3 = new Patient("test2", "test2", "test2@test.com", Gender.Male, "test2", "test2", 19, "test2", "test2", "test2", "test2", 1, "test2");
 
-        patient1.ResearchGroupId = Guid.Empty;
-        patient2.ResearchGroupId = Guid.Empty;
         patient3.ResearchGroupId = Guid.NewGuid();
 
         var patients = new List<Patient>

@@ -435,9 +435,10 @@ public class SuperviseRepositoryTests
         Assert.NotNull(result);
         Assert.NotEmpty(result);
         Assert.IsType<List<StudentResponseDto>>(result);
-        Assert.Equal(2, result.Count);
-        Assert.Equal(student.UserName, result.First().UserName);
-        Assert.Equal(student2.UserName, result.Last().UserName);
+        Assert.Equal(3, result.Count);
+        Assert.Equal(student.UserName, result[0].UserName);
+        Assert.Equal(student2.UserName, result[1].UserName);
+        Assert.Equal(student3.UserName, result[2].UserName);
     }
 
     [Fact]

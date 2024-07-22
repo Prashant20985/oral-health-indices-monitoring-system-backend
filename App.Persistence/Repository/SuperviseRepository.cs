@@ -58,10 +58,10 @@ public class SuperviseRepository(OralEhrContext oralEhrContext, IMapper mapper) 
     /// <inheritdoc />
     public async Task<List<StudentResponseDto>> GetAllStudentsNotUnderSupervisionByDoctorId(string doctorId) =>
         await _oralEhrContext.Users
-            .Where(x => x.SuperviseStudentNavigation.Any(s => s.DoctorId != doctorId)
-            && x.ApplicationUserRoles.Any(r => r.ApplicationRole.Name.Equals("Student"))
-            && x.IsAccountActive && x.DeletedAt == null)
-        .ProjectTo<StudentResponseDto>(_mapper.ConfigurationProvider)
-        .OrderBy(s => s.UserName)
+            .Where(x => x.IsAccountActive && x.DeletedAt == null
+                && x.ApplicationUserRoles.Any(r => r.ApplicationRole.Name.Equals("Student"))
+                && x.SuperviseStudentNavigation.All(s => s.DoctorId != doctorId))
+            .ProjectTo<StudentResponseDto>(_mapper.ConfigurationProvider)
+            .OrderBy(s => s.UserName)
         .ToListAsync();
 }
