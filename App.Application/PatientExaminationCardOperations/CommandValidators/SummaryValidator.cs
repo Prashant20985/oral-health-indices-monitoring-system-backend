@@ -1,7 +1,7 @@
 ﻿using App.Domain.DTOs.Common.Request;
 using FluentValidation;
 
-namespace App.Application.PatientExaminationCardOperations.CommanValidators;
+namespace App.Application.PatientExaminationCardOperations.CommandValidators;
 
 public class SummaryValidator
     : AbstractValidator<SummaryRequestDto>

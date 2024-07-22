@@ -15,5 +15,5 @@ public class CreateBleedingRequestDto
     /// <summary>
     /// Gets or initializes Bledding Assessment model
     /// </summary>
-    public APIBleedingAssessmentModel BleedingAssessmentModel { get; init; }
+    public APIBleedingAssessmentModel AssessmentModel { get; init; }
 }

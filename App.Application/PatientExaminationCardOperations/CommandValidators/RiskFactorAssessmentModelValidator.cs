@@ -1,7 +1,7 @@
 ﻿using App.Domain.Models.Common.RiskFactorAssessment;
 using FluentValidation;
 
-namespace App.Application.PatientExaminationCardOperations.CommanValidators;
+namespace App.Application.PatientExaminationCardOperations.CommandValidators;
 
 /// <summary>
 /// Validator for RiskFactorAssessmentModel
@@ -13,22 +13,23 @@ public class RiskFactorAssessmentModelValidator : AbstractValidator<RiskFactorAs
     [
         "Fluoride exposure",
         "Consumption of sweetened products and beverages",
-        "Regular dental care",
+        "Systematic Dental Care",
         "Systemic diseases",
         "Eating disorders",
-        "Complex pharmacotherapy",
+        "Complex Pharmacotherapy",
         "Alcohol/Nicotine",
-        "New caries foci within last 36 months",
-        "Visible plaque",
-        "Tooth extraction for caries within the last 36 months",
-        "Unusual tooth morphology",
-        "1 or more fills on tangent surfaces",
+        "New carious lesions in the last 36 months",
+        "Visible Plaque",
+        "Teeth extraction due to caries in the last 36 months",
+        "Abnormal Tooth Morphology",
+        "1 or more proximal restorations",
         "Exposed root surfaces",
         "Overhanging fills, no contact points",
-        "Fixed braces",
+        "Fixed Orthodontic Braces",
         "Xerostomy",
         "Caries risk factor assessment"
     ];
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RiskFactorAssessmentModelValidator"/> class.

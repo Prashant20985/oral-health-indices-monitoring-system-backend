@@ -1,4 +1,4 @@
-﻿using App.Application.PatientExaminationCardOperations.CommanValidators;
+﻿using App.Application.PatientExaminationCardOperations.CommandValidators;
 using FluentValidation;
 
 namespace App.Application.PatientExaminationCardOperations.Command.UpdateAPIForm;
@@ -20,6 +20,7 @@ public class UpdateAPIFormCommandValidator : AbstractValidator<UpdateAPIFormComm
         // Validates AssessmentModel
         RuleFor(x => x.AssessmentModel)
             .NotNull()
-            .SetValidator(new APIBleedingAssessmentModelValidator());
+            .SetValidator(new APIBleedingAssessmentModelValidator())
+            .OverridePropertyName("API");
     }
 }

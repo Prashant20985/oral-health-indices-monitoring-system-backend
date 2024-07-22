@@ -1,4 +1,4 @@
-﻿using App.Application.PatientExaminationCardOperations.CommanValidators;
+﻿using App.Application.PatientExaminationCardOperations.CommandValidators;
 using FluentValidation;
 
 namespace App.Application.PatientExaminationCardOperations.Command.UpdateRiskFactorAssessmentForm;
@@ -20,6 +20,7 @@ public class UpdateRiskFactorAssessmentFormCommandValidator : AbstractValidator<
         // Validate the AssessmentModel property
         RuleFor(x => x.AssessmentModel)
             .NotNull()
-            .SetValidator(new RiskFactorAssessmentModelValidator());
+            .SetValidator(new RiskFactorAssessmentModelValidator())
+            .OverridePropertyName("Risk Factor Assessment");
     }
 }

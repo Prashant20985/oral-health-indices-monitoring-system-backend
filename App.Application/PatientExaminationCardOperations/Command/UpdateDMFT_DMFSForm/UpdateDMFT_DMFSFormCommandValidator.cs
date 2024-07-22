@@ -1,4 +1,4 @@
-﻿using App.Application.PatientExaminationCardOperations.CommanValidators;
+﻿using App.Application.PatientExaminationCardOperations.CommandValidators;
 using FluentValidation;
 
 namespace App.Application.PatientExaminationCardOperations.Command.UpdateDMFT_DMFSForm;
@@ -22,19 +22,20 @@ public class UpdateDMFT_DMFSFormCommandValidator : AbstractValidator<UpdateDMFT_
         RuleFor(x => x.UpdateDMFT_DMFS.ProstheticStatus)
             .NotEmpty()
             .Must(x => prostheticStatusValues.Contains(x)).WithMessage("Invalid Value.")
-            .MaximumLength(1);
+            .MaximumLength(1).OverridePropertyName("Prosthetic Status");
 
         // Validate DMFTResult
         RuleFor(x => x.UpdateDMFT_DMFS.DMFTResult)
-            .NotEmpty();
+            .NotNull().OverridePropertyName("DMFT Result");
 
         // Validate DMFSResult
         RuleFor(x => x.UpdateDMFT_DMFS.DMFSResult)
-            .NotEmpty();
+            .NotNull().OverridePropertyName("DMFS Result");
 
         // Validate AssessmentModel
         RuleFor(x => x.UpdateDMFT_DMFS.AssessmentModel)
             .NotNull()
-            .SetValidator(new DMFT_DMFSAssessmentModelValidator());
+            .SetValidator(new DMFT_DMFSAssessmentModelValidator())
+            .OverridePropertyName("DMFT/DMFS");
     }
 }

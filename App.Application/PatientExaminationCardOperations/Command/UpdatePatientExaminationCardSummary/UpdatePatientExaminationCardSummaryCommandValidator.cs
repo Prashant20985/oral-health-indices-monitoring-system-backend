@@ -1,4 +1,4 @@
-﻿using App.Application.PatientExaminationCardOperations.CommanValidators;
+﻿using App.Application.PatientExaminationCardOperations.CommandValidators;
 using FluentValidation;
 
 namespace App.Application.PatientExaminationCardOperations.Command.UpdatePatientExaminationCardSummary;
@@ -16,6 +16,7 @@ public class UpdatePatientExaminationCardSummaryCommandValidator
 
         RuleFor(x => x.Summary)
             .NotNull().WithMessage("Summary is required.")
-            .SetValidator(new SummaryValidator());
+            .SetValidator(new SummaryValidator())
+            .OverridePropertyName("Summary");
     }
 }

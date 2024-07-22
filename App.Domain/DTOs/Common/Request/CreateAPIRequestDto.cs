@@ -15,5 +15,5 @@ public class CreateAPIRequestDto
     /// <summary>
     /// Gets or initializes the API Assessment model.
     /// </summary>
-    public APIBleedingAssessmentModel APIAssessmentModel { get; init; }
+    public APIBleedingAssessmentModel AssessmentModel { get; init; }
 }
