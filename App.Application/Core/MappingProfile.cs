@@ -131,11 +131,19 @@ public class MappingProfile : Profile
         // CreateMap<TSource, TDestination> creates a mapping from ApplicationUser to SupervisingDoctorResponseDto
         CreateMap<ApplicationUser, SupervisingDoctorResponseDto>()
             .ForMember(x => x.Id, o => o.MapFrom(s => s.Id))
-            .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.FirstName} {s.LastName}"));
+            .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.FirstName} {s.LastName} ({s.Email})"));
 
         // CreateMap<TSource, TDestination> creates a mapping from PatientExaminationCard to PatientDetailsWithExaminationCards
         CreateMap<PatientExaminationCard, PatientDetailsWithExaminationCards>()
-           .ForMember(x => x.Patient, o => o.MapFrom(s => s.Patient))
+            .ForMember(x => x.Patient, o => o.MapFrom(s => s.Patient))
+            .ForMember(x => x.Summary, o => o.MapFrom(s => new SummaryResponseDto
+            {
+                Description = s.Description,
+                NeedForDentalInterventions = s.NeedForDentalInterventions,
+                PatientRecommendations = s.PatientRecommendations,
+                ProposedTreatment = s.ProposedTreatment
+            }))
+            .ForMember(x => x.PatientName, o => o.MapFrom(s => $"{s.Patient.FirstName} {s.Patient.LastName}"))
             .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName} ({s.Doctor.Email})"))
             .ForMember(x => x.StudentName, o => o.MapFrom(s => $"{s.Student.FirstName} {s.Student.LastName} ({s.Student.Email})"));
     }
