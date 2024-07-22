@@ -1,4 +1,5 @@
-﻿using App.Domain.Models.Logs;
+﻿using App.Domain.DTOs.Common.Response;
+using App.Domain.Models.Logs;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
@@ -43,7 +44,7 @@ public class LogService : ILogService
     /// </summary>
     /// <param name="query">The LogQueryParameters instance for filtering the logs.</param>
     /// <returns>Returns a list of filtered request logs.</returns>
-    public async Task<List<RequestLogDocument>> GetFilteredLogs(LogQueryParameters query)
+    public async Task<LogResponseDto> GetFilteredLogs(LogQueryParameters query)
     {
         var filters = new List<FilterDefinition<RequestLogDocument>>();
 
@@ -71,7 +72,13 @@ public class LogService : ILogService
 
         var filter = filters.Count > 0 ? Builders<RequestLogDocument>.Filter.And(filters) : Builders<RequestLogDocument>.Filter.Empty;
 
-        return await _logCollection.Find(filter).ToListAsync();
+        var skip = (query.PageNumber - 1) * query.PageSize;
+        var limit = query.PageSize;
+
+        var logs = await _logCollection.Find(filter).Skip(skip).Limit(limit).ToListAsync();
+        var totalCount = await _logCollection.CountDocumentsAsync(filter);
+
+        return new LogResponseDto { Logs = logs, TotalCount = totalCount};
     }
 
 }

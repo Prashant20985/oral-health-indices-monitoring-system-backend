@@ -1,6 +1,8 @@
 ﻿using App.API.Controllers;
 using App.API.LogServices;
+using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Logs;
+using Azure;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Moq;
@@ -27,7 +29,9 @@ namespace App.API.Test.Controllers.LogControllerTests
                 StartDate = DateTime.UtcNow.Date.AddDays(-1),
                 EndDate = DateTime.UtcNow.Date,
                 UserName = "User123",
-                Level = "Info"
+                Level = "Info",
+                PageNumber = 1,
+                PageSize = 50
             };
 
             var mockFilteredLogs = new List<RequestLogDocument>
@@ -48,17 +52,27 @@ namespace App.API.Test.Controllers.LogControllerTests
                 }
             };
 
+            var totalCount = mockFilteredLogs.Count;
+
             _mockLogService.Setup(service => service.GetFilteredLogs(query))
-                          .ReturnsAsync(mockFilteredLogs);
+                          .ReturnsAsync(new LogResponseDto { Logs = mockFilteredLogs, TotalCount = totalCount });
 
             // Act
-            var result = await _logController.GetFilteredLogs(query);
+            var result = await _logController.GetFilteredLogs(query) as OkObjectResult;
 
             // Assert
             Assert.NotNull(result);
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var logs = Assert.IsAssignableFrom<List<RequestLogDocument>>(okResult.Value);
-            Assert.Single(logs);
+            Assert.Equal(200, result.StatusCode);
+
+            var resultValue = result.Value as LogResponseDto;
+            Assert.NotNull(resultValue);
+            Assert.Equal(totalCount, resultValue.TotalCount);
+            Assert.Single(resultValue.Logs);
+
+            var firstLog = resultValue.Logs.First();
+            Assert.Equal(mockFilteredLogs[0].Timestamp, firstLog.Timestamp);
+            Assert.Equal(mockFilteredLogs[0].Level, firstLog.Level);
+            Assert.Equal(mockFilteredLogs[0].Properties.ExecutedBy, firstLog.Properties.ExecutedBy);
         }
     }
 }

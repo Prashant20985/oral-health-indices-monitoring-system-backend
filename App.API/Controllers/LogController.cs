@@ -36,9 +36,6 @@ public class LogController(ILogService logService) : ControllerBase
     /// <param name="query">The LogQueryParameters instance for filtering the logs.</param>
     /// <returns>Returns a list of filtered request logs.</returns>
     [HttpGet("filtered-logs")]
-    public async Task<ActionResult<List<RequestLogDocument>>> GetFilteredLogs([FromQuery] LogQueryParameters query)
-    {
-        var logs = await _logService.GetFilteredLogs(query);
-        return Ok(logs);
-    }
+    public async Task<ActionResult> GetFilteredLogs([FromQuery] LogQueryParameters query) =>
+        Ok(await _logService.GetFilteredLogs(query));
 }
