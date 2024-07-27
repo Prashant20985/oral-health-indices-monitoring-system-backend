@@ -45,6 +45,7 @@ public class MappingProfile : Profile
 
         // CreateMap<TSource, TDestination> creates a mapping from Patient to ResearchGroupPatientDto
         CreateMap<Patient, ResearchGroupPatientResponseDto>()
+            .ForMember(x => x.Gender, o => o.MapFrom(s => s.Gender.ToString()))
            .ForMember(x => x.AddedBy, o => o.MapFrom(s => $"{s.Doctor.FirstName} {s.Doctor.LastName}"));
 
         // CreateMap<TSource, TDestination> creates a mapping from ResearchGroup to ResearchGroupDto
