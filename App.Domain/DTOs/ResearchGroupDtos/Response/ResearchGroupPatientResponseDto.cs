@@ -1,6 +1,4 @@
-﻿using App.Domain.Models.Enums;
-
-namespace App.Domain.DTOs.ResearchGroupDtos.Response;
+﻿namespace App.Domain.DTOs.ResearchGroupDtos.Response;
 
 public class ResearchGroupPatientResponseDto
 {
@@ -8,7 +6,7 @@ public class ResearchGroupPatientResponseDto
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
-    public Gender Gender { get; set; }
+    public string Gender { get; set; }
     public string EthnicGroup { get; set; }
     public string OtherGroup { get; set; }
     public int YearsInSchool { get; set; }
