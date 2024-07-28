@@ -42,7 +42,7 @@ public class StudentController : BaseController
     /// Gets the supervising doctors of the student.
     /// </summary>
     /// <returns>List of supervising doctors of the student.</returns>
-    [HttpGet("spervisors")]
+    [HttpGet("supervisors")]
     public async Task<ActionResult<List<SupervisingDoctorResponseDto>>> GetSupervisingDoctors() =>
                HandleOperationResult(await Mediator.Send(new FetchSupervisingDoctorsQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
 }
