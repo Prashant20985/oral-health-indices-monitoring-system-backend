@@ -1339,13 +1339,13 @@ public class ExportController : ControllerBase
         sheet.Cells[13, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[13, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
-        sheet.Cells[14, 1].Value = "q47";
-        sheet.Cells[14, 2].Value = "q46";
-        sheet.Cells[14, 3].Value = "q45";
-        sheet.Cells[14, 4].Value = "q44";
-        sheet.Cells[14, 5].Value = "q43";
-        sheet.Cells[14, 6].Value = "q42";
-        sheet.Cells[14, 7].Value = "q41";
+        sheet.Cells[14, 1].Value = "q37";
+        sheet.Cells[14, 2].Value = "q36";
+        sheet.Cells[14, 3].Value = "q35";
+        sheet.Cells[14, 4].Value = "q34";
+        sheet.Cells[14, 5].Value = "q33";
+        sheet.Cells[14, 6].Value = "q32";
+        sheet.Cells[14, 7].Value = "q31";
 
         sheet.Cells[14, 1, 14, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[14, 1, 14, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
@@ -1369,13 +1369,13 @@ public class ExportController : ControllerBase
         sheet.Cells[13, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[13, 9].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
-        sheet.Cells[14, 9].Value = "q31";
-        sheet.Cells[14, 10].Value = "q32";
-        sheet.Cells[14, 11].Value = "q33";
-        sheet.Cells[14, 12].Value = "q34";
-        sheet.Cells[14, 13].Value = "q35";
-        sheet.Cells[14, 14].Value = "q36";
-        sheet.Cells[14, 15].Value = "q37";
+        sheet.Cells[14, 9].Value = "q41";
+        sheet.Cells[14, 10].Value = "q42";
+        sheet.Cells[14, 11].Value = "q43";
+        sheet.Cells[14, 12].Value = "q44";
+        sheet.Cells[14, 13].Value = "q45";
+        sheet.Cells[14, 14].Value = "q46";
+        sheet.Cells[14, 15].Value = "q47";
 
         sheet.Cells[14, 9, 14, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[14, 9, 14, 15].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
