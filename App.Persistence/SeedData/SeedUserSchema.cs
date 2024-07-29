@@ -31,41 +31,11 @@ public class SeedUserSchema
         {
             // Create a list of AppUser objects representing different users.
             // Create a list of AppUser objects representing different users.
-            List<ApplicationUser> appUsers = new List<ApplicationUser>
-            {
-                new ApplicationUser("superman@test.com", "Clark", "Kent", null, null),
-                new ApplicationUser("batman@test.com", "Bruce", "Wayne", null, null),
-                new ApplicationUser("lantern@test.com", "Hal", "Jordan", null, null),
-                new ApplicationUser("flash@test.com", "Barry", "Allen", null, null),
-                new ApplicationUser("cyborg@test.com", "Victor", "Stone", null, null),
-                new ApplicationUser("aquaman@test.com", "Arthur", "Kent", null, null),
-                new ApplicationUser("greenarrow@test.com", "Oliver", "Queen", null, null),
-                new ApplicationUser("supergirl@test.com", "Kara", "Denvers", null, "Guest Examiner"),
-                new ApplicationUser("wick@test.com", "Jhon", "wick", null, null),
-            };
+            ApplicationUser appUser = new("superman@test.com", "Clark", "Kent", null, null);
 
             // Iterate over the appUsers list and create each user using the user manager.
-            foreach (var appUser in appUsers)
-            {
-                await userManager.CreateAsync(appUser, "P@ssw0rd");
-
-                if (appUser.UserName == "superman")
-                {
-                    await userManager.AddToRoleAsync(appUser, Role.Admin.ToString());
-                }
-                else if (appUser.UserName == "lantern" || appUser.UserName == "flash")
-                {
-                    await userManager.AddToRoleAsync(appUser, Role.Student.ToString());
-                }
-                else if (appUser.UserName == "cyborg" || appUser.UserName == "aquaman")
-                {
-                    await userManager.AddToRoleAsync(appUser, Role.Dentist_Teacher_Researcher.ToString());
-                }
-                else if (appUser.UserName == "greenarrow" || appUser.UserName == "supergirl")
-                {
-                    await userManager.AddToRoleAsync(appUser, Role.Dentist_Teacher_Examiner.ToString());
-                }
-            }
+            await userManager.CreateAsync(appUser, "P@ssw0rd");
+            await userManager.AddToRoleAsync(appUser, Role.Admin.ToString());
         }
     }
 }
