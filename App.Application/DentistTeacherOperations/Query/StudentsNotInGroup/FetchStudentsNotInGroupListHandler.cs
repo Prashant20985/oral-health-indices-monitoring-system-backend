@@ -31,8 +31,8 @@ internal sealed class FetchStudentsNotInGroupListHandler
         // check if students list not in group is empty
         var studentsNotInGroupQuery = await _groupRepository.GetAllStudentsNotInGroup(request.GroupId);
 
-        if (studentsNotInGroupQuery.IsNullOrEmpty())
-            return OperationResult<List<StudentResponseDto>>.Failure("Students not found");
+        //if (studentsNotInGroupQuery.IsNullOrEmpty())
+          //  return OperationResult<List<StudentResponseDto>>.Failure("Students not found");
 
         // Return a success result with no specific data.
         return OperationResult<List<StudentResponseDto>>.Success(studentsNotInGroupQuery);
