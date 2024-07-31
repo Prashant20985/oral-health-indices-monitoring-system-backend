@@ -17,9 +17,9 @@ builder.Services.AddControllers();
 
 // Serilog 
 builder.Host.UseSerilog((context, configuration) =>
-    configuration.ReadFrom.Configuration(context.Configuration));
+    configuration.WriteTo.Console());
 
-Serilog.Debugging.SelfLog.Enable(msg => Console.WriteLine(msg));
+//Serilog.Debugging.SelfLog.Enable(msg => Console.WriteLine(msg));
 
 // Extensions
 builder.Services.AddApplicationServices(builder.Configuration);
