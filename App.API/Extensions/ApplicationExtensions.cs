@@ -49,7 +49,7 @@ public static class ApplicationExtension
                     .AllowAnyHeader()
                     .AllowCredentials()
                     .WithExposedHeaders("WWW-Authenticate")
-                    .WithOrigins("http://localhost:3000", "https://localhost:3000");
+                    .WithOrigins("http://localhost:3000", "https://localhost:3000", "https://oral-ehr-system.netlify.app");
             });
         });
 
