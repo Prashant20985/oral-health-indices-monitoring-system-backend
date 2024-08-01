@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 
 // Serilog 
 builder.Host.UseSerilog((context, configuration) =>
-    configuration.WriteTo.Console());
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 //Serilog.Debugging.SelfLog.Enable(msg => Console.WriteLine(msg));
 
