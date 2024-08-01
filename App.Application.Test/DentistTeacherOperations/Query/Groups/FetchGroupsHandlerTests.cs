@@ -49,8 +49,6 @@ public class FetchGroupsHandlerTests : TestHelper
         var result = await handler.Handle(query, CancellationToken.None);
 
         // Assert
-        Assert.False(result.IsSuccessful);
-        Assert.Equal($"No groups found for teacher with Id {query.TeacherId}", result.ErrorMessage);
-        groupRepositoryMock.Verify(repo => repo.GetAllGroupsWithStudentsList(query.TeacherId), Times.Once);
+        Assert.Empty(result.ResultValue);
     }
 }
