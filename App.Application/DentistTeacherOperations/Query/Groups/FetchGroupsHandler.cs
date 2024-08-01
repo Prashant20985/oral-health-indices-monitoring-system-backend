@@ -25,9 +25,6 @@ internal sealed class FetchGroupsHandler : IRequestHandler<FetchGroupsQuery, Ope
         // Retrieve a list of groups associated with the specified teacher.
         var result = await _groupRepository.GetAllGroupsWithStudentsList(request.TeacherId);
 
-        //if (result.IsNullOrEmpty())
-          //  return OperationResult<List<StudentGroupResponseDto>>.Failure($"No groups found for teacher with Id {request.TeacherId}");
-
         // Return a success result with the list of groups.
         return OperationResult<List<StudentGroupResponseDto>>.Success(result);
     }

@@ -47,8 +47,6 @@ public class FetchStudentsNotInGroupListHandlerTests : TestHelper
         var result = await handler.Handle(query, CancellationToken.None);
 
         // Assert
-        Assert.False(result.IsSuccessful);
-        Assert.Equal("Students not found", result.ErrorMessage);
-        groupRepositoryMock.Verify(repo => repo.GetAllStudentsNotInGroup(query.GroupId), Times.Once);
+        Assert.Empty(result.ResultValue);
     }
 }

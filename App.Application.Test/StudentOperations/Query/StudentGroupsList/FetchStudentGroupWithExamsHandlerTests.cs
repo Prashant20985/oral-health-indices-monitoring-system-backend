@@ -73,8 +73,6 @@ public class FetchStudentGroupWithExamsHandlerTests : TestHelper
         var result = await handler.Handle(query, CancellationToken.None);
 
         // Assert
-        Assert.False(result.IsSuccessful);
         Assert.Null(result.ResultValue);
-        Assert.Equal("No groups found for the student.", result.ErrorMessage);
     }
 }

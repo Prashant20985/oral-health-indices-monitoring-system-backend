@@ -2,7 +2,6 @@
 using App.Domain.DTOs.StudentGroupDtos.Response;
 using App.Domain.Repository;
 using MediatR;
-using Microsoft.IdentityModel.Tokens;
 
 namespace App.Application.StudentOperations.Query.StudentGroupsList;
 
@@ -25,9 +24,6 @@ internal sealed class FetchStudentGroupWithExamsHandler(IGroupRepository groupRe
     {
         var studentGroupsWithExams = await _groupRepository
             .GetAllGroupsByStudentIdWithExamsList(request.StudentId);
-
-        //if (studentGroupsWithExams.IsNullOrEmpty())
-          //  return OperationResult<List<StudentGroupWithExamsListResponseDto>>.Failure("No groups found for the student.");
 
         return OperationResult<List<StudentGroupWithExamsListResponseDto>>.Success(studentGroupsWithExams);
     }
