@@ -1,10 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Email\EmailTemplates\password_reset.html" />
+    <None Remove="Email\EmailTemplates\password_reset_confirmation.html" />
+    <None Remove="Email\EmailTemplates\registration_successfull.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Email\EmailTemplates\password_reset.html" />
+    <EmbeddedResource Include="Email\EmailTemplates\password_reset_confirmation.html" />
+    <EmbeddedResource Include="Email\EmailTemplates\registration_successfull.html" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\App.Application\App.Application.csproj" />

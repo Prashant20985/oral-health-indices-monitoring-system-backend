@@ -12,16 +12,11 @@ namespace App.Infrastructure.Email;
 /// <summary>
 /// Service for sending emails using the configured email settings.
 /// </summary>
-public class EmailService : IEmailService
+public class EmailService(IOptions<EmailSettings> emailSettings,
+    IEmailTemplatePathProvider emailTemplatePathProvider) : IEmailService
 {
-    private readonly EmailSettings _emailSettings;
-    private readonly IEmailTemplatePathProvider _emailTemplatePathProvider;
-
-    public EmailService(IOptions<EmailSettings> emailSettings, IEmailTemplatePathProvider emailTemplatePathProvider)
-    {
-        _emailSettings = emailSettings.Value;
-        _emailTemplatePathProvider = emailTemplatePathProvider;
-    }
+    private readonly EmailSettings _emailSettings = emailSettings.Value;
+    private readonly IEmailTemplatePathProvider _emailTemplatePathProvider = emailTemplatePathProvider;
 
     /// <summary>
     /// Sends an email asynchronously.
@@ -42,50 +37,36 @@ public class EmailService : IEmailService
             mail.Sender = new MailboxAddress(_emailSettings.UserName, _emailSettings.FromAddress);
             mail.To.Add(MailboxAddress.Parse(email));
 
-            var body = new BodyBuilder(); ;
+            var body = new BodyBuilder();
 
             // Build the email body
             switch (emailType)
             {
                 case EmailType.Registration:
-                    // Retrieve the template path for successfull registration email
-                    var registrationSuccessfullTemplatePath = _emailTemplatePathProvider.GetTemplatePath(EmailType.Registration);
-                    var registrationSuccessfullTemplate = await File.ReadAllTextAsync(registrationSuccessfullTemplatePath);
-
+                    var registrationTemplate = _emailTemplatePathProvider.GetTemplateContent(EmailType.Registration);
                     var username = message.Split(" ")[0];
                     var password = message.Split(" ")[1];
 
-                    var registrationSuccessfullEmailContent = registrationSuccessfullTemplate
+                    var registrationEmailContent = registrationTemplate
                         .Replace("{{username}}", username)
                         .Replace("{{password}}", password);
 
-                    body.HtmlBody = registrationSuccessfullEmailContent;
+                    body.HtmlBody = registrationEmailContent;
                     break;
 
                 case EmailType.PasswordResetConfirmation:
-                    // Retrieve the template path for successfull password change email
-                    var passwordResetConfirmationTemplatePath = _emailTemplatePathProvider.GetTemplatePath(EmailType.Registration);
-                    var passwordResetConfirmationTemplate = await File.ReadAllTextAsync(passwordResetConfirmationTemplatePath);
-
-                    username = message.Split(" ")[0];
-                    password = message.Split(" ")[1];
-
-                    var passwordResetConfirmationEmailContent = passwordResetConfirmationTemplate
-                        .Replace("{{username}}", username)
-                        .Replace("{{password}}", password);
-
-                    body.HtmlBody = passwordResetConfirmationEmailContent;
+                    var resetConfirmationTemplate = _emailTemplatePathProvider.GetTemplateContent(EmailType.PasswordResetConfirmation);
+                    body.HtmlBody = resetConfirmationTemplate;
                     break;
 
                 case EmailType.PasswordReset:
-                    // Retrieve the template path for password reset email
-                    var passwordResetTemplatePath = _emailTemplatePathProvider.GetTemplatePath(EmailType.PasswordReset);
-                    var passwordResetTemplate = await File.ReadAllTextAsync(passwordResetTemplatePath);
-                    var passwordResetEmailContent = passwordResetTemplate.Replace("{{callbackUrl}}", message);
-                    body.HtmlBody = passwordResetEmailContent;
+                    var resetTemplate = _emailTemplatePathProvider.GetTemplateContent(EmailType.PasswordReset);
+                    var resetEmailContent = resetTemplate.Replace("{{callbackUrl}}", message);
+                    body.HtmlBody = resetEmailContent;
                     break;
+
                 default:
-                    break;
+                    throw new ArgumentException("Invalid email type.");
             }
 
             mail.Subject = subject;

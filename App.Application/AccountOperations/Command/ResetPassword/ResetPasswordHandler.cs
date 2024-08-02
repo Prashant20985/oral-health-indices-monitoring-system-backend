@@ -56,7 +56,7 @@ internal sealed class ResetPasswordHandler : IRequestHandler<ResetPasswordComman
         var emailContent = new EmailContentDto(
             receiverEmail: user.Email,
             subject: "Password Reset Confirmation",
-            message: $"{user.UserName} {request.ResetPassword.Password}",
+            message: null,
             emailType: EmailType.PasswordResetConfirmation);
 
         await _mediator.Publish(new EmailNotification(emailContent));

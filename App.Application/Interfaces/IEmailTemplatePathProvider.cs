@@ -7,5 +7,5 @@ namespace App.Application.Interfaces;
 /// </summary>
 public interface IEmailTemplatePathProvider
 {
-    string GetTemplatePath(EmailType emailType);
+    string GetTemplateContent(EmailType emailType);
 }
