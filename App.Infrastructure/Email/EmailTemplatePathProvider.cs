@@ -1,52 +1,69 @@
 ﻿using App.Application.Interfaces;
 using App.Domain.Models.Enums;
-using Microsoft.AspNetCore.Hosting;
+using System.Reflection;
 
 namespace App.Infrastructure.Email;
 
 /// <summary>
-/// A service that provides the path to the email template files based on the email type.
+/// A service that provides the content of the email template files based on the email type.
 /// </summary>
 public class EmailTemplatePathProvider : IEmailTemplatePathProvider
 {
-    private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly Assembly _assembly;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EmailTemplatePathProvider"/> class.
     /// </summary>
-    /// <param name="webHostEnvironment">The web host environment service.</param>
-    public EmailTemplatePathProvider(IWebHostEnvironment webHostEnvironment)
+    public EmailTemplatePathProvider()
     {
-        _webHostEnvironment = webHostEnvironment;
+        _assembly = Assembly.GetExecutingAssembly();
     }
 
     /// <summary>
-    /// Gets the file path for the email template based on the provided email type.
+    /// Gets the content of the email template based on the provided email type.
     /// </summary>
-    /// <param name="emailType">The type of email for which the template path is needed.</param>
-    /// <returns>The file path to the email template.</returns>
-    public string GetTemplatePath(EmailType emailType)
+    /// <param name="emailType">The type of email for which the template content is needed.</param>
+    /// <returns>The content of the email template.</returns>
+    public string GetTemplateContent(EmailType emailType)
     {
-        string templateFolder = "EmailTemplates";
-        string templateFileName = GetTemplateFileName(emailType);
-        string templatePath = Path.Combine(_webHostEnvironment.ContentRootPath, templateFolder, templateFileName);
-
-        return templatePath;
+        string templateResourceName = GetTemplateResourceName(emailType);
+        return GetEmbeddedResourceContent(templateResourceName);
     }
 
     /// <summary>
-    /// Determines the template file name based on the provided email type.
+    /// Reads the content of an embedded resource.
     /// </summary>
-    /// <param name="emailType">The type of email for which the template file name is needed.</param>
-    /// <returns>The file name of the email template.</returns>
-    private static string GetTemplateFileName(EmailType emailType)
+    /// <param name="resourceName">The name of the resource.</param>
+    /// <returns>The content of the resource.</returns>
+    private string GetEmbeddedResourceContent(string resourceName)
     {
-        // Logic to determine the template file name based on the email type
+        using (var stream = _assembly.GetManifestResourceStream(resourceName))
+        {
+            if (stream == null)
+            {
+                throw new FileNotFoundException($"Resource {resourceName} not found.");
+            }
+
+            using (var reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Determines the template resource name based on the provided email type.
+    /// </summary>
+    /// <param name="emailType">The type of email for which the template resource name is needed.</param>
+    /// <returns>The resource name of the email template.</returns>
+    private static string GetTemplateResourceName(EmailType emailType)
+    {
+        string resourceBaseName = "App.Infrastructure.Email.EmailTemplates"; // Adjust this namespace as needed
         return emailType switch
         {
-            EmailType.Registration => "registration_successfull.html",
-            EmailType.PasswordReset => "password_reset.html",
-            EmailType.PasswordResetConfirmation => "password_reset_confirmation.html",
+            EmailType.Registration => $"{resourceBaseName}.registration_successfull.html",
+            EmailType.PasswordReset => $"{resourceBaseName}.password_reset.html",
+            EmailType.PasswordResetConfirmation => $"{resourceBaseName}.password_reset_confirmation.html",
             _ => throw new ArgumentException("Invalid email type."),
         };
     }
