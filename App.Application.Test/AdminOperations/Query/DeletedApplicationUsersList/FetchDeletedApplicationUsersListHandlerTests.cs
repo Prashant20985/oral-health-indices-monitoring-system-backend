@@ -1,6 +1,5 @@
 ﻿using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
 using App.Application.AdminOperations.Query.DeletedApplicationUsersList;
-using App.Application.Core;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MockQueryable.Moq;
 using Moq;
@@ -30,7 +29,7 @@ public class FetchDeletedApplicationUsersListHandlerTests : TestHelper
         var users = new List<ApplicationUserResponseDto> { user1, user2 };
         var filteredUsers = new PaginatedApplicationUserResponseDto { Users = new List<ApplicationUserResponseDto> { user1, user2 }, TotalUsersCount = 1 };
 
-        userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery()).Returns(users.AsQueryable().BuildMock());
+        userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery("testUser")).Returns(users.AsQueryable().BuildMock());
 
         queryFilterMock.Setup(filter =>
                 filter.ApplyFilters(It.IsAny<IQueryable<ApplicationUserResponseDto>>(), It.IsAny<ApplicationUserPaginationAndSearchParams>(), CancellationToken.None))

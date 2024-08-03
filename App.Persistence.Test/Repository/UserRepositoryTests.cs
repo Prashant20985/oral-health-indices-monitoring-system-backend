@@ -189,7 +189,7 @@ public class UserRepositoryTests
         userManagerMock.Setup(x => x.Users).Returns(userQueryable);
 
         // Act
-        var result = userRepository.GetActiveApplicationUsersQuery();
+        var result = userRepository.GetActiveApplicationUsersQuery("testUser");
 
         // Assert
         Assert.NotNull(result);

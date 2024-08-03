@@ -13,6 +13,7 @@ using App.Domain.DTOs.ApplicationUserDtos.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace App.API.Controllers;
 
@@ -27,7 +28,7 @@ public class AdminController : BaseController
     [HttpGet("active-users")]
     public async Task<ActionResult<PaginatedApplicationUserResponseDto>> GetActiveUsers(
         [FromQuery] ApplicationUserPaginationAndSearchParams pagingAndSearchParams) => HandleOperationResult(
-            await Mediator.Send(new FetchActiveApplicationUsersListQuery(pagingAndSearchParams)));
+            await Mediator.Send(new FetchActiveApplicationUsersListQuery(pagingAndSearchParams, User.FindFirstValue(ClaimTypes.NameIdentifier))));
 
 
     /// <summary>

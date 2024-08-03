@@ -3,8 +3,10 @@ using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
 using App.Application.Core;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Security.Claims;
 
 namespace App.API.Test.Controllers.AdminControllerTests;
 
@@ -24,6 +26,11 @@ public class GetActiveUsersTest
     public async Task GetActiveUsers_Returns_OkResult()
     {
         //Arrange
+        var userClaims = new ClaimsPrincipal(new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, "testUser")
+        }));
+
         var activeUsers = new List<ApplicationUserResponseDto>()
         {
             new ApplicationUserResponseDto
@@ -58,6 +65,11 @@ public class GetActiveUsersTest
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<FetchActiveApplicationUsersListQuery>(), default))
             .ReturnsAsync(OperationResult<PaginatedApplicationUserResponseDto>.Success(paginatedActiveUsers));
+
+        _adminController.ControllerContext = new ControllerContext
+        {
+            HttpContext = new DefaultHttpContext { User = userClaims }
+        };
 
         // Act
         var result = await _adminController.GetActiveUsers(searchParams);
