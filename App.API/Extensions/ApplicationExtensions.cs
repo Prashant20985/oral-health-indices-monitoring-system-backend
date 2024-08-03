@@ -1,4 +1,5 @@
 ﻿using App.API.LogServices;
+using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
 using App.Application.Behavior;
 using App.Application.Core;
 using App.Application.Interfaces;
@@ -9,7 +10,6 @@ using App.Infrastructure.Configuration;
 using App.Infrastructure.ContextAccessor;
 using App.Infrastructure.Email;
 using App.Infrastructure.GeneratePassword;
-using App.Infrastructure.QueryFilter;
 using App.Infrastructure.ReadCsv;
 using App.Persistence.Contexts;
 using App.Persistence.Repository;
@@ -82,7 +82,7 @@ public static class ApplicationExtension
         services.AddScoped<IGeneratePassword, GeneratePassword>();
 
         // Add a scoped dependency for IQueryFilter with the implementation of QueryFilter.
-        services.AddScoped<IQueryFilter, QueryFilter>();
+        services.AddScoped<IApplicationUsersListQuesyFilter, ApplicationUsersListQueryFilter>();
 
         // Add a scoped dependency for IUserRequestRepository with the implementation of UserRequestRepository.
         services.AddScoped<IUserRequestRepository, UserRequestRepository>();

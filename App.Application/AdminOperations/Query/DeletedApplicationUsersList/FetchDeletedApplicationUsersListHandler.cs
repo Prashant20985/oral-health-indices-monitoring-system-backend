@@ -1,5 +1,5 @@
-﻿using App.Application.Core;
-using App.Application.Interfaces;
+﻿using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
+using App.Application.Core;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
 using App.Domain.Repository;
 using MediatR;
@@ -11,10 +11,10 @@ namespace App.Application.AdminOperations.Query.DeletedApplicationUsersList;
 /// </summary>
 internal sealed class FetchDeletedApplicationUsersListHandler
     : IRequestHandler<FetchDeletedApplicationUsersListQuery,
-    OperationResult<List<ApplicationUserResponseDto>>>
+    OperationResult<PaginatedApplicationUserResponseDto>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IQueryFilter _queryFilter;
+    private readonly IApplicationUsersListQuesyFilter _queryFilter;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FetchDeletedApplicationUsersListHandler"/> class with the required dependencies.
@@ -22,7 +22,7 @@ internal sealed class FetchDeletedApplicationUsersListHandler
     /// <param name="userRepository">The user repository instance.</param>
     /// <param name="queryFilter">The query filter instance.</param>
     public FetchDeletedApplicationUsersListHandler(IUserRepository userRepository,
-        IQueryFilter queryFilter)
+        IApplicationUsersListQuesyFilter queryFilter)
     {
         _userRepository = userRepository;
         _queryFilter = queryFilter;
@@ -34,7 +34,7 @@ internal sealed class FetchDeletedApplicationUsersListHandler
     /// <param name="request">The query request.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>An operation result containing the paged list of deleted users.</returns>
-    public async Task<OperationResult<List<ApplicationUserResponseDto>>> Handle(
+    public async Task<OperationResult<PaginatedApplicationUserResponseDto>> Handle(
         FetchDeletedApplicationUsersListQuery request, CancellationToken cancellationToken)
     {
         // Retrieve the query for deleted application users
@@ -45,6 +45,6 @@ internal sealed class FetchDeletedApplicationUsersListHandler
                 .ApplyFilters(deletedApplicationUsersQuery, request.Params, cancellationToken);
 
         // Return the paged list as a successful operation result
-        return OperationResult<List<ApplicationUserResponseDto>>.Success(filteredUsers);
+        return OperationResult<PaginatedApplicationUserResponseDto>.Success(filteredUsers);
     }
 }

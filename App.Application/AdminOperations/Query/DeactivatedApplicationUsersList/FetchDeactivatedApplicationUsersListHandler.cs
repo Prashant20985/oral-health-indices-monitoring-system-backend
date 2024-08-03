@@ -1,5 +1,5 @@
-﻿using App.Application.Core;
-using App.Application.Interfaces;
+﻿using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
+using App.Application.Core;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
 using App.Domain.Repository;
 using MediatR;
@@ -12,10 +12,10 @@ namespace App.Application.AdminOperations.Query.DeactivatedApplicationUsersList;
 /// </summary>
 internal sealed class FetchDeactivatedApplicationUsersListHandler
     : IRequestHandler<FetchDeactivatedApplicationUsersListQuery,
-    OperationResult<List<ApplicationUserResponseDto>>>
+    OperationResult<PaginatedApplicationUserResponseDto>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IQueryFilter _queryFilter;
+    private readonly IApplicationUsersListQuesyFilter _queryFilter;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FetchDeactivatedApplicationUsersListHandler"/> class with the required dependencies.
@@ -23,7 +23,7 @@ internal sealed class FetchDeactivatedApplicationUsersListHandler
     /// <param name="userRepository">The user repository instance.</param>
     /// <param name="queryFilter">The query filter instance.</param>
     public FetchDeactivatedApplicationUsersListHandler(IUserRepository userRepository,
-        IQueryFilter queryFilter)
+        IApplicationUsersListQuesyFilter queryFilter)
     {
         _userRepository = userRepository;
         _queryFilter = queryFilter;
@@ -35,7 +35,7 @@ internal sealed class FetchDeactivatedApplicationUsersListHandler
     /// <param name="request">The query request.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>An operation result containing the paged list of deactivated users.</returns>
-    public async Task<OperationResult<List<ApplicationUserResponseDto>>> Handle(
+    public async Task<OperationResult<PaginatedApplicationUserResponseDto>> Handle(
         FetchDeactivatedApplicationUsersListQuery request, CancellationToken cancellationToken)
     {
         // Retrieve the query for deactivated application users
@@ -46,6 +46,6 @@ internal sealed class FetchDeactivatedApplicationUsersListHandler
                 .ApplyFilters(deactivatedApplicationUsersQuery, request.Params, cancellationToken);
 
         // Return the paged list as a successful operation result
-        return OperationResult<List<ApplicationUserResponseDto>>.Success(filteredUsers);
+        return OperationResult<PaginatedApplicationUserResponseDto>.Success(filteredUsers);
     }
 }

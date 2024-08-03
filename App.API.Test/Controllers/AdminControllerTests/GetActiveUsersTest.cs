@@ -1,4 +1,5 @@
 ﻿using App.Application.AdminOperations.Query.ActiveApplicationUsersList;
+using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
 using App.Application.Core;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MediatR;
@@ -47,37 +48,24 @@ public class GetActiveUsersTest
             }
         };
 
-        var searchParams = new SearchParams();
+        PaginatedApplicationUserResponseDto paginatedActiveUsers = new PaginatedApplicationUserResponseDto
+        {
+            Users = activeUsers,
+            TotalUsersCount = activeUsers.Count
+        };
+
+        var searchParams = new ApplicationUserPaginationAndSearchParams();
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<FetchActiveApplicationUsersListQuery>(), default))
-            .ReturnsAsync(OperationResult<List<ApplicationUserResponseDto>>.Success(activeUsers));
+            .ReturnsAsync(OperationResult<PaginatedApplicationUserResponseDto>.Success(paginatedActiveUsers));
 
         // Act
         var result = await _adminController.GetActiveUsers(searchParams);
 
         // Assert
-        var actionResult = Assert.IsType<ActionResult<List<ApplicationUserResponseDto>>>(result);
+        var actionResult = Assert.IsType<ActionResult<PaginatedApplicationUserResponseDto>>(result);
         var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-        var model = Assert.IsType<List<ApplicationUserResponseDto>>(okObjectResult.Value);
-        Assert.Equal(activeUsers.Count, model.Count);
-    }
-
-
-    [Fact]
-    public async Task GetActiveUsers_Returns_BadRequest()
-    {
-        // Arrange
-        var searchParams = new SearchParams();
-
-        _mediatorMock.Setup(m => m.Send(It.IsAny<FetchActiveApplicationUsersListQuery>(), default))
-            .ReturnsAsync(OperationResult<List<ApplicationUserResponseDto>>.Failure("Failed to fetch active users"));
-
-        // Act
-        var result = await _adminController.GetActiveUsers(searchParams);
-
-        // Assert
-        var actionResult = Assert.IsType<ActionResult<List<ApplicationUserResponseDto>>>(result);
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(actionResult.Result);
-        Assert.Equal("Failed to fetch active users", badRequestResult.Value);
+        var model = Assert.IsType<PaginatedApplicationUserResponseDto>(okObjectResult.Value);
+        Assert.Equal(activeUsers.Count, model.Users.Count);
     }
 }

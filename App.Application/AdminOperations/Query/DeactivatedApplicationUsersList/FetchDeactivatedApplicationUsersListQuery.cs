@@ -1,4 +1,5 @@
-﻿using App.Application.Core;
+﻿using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
+using App.Application.Core;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MediatR;
 
@@ -8,5 +9,5 @@ namespace App.Application.AdminOperations.Query.DeactivatedApplicationUsersList;
 /// Represents a request to fetch a paged list of deactivated application users.
 /// </summary>
 public record FetchDeactivatedApplicationUsersListQuery(
-    SearchParams Params)
-        : IRequest<OperationResult<List<ApplicationUserResponseDto>>>;
+    ApplicationUserPaginationAndSearchParams Params)
+        : IRequest<OperationResult<PaginatedApplicationUserResponseDto>>;
