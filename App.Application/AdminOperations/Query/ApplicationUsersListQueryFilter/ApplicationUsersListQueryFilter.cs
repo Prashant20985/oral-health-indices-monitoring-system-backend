@@ -1,11 +1,9 @@
-﻿using App.Application.Core;
-using App.Application.Interfaces;
-using App.Domain.DTOs.ApplicationUserDtos.Response;
+﻿using App.Domain.DTOs.ApplicationUserDtos.Response;
 using Microsoft.EntityFrameworkCore;
 
-namespace App.Infrastructure.QueryFilter;
+namespace App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
 
-public class QueryFilter : IQueryFilter
+public class ApplicationUsersListQueryFilter : IApplicationUsersListQuesyFilter
 {
     /// <summary>
     /// Apply filters to the given query based on search parameters and return a paged result.
@@ -14,8 +12,8 @@ public class QueryFilter : IQueryFilter
     /// <param name="pagingAndSearchParams">Paging and search parameters to apply.</param>
     /// <param name="cancellationToken">A token to cancel the operation if needed.</param>
     /// <returns>A paged list of ApplicationUserDto that match the applied filters.</returns>
-    public async Task<List<ApplicationUserResponseDto>> ApplyFilters(IQueryable<ApplicationUserResponseDto> query,
-        SearchParams pagingAndSearchParams,
+    public async Task<PaginatedApplicationUserResponseDto> ApplyFilters(IQueryable<ApplicationUserResponseDto> query,
+        ApplicationUserPaginationAndSearchParams pagingAndSearchParams,
         CancellationToken cancellationToken)
     {
         if (!string.IsNullOrWhiteSpace(pagingAndSearchParams.SearchTerm))
@@ -31,6 +29,17 @@ public class QueryFilter : IQueryFilter
             query = query.Where(x =>
                 x.UserType == pagingAndSearchParams.UserType);
 
-        return await query.ToListAsync(cancellationToken: cancellationToken);
+        var totalUsersCount = await query.CountAsync(cancellationToken: cancellationToken);
+
+        query = query.Skip((pagingAndSearchParams.Page) * pagingAndSearchParams.PageSize)
+            .Take(pagingAndSearchParams.PageSize);
+
+        var users = await query.ToListAsync(cancellationToken: cancellationToken);
+
+        return new PaginatedApplicationUserResponseDto
+        {
+            TotalUsersCount = totalUsersCount,
+            Users = users
+        };
     }
 }

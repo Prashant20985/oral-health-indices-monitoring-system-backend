@@ -1,4 +1,5 @@
-﻿using App.Application.Interfaces;
+﻿using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
+using App.Application.Interfaces;
 using App.Domain.Models.Users;
 using App.Domain.Repository;
 using App.Domain.UnitOfWork;
@@ -52,7 +53,7 @@ public class TestHelper
     /// <summary>
     /// Mock instance for the IQueryFilter interface, used to simulate Query Filter service behavior in tests.
     /// </summary>
-    protected Mock<IQueryFilter> queryFilterMock;
+    protected Mock<IApplicationUsersListQuesyFilter> queryFilterMock;
 
     /// <summary>
     /// Mock instance for the IGroupRepository interface, used to simulate groupRepository service behavior in tests.
@@ -106,7 +107,7 @@ public class TestHelper
         mediatorMock = new Mock<IMediator>();
         emailServiceMock = new Mock<IEmailService>();
         unitOfWork = new Mock<IUnitOfWork>();
-        queryFilterMock = new Mock<IQueryFilter>();
+        queryFilterMock = new Mock<IApplicationUsersListQuesyFilter>();
         groupRepositoryMock = new Mock<IGroupRepository>();
         userRequestRepositoryMock = new Mock<IUserRequestRepository>();
         patientRepositoryMock = new Mock<IPatientRepository>();

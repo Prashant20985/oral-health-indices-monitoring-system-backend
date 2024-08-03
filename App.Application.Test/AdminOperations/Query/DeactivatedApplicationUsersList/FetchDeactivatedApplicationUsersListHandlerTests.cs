@@ -1,4 +1,5 @@
-﻿using App.Application.AdminOperations.Query.DeactivatedApplicationUsersList;
+﻿using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
+using App.Application.AdminOperations.Query.DeactivatedApplicationUsersList;
 using App.Application.Core;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MockQueryable.Moq;
@@ -27,25 +28,25 @@ public class FetchDeactivatedApplicationUsersListHandlerTests : TestHelper
         };
 
         var users = new List<ApplicationUserResponseDto> { user1, user2 };
-        var filteredUsers = new List<ApplicationUserResponseDto> { user1 };
+        var filteredUsers = new PaginatedApplicationUserResponseDto { Users = new List<ApplicationUserResponseDto> { user1 }, TotalUsersCount = 1 };
 
         userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery()).Returns(users.AsQueryable().BuildMock());
 
         queryFilterMock.Setup(filter =>
-                filter.ApplyFilters(It.IsAny<IQueryable<ApplicationUserResponseDto>>(), It.IsAny<SearchParams>(), CancellationToken.None))
-            .ReturnsAsync((IQueryable<ApplicationUserResponseDto> query, SearchParams param, CancellationToken ct) =>
+                filter.ApplyFilters(It.IsAny<IQueryable<ApplicationUserResponseDto>>(), It.IsAny<ApplicationUserPaginationAndSearchParams>(), CancellationToken.None))
+            .ReturnsAsync((IQueryable<ApplicationUserResponseDto> query, ApplicationUserPaginationAndSearchParams param, CancellationToken ct) =>
             {
                 return filteredUsers;
             });
 
-        var query = new FetchDeactivatedApplicationUsersListQuery(new SearchParams());
+        var query = new FetchDeactivatedApplicationUsersListQuery(new ApplicationUserPaginationAndSearchParams());
         var handler = new FetchDeactivatedApplicationUsersListHandler(userRepositoryMock.Object, queryFilterMock.Object);
 
         // Act 
         var result = await handler.Handle(query, CancellationToken.None);
 
         // Assert
-        Assert.Single(result.ResultValue);
-        Assert.Equal(user1.FirstName, result.ResultValue[0].FirstName);
+        Assert.Single(result.ResultValue.Users);
+        Assert.Equal(user1.FirstName, result.ResultValue.Users[0].FirstName);
     }
 }

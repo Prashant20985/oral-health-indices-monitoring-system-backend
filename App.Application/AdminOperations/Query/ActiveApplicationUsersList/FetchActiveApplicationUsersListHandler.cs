@@ -1,5 +1,5 @@
-﻿using App.Application.Core;
-using App.Application.Interfaces;
+﻿using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
+using App.Application.Core;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
 using App.Domain.Repository;
 using MediatR;
@@ -12,10 +12,10 @@ namespace App.Application.AdminOperations.Query.ActiveApplicationUsersList;
 /// </summary>
 internal sealed class FetchActiveApplicationUsersListHandler
     : IRequestHandler<FetchActiveApplicationUsersListQuery,
-        OperationResult<List<ApplicationUserResponseDto>>>
+        OperationResult<PaginatedApplicationUserResponseDto>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IQueryFilter _queryFilter;
+    private readonly IApplicationUsersListQuesyFilter _queryFilter;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FetchActiveApplicationUsersListHandler"/> class with the required dependencies.
@@ -23,7 +23,7 @@ internal sealed class FetchActiveApplicationUsersListHandler
     /// <param name="userRepository">The user repository instance.</param>
     /// <param name="queryFilter">The query filter instance.</param>
     public FetchActiveApplicationUsersListHandler(IUserRepository userRepository,
-        IQueryFilter queryFilter)
+        IApplicationUsersListQuesyFilter queryFilter)
     {
         _queryFilter = queryFilter;
         _userRepository = userRepository;
@@ -35,7 +35,7 @@ internal sealed class FetchActiveApplicationUsersListHandler
     /// <param name="request">The query request.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>An operation result containing the paged list of active users.</returns>
-    public async Task<OperationResult<List<ApplicationUserResponseDto>>> Handle(
+    public async Task<OperationResult<PaginatedApplicationUserResponseDto>> Handle(
         FetchActiveApplicationUsersListQuery request, CancellationToken cancellationToken)
     {
         // Retrieve the query for active application users
@@ -46,6 +46,6 @@ internal sealed class FetchActiveApplicationUsersListHandler
                 .ApplyFilters(activeApplicationUsersQuery, request.Params, cancellationToken);
 
         // Return the paged list as a successful operation result
-        return OperationResult<List<ApplicationUserResponseDto>>.Success(filterdUsers);
+        return OperationResult<PaginatedApplicationUserResponseDto>.Success(filterdUsers);
     }
 }

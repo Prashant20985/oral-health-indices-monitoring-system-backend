@@ -4,10 +4,10 @@ using App.Application.AdminOperations.Command.CreateApplicationUsersFromCsv;
 using App.Application.AdminOperations.Command.DeleteApplicationUser;
 using App.Application.AdminOperations.Command.UpdateApplicationUser;
 using App.Application.AdminOperations.Query.ActiveApplicationUsersList;
+using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
 using App.Application.AdminOperations.Query.DeactivatedApplicationUsersList;
 using App.Application.AdminOperations.Query.DeletedApplicationUsersList;
 using App.Application.AdminOperations.Query.UserDetails;
-using App.Application.Core;
 using App.Domain.DTOs.ApplicationUserDtos.Request;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
 using Microsoft.AspNetCore.Authorization;
@@ -25,8 +25,8 @@ public class AdminController : BaseController
     /// <returns>A paged list of active users.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("active-users")]
-    public async Task<ActionResult<List<ApplicationUserResponseDto>>> GetActiveUsers(
-        [FromQuery] SearchParams pagingAndSearchParams) => HandleOperationResult(
+    public async Task<ActionResult<PaginatedApplicationUserResponseDto>> GetActiveUsers(
+        [FromQuery] ApplicationUserPaginationAndSearchParams pagingAndSearchParams) => HandleOperationResult(
             await Mediator.Send(new FetchActiveApplicationUsersListQuery(pagingAndSearchParams)));
 
 
@@ -37,8 +37,8 @@ public class AdminController : BaseController
     /// <returns>A paged list of deactivated users.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("deactivated-users")]
-    public async Task<ActionResult<List<ApplicationUserResponseDto>>> GetDeactivatedUsers(
-        [FromQuery] SearchParams pagingAndSearchParams) => HandleOperationResult(
+    public async Task<ActionResult<PaginatedApplicationUserResponseDto>> GetDeactivatedUsers(
+        [FromQuery] ApplicationUserPaginationAndSearchParams pagingAndSearchParams) => HandleOperationResult(
             await Mediator.Send(new FetchDeactivatedApplicationUsersListQuery(pagingAndSearchParams)));
 
 
@@ -49,8 +49,8 @@ public class AdminController : BaseController
     /// <returns>A paged list of deleted users.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("deleted-users")]
-    public async Task<ActionResult<List<ApplicationUserResponseDto>>> GetDeletedUsers(
-        [FromQuery] SearchParams pagingAndSearchParams) => HandleOperationResult(
+    public async Task<ActionResult<PaginatedApplicationUserResponseDto>> GetDeletedUsers(
+        [FromQuery] ApplicationUserPaginationAndSearchParams pagingAndSearchParams) => HandleOperationResult(
             await Mediator.Send(new FetchDeletedApplicationUsersListQuery(pagingAndSearchParams)));
 
 
