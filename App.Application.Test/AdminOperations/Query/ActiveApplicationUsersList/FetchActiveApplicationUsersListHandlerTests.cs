@@ -33,7 +33,7 @@ public class FetchActiveApplicationUsersHandlerTests : TestHelper
             TotalUsersCount = 1
         };
 
-        userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery()).Returns(users.AsQueryable().BuildMock());
+        userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery("testUser")).Returns(users.AsQueryable().BuildMock());
 
         queryFilterMock.Setup(filter =>
                 filter.ApplyFilters(It.IsAny<IQueryable<ApplicationUserResponseDto>>(), It.IsAny<ApplicationUserPaginationAndSearchParams>(), CancellationToken.None))
@@ -42,7 +42,7 @@ public class FetchActiveApplicationUsersHandlerTests : TestHelper
                 return filteredUsers;
             });
 
-        var query = new FetchActiveApplicationUsersListQuery(new ApplicationUserPaginationAndSearchParams { SearchTerm = "Bruce" });
+        var query = new FetchActiveApplicationUsersListQuery(new ApplicationUserPaginationAndSearchParams { SearchTerm = "Bruce" }, "testUser");
         var handler = new FetchActiveApplicationUsersListHandler(userRepositoryMock.Object, queryFilterMock.Object);
 
         // Act 

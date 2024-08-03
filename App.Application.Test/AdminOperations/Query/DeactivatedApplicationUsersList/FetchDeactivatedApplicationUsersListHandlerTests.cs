@@ -30,7 +30,7 @@ public class FetchDeactivatedApplicationUsersListHandlerTests : TestHelper
         var users = new List<ApplicationUserResponseDto> { user1, user2 };
         var filteredUsers = new PaginatedApplicationUserResponseDto { Users = new List<ApplicationUserResponseDto> { user1 }, TotalUsersCount = 1 };
 
-        userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery()).Returns(users.AsQueryable().BuildMock());
+        userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery("testUser")).Returns(users.AsQueryable().BuildMock());
 
         queryFilterMock.Setup(filter =>
                 filter.ApplyFilters(It.IsAny<IQueryable<ApplicationUserResponseDto>>(), It.IsAny<ApplicationUserPaginationAndSearchParams>(), CancellationToken.None))

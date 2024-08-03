@@ -39,7 +39,7 @@ internal sealed class FetchActiveApplicationUsersListHandler
         FetchActiveApplicationUsersListQuery request, CancellationToken cancellationToken)
     {
         // Retrieve the query for active application users
-        var activeApplicationUsersQuery = _userRepository.GetActiveApplicationUsersQuery();
+        var activeApplicationUsersQuery = _userRepository.GetActiveApplicationUsersQuery(request.CurrentUserId);
 
         // Create paged list of active application users
         var filterdUsers = await _queryFilter

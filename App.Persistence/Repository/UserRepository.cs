@@ -88,9 +88,9 @@ public class UserRepository : IUserRepository
     /// Get an IQueryable of active application users.
     /// </summary>
     /// <returns>An IQueryable of ApplicationUserDto representing active application users.</returns>
-    public IQueryable<ApplicationUserResponseDto> GetActiveApplicationUsersQuery() => _userManager.Users
+    public IQueryable<ApplicationUserResponseDto> GetActiveApplicationUsersQuery(string currentUserId) => _userManager.Users
+        .Where(x => x.IsAccountActive && x.DeletedAt == null && x.Id != currentUserId)
         .ProjectTo<ApplicationUserResponseDto>(_mapper.ConfigurationProvider)
-        .Where(x => x.IsAccountActive && x.DeletedAt == null)
         .OrderBy(c => c.CreatedAt)
         .AsQueryable();
 

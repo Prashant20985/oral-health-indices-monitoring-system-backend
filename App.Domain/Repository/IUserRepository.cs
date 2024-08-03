@@ -62,7 +62,7 @@ public interface IUserRepository
     /// Get an IQueryable of active application users.
     /// </summary>
     /// <returns>An IQueryable of ApplicationUserDto representing active application users.</returns>
-    IQueryable<ApplicationUserResponseDto> GetActiveApplicationUsersQuery();
+    IQueryable<ApplicationUserResponseDto> GetActiveApplicationUsersQuery(string currentUserId);
 
     /// <summary>
     /// Get an IQueryable of deactivated application users.
