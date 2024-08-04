@@ -70,8 +70,11 @@ public class PatientController : BaseController
     /// <param name="email">Email filter.</param>
     [Authorize]
     [HttpGet("active-patients")]
-    public async Task<ActionResult<List<PatientResponseDto>>> FetchAllActivePatients([FromQuery] string name, [FromQuery] string email) =>
-        HandleOperationResult(await Mediator.Send(new FetchAllActivePatientsQuery(name, email)));
+    public async Task<ActionResult<List<PatientResponseDto>>> FetchAllActivePatients(
+        [FromQuery] string name,
+        [FromQuery] string email,
+        [FromQuery] int page = 0,
+        [FromQuery] int pageSize = 20) => HandleOperationResult(await Mediator.Send(new FetchAllActivePatientsQuery(name, email, page, pageSize)));
 
     /// <summary>
     /// Fetches all archived patients.
@@ -80,8 +83,11 @@ public class PatientController : BaseController
     /// <param name="email">Email filter.</param>
     [Authorize]
     [HttpGet("archived-patients")]
-    public async Task<ActionResult<List<PatientResponseDto>>> FetchAllArchivedPatients([FromQuery] string name, [FromQuery] string email) =>
-        HandleOperationResult(await Mediator.Send(new FetchAllArchivedPatientsQuery(name, email)));
+    public async Task<ActionResult<List<PatientResponseDto>>> FetchAllArchivedPatients(
+        [FromQuery] string name,
+        [FromQuery] string email,
+        [FromQuery] int page = 0,
+        [FromQuery] int pageSize = 20) => HandleOperationResult(await Mediator.Send(new FetchAllArchivedPatientsQuery(name, email, page, pageSize)));
 
     /// <summary>
     /// Fetches patient details.

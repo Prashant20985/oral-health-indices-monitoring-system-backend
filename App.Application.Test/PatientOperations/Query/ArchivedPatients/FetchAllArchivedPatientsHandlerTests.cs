@@ -1,5 +1,6 @@
 ﻿using App.Application.PatientOperations.Query.ArchivedPatients;
 using App.Domain.DTOs.Common.Response;
+using App.Domain.DTOs.PatientDtos.Response;
 using MockQueryable.Moq;
 using Moq;
 
@@ -13,7 +14,7 @@ public class FetchAllArchivedPatientsHandlerTests : TestHelper
     public FetchAllArchivedPatientsHandlerTests()
     {
         handler = new FetchAllArchivedPatientsHandler(patientRepositoryMock.Object);
-        query = new FetchAllArchivedPatientsQuery("test", "test@test.com");
+        query = new FetchAllArchivedPatientsQuery("test", "test@test.com", 0, 20);
     }
 
     [Fact]
@@ -35,8 +36,8 @@ public class FetchAllArchivedPatientsHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.Null(result.ErrorMessage);
-        var fetchedPatients = Assert.IsType<List<PatientResponseDto>>(result.ResultValue);
-        Assert.Equal(archivedPatients.Count(), fetchedPatients.Count);
+        var fetchedPatients = Assert.IsType<PaginatedPatientResponseDto>(result.ResultValue);
+        Assert.Equal(archivedPatients.Count(), fetchedPatients.Patients.Count);
         patientRepositoryMock.Verify(repo => repo.GetAllArchivedPatients(), Times.Once);
     }
 

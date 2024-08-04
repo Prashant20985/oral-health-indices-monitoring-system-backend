@@ -1,5 +1,6 @@
 ﻿using App.Application.PatientOperations.Query.ActivePatients;
 using App.Domain.DTOs.Common.Response;
+using App.Domain.DTOs.PatientDtos.Response;
 using MockQueryable.Moq;
 using Moq;
 
@@ -13,7 +14,7 @@ public class FetchAllActivePatientsHandlerTests : TestHelper
     public FetchAllActivePatientsHandlerTests()
     {
         handler = new FetchAllActivePatientsHandler(patientRepositoryMock.Object);
-        query = new FetchAllActivePatientsQuery("test", "test@test.com");
+        query = new FetchAllActivePatientsQuery("test", "test@test.com", 0, 20);
     }
 
     [Fact]
@@ -35,8 +36,8 @@ public class FetchAllActivePatientsHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.Null(result.ErrorMessage);
-        var fetchedPatients = Assert.IsType<List<PatientResponseDto>>(result.ResultValue);
-        Assert.Equal(activePatients.Count(), fetchedPatients.Count);
+        var fetchedPatients = Assert.IsType<PaginatedPatientResponseDto>(result.ResultValue);
+        Assert.Equal(activePatients.Count(), fetchedPatients.Patients.Count);
         patientRepositoryMock.Verify(repo => repo.GetAllActivePatients(), Times.Once);
     }
 }
