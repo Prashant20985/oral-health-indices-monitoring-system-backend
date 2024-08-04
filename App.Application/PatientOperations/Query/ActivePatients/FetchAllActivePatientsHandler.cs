@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs.Common.Response;
+using App.Domain.DTOs.PatientDtos.Response;
 using App.Domain.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +13,8 @@ namespace App.Application.PatientOperations.Query.ActivePatients;
 /// Initializes a new instance of the <see cref="FetchAllActivePatientsHandler"/> class.
 /// </remarks>
 /// <param name="patientRepository">The repository for patient-related operations.</param>
-internal sealed class FetchAllActivePatientsHandler(IPatientRepository patientRepository) : IRequestHandler<FetchAllActivePatientsQuery, OperationResult<List<PatientResponseDto>>>
+internal sealed class FetchAllActivePatientsHandler(IPatientRepository patientRepository)
+    : IRequestHandler<FetchAllActivePatientsQuery, OperationResult<PaginatedPatientResponseDto>>
 {
     private readonly IPatientRepository _patientRepository = patientRepository;
 
@@ -23,7 +24,7 @@ internal sealed class FetchAllActivePatientsHandler(IPatientRepository patientRe
     /// <param name="request">The fetch all active patients query.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>An operation result containing a list of active patient DTOs.</returns>
-    public async Task<OperationResult<List<PatientResponseDto>>> Handle(FetchAllActivePatientsQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<PaginatedPatientResponseDto>> Handle(FetchAllActivePatientsQuery request, CancellationToken cancellationToken)
     {
         var query = _patientRepository.GetAllActivePatients();
 
@@ -34,9 +35,21 @@ internal sealed class FetchAllActivePatientsHandler(IPatientRepository patientRe
         if (!string.IsNullOrEmpty(request.Email))
             query = query.Where(x => x.Email.Contains(request.Email));
 
-        var patients = await query.AsNoTracking().ToListAsync(cancellationToken);
+        var totalPatientsCount = await query.CountAsync(cancellationToken);
 
-        return OperationResult<List<PatientResponseDto>>.Success(patients);
+        var patients = await query
+            .Skip(request.Page * request.PageSize)
+            .Take(request.PageSize)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        var paginatedPatients = new PaginatedPatientResponseDto
+        {
+            TotalPatientsCount = totalPatientsCount,
+            Patients = patients
+        };
+
+        return OperationResult<PaginatedPatientResponseDto>.Success(paginatedPatients);
     }
 }
 

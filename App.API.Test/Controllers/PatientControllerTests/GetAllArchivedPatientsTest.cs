@@ -1,6 +1,7 @@
 ﻿using App.Application.Core;
 using App.Application.PatientOperations.Query.ArchivedPatients;
 using App.Domain.DTOs.Common.Response;
+using App.Domain.DTOs.PatientDtos.Response;
 using App.Domain.Models.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -61,45 +62,31 @@ public class GetAllArchivedPatientsTest
         }
     };
 
+        PaginatedPatientResponseDto paginatedPatientResponseDto = new PaginatedPatientResponseDto
+        {
+            Patients = expectedPatients,
+            TotalPatientsCount = expectedPatients.Count
+        };
+
         _mediator.Setup(x => x.Send(It.IsAny<FetchAllArchivedPatientsQuery>(), default))
-            .ReturnsAsync(OperationResult<List<PatientResponseDto>>
-            .Success(expectedPatients));
+            .ReturnsAsync(OperationResult<PaginatedPatientResponseDto>
+            .Success(paginatedPatientResponseDto));
 
         // Act
         var result = await _patientcontroller.FetchAllArchivedPatients("John", "john.doe@example");
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var patients = Assert.IsAssignableFrom<List<PatientResponseDto>>(okResult.Value);
-        Assert.Equal(expectedPatients.Count, patients.Count);
+        var patients = Assert.IsAssignableFrom<PaginatedPatientResponseDto>(okResult.Value);
+        Assert.Equal(expectedPatients.Count, patients.Patients.Count);
     }
 
     [Fact]
     public async Task GetAllArchivedPatients_WhenFetchFails_ShouldReturnBadRequest()
     {
         // Arrange
-        var expectedPatients = new List<PatientResponseDto>
-    {
-        new PatientResponseDto {
-            Id = Guid.NewGuid(),
-            FirstName = "Jane",
-            LastName = "Doe",
-            Email = "jane.doe@example",
-            Gender = Gender.Female.ToString(),
-            EthnicGroup = "Caucasian",
-            OtherGroup = "Other",
-            YearsInSchool = 1,
-            OtherData = "Other data",
-            OtherData2 = "Other data 2",
-            OtherData3 = "Other data 3",
-            Location = "Location",
-            Age = 20,
-            IsArchived = true
-        }
-    };
-
         _mediator.Setup(x => x.Send(It.IsAny<FetchAllArchivedPatientsQuery>(), default))
-            .ReturnsAsync(OperationResult<List<PatientResponseDto>>
+            .ReturnsAsync(OperationResult<PaginatedPatientResponseDto>
                        .Failure("Failed to fetch archived patients"));
 
         // Act
