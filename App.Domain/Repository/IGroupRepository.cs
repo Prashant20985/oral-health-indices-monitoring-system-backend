@@ -62,7 +62,7 @@ public interface IGroupRepository
     /// Gets a list of students not in a specific group.
     /// </summary>
     /// <param name="groupId">The identifier of the group.</param>
-    Task<List<StudentResponseDto>> GetAllStudentsNotInGroup(Guid groupId);
+    IQueryable<StudentResponseDto> GetAllStudentsNotInGroup(Guid groupId);
 
     /// <summary>
     /// Gets a list of groups with associated students, grouped by a teacher.

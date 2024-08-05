@@ -10,7 +10,7 @@ namespace App.Application.DentistTeacherOperations.Query.PatientsNotInResearchGr
 /// Handler for fetching patients not in any research group.
 /// </summary>
 internal sealed class FetchPatientsNotInResearchGroupsHandler
-    : IRequestHandler<FetchPatientsNotInResearchGroupsQuery, OperationResult<List<ResearchGroupPatientResponseDto>>>
+    : IRequestHandler<FetchPatientsNotInResearchGroupsQuery, OperationResult<PaginatedResearchGroupPatientResponseDto>>
 {
     private readonly IResearchGroupRepository _researchGroupRepository;
 
@@ -29,7 +29,7 @@ internal sealed class FetchPatientsNotInResearchGroupsHandler
     /// <param name="request">The query to fetch patients not in any research group.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>An operation result containing the list of patients not in any research group.</returns>
-    public async Task<OperationResult<List<ResearchGroupPatientResponseDto>>> Handle(FetchPatientsNotInResearchGroupsQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<PaginatedResearchGroupPatientResponseDto>> Handle(FetchPatientsNotInResearchGroupsQuery request, CancellationToken cancellationToken)
     {
         // Get the initial query of all patients not in any research group.
         var query = _researchGroupRepository.GetAllPatientsNotInAnyResearchGroup();
@@ -41,11 +41,24 @@ internal sealed class FetchPatientsNotInResearchGroupsHandler
         if (!string.IsNullOrEmpty(request.Email))
             query = query.Where(p => p.Email.Contains(request.Email));
 
+        // Get the total number of patients.
+        var totalNumberOfPatients = await query.CountAsync(cancellationToken);
+
         // Execute the query and retrieve the list of patients.
-        var patients = await query.ToListAsync(cancellationToken);
+        var patients = await query
+            .Skip(request.Page * request.PageSize)
+            .Take(request.PageSize)
+            .ToListAsync(cancellationToken);
+
+        // Create a paginated response of the patients.
+        var paginatedResponse = new PaginatedResearchGroupPatientResponseDto
+        {
+            TotalNumberOfPatients = totalNumberOfPatients,
+            Patients = patients
+        };
 
         // Return the result encapsulated in an OperationResult.
-        return OperationResult<List<ResearchGroupPatientResponseDto>>.Success(patients);
+        return OperationResult<PaginatedResearchGroupPatientResponseDto>.Success(paginatedResponse);
     }
 }
 
