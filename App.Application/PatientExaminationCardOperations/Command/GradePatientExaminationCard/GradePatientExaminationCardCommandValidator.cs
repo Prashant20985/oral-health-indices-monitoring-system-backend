@@ -14,10 +14,10 @@ public class GradePatientExaminationCardCommandValidator
     public GradePatientExaminationCardCommandValidator()
     {
         RuleFor(command => command.CardId)
+            .NotNull()
             .NotEmpty();
 
         RuleFor(command => command.TotalScore)
-            .NotEmpty()
             .NotNull();
     }
 }

@@ -13,10 +13,10 @@ public class CommentDMFT_DMFSCommandValidator : AbstractValidator<CommentDMFT_DM
     public CommentDMFT_DMFSCommandValidator()
     {
         RuleFor(x => x.CardId)
+            .NotNull()
             .NotEmpty();
 
         RuleFor(x => x.Comment)
-            .NotEmpty()
             .MaximumLength(500);
     }
 }

@@ -13,10 +13,10 @@ public class CommentBleedingFormCommandValidator : AbstractValidator<CommentBlee
     public CommentBleedingFormCommandValidator()
     {
         RuleFor(x => x.CardId)
+            .NotNull()
             .NotEmpty();
 
         RuleFor(x => x.Comment)
-            .NotEmpty()
             .MaximumLength(500);
     }
 }
