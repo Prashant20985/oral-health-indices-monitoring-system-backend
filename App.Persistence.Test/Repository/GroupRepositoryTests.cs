@@ -4,6 +4,7 @@ using App.Domain.Models.Users;
 using App.Persistence.Contexts;
 using App.Persistence.Repository;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
 
@@ -242,14 +243,16 @@ public class GroupRepositoryTests
         _mockOralEhrContext.Setup(x => x.ApplicationUserRoles).Returns(mockApplicationUserRoles.Object);
 
         // Act
-        var result = await _groupRepository.GetAllStudentsNotInGroup(groupId);
+        var result = _groupRepository.GetAllStudentsNotInGroup(groupId);
+
+        var resultList = await result.ToListAsync();
 
         // Assert
-        Assert.IsType<List<StudentResponseDto>>(result);
-        Assert.Single(result);
-        Assert.Equal("test2", result[0].UserName);
-        Assert.Equal("Test2", result[0].FirstName);
-        Assert.Equal("User", result[0].LastName);
+        Assert.IsAssignableFrom<IQueryable<StudentResponseDto>>(result);
+        Assert.Single(resultList);
+        Assert.Equal("test2", resultList[0].UserName);
+        Assert.Equal("Test2", resultList[0].FirstName);
+        Assert.Equal("User", resultList[0].LastName);
     }
 
     [Fact]

@@ -58,12 +58,12 @@ public class GroupRepository : IGroupRepository
         _oralEhrContext.StudentGroups.Remove(studentGroup);
 
     /// <inheritdoc />
-    public async Task<List<StudentResponseDto>> GetAllStudentsNotInGroup(Guid groupId) => await _oralEhrContext.Users
+    public IQueryable<StudentResponseDto> GetAllStudentsNotInGroup(Guid groupId) => _oralEhrContext.Users
         .Where(x => !x.StudentGroups.Any(g => g.GroupId == groupId)
             && x.ApplicationUserRoles.Any(r => r.ApplicationRole.Name.Equals("Student")))
         .ProjectTo<StudentResponseDto>(_mapper.ConfigurationProvider)
         .OrderBy(s => s.UserName)
-        .ToListAsync();
+        .AsQueryable();
 
     /// <inheritdoc />
     public async Task<List<Group>> GetAllGroupsCreatedByTeacher(string teacherId) => await _oralEhrContext.Groups

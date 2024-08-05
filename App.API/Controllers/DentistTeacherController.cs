@@ -92,9 +92,14 @@ public class DentistTeacherController : BaseController
     /// <param name="groupId">The identiffier of the group in which students are not present</param>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
-    [HttpGet("get-studentsNotInGroup/{groupId}")]
-    public async Task<IActionResult> GetStudentsNotInGroup([Required] Guid groupId) => HandleOperationResult(
-        await Mediator.Send(new FetchStudentsNotInGroupListQuery(groupId)));
+    [HttpGet("students-not-in-group/{groupId}")]
+    public async Task<ActionResult<PaginatedStudentnotInGroupResponseDto>> GetStudentsNotInGroup(
+        [Required] Guid groupId,
+        [FromQuery] string studentName,
+        [FromQuery] string email,
+        [FromQuery] int page = 0,
+        [FromQuery] int pageSize = 20) => HandleOperationResult(
+        await Mediator.Send(new FetchStudentsNotInGroupListQuery(groupId, studentName, email, page, pageSize)));
 
     /// <summary>
     /// Retrieves a list of all groups associated with the currently authentcated teacher. 
@@ -132,9 +137,12 @@ public class DentistTeacherController : BaseController
     /// <returns>An HTTP response indicating the result of the operation.</returns>
     [Authorize(Roles = "Dentist_Teacher_Researcher")]
     [HttpGet("patients-not-in-research-group")]
-    public async Task<ActionResult<List<ResearchGroupPatientResponseDto>>> GetPatientsNotInResearchGroup(string patientName,
-        string email) => HandleOperationResult(
-                  await Mediator.Send(new FetchPatientsNotInResearchGroupsQuery(patientName, email)));
+    public async Task<ActionResult<PaginatedResearchGroupPatientResponseDto>> GetPatientsNotInResearchGroup(
+        [FromQuery] string patientName,
+        [FromQuery] string email,
+        [FromQuery] int page = 0,
+        [FromQuery] int pageSize = 20) => HandleOperationResult(
+                  await Mediator.Send(new FetchPatientsNotInResearchGroupsQuery(patientName, email, page, pageSize)));
 
     /// <summary>
     /// Creates a new research group.

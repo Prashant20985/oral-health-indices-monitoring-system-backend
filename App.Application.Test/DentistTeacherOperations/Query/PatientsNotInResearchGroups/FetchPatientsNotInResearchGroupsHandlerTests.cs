@@ -12,7 +12,7 @@ public class FetchPatientsNotInResearchGroupsHandlerTests : TestHelper
     public FetchPatientsNotInResearchGroupsHandlerTests()
     {
         handler = new FetchPatientsNotInResearchGroupsHandler(researchGroupRepositoryMock.Object);
-        query = new FetchPatientsNotInResearchGroupsQuery("Patient", "test@test.com");
+        query = new FetchPatientsNotInResearchGroupsQuery("Patient", "test@test.com", 0, 20);
     }
 
     [Fact]
@@ -46,9 +46,9 @@ public class FetchPatientsNotInResearchGroupsHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.NotNull(result.ResultValue);
-        Assert.Equal(2, result.ResultValue.Count);
-        Assert.Equal("Patient", result.ResultValue[0].FirstName);
-        Assert.Equal("Patient1", result.ResultValue[0].LastName);
+        Assert.Equal(2, result.ResultValue.TotalNumberOfPatients);
+        Assert.Equal("Patient", result.ResultValue.Patients[0].FirstName);
+        Assert.Equal("Patient1", result.ResultValue.Patients[0].LastName);
     }
 
     [Fact]
@@ -62,6 +62,6 @@ public class FetchPatientsNotInResearchGroupsHandlerTests : TestHelper
         var result = await handler.Handle(query, CancellationToken.None);
 
         // Assert
-        Assert.Empty(result.ResultValue);
+        Assert.Empty(result.ResultValue.Patients);
     }
 }
