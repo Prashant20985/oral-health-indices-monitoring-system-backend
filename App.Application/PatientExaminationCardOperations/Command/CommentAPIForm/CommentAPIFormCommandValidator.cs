@@ -13,10 +13,10 @@ public class CommentAPIFormCommandValidator : AbstractValidator<CommentAPIFormCo
     public CommentAPIFormCommandValidator()
     {
         RuleFor(x => x.CardId)
+            .NotNull()
             .NotEmpty();
 
         RuleFor(x => x.Comment)
-            .NotEmpty()
             .MaximumLength(500);
     }
 }

@@ -24,6 +24,11 @@ public class CreatePatientExaminationCardByDoctorCommandValidator
             .NotNull()
             .NotEmpty();
 
+        // Validate Patient Examination Card Comment
+        RuleFor(x => x.InputParams.PatientExaminationCardComment)
+            .MaximumLength(500)
+            .OverridePropertyName("Patient Examination Card Comment");
+
         // Validate Summary
         RuleFor(x => x.InputParams.Summary)
             .NotNull()
@@ -38,7 +43,6 @@ public class CreatePatientExaminationCardByDoctorCommandValidator
 
         // Validate CreateDMFT_DMFSRequest Comment
         RuleFor(x => x.InputParams.DMFT_DMFS.Comment)
-            .NotNull()
             .MaximumLength(500)
             .OverridePropertyName("DMFT/DMFS Comment");
 
@@ -58,7 +62,6 @@ public class CreatePatientExaminationCardByDoctorCommandValidator
 
         // Validate CreateBeweRequest Comment
         RuleFor(x => x.InputParams.Bewe.Comment)
-            .NotEmpty()
             .MaximumLength(500)
             .OverridePropertyName("Bewe Comment");
 
@@ -70,7 +73,6 @@ public class CreatePatientExaminationCardByDoctorCommandValidator
 
         // Validate CreateAPIRequest Comment
         RuleFor(x => x.InputParams.API.Comment)
-            .NotEmpty()
             .MaximumLength(500)
             .OverridePropertyName("API Comment");
 
@@ -82,7 +84,6 @@ public class CreatePatientExaminationCardByDoctorCommandValidator
 
         // Validate CreateBleedingRequest Comment
         RuleFor(x => x.InputParams.Bleeding.Comment)
-            .NotEmpty()
             .MaximumLength(500)
             .OverridePropertyName("Bleeding Comment");
 

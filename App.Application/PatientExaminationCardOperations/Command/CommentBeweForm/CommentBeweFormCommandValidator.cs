@@ -13,10 +13,10 @@ public class CommentBeweFormCommandValidator : AbstractValidator<CommentBeweForm
     public CommentBeweFormCommandValidator()
     {
         RuleFor(x => x.CardId)
+            .NotNull()
             .NotEmpty();
 
         RuleFor(x => x.Comment)
-            .NotEmpty()
             .MaximumLength(500);
     }
 }

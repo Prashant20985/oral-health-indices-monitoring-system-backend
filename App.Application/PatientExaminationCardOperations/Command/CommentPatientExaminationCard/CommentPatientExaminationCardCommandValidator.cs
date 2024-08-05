@@ -13,10 +13,10 @@ public class CommentPatientExaminationCardCommandValidator : AbstractValidator<C
     public CommentPatientExaminationCardCommandValidator()
     {
         RuleFor(command => command.Cardid)
+            .NotNull()
             .NotEmpty();
 
         RuleFor(command => command.Comment)
-            .NotEmpty()
             .MaximumLength(500);
     }
 }
