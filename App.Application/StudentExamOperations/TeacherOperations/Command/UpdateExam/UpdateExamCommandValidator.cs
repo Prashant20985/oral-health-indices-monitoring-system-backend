@@ -15,7 +15,6 @@ public class UpdateExamCommandValidator
     {
         RuleFor(x => x.UpdateExam.DateOfExamination)
             .NotEmpty()
-            .GreaterThan(DateTime.Now)
             .OverridePropertyName("DateOfExamination");
 
         RuleFor(x => x.UpdateExam.ExamTitle)
@@ -31,6 +30,13 @@ public class UpdateExamCommandValidator
             .NotEmpty()
             .Must((command, startTime) => startTime < command.UpdateExam.EndTime)
             .WithMessage("Start time must be less than end time")
+            .Must((command, startTime) =>
+            {
+                var now = DateTime.Now;
+                return command.UpdateExam.DateOfExamination.Date != now.Date ||
+                       startTime > TimeOnly.FromDateTime(now);
+            })
+            .WithMessage("If the exam is today, start time must be later than the current time")
             .OverridePropertyName("StartTime");
 
         RuleFor(x => x.UpdateExam.EndTime)

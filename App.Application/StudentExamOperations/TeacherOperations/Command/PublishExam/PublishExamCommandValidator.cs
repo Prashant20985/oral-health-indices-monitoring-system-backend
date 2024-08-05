@@ -14,7 +14,6 @@ public class PublishExamCommandValidator : AbstractValidator<PublishExamCommand>
     {
         RuleFor(x => x.PublishExam.DateOfExamination)
             .NotEmpty()
-            .GreaterThan(DateTime.Now)
             .OverridePropertyName("DateOfExamination");
 
         RuleFor(x => x.PublishExam.ExamTitle)
@@ -30,7 +29,15 @@ public class PublishExamCommandValidator : AbstractValidator<PublishExamCommand>
             .NotEmpty()
             .Must((command, startTime) => startTime < command.PublishExam.EndTime)
             .WithMessage("Start time must be less than end time")
+            .Must((command, startTime) =>
+            {
+                var now = DateTime.Now;
+                return command.PublishExam.DateOfExamination.Date != now.Date ||
+                       startTime > TimeOnly.FromDateTime(now);
+            })
+            .WithMessage("If the exam is today, start time must be later than the current time")
             .OverridePropertyName("StartTime");
+
 
         RuleFor(x => x.PublishExam.EndTime)
             .NotEmpty()
