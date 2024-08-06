@@ -152,18 +152,18 @@ public class SuperviseRepositoryTests
         _mockOralEhrContext.Setup(x => x.ApplicationUserRoles).Returns(mockApplicationUserRoles1.Object);
 
         // Act
-        var result = await _superviseRepository.GetAllStudentsUnderSupervisionByDoctorId(doctor.Id);
+        var result = _superviseRepository.GetAllStudentsUnderSupervisionByDoctorId(doctor.Id);
 
         // Assert
         Assert.NotNull(result);
         Assert.NotEmpty(result);
-        Assert.IsType<List<StudentResponseDto>>(result);
+        Assert.IsAssignableFrom<IQueryable<StudentResponseDto>>(result);
         Assert.Single(result);
         Assert.Equal(student.UserName, result.First().UserName);
     }
 
     [Fact]
-    public async Task GetAllStudentsUnderSupervisionByDoctorId_ShouldReturnEmptyList_WhenNoStudentsUnderSupervision()
+    public void GetAllStudentsUnderSupervisionByDoctorId_ShouldReturnEmptyList_WhenNoStudentsUnderSupervision()
     {
         // Arrange
         var applicationUserRoles = new List<ApplicationUserRole>
@@ -191,7 +191,7 @@ public class SuperviseRepositoryTests
         _mockOralEhrContext.Setup(x => x.ApplicationUserRoles).Returns(emptyApplicationUserRoles.Object);
 
         // Act
-        var result = await _superviseRepository.GetAllStudentsUnderSupervisionByDoctorId(doctor.Id);
+        var result = _superviseRepository.GetAllStudentsUnderSupervisionByDoctorId(doctor.Id);
 
         // Assert
         Assert.NotNull(result);
@@ -371,7 +371,7 @@ public class SuperviseRepositoryTests
     }
 
     [Fact]
-    public async Task GetAllStudentsNotUnderSupervisionByDoctorId_ShouldReturnListOfStudentResponseDto()
+    public void GetAllStudentsNotUnderSupervisionByDoctorId_ShouldReturnListOfStudentResponseDto()
     {
         // Arrange
         var applicationUserRoles = new List<ApplicationUserRole>
@@ -429,20 +429,20 @@ public class SuperviseRepositoryTests
         _mockOralEhrContext.Setup(x => x.ApplicationUserRoles).Returns(mockApplicationUserRoles1.Object);
 
         // Act
-        var result = await _superviseRepository.GetAllStudentsNotUnderSupervisionByDoctorId(doctor2.Id);
+        var result = _superviseRepository.GetAllStudentsNotUnderSupervisionByDoctorId(doctor2.Id);
 
         // Assert
         Assert.NotNull(result);
         Assert.NotEmpty(result);
-        Assert.IsType<List<StudentResponseDto>>(result);
-        Assert.Equal(3, result.Count);
-        Assert.Equal(student.UserName, result[0].UserName);
-        Assert.Equal(student2.UserName, result[1].UserName);
-        Assert.Equal(student3.UserName, result[2].UserName);
+        Assert.IsAssignableFrom<IQueryable<StudentResponseDto>>(result);
+        Assert.Equal(3, result.Count());
+        Assert.Equal(student.UserName, result.ToList()[0].UserName);
+        Assert.Equal(student2.UserName, result.ToList()[1].UserName);
+        Assert.Equal(student3.UserName, result.ToList()[2].UserName);
     }
 
     [Fact]
-    public async Task GetAllStudentsNotUnderSupervisionByDoctorId_ShouldReturnEmpty_WhenAllStudentsAreUnderSupervisionOfDoctor()
+    public void GetAllStudentsNotUnderSupervisionByDoctorId_ShouldReturnEmpty_WhenAllStudentsAreUnderSupervisionOfDoctor()
     {
         // Arrange
         var applicationUserRoles = new List<ApplicationUserRole>
@@ -494,7 +494,7 @@ public class SuperviseRepositoryTests
         _mockOralEhrContext.Setup(x => x.ApplicationUserRoles).Returns(mockApplicationUserRoles1.Object);
 
         // Act
-        var result = await _superviseRepository.GetAllStudentsNotUnderSupervisionByDoctorId(doctor.Id);
+        var result = _superviseRepository.GetAllStudentsNotUnderSupervisionByDoctorId(doctor.Id);
 
         // Assert
         Assert.NotNull(result);

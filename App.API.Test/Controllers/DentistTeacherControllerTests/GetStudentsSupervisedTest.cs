@@ -50,8 +50,14 @@ public class GetStudentsSupervisedTest
             }
         };
 
+        var paginatedStudentResponse = new PaginatedStudentResponseDto
+        {
+            Students = studentsUnderSupervision,
+            TotalStudents = studentsUnderSupervision.Count,
+        };
+
         _mediatorMock.Setup(m => m.Send(It.IsAny<FetchStudentsSupervisedQuery>(), default))
-            .ReturnsAsync(OperationResult<List<StudentResponseDto>>.Success(studentsUnderSupervision));
+            .ReturnsAsync(OperationResult<PaginatedStudentResponseDto>.Success(paginatedStudentResponse));
 
         _dentistTeacherController.ControllerContext = new ControllerContext()
         {
@@ -59,13 +65,13 @@ public class GetStudentsSupervisedTest
         };
 
         // Act
-        var result = await _dentistTeacherController.GetStudentsSupervised();
+        var result = await _dentistTeacherController.GetStudentsSupervised(null, null, 0, 10);
 
         // Assert
         Assert.NotNull(result);
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
         Assert.Equal(200, okResult.StatusCode);
-        Assert.Equal(studentsUnderSupervision, okResult.Value);
+        Assert.Equal(paginatedStudentResponse, okResult.Value);
     }
 
     [Fact]
@@ -95,7 +101,7 @@ public class GetStudentsSupervisedTest
         };
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<FetchStudentsSupervisedQuery>(), default))
-            .ReturnsAsync(OperationResult<List<StudentResponseDto>>.Failure("No students under supervision"));
+            .ReturnsAsync(OperationResult<PaginatedStudentResponseDto>.Failure("No students under supervision"));
 
         _dentistTeacherController.ControllerContext = new ControllerContext()
         {
@@ -103,7 +109,7 @@ public class GetStudentsSupervisedTest
         };
 
         // Act
-        var result = await _dentistTeacherController.GetStudentsSupervised();
+        var result = await _dentistTeacherController.GetStudentsSupervised(null, null, 0, 20);
 
         // Assert
         Assert.NotNull(result);

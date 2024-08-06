@@ -7,5 +7,5 @@ namespace App.Application.DentistTeacherOperations.Query.StudentsSupervised;
 /// <summary>
 /// Fetches all students supervised by a doctor
 /// </summary>
-public record FetchStudentsSupervisedQuery(string DoctorId)
-    : IRequest<OperationResult<List<StudentResponseDto>>>;
+public record FetchStudentsSupervisedQuery(string DoctorId, string StudentName, string Email, int Page, int PageSize)
+    : IRequest<OperationResult<PaginatedStudentResponseDto>>;

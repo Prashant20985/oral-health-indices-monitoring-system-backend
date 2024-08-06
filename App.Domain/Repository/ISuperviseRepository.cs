@@ -35,7 +35,7 @@ public interface ISuperviseRepository
     /// </summary>
     /// <param name="doctorId">The ID of the doctor.</param>
     /// <returns>A list of students under the supervision of the doctor.</returns>
-    Task<List<StudentResponseDto>> GetAllStudentsUnderSupervisionByDoctorId(string doctorId);
+    IQueryable<StudentResponseDto> GetAllStudentsUnderSupervisionByDoctorId(string doctorId);
 
     /// <summary>
     /// Retrieves all doctors supervising a student.
@@ -57,5 +57,5 @@ public interface ISuperviseRepository
     /// </summary>
     /// <param name="doctorId">The ID of the doctor.</param>
     /// <returns>A list of students not under the supervision of the doctor.</returns>
-    Task<List<StudentResponseDto>> GetAllStudentsNotUnderSupervisionByDoctorId(string doctorId);
+    IQueryable<StudentResponseDto> GetAllStudentsNotUnderSupervisionByDoctorId(string doctorId);
 }

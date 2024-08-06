@@ -1,5 +1,5 @@
 ﻿using App.Application.Core;
-using App.Domain.DTOs.StudentGroupDtos.Response;
+using App.Domain.DTOs.ApplicationUserDtos.Response;
 using App.Domain.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +11,7 @@ namespace App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
 /// </summary>
 internal sealed class FetchStudentsNotInGroupListHandler
     : IRequestHandler<FetchStudentsNotInGroupListQuery,
-        OperationResult<PaginatedStudentnotInGroupResponseDto>>
+        OperationResult<PaginatedStudentResponseDto>>
 {
     private readonly IGroupRepository _groupRepository;
 
@@ -25,7 +25,7 @@ internal sealed class FetchStudentsNotInGroupListHandler
     }
 
     /// <inheritdoc />
-    public async Task<OperationResult<PaginatedStudentnotInGroupResponseDto>> Handle
+    public async Task<OperationResult<PaginatedStudentResponseDto>> Handle
         (FetchStudentsNotInGroupListQuery request, CancellationToken cancellationToken)
     {
         // check if students list not in group is empty
@@ -48,14 +48,14 @@ internal sealed class FetchStudentsNotInGroupListHandler
             .ToListAsync(cancellationToken);
 
         // Create a paginated response object.
-        var studentsNotInGroupResponse = new PaginatedStudentnotInGroupResponseDto
+        var studentsNotInGroupResponse = new PaginatedStudentResponseDto
         {
             TotalStudents = totalStudents,
             Students = studentsNotInGroup
         };
 
         // Return a success result with no specific data.
-        return OperationResult<PaginatedStudentnotInGroupResponseDto>.Success(studentsNotInGroupResponse);
+        return OperationResult<PaginatedStudentResponseDto>.Success(studentsNotInGroupResponse);
     }
 }
 

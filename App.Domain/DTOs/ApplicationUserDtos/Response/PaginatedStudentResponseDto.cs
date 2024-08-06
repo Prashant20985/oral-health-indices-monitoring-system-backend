@@ -1,11 +1,9 @@
-﻿using App.Domain.DTOs.ApplicationUserDtos.Response;
-
-namespace App.Domain.DTOs.StudentGroupDtos.Response;
+﻿namespace App.Domain.DTOs.ApplicationUserDtos.Response;
 
 /// <summary>
 /// Class representing a paginated response of students not in a group.
 /// </summary>
-public class PaginatedStudentnotInGroupResponseDto
+public class PaginatedStudentResponseDto
 {
     /// <summary>
     /// Gets or sets the total number of students.
