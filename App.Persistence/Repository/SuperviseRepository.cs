@@ -29,13 +29,14 @@ public class SuperviseRepository(OralEhrContext oralEhrContext, IMapper mapper) 
         await _oralEhrContext.Supervises.AnyAsync(s => s.StudentId == studentId && s.DoctorId == doctorId);
 
     /// <inheritdoc />
-    public async Task<List<StudentResponseDto>> GetAllStudentsUnderSupervisionByDoctorId(string doctorId) =>
-        await _oralEhrContext.Supervises
+    public IQueryable<StudentResponseDto> GetAllStudentsUnderSupervisionByDoctorId(string doctorId) =>
+        _oralEhrContext.Supervises
             .Where(s => s.DoctorId == doctorId)
             .Select(s => s.Student)
             .Where(s => s.IsAccountActive && s.DeletedAt == null)
             .ProjectTo<StudentResponseDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+            .OrderBy(s => s.UserName)
+            .AsQueryable();
 
     /// <inheritdoc />
     public async Task<List<SupervisingDoctorResponseDto>> GetAllSupervisingDoctorsByStudentId(string studentId) =>
@@ -56,12 +57,12 @@ public class SuperviseRepository(OralEhrContext oralEhrContext, IMapper mapper) 
             .FirstOrDefaultAsync(s => s.DoctorId == doctorId && s.StudentId == studentId);
 
     /// <inheritdoc />
-    public async Task<List<StudentResponseDto>> GetAllStudentsNotUnderSupervisionByDoctorId(string doctorId) =>
-        await _oralEhrContext.Users
+    public IQueryable<StudentResponseDto> GetAllStudentsNotUnderSupervisionByDoctorId(string doctorId) =>
+         _oralEhrContext.Users
             .Where(x => x.IsAccountActive && x.DeletedAt == null
                 && x.ApplicationUserRoles.Any(r => r.ApplicationRole.Name.Equals("Student"))
                 && x.SuperviseStudentNavigation.All(s => s.DoctorId != doctorId))
             .ProjectTo<StudentResponseDto>(_mapper.ConfigurationProvider)
             .OrderBy(s => s.UserName)
-        .ToListAsync();
+            .AsQueryable();
 }

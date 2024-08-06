@@ -47,22 +47,22 @@ public class GetStudentsNoInGroupTest
             }
         };
 
-        var studentsNotInGroup = new PaginatedStudentnotInGroupResponseDto
+        var studentsNotInGroup = new PaginatedStudentResponseDto
         {
             Students = expectedStudents,
             TotalStudents = expectedStudents.Count
         };
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchStudentsNotInGroupListQuery>(), default))
-            .ReturnsAsync(OperationResult<PaginatedStudentnotInGroupResponseDto>.Success(studentsNotInGroup));
+            .ReturnsAsync(OperationResult<PaginatedStudentResponseDto>.Success(studentsNotInGroup));
 
         // Act
         var result = await _dentistTeacherController.GetStudentsNotInGroup(groupId, null, null);
 
         // Assert
-        var actionResult = Assert.IsType<ActionResult<PaginatedStudentnotInGroupResponseDto>>(result);
+        var actionResult = Assert.IsType<ActionResult<PaginatedStudentResponseDto>>(result);
         var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-        var returnedStudents = Assert.IsAssignableFrom<PaginatedStudentnotInGroupResponseDto>(okObjectResult.Value);
+        var returnedStudents = Assert.IsAssignableFrom<PaginatedStudentResponseDto>(okObjectResult.Value);
         Assert.Equal(expectedStudents, returnedStudents.Students);
 
         _mediatorMock.Verify(x => x.Send(It.Is<FetchStudentsNotInGroupListQuery>(q => q.GroupId == groupId), It.IsAny<CancellationToken>()), Times.Once);
@@ -75,13 +75,13 @@ public class GetStudentsNoInGroupTest
         var groupId = Guid.NewGuid();
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchStudentsNotInGroupListQuery>(), default))
-            .ReturnsAsync(OperationResult<PaginatedStudentnotInGroupResponseDto>.Failure("Failed to fetch students"));
+            .ReturnsAsync(OperationResult<PaginatedStudentResponseDto>.Failure("Failed to fetch students"));
 
         // Act
         var result = await _dentistTeacherController.GetStudentsNotInGroup(groupId, null, null);
 
         // Assert
-        var badRequestresult = Assert.IsType<ActionResult<PaginatedStudentnotInGroupResponseDto>>(result);
+        var badRequestresult = Assert.IsType<ActionResult<PaginatedStudentResponseDto>>(result);
         var error = Assert.IsType<BadRequestObjectResult>(badRequestresult.Result);
         Assert.Equal("Failed to fetch students", error.Value);
 

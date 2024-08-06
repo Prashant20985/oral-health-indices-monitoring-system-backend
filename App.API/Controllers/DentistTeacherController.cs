@@ -93,7 +93,7 @@ public class DentistTeacherController : BaseController
     /// <returns>An HTTP response indicating the result of the operation.</returns>
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
     [HttpGet("students-not-in-group/{groupId}")]
-    public async Task<ActionResult<PaginatedStudentnotInGroupResponseDto>> GetStudentsNotInGroup(
+    public async Task<ActionResult<PaginatedStudentResponseDto>> GetStudentsNotInGroup(
         [Required] Guid groupId,
         [FromQuery] string studentName,
         [FromQuery] string email,
@@ -235,8 +235,18 @@ public class DentistTeacherController : BaseController
     /// <returns>A list of students not supervised by the currently authenticated teacher.</returns>
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
     [HttpGet("students-not-supervised")]
-    public async Task<ActionResult<List<StudentResponseDto>>> GetStudentsNotSupervised() => HandleOperationResult(
-                await Mediator.Send(new FetchStudentsNotSupervisedQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
+    public async Task<ActionResult<PaginatedStudentResponseDto>> GetStudentsNotSupervised(
+        [FromQuery] string studentName,
+        [FromQuery] string email,
+        [FromQuery] int page = 0,
+        [FromQuery] int pageSize = 20) =>
+        HandleOperationResult(await Mediator.Send(
+            new FetchStudentsNotSupervisedQuery(
+                User.FindFirstValue(ClaimTypes.NameIdentifier),
+                studentName,
+                email,
+                page,
+                pageSize)));
 
     /// <summary>
     /// Gets a list of students supervised by the currently authenticated teacher.
@@ -244,6 +254,16 @@ public class DentistTeacherController : BaseController
     /// <returns>A list of students supervised by the currently authenticated teacher.</returns>
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
     [HttpGet("students-supervised")]
-    public async Task<ActionResult<List<StudentResponseDto>>> GetStudentsSupervised() => HandleOperationResult(
-                await Mediator.Send(new FetchStudentsSupervisedQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
+    public async Task<ActionResult<PaginatedStudentResponseDto>> GetStudentsSupervised(
+        [FromQuery] string studentName,
+        [FromQuery] string email,
+        [FromQuery] int page = 0,
+        [FromQuery] int pageSize = 20) => 
+        HandleOperationResult(await Mediator.Send(
+            new FetchStudentsSupervisedQuery(
+                User.FindFirstValue(ClaimTypes.NameIdentifier),
+                studentName,
+                email,
+                page,
+                pageSize)));
 }

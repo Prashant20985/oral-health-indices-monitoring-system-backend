@@ -48,8 +48,14 @@ public class GetStudentsNotSupervisedTest
             }
         };
 
+        var paginatedStudentResponse = new PaginatedStudentResponseDto
+        {
+            Students = studentsNotUnderSupervision,
+            TotalStudents = studentsNotUnderSupervision.Count,
+        };
+
         _mediatorMock.Setup(m => m.Send(It.IsAny<FetchStudentsNotSupervisedQuery>(), default))
-            .ReturnsAsync(OperationResult<List<StudentResponseDto>>.Success(studentsNotUnderSupervision));
+            .ReturnsAsync(OperationResult<PaginatedStudentResponseDto>.Success(paginatedStudentResponse));
 
         _dentistTeacherController.ControllerContext = new ControllerContext()
         {
@@ -57,7 +63,7 @@ public class GetStudentsNotSupervisedTest
         };
 
         // Act
-        var result = await _dentistTeacherController.GetStudentsNotSupervised();
+        var result = await _dentistTeacherController.GetStudentsNotSupervised(null, null, 0, 10);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
@@ -93,7 +99,7 @@ public class GetStudentsNotSupervisedTest
         };
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<FetchStudentsNotSupervisedQuery>(), default))
-            .ReturnsAsync(OperationResult<List<StudentResponseDto>>.Failure("Not Found Students not under supervision"));
+            .ReturnsAsync(OperationResult<PaginatedStudentResponseDto>.Failure("Not Found Students not under supervision"));
 
         _dentistTeacherController.ControllerContext = new ControllerContext()
         {
@@ -101,7 +107,7 @@ public class GetStudentsNotSupervisedTest
         };
 
         // Act
-        var result = await _dentistTeacherController.GetStudentsNotSupervised();
+        var result = await _dentistTeacherController.GetStudentsNotSupervised(null, null, 0, 10);
 
         // Assert
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);

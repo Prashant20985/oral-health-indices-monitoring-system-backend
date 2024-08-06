@@ -1,6 +1,5 @@
 ﻿using App.Application.Core;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
-using App.Domain.DTOs.StudentGroupDtos.Response;
 using MediatR;
 
 namespace App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
@@ -13,4 +12,4 @@ public record FetchStudentsNotInGroupListQuery(Guid GroupId,
     string StudentName,
     string Email,
     int Page,
-    int PageSize) : IRequest<OperationResult<PaginatedStudentnotInGroupResponseDto>>;
+    int PageSize) : IRequest<OperationResult<PaginatedStudentResponseDto>>;
