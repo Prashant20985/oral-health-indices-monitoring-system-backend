@@ -162,4 +162,16 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
             .ProjectTo<PracticePatientExaminationCardDto>(_mapper.ConfigurationProvider)
             .AsNoTracking()
             .FirstOrDefaultAsync();
+
+    /// <inheritdoc/>
+    public async Task<List<ExamDto>> UpcomingExams(string studentId) => await _context.Exams
+        .Where(x => x.Group.StudentGroups.Any(sg => sg.StudentId == studentId)
+            && (x.DateOfExamination.Date >= DateTime.UtcNow.Date ||
+                (x.DateOfExamination.Date == DateTime.UtcNow.Date && x.EndTime > TimeOnly.FromDateTime(DateTime.UtcNow))))
+        .ProjectTo<ExamDto>(_mapper.ConfigurationProvider)
+        .OrderBy(x => x.DateOfExamination)
+        .ThenBy(x => x.StartTime)
+        .Take(3)
+        .ToListAsync();
+
 }

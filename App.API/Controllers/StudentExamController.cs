@@ -2,6 +2,7 @@
 using App.Application.StudentExamOperations.CommonOperations.Query.ExamsList;
 using App.Application.StudentExamOperations.StudentOperations.Command.AddPracticePatientExmaintionCard;
 using App.Application.StudentExamOperations.StudentOperations.Query;
+using App.Application.StudentExamOperations.StudentOperations.Query.UpcomingExams;
 using App.Application.StudentExamOperations.TeacherOperations.Command.CommentAPIForm;
 using App.Application.StudentExamOperations.TeacherOperations.Command.CommentBeweForm;
 using App.Application.StudentExamOperations.TeacherOperations.Command.CommentBleedingForm;
@@ -200,5 +201,14 @@ public class StudentExamController : BaseController
     [HttpGet("exam-solution/{examId}")]
     public async Task<ActionResult<PracticePatientExaminationCardDto>> GetStudentExamSolution(Guid examId) =>
         HandleOperationResult(await Mediator.Send(new FetchStudentExamSolutionQuery(examId, User.FindFirstValue(ClaimTypes.NameIdentifier))));
+
+    /// <summary>
+    /// Retrieves the list of upcoming exams for the student.
+    /// </summary>
+    /// <returns>An ActionResult of a list of ExamDto.</returns>
+    [Authorize(Roles = "Student")]
+    [HttpGet("upcoming-exams")]
+    public async Task<ActionResult<List<ExamDto>>> GetUpcomingExams() =>
+        HandleOperationResult(await Mediator.Send(new UpcominExamsQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
 }
 
