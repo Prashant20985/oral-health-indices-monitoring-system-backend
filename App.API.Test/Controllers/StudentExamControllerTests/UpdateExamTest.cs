@@ -52,7 +52,7 @@ public class UpdateExamTest
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<UpdateExamCommand>(), default))
-                 .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
+                 .ReturnsAsync(OperationResult<ExamDto>.Success(examDto));
 
 
         // Act
@@ -82,7 +82,7 @@ public class UpdateExamTest
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<UpdateExamCommand>(), default))
-                 .ReturnsAsync(OperationResult<Unit>.Failure("test"));
+                 .ReturnsAsync(OperationResult<ExamDto>.Failure("test"));
 
         // Act
         var result = await _studentExamController.UpdateExam(exam.Id, updateExamDto);
@@ -109,7 +109,7 @@ public class UpdateExamTest
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<UpdateExamCommand>(), default))
-                 .ReturnsAsync(OperationResult<Unit>.Failure("Exam not found"));
+                 .ReturnsAsync(OperationResult<ExamDto>.Failure("Exam not found"));
 
         // Act
         var result = await _studentExamController.UpdateExam(examId, updateExamDto);

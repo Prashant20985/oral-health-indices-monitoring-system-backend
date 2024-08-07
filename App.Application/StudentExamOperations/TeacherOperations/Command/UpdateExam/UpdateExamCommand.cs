@@ -1,5 +1,6 @@
 ﻿using App.Application.Core;
 using App.Domain.DTOs.ExamDtos.Request;
+using App.Domain.DTOs.ExamDtos.Response;
 using App.Persistence.Attributes;
 using MediatR;
 
@@ -10,4 +11,4 @@ namespace App.Application.StudentExamOperations.TeacherOperations.Command.Update
 /// </summary>
 [OralEhrContextUnitOfWork]
 public record UpdateExamCommand(Guid ExamId, UpdateExamDto UpdateExam)
-    : IRequest<OperationResult<Unit>>;
+    : IRequest<OperationResult<ExamDto>>;
