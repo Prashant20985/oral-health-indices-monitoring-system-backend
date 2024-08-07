@@ -5,7 +5,7 @@ public class ExamDto
     /// <summary>
     /// Gets or sets the unique identifier of the examination.
     /// </summary>
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Gets or sets the date of the examination.
