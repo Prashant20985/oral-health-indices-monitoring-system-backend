@@ -155,5 +155,11 @@ public interface IStudentExamRepository
     /// <returns>Returns the practice patient examination card DTO corresponding to the provided Exam Id and Student Id.</returns>
     public Task<PracticePatientExaminationCardDto> GetPracticePatientExaminationCardByExamIdAndStudentId(Guid examId, string studentId);
 
+    /// <summary>
+    /// Retrieves a list of top 5 upcoming exams for a student.
+    /// </summary>
+    /// <param name="studentId">The ID of the student.</param>
+    /// <returns>A list of exam DTOs representing the upcoming exams for the student.</returns>
+    public Task<List<ExamDto>> UpcomingExams(string studentId);
 }
 
