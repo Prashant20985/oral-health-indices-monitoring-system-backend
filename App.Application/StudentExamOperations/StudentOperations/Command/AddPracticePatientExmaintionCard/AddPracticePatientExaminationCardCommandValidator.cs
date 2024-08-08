@@ -81,8 +81,7 @@ public class PracticePatientValidator : AbstractValidator<CreatePatientDto>
             .WithMessage("Max length id 50");
 
         RuleFor(x => x.YearsInSchool)
-            .NotEmpty()
-            .GreaterThanOrEqualTo(0)
+            .NotNull()
             .WithMessage("Years in school is required");
 
         RuleFor(x => x.OtherData)
@@ -108,8 +107,6 @@ public class PracticePatientValidator : AbstractValidator<CreatePatientDto>
 
         RuleFor(x => x.Age)
             .NotNull()
-            .NotEmpty()
-            .GreaterThanOrEqualTo(0)
             .WithMessage("Age is required");
     }
 }
