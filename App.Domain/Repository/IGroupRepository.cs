@@ -38,7 +38,7 @@ public interface IGroupRepository
     /// Deletes a group.
     /// </summary>
     /// <param name="group">The group to delete.</param>
-    void DeleteGroup(Group group);
+    Task DeleteGroup(Guid groupId);
 
     /// <summary>
     /// Gets a group by its name.

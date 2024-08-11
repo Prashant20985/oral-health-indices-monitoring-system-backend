@@ -60,7 +60,7 @@ public class PracticePatientExaminationCard(Guid examId, string studentId)
     /// <summary>
     /// Gets or sets the patient examination result associated with this examination.
     /// </summary>
-    public virtual PracticePatientExaminationResult PracticePatientExaminationResult { get; private set; }
+    public virtual PracticePatientExaminationResult PracticePatientExaminationResult { get; set; }
 
     /// <summary>
     /// Gets or sets the unique identifier of the exam associated with this examination.

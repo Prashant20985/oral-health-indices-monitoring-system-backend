@@ -22,8 +22,44 @@ public class PatientRepository : IPatientRepository
     public async Task CreatePatient(Patient patient) => await
         _oralEhrContext.Patients.AddAsync(patient);
 
-    public void DeletePatient(Patient patient) =>
-        _oralEhrContext.Patients.Remove(patient);
+    public async Task DeletePatient(Guid patientId)
+    {
+        var patientToDelete = await _oralEhrContext.Patients
+            .Include(patient => patient.PatientExaminationCards)
+            .ThenInclude(patient => patient.PatientExaminationResult)
+            .ThenInclude(patient => patient.API)
+            .Include(patient => patient.PatientExaminationCards)
+            .ThenInclude(patient => patient.PatientExaminationResult)
+            .ThenInclude(patient => patient.Bewe)
+            .Include(patient => patient.PatientExaminationCards)
+            .ThenInclude(patient => patient.PatientExaminationResult)
+            .ThenInclude(patient => patient.Bleeding)
+            .Include(patient => patient.PatientExaminationCards)
+            .ThenInclude(patient => patient.PatientExaminationResult)
+            .ThenInclude(patient => patient.DMFT_DMFS)
+            .Include(patient => patient.PatientExaminationCards)
+            .ThenInclude(patient => patient.RiskFactorAssessment)
+            .FirstOrDefaultAsync(patient => patient.Id.Equals(patientId));
+
+        if (patientToDelete is not null)
+        {
+            _oralEhrContext.Patients.Remove(patientToDelete);
+
+            if (patientToDelete.PatientExaminationCards.Count != 0)
+            {
+                _oralEhrContext.PatientExaminationCards.RemoveRange(patientToDelete.PatientExaminationCards);
+
+                foreach (var card in patientToDelete.PatientExaminationCards)
+                {
+                    _oralEhrContext.RiskFactorAssessments.Remove(card.RiskFactorAssessment);
+                    _oralEhrContext.DMFT_DMFSs.Remove(card.PatientExaminationResult.DMFT_DMFS);
+                    _oralEhrContext.Bleedings.Remove(card.PatientExaminationResult.Bleeding);
+                    _oralEhrContext.Bewes.Remove(card.PatientExaminationResult.Bewe);
+                    _oralEhrContext.APIs.Remove(card.PatientExaminationResult.API);
+                }
+            }
+        }
+    }
 
     public IQueryable<PatientResponseDto> GetAllActivePatients() => _oralEhrContext.Patients
         .Where(patient => !patient.IsArchived)

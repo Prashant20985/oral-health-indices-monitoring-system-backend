@@ -31,7 +31,7 @@ internal sealed class DeletePatientHandler(IPatientRepository patientRepository)
             return OperationResult<Unit>.Failure("Patient not found.");
 
         // Delete the patient from the repository
-        _patientRepository.DeletePatient(patient);
+        await _patientRepository.DeletePatient(request.PatientId);
 
         return OperationResult<Unit>.Success(Unit.Value);
     }

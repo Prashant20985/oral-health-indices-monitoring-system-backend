@@ -30,7 +30,7 @@ public class DeleteGroupHandlerTests : TestHelper
         Assert.True(result.IsSuccessful);
         Assert.Equal(Unit.Value, result.ResultValue);
         groupRepositoryMock.Verify(repo => repo.GetGroupById(command.GroupId), Times.Once);
-        groupRepositoryMock.Verify(repo => repo.DeleteGroup(It.IsAny<Group>()), Times.Once);
+        groupRepositoryMock.Verify(repo => repo.DeleteGroup(It.IsAny<Guid>()), Times.Once);
     }
 
     [Fact]
@@ -48,6 +48,6 @@ public class DeleteGroupHandlerTests : TestHelper
         Assert.False(result.IsSuccessful);
         Assert.Equal("Group Id not found", result.ErrorMessage);
         groupRepositoryMock.Verify(repo => repo.GetGroupById(command.GroupId), Times.Once);
-        groupRepositoryMock.Verify(repo => repo.DeleteGroup(It.IsAny<Group>()), Times.Never);
+        groupRepositoryMock.Verify(repo => repo.DeleteGroup(It.IsAny<Guid>()), Times.Never);
     }
 }

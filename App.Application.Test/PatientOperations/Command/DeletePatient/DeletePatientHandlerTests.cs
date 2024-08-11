@@ -32,7 +32,7 @@ public class DeletePatientHandlerTests : TestHelper
         Assert.True(result.IsSuccessful);
         Assert.Equal(Unit.Value, result.ResultValue);
         patientRepositoryMock.Verify(repo => repo.GetPatientById(command.PatientId), Times.Once);
-        patientRepositoryMock.Verify(repo => repo.DeletePatient(It.IsAny<Patient>()), Times.Once);
+        patientRepositoryMock.Verify(repo => repo.DeletePatient(It.IsAny<Guid>()), Times.Once);
     }
 
     [Fact]
@@ -49,6 +49,6 @@ public class DeletePatientHandlerTests : TestHelper
         Assert.False(result.IsSuccessful);
         Assert.Equal("Patient not found.", result.ErrorMessage);
         patientRepositoryMock.Verify(repo => repo.GetPatientById(command.PatientId), Times.Once);
-        patientRepositoryMock.Verify(repo => repo.DeletePatient(It.IsAny<Patient>()), Times.Never);
+        patientRepositoryMock.Verify(repo => repo.DeletePatient(It.IsAny<Guid>()), Times.Never);
     }
 }
