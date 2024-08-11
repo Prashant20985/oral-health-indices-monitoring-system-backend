@@ -232,7 +232,7 @@ public class PatientRepositoryTests
     }
 
     [Fact]
-    public void DeletePatient_WhenPatientIsDeleted_ShouldDeletePatient()
+    public async Task DeletePatient_WhenPatientIsDeleted_ShouldDeletePatient()
     {
         // Arrange
         var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
@@ -244,7 +244,7 @@ public class PatientRepositoryTests
         _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
 
         //Act
-        _patientRepository.DeletePatient(patient1);
+        await _patientRepository.DeletePatient(patient1.Id);
 
         //Assert
         _mockOralEhrContext.Verify(x => x.Patients.Remove(patient1), Times.Once);

@@ -42,15 +42,25 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
             .ThenInclude(x => x.Bewe)
             .FirstOrDefaultAsync(x => x.Id == examId);
 
-        _context.Exams.Remove(exam);
-        _context.PracticePatientExaminationCards.RemoveRange(exam.PracticePatientExaminationCards);
-        _context.PracticePatients.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatient));
-        _context.PracticeRiskFactorAssessments.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticeRiskFactorAssessment));
-        _context.PracticeAPIs.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatientExaminationResult.API));
-        _context.PracticeBleedings.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatientExaminationResult.Bleeding));
-        _context.PracticeDMFT_DMFSs.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatientExaminationResult.DMFT_DMFS));
-        _context.PracticeBewes.RemoveRange(exam.PracticePatientExaminationCards.Select(x => x.PracticePatientExaminationResult.Bewe));
+        if (exam != null)
+        {
+            _context.Exams.Remove(exam);
 
+            if (exam.PracticePatientExaminationCards.Count != 0)
+            {
+                _context.PracticePatientExaminationCards.RemoveRange(exam.PracticePatientExaminationCards);
+
+                foreach (var card in exam.PracticePatientExaminationCards)
+                {
+                    _context.PracticePatients.Remove(card.PracticePatient);
+                    _context.PracticeRiskFactorAssessments.Remove(card.PracticeRiskFactorAssessment);
+                    _context.PracticeBleedings.Remove(card.PracticePatientExaminationResult.Bleeding);
+                    _context.PracticeAPIs.Remove(card.PracticePatientExaminationResult.API);
+                    _context.PracticeDMFT_DMFSs.Remove(card.PracticePatientExaminationResult.DMFT_DMFS);
+                    _context.PracticeBewes.Remove(card.PracticePatientExaminationResult.Bewe);
+                }
+            }
+        }
     }
 
     /// <inheritdoc/>

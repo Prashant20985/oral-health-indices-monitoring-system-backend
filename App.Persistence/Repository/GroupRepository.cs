@@ -42,8 +42,61 @@ public class GroupRepository : IGroupRepository
         await _oralEhrContext.Groups.AddAsync(group);
 
     /// <inheritdoc />
-    public void DeleteGroup(Group group) =>
-        _oralEhrContext.Groups.Remove(group);
+    public async Task DeleteGroup(Guid groupId)
+    {
+        var groupToDelete = await _oralEhrContext.Groups
+            .Include(x => x.Exams)
+            .ThenInclude(x => x.PracticePatientExaminationCards)
+            .ThenInclude(x => x.PracticePatient)
+            .Include(x => x.Exams)
+            .ThenInclude(x => x.PracticePatientExaminationCards)
+            .ThenInclude(x => x.PracticeRiskFactorAssessment)
+            .Include(x => x.Exams)
+            .ThenInclude(x => x.PracticePatientExaminationCards)
+            .ThenInclude(x => x.PracticePatientExaminationResult)
+            .ThenInclude(x => x.Bleeding)
+            .Include(x => x.Exams)
+            .ThenInclude(x => x.PracticePatientExaminationCards)
+            .ThenInclude(x => x.PracticePatientExaminationResult)
+            .ThenInclude(x => x.Bewe)
+            .Include(x => x.Exams)
+            .ThenInclude(x => x.PracticePatientExaminationCards)
+            .ThenInclude(x => x.PracticePatientExaminationResult)
+            .ThenInclude(x => x.API)
+            .Include(x => x.Exams)
+            .ThenInclude(x => x.PracticePatientExaminationCards)
+            .ThenInclude(x => x.PracticePatientExaminationResult)
+            .ThenInclude(x => x.DMFT_DMFS)
+            .FirstOrDefaultAsync(x => x.Id == groupId);
+
+        if (groupToDelete is not null)
+        {
+            _oralEhrContext.Groups.Remove(groupToDelete);
+
+            if (groupToDelete.Exams.Count != 0)
+            {
+                _oralEhrContext.Exams.RemoveRange(groupToDelete.Exams);
+
+                foreach (var exam in groupToDelete.Exams)
+                {
+                    if (exam.PracticePatientExaminationCards.Count != 0)
+                    {
+                        _oralEhrContext.PracticePatientExaminationCards.RemoveRange(exam.PracticePatientExaminationCards);
+
+                        foreach (var card in exam.PracticePatientExaminationCards)
+                        {
+                            _oralEhrContext.PracticeRiskFactorAssessments.Remove(card.PracticeRiskFactorAssessment);
+                            _oralEhrContext.PracticePatients.Remove(card.PracticePatient);
+                            _oralEhrContext.PracticeAPIs.Remove(card.PracticePatientExaminationResult.API);
+                            _oralEhrContext.PracticeBleedings.Remove(card.PracticePatientExaminationResult.Bleeding);
+                            _oralEhrContext.PracticeBewes.Remove(card.PracticePatientExaminationResult.Bewe);
+                            _oralEhrContext.PracticeDMFT_DMFSs.Remove(card.PracticePatientExaminationResult.DMFT_DMFS);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     /// <inheritdoc />
     public async Task<StudentGroup> GetStudentGroup(string studentId, Guid groupId) => await _oralEhrContext.StudentGroups

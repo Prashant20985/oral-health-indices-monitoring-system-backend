@@ -1550,7 +1550,10 @@ public class StudentExamRepositoryTests
 
         var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
-        var patientExaminationCard = new PracticePatientExaminationCard(exam.Id, "studentId");
+        var patientExaminationCard = new PracticePatientExaminationCard(exam.Id, "studentId")
+        {
+            PracticePatientExaminationResult = practicePatientExaminationResult
+        };
 
         patientExaminationCard.SetRiskFactorAssessmentId(practiceRiskFactorAssessment.Id);
         patientExaminationCard.SetPatientId(practicePatient.Id);
@@ -1609,11 +1612,11 @@ public class StudentExamRepositoryTests
 
         // Assert
         _mockOralEhrContext.Verify(x => x.Exams.Remove(exam), Times.Once);
-        _mockOralEhrContext.Verify(x => x.PracticePatients.RemoveRange(It.IsAny<IEnumerable<PracticePatient>>()), Times.Once);
-        _mockOralEhrContext.Verify(x => x.PracticeRiskFactorAssessments.RemoveRange(It.IsAny<IEnumerable<PracticeRiskFactorAssessment>>()), Times.Once);
-        _mockOralEhrContext.Verify(x => x.PracticeBewes.RemoveRange(It.IsAny<IEnumerable<PracticeBewe>>()), Times.Once);
-        _mockOralEhrContext.Verify(x => x.PracticeDMFT_DMFSs.RemoveRange(It.IsAny<IEnumerable<PracticeDMFT_DMFS>>()), Times.Once);
-        _mockOralEhrContext.Verify(x => x.PracticeAPIs.RemoveRange(It.IsAny<IEnumerable<PracticeAPI>>()), Times.Once);
-        _mockOralEhrContext.Verify(x => x.PracticeBleedings.RemoveRange(It.IsAny<IEnumerable<PracticeBleeding>>()), Times.Once);
+        _mockOralEhrContext.Verify(x => x.PracticePatients.Remove(It.IsAny<PracticePatient>()), Times.Once);
+        _mockOralEhrContext.Verify(x => x.PracticeRiskFactorAssessments.Remove(It.IsAny<PracticeRiskFactorAssessment>()), Times.Once);
+        _mockOralEhrContext.Verify(x => x.PracticeBewes.Remove(It.IsAny<PracticeBewe>()), Times.Once);
+        _mockOralEhrContext.Verify(x => x.PracticeDMFT_DMFSs.Remove(It.IsAny<PracticeDMFT_DMFS>()), Times.Once);
+        _mockOralEhrContext.Verify(x => x.PracticeAPIs.Remove(It.IsAny<PracticeAPI>()), Times.Once);
+        _mockOralEhrContext.Verify(x => x.PracticeBleedings.Remove(It.IsAny<PracticeBleeding>()), Times.Once);
     }
 }

@@ -13,7 +13,7 @@ public interface IPatientRepository
 
     Task<Patient> GetPatientById(Guid id);
 
-    void DeletePatient(Patient patient);
+    Task DeletePatient(Guid patientId);
 
     Task<Patient> GetPatientByEmail(string email);
 

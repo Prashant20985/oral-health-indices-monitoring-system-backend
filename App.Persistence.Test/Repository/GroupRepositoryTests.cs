@@ -124,7 +124,7 @@ public class GroupRepositoryTests
     }
 
     [Fact]
-    public void DeleteGroup_StateUnderTest_ExpectedBehavior()
+    public async Task DeleteGroup_StateUnderTest_ExpectedBehavior()
     {
         // Arrange
         var group = new Group(Guid.NewGuid().ToString(), "Group");
@@ -134,7 +134,7 @@ public class GroupRepositoryTests
         _mockOralEhrContext.Setup(x => x.Groups).Returns(groups.Object);
 
         // Act
-        _groupRepository.DeleteGroup(group);
+        await _groupRepository.DeleteGroup(group.Id);
 
         // Assert
         _mockOralEhrContext.Verify(x => x.Groups.Remove(group), Times.Once);

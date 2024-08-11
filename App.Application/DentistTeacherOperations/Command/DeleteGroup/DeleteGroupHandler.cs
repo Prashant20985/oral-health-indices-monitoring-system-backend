@@ -27,7 +27,7 @@ internal sealed class DeleteGroupHandler : IRequestHandler<DeleteGroupCommand, O
             return OperationResult<Unit>.Failure("Group Id not found");
 
         // Remove the group.
-        _groupRepository.DeleteGroup(group);
+        await _groupRepository.DeleteGroup(request.GroupId);
 
         // Return a success result with no specific data.
         return OperationResult<Unit>.Success(Unit.Value);
