@@ -1,5 +1,6 @@
 using App.API.Extensions;
 using App.API.Middleware;
+using Azure.Identity;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,11 +11,24 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
 
-// Serilog 
-builder.Host.UseSerilog((context, configuration) =>
-    configuration.ReadFrom.Configuration(context.Configuration));
+// Add Azure App Configuration
+builder.Configuration.AddAzureAppConfiguration(options =>
+{
+    var appUri = new Uri(builder.Configuration.GetConnectionString("AppConfigUri"));
+    var credentials = new DefaultAzureCredential();
+    options.Connect(appUri, credentials);
+});
 
-//Serilog.Debugging.SelfLog.Enable(msg => Console.WriteLine(msg));
+// Serilog 
+string logsConnectionString = builder.Configuration["LogsDatabaseSettings:ConnectionString"];
+string collectionName = builder.Configuration["LogsDatabaseSettings:CollectionName"];
+
+builder.Host.UseSerilog((context, configuration) =>
+{
+    configuration
+        .ReadFrom.Configuration(context.Configuration)
+        .WriteTo.MongoDB(logsConnectionString, collectionName);
+});
 
 // Extensions
 builder.Services.AddApplicationServices(builder.Configuration);
