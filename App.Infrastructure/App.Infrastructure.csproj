@@ -1,34 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>disable</Nullable>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<None Remove="Email\EmailTemplates\password_reset.html" />
-		<None Remove="Email\EmailTemplates\password_reset_confirmation.html" />
-		<None Remove="Email\EmailTemplates\registration_successfull.html" />
-	</ItemGroup>
+  <ItemGroup>
+    <None Remove="Email\EmailTemplates\password_reset.html" />
+    <None Remove="Email\EmailTemplates\password_reset_confirmation.html" />
+    <None Remove="Email\EmailTemplates\registration_successfull.html" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<EmbeddedResource Include="Email\EmailTemplates\password_reset.html" />
-		<EmbeddedResource Include="Email\EmailTemplates\password_reset_confirmation.html" />
-		<EmbeddedResource Include="Email\EmailTemplates\registration_successfull.html" />
-	</ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Email\EmailTemplates\password_reset.html" />
+    <EmbeddedResource Include="Email\EmailTemplates\password_reset_confirmation.html" />
+    <EmbeddedResource Include="Email\EmailTemplates\registration_successfull.html" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\App.Application\App.Application.csproj" />
-	</ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\App.Application\App.Application.csproj" />
+  </ItemGroup>
 	<ItemGroup>
 		<InternalsVisibleTo Include="App.Infrastructure.Test" />
 	</ItemGroup>
-
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.0.1" />
-	  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
+	  <PackageReference Include="Microsoft.IdentityModel.Protocols" Version="8.0.1" />
+	  <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.0.1" />
 	</ItemGroup>
 
 </Project>
