@@ -317,4 +317,35 @@ public class GroupRepositoryTests
         Assert.Equal("test", result[0].Students[0].UserName);
         Assert.Equal("test2", result[0].Students[1].UserName);
     }
+
+    [Fact]
+    public async Task GetGroupDetailsWithStudentList_Returns_StudentGroupResponseDto()
+    {
+        // Arrange
+        var group = new Group(Guid.NewGuid().ToString(), "Group 1");
+
+        var student1 = new ApplicationUser("test@test.com", "Test", "User", "7418552", "comment");
+        var studentGroup1 = new StudentGroup(group.Id, student1.Id.ToString());
+
+        studentGroup1.Student = student1;
+
+        group.StudentGroups.Add(studentGroup1);
+
+        var studentGroups = new List<StudentGroup> { studentGroup1 };
+        var groups = new List<Group> { group };
+
+        var mockStudentGroups = studentGroups.AsQueryable().BuildMockDbSet();
+        var mockGroups = groups.AsQueryable().BuildMockDbSet();
+
+        _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(mockStudentGroups.Object);
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(mockGroups.Object);
+
+        // Act
+        var result = await _groupRepository.GetGroupDetailsWithStudentList(group.Id);
+
+        // Assert
+        Assert.IsType<StudentGroupResponseDto>(result);
+        Assert.Equal("Group 1", result.GroupName);
+        Assert.Single(result.Students);
+    }
 }
