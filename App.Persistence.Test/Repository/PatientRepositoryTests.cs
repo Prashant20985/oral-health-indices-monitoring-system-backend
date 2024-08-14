@@ -249,4 +249,47 @@ public class PatientRepositoryTests
         //Assert
         _mockOralEhrContext.Verify(x => x.Patients.Remove(patient1), Times.Once);
     }
-}
+
+    [Fact]
+    public async Task GetPatientDetails_ShoudlReturn_PatientResponseDto()
+    {
+        // Arrange
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
+
+        var patients = new List<Patient> { patient1 }
+            .AsQueryable().
+            BuildMockDbSet();
+
+        _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
+
+        //Act
+        var result = await _patientRepository.GetPatientDetails(patient1.Id);
+
+        //Assert
+        Assert.NotNull(result);
+        Assert.IsType<PatientResponseDto>(result);
+        Assert.Equal(patient1.Id, result.Id);
+        Assert.Equal(patient1.FirstName, result.FirstName);
+        Assert.Equal(patient1.LastName, result.LastName);
+        Assert.Equal(patient1.Email, result.Email);
+    }
+
+    [Fact]
+    public async Task GetPatientDetails_WhenPatientDoesNotExist_ShouldReturnNull()
+    {
+        // Arrange
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
+
+        var patients = new List<Patient> { patient1 }
+            .AsQueryable().
+            BuildMockDbSet();
+
+        _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
+
+        //Act
+        var result = await _patientRepository.GetPatientDetails(Guid.NewGuid());
+
+        //Assert
+        Assert.Null(result);
+    }
+ }
