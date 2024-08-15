@@ -67,7 +67,9 @@ namespace App.Infrastructure.Test.Token
         private static Mock<UserManager<ApplicationUser>> GetUserManagerMock()
         {
             var storeMock = new Mock<IUserStore<ApplicationUser>>();
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Mock<UserManager<ApplicationUser>> userManagerMock = new(storeMock.Object, null, null, null, null, null, null, null, null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
             return userManagerMock;
         }
@@ -75,7 +77,9 @@ namespace App.Infrastructure.Test.Token
         private static Mock<RoleManager<ApplicationRole>> GetRoleManagerMock()
         {
             var storeMock = new Mock<IRoleStore<ApplicationRole>>();
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Mock<RoleManager<ApplicationRole>> roleManagerMock = new(storeMock.Object, null, null, null, null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
             return roleManagerMock;
         }

@@ -17,6 +17,18 @@ public class PracticeBeweResponseDto
     /// </summary>
     public decimal BeweResult { get; init; }
 
+    public decimal Sectant1 { get; init; }
+
+    public decimal Sectant2 { get; init; }
+
+    public decimal Sectant3 { get; init; }
+
+    public decimal Sectant4 { get; init; }
+
+    public decimal Sectant5 { get; init; }
+
+    public decimal Sectant6 { get; init; }
+
     /// <summary>
     /// Gets or sets comments related to the BEWE assessment.
     /// </summary>

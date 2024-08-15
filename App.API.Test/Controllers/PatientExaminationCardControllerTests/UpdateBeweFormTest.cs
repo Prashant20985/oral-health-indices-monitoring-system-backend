@@ -1,5 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.PatientExaminationCardOperations.Command.UpdateBeweForm;
+using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Common.Bewe;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -44,10 +45,19 @@ public class UpdateBeweFormTest
 
         var assessmentModel = new BeweAssessmentModel();
 
-        var expectedResponse = 123.45m;
+        var expectedResponse = new BeweResultResponseDto
+        {
+            BeweResult = 1.0m,
+            Sectant1 = 1.0m,
+            Sectant2 = 1.0m,
+            Sectant3 = 1.0m,
+            Sectant4 = 1.0m,
+            Sectant5 = 1.0m,
+            Sectant6 = 1.0m,
+        };
 
         _mediator.Setup(x => x.Send(It.IsAny<UpdateBeweFormCommand>(), default))
-            .ReturnsAsync(OperationResult<decimal>.Success(expectedResponse));
+            .ReturnsAsync(OperationResult<BeweResultResponseDto>.Success(expectedResponse));
 
         // Act
         var result = await _patientExaminationCardController.UpdateBeweForm(patientExaminationCard.Id, assessmentModel);
@@ -83,7 +93,7 @@ public class UpdateBeweFormTest
         var assessmentModel = new BeweAssessmentModel();
 
         _mediator.Setup(x => x.Send(It.IsAny<UpdateBeweFormCommand>(), default))
-            .ReturnsAsync(OperationResult<decimal>.Failure("Bewe Form Not Found"));
+            .ReturnsAsync(OperationResult<BeweResultResponseDto>.Failure("Bewe Form Not Found"));
 
         // Act
         var result = await _patientExaminationCardController.UpdateBeweForm(patientExaminationCard.Id, assessmentModel);

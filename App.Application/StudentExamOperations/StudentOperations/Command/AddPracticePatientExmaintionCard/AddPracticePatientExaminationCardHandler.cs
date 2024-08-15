@@ -87,8 +87,18 @@ internal sealed class AddPracticePatientExaminationCardHandler(IStudentExamRepos
         await _studentExamRepository.AddPracticeDMFT_DMFS(practiceDMFT_DMFS);
 
         // Create practice BEWE object
-        PracticeBewe practiceBewe = new(request.CardInputModel.PracticeBewe.BeweResult);
-        practiceBewe.SetAssessmentModel(request.CardInputModel.PracticeBewe.AssessmentModel);
+        var bewe = request.CardInputModel.PracticeBewe;
+
+        PracticeBewe practiceBewe = new(beweResult: bewe.BeweResult);
+
+        practiceBewe.SetSectant1(bewe.Sectant1);
+        practiceBewe.SetSectant2(bewe.Sectant2);
+        practiceBewe.SetSectant3(bewe.Sectant3);
+        practiceBewe.SetSectant4(bewe.Sectant4);
+        practiceBewe.SetSectant5(bewe.Sectant5);
+        practiceBewe.SetSectant6(bewe.Sectant6);
+
+        practiceBewe.SetAssessmentModel(bewe.AssessmentModel);
 
         // Add practice BEWE to repository
         await _studentExamRepository.AddPracticeBewe(practiceBewe);
