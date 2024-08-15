@@ -20,7 +20,7 @@ public class ResetPasswordPostRequestTest
     }
 
     [Fact]
-    public async void ResetPassword_ReturnsOkResultWithResetPasswordDto()
+    public async Task ResetPassword_ReturnsOkResultWithResetPasswordDto()
     {
         // Arrange
         var resetPasswordDto = new ResetPasswordDto

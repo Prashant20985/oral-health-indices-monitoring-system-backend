@@ -94,7 +94,7 @@ public class SuperviseRepositoryTests
     }
 
     [Fact]
-    public async Task GetAllStudentsUnderSupervisionByDoctorId_ShouldReturnListOfStudentResponseDto()
+    public void GetAllStudentsUnderSupervisionByDoctorId_ShouldReturnListOfStudentResponseDto()
     {
         // Arrange
         var applicationUserRoles = new List<ApplicationUserRole>

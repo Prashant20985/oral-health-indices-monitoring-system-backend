@@ -126,7 +126,7 @@ public class PatientExaminationCardController : BaseController
     /// <returns>An ActionResult of decimal</returns>
     [HttpPut("update-bewe-form/{cardId}")]
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
-    public async Task<ActionResult<decimal>> UpdateBeweForm(Guid cardId, [FromBody] BeweAssessmentModel assessmentModel) =>
+    public async Task<ActionResult<BeweResultResponseDto>> UpdateBeweForm(Guid cardId, [FromBody] BeweAssessmentModel assessmentModel) =>
         HandleOperationResult(await Mediator.Send(new UpdateBeweFormCommand(cardId, assessmentModel)));
 
     /// <summary>

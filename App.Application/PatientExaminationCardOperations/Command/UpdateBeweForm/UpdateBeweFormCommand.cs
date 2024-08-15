@@ -1,4 +1,5 @@
 ﻿using App.Application.Core;
+using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Common.Bewe;
 using App.Persistence.Attributes;
 using MediatR;
@@ -10,5 +11,5 @@ namespace App.Application.PatientExaminationCardOperations.Command.UpdateBeweFor
 /// </summary>
 [OralEhrContextUnitOfWork]
 public record UpdateBeweFormCommand(Guid CardId, BeweAssessmentModel AssessmentModel)
-    : IRequest<OperationResult<decimal>>;
+    : IRequest<OperationResult<BeweResultResponseDto>>;
 

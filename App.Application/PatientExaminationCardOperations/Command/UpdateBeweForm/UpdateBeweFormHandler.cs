@@ -1,4 +1,5 @@
 ﻿using App.Application.Core;
+using App.Domain.DTOs.Common.Response;
 using App.Domain.Repository;
 using MediatR;
 
@@ -9,7 +10,7 @@ namespace App.Application.PatientExaminationCardOperations.Command.UpdateBeweFor
 /// </summary>
 /// <param name="patientExaminationCardRepository">The patient examination card repository</param>
 internal sealed class UpdateBeweFormHandler(IPatientExaminationCardRepository patientExaminationCardRepository)
-    : IRequestHandler<UpdateBeweFormCommand, OperationResult<decimal>>
+    : IRequestHandler<UpdateBeweFormCommand, OperationResult<BeweResultResponseDto>>
 {
     private readonly IPatientExaminationCardRepository _patientExaminationCardRepository = patientExaminationCardRepository;
 
@@ -19,14 +20,14 @@ internal sealed class UpdateBeweFormHandler(IPatientExaminationCardRepository pa
     /// <param name="request">The request</param>
     /// <param name="cancellationToken">The cancellation token</param>
     /// <returns>The result of the operation</returns>
-    public async Task<OperationResult<decimal>> Handle(UpdateBeweFormCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<BeweResultResponseDto>> Handle(UpdateBeweFormCommand request, CancellationToken cancellationToken)
     {
         // Get the BEWE form by card id
         var beweForm = await _patientExaminationCardRepository.GetBeweByCardId(request.CardId);
 
         // If the BEWE form is not found, return an error
         if (beweForm is null)
-            return OperationResult<decimal>.Failure("Bewe form not found");
+            return OperationResult<BeweResultResponseDto>.Failure("Bewe form not found");
 
         // Set the assessment model
         beweForm.SetAssessmentModel(request.AssessmentModel);
@@ -34,6 +35,17 @@ internal sealed class UpdateBeweFormHandler(IPatientExaminationCardRepository pa
         // Calculate the BEWE result
         beweForm.CalculateBeweResult();
 
-        return OperationResult<decimal>.Success(beweForm.BeweResult);
+        var beweResultResponse = new BeweResultResponseDto
+        {
+            BeweResult = beweForm.BeweResult,
+            Sectant1 = beweForm.Sectant1,
+            Sectant2 = beweForm.Sectant2,
+            Sectant3 = beweForm.Sectant3,
+            Sectant4 = beweForm.Sectant4,
+            Sectant5 = beweForm.Sectant5,
+            Sectant6 = beweForm.Sectant6
+        };
+
+        return OperationResult<BeweResultResponseDto>.Success(beweResultResponse);
     }
 }
