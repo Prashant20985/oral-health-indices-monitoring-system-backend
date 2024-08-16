@@ -133,6 +133,7 @@ public class GroupRepository : IGroupRepository
             {
                 Id = x.Id,
                 GroupName = x.GroupName,
+                CreatedAt = x.CreatedAt,
                 Students = x.StudentGroups.Select(x => _mapper.Map<StudentResponseDto>(x.Student)).ToList()
             })
             .ToListAsync();
@@ -147,6 +148,7 @@ public class GroupRepository : IGroupRepository
             {
                 Id = x.Id,
                 GroupName = x.GroupName,
+                CreatedAt = x.CreatedAt,
                 Students = x.StudentGroups.Select(x => _mapper.Map<StudentResponseDto>(x.Student)).ToList()
             }).FirstOrDefaultAsync();
     }
@@ -161,6 +163,7 @@ public class GroupRepository : IGroupRepository
             {
                 Id = x.Id,
                 GroupName = x.GroupName,
+                CreatedAt = x.CreatedAt,
                 Teacher = $"{x.Teacher.FirstName} {x.Teacher.LastName} ({x.Teacher.UserName})",
                 Exams = x.Exams.Select(x => _mapper.Map<ExamDto>(x)).ToList()
             })
@@ -176,6 +179,7 @@ public class GroupRepository : IGroupRepository
             {
                 Id = x.Id,
                 GroupName = x.GroupName,
+                CreatedAt = x.CreatedAt,
                 Teacher = $"{x.Teacher.FirstName} {x.Teacher.LastName} ({x.Teacher.UserName})",
                 Exams = x.Exams.Select(x => _mapper.Map<ExamDto>(x)).ToList()
             }).FirstOrDefaultAsync();
