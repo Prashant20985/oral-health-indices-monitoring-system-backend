@@ -15,6 +15,7 @@ using App.Application.StudentExamOperations.TeacherOperations.Command.PublishExa
 using App.Application.StudentExamOperations.TeacherOperations.Command.UpdateExam;
 using App.Application.StudentExamOperations.TeacherOperations.Query.ExaminationCardDetails;
 using App.Application.StudentExamOperations.TeacherOperations.Query.ExaminationCardsList;
+using App.Application.StudentExamOperations.TeacherOperations.Query.ExamResults;
 using App.Domain.DTOs.ExamDtos.Request;
 using App.Domain.DTOs.ExamDtos.Response;
 using Microsoft.AspNetCore.Authorization;
@@ -210,5 +211,16 @@ public class StudentExamController : BaseController
     [HttpGet("upcoming-exams")]
     public async Task<ActionResult<List<ExamDto>>> GetUpcomingExams() =>
         HandleOperationResult(await Mediator.Send(new UpcominExamsQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
+
+
+    /// <summary>
+    /// Retrieves the list of student exam results for a specific exam.
+    /// </summary>
+    /// <param name="examId">The ID of the exam.</param>
+    /// <returns>An ActionResult of a list of StudentExamResultResponseDto.</returns>
+    [Authorize(Roles = "Dentist_Teacher_Examiner")]
+    [HttpGet("exam-results/{examId}")]
+    public async Task<ActionResult<List<StudentExamResultResponseDto>>> GetStudentExamResults(Guid examId) =>
+        HandleOperationResult(await Mediator.Send(new FetchExamResultsQuery(examId)));
 }
 

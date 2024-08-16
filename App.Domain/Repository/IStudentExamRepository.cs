@@ -161,5 +161,12 @@ public interface IStudentExamRepository
     /// <param name="studentId">The ID of the student.</param>
     /// <returns>A list of exam DTOs representing the upcoming exams for the student.</returns>
     public Task<List<ExamDto>> UpcomingExams(string studentId);
+
+    /// <summary>
+    /// Retrieves a list of student exam results.
+    /// </summary>
+    /// <param name="examId">The ID of the exam.</param>
+    /// <returns>A list of student exam result response DTOs.</returns>
+    Task<List<StudentExamResultResponseDto>> GetStudentExamResults(Guid examId);
 }
 

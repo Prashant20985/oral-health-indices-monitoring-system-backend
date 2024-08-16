@@ -184,4 +184,17 @@ public class StudentExamRepository(OralEhrContext context, IMapper mapper) : ISt
         .Take(3)
         .ToListAsync();
 
+    /// <inheritdoc/>
+    public async Task<List<StudentExamResultResponseDto>> GetStudentExamResults(Guid examId) => await _context.PracticePatientExaminationCards
+        .Where(x => x.ExamId == examId)
+        .Include(x => x.Student)
+        .OrderByDescending(x => x.Student.CreatedAt)
+        .Select(x => new StudentExamResultResponseDto
+        {
+            UserName = x.Student.UserName,
+            FirstName = x.Student.FirstName,
+            LastName = x.Student.LastName,
+            Email = x.Student.Email,
+            StudentMark = x.StudentMark
+        }).ToListAsync();
 }
