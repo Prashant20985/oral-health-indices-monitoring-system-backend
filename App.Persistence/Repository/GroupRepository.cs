@@ -128,12 +128,14 @@ public class GroupRepository : IGroupRepository
     {
         return await _oralEhrContext.Groups
             .Where(x => x.TeacherId.Equals(teacherId))
+            .OrderByDescending(x => x.CreatedAt)
             .Select(x => new StudentGroupResponseDto
             {
                 Id = x.Id,
                 GroupName = x.GroupName,
                 Students = x.StudentGroups.Select(x => _mapper.Map<StudentResponseDto>(x.Student)).ToList()
-            }).ToListAsync();
+            })
+            .ToListAsync();
     }
 
     /// <inheritdoc />
@@ -152,14 +154,17 @@ public class GroupRepository : IGroupRepository
     /// <inheritdoc />
     public async Task<List<StudentGroupWithExamsListResponseDto>> GetAllGroupsByStudentIdWithExamsList(string studentId)
     {
-        return await _oralEhrContext.Groups.Where(x => x.StudentGroups.Any(s => s.StudentId == studentId))
+        return await _oralEhrContext.Groups
+            .Where(x => x.StudentGroups.Any(s => s.StudentId == studentId))
+            .OrderByDescending(x => x.CreatedAt)
             .Select(x => new StudentGroupWithExamsListResponseDto
             {
                 Id = x.Id,
                 GroupName = x.GroupName,
                 Teacher = $"{x.Teacher.FirstName} {x.Teacher.LastName} ({x.Teacher.UserName})",
                 Exams = x.Exams.Select(x => _mapper.Map<ExamDto>(x)).ToList()
-            }).ToListAsync();
+            })
+            .ToListAsync();
     }
 
     /// <inheritdoc />

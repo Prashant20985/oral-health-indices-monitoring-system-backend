@@ -18,6 +18,11 @@ public class StudentGroupResponseDto
     public string GroupName { get; set; }
 
     /// <summary>
+    /// Gets or sets the date and time when the group was created.
+    /// </summary>
+    public DateTime CreatedAt { get; set; }
+
+    /// <summary>
     /// Gets or sets a list of students names in which group is associated
     /// </summary>
     public List<StudentResponseDto> Students { get; set; }

@@ -20,6 +20,11 @@ public class StudentGroupWithExamsListResponseDto
     public string Teacher { get; set; }
 
     /// <summary>
+    /// Gets or sets the date and time when the group was created.
+    /// </summary>
+    public DateTime CreatedAt { get; set; }
+
+    /// <summary>
     /// Gets or sets the exams.
     /// </summary>
     public List<ExamDto> Exams { get; set; }

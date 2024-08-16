@@ -30,6 +30,11 @@ public class Group
     public string GroupName { get; private set; }
 
     /// <summary>
+    /// Gets or sets the date and time when the group was created.
+    /// </summary>
+    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+
+    /// <summary>
     /// Gets the identifier of the teacher associated with the group.
     /// </summary>
     public string TeacherId { get; private set; }
