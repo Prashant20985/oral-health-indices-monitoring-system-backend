@@ -1747,4 +1747,125 @@ public class StudentExamRepositoryTests
         _mockOralEhrContext.Verify(x => x.Exams.AddAsync(exam, CancellationToken.None), Times.Once);
     }
 
+    [Fact]
+    public async Task GetStudentExamResults_ShouldReturnListOfStudentExamResultResponseDto()
+    {
+      // Arrange
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, Guid.NewGuid());
+
+        var group = new Group("teacherId", "groupName");
+
+        var student = new ApplicationUser("test@test.com", "Test", "User", "123456789", "comment");
+        var studentGroup = new StudentGroup(group.Id,student.Id);
+        group.StudentGroups.Add(studentGroup);
+
+        exam.Group = group;
+        studentGroup.Group = group;
+
+        exam.MarksAsGraded();
+        
+        var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, student.Id);
+
+        exam.PracticePatientExaminationCards.Add(practicePatientExaminationCard);
+
+        practicePatientExaminationCard.SetStudentMark(90);
+        practicePatientExaminationCard.SetStudent(student);
+        
+        var practicePatientExaminationCards = new List<PracticePatientExaminationCard> { practicePatientExaminationCard }
+            .AsQueryable()
+            .BuildMockDbSet();
+
+        var exams = new List<Exam> { exam }
+        .AsQueryable()
+            .BuildMockDbSet();
+
+        var students = new List<ApplicationUser> { student }
+        .AsQueryable()
+            .BuildMockDbSet();
+
+        var groups = new List<Group> { group }
+        .AsQueryable()
+            .BuildMockDbSet();
+
+        var studentGroups = new List<StudentGroup> { studentGroup }
+        .AsQueryable()
+            .BuildMockDbSet();
+
+        _mockOralEhrContext.Setup(x => x.Exams).Returns(exams.Object);
+        _mockOralEhrContext.Setup(x => x.Users).Returns(students.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(groups.Object);
+        _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
+
+        // Act
+        var result = await _studentExamRepository.GetStudentExamResults(exam.Id);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.IsType<List<StudentExamResultResponseDto>>(result);
+        Assert.Single(result);
+        Assert.Equal(practicePatientExaminationCard.StudentMark, result[0].StudentMark);
+        Assert.Equal(practicePatientExaminationCard.Student.FirstName, result[0].FirstName);
+    }
+
+    [Fact]
+    public async Task GetStudentExamResults_ShouldReturnEmptyList()
+    {
+        // Arrange
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, Guid.NewGuid());
+
+        var group = new Group("teacherId", "groupName");
+
+        var student = new ApplicationUser("test@test.com", "Test", "User", "123456789", "comment");
+
+        var studentGroup = new StudentGroup(group.Id, student.Id);
+        group.StudentGroups.Add(studentGroup);
+
+        exam.Group = group;
+        studentGroup.Group = group;
+
+        exam.MarksAsGraded();
+
+        var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, student.Id);
+
+        exam.PracticePatientExaminationCards.Add(practicePatientExaminationCard);
+
+        practicePatientExaminationCard.SetStudentMark(90);
+        practicePatientExaminationCard.SetStudent(student);
+
+        var practicePatientExaminationCards = new List<PracticePatientExaminationCard> { practicePatientExaminationCard }
+            .AsQueryable()
+            .BuildMockDbSet();
+
+        var exams = new List<Exam> { exam }
+        .AsQueryable()
+            .BuildMockDbSet();
+
+        var students = new List<ApplicationUser> { student }
+        .AsQueryable()
+            .BuildMockDbSet();
+
+        var groups = new List<Group> { group }
+        .AsQueryable()
+            .BuildMockDbSet();
+
+        var studentGroups = new List<StudentGroup> { studentGroup }
+        .AsQueryable()
+            .BuildMockDbSet();
+
+        _mockOralEhrContext.Setup(x => x.Exams).Returns(exams.Object);
+        _mockOralEhrContext.Setup(x => x.Users).Returns(students.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(groups.Object);
+        _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
+
+        // Act
+        var result = await _studentExamRepository.GetStudentExamResults(Guid.NewGuid());
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.IsType<List<StudentExamResultResponseDto>>(result);
+        Assert.Empty(result);
+    }
+
 }
