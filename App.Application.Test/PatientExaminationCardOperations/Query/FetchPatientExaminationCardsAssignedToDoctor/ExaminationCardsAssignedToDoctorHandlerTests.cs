@@ -8,11 +8,11 @@ using Moq;
 
 namespace App.Application.Test.PatientExaminationCardOperations.Query.FetchPatientExaminationCardsAssignedToDoctor;
 
-public class FetchPatientExaminationCardsAssignedToDoctorHandlerTests : TestHelper
+public class ExaminationCardsAssignedToDoctorHandlerTests : TestHelper
 {
     private readonly FetchPatientExaminationCardsAssignedToDoctorHandler handler;
 
-    public FetchPatientExaminationCardsAssignedToDoctorHandlerTests()
+    public ExaminationCardsAssignedToDoctorHandlerTests()
     {
         handler = new FetchPatientExaminationCardsAssignedToDoctorHandler(patientExaminationCardRepositoryMock.Object, mapperMock.Object);
     }
