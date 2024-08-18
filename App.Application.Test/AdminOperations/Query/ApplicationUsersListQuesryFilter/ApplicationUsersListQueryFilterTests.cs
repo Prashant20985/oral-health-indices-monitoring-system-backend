@@ -1,8 +1,6 @@
 ﻿using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
-using App.Application.Core;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MockQueryable.Moq;
-using Moq;
 
 namespace App.Application.Test.AdminOperations.Query.ApplicationUsersListQuesryFilter;
 

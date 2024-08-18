@@ -104,7 +104,7 @@ public class PatientExaminationCardController : BaseController
     /// <returns>An ActionResult of DMFT_DMFSResultResponseDto</returns>
     [HttpPut("update-dmft-dmfs-form/{cardId}")]
     [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
-    public async Task<ActionResult<DMFT_DMFSResultResponseDto>> UpdateDMFTDMFSForm(Guid cardId,string prostheticStatus, [FromBody] UpdateDMFT_DMFSRequestDto updateDMFT_DMFS) =>
+    public async Task<ActionResult<DMFT_DMFSResultResponseDto>> UpdateDMFTDMFSForm(Guid cardId, string prostheticStatus, [FromBody] UpdateDMFT_DMFSRequestDto updateDMFT_DMFS) =>
         HandleOperationResult(await Mediator.Send(new UpdateDMFT_DMFSFormCommand(cardId, updateDMFT_DMFS)));
 
     /// <summary>

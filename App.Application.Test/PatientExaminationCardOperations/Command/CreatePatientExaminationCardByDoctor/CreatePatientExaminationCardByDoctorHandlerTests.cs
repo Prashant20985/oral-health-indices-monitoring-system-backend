@@ -204,7 +204,7 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
             bleeding);
 
         command = new CreatePatientExaminationCardByDoctorCommand(Guid.NewGuid(), "doctorId", inputParams);
-        
+
         handler = new CreatePatientExaminationCardByDoctorHandler(
             patientExaminationCardRepositoryMock.Object,
             patientRepositoryMock.Object,

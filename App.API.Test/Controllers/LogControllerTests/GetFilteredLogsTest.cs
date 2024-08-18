@@ -2,7 +2,6 @@
 using App.API.LogServices;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Logs;
-using Azure;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Moq;

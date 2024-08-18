@@ -14,8 +14,8 @@ internal sealed class FetchSupervisingDoctorsHandler(ISuperviseRepository superv
 {
     private readonly ISuperviseRepository _superviseRepository = superviseRepository;
 
-    
-    public async Task<OperationResult<List<SupervisingDoctorResponseDto>>> Handle(FetchSupervisingDoctorsQuery request, CancellationToken cancellationToken) => 
+
+    public async Task<OperationResult<List<SupervisingDoctorResponseDto>>> Handle(FetchSupervisingDoctorsQuery request, CancellationToken cancellationToken) =>
         await _superviseRepository.GetAllSupervisingDoctorsByStudentId(request.StudentId) switch
         {
             // If there are no supervising doctors, return a failure result.

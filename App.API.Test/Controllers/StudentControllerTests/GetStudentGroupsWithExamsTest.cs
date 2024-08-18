@@ -1,5 +1,4 @@
-﻿using App.API.Controllers;
-using App.Application.Core;
+﻿using App.Application.Core;
 using App.Application.StudentOperations.Query.StudentGroupsList;
 using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.DTOs.StudentGroupDtos.Response;
@@ -36,14 +35,14 @@ public class GetStudentGroupsWithExamsTest
 
 
         var student = new ApplicationUser("student@test.com", "John", "Doe", "123456789", "test");
-        var teacher = new ApplicationUser("teacher@test.com","Jane","Doe","987654321","test");
+        var teacher = new ApplicationUser("teacher@test.com", "Jane", "Doe", "987654321", "test");
 
-        var group = new Group(teacher.Id,"test123");
+        var group = new Group(teacher.Id, "test123");
         group.Teacher = teacher;
         var studentGroup = new StudentGroup(group.Id, student.Id);
         var exam = new Exam(DateTime.Now, "test123", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
         group.Exams.Add(exam);
-        
+
         group.StudentGroups.Add(studentGroup);
 
         var group2 = new Group(teacher.Id, "test234");

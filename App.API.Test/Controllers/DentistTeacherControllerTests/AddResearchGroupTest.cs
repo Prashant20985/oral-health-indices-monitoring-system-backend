@@ -1,6 +1,5 @@
 ﻿using App.Application.Core;
 using App.Application.DentistTeacherOperations.Command.CreateResearchGroup;
-using App.Domain.DTOs;
 using App.Domain.DTOs.ResearchGroupDtos.Request;
 using MediatR;
 using Microsoft.AspNetCore.Http;

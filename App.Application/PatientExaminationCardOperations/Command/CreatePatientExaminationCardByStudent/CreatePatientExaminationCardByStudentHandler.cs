@@ -137,7 +137,7 @@ internal sealed class CreatePatientExaminationCardByStudentHandler(
 
         // Set Need For Dental Interventions
         examinationCard.SetNeedForDentalInterventions(request.InputParams.Summary.NeedForDentalInterventions);
-        
+
         // Set Proposed Treatment
         examinationCard.SetProposedTreatment(request.InputParams.Summary.ProposedTreatment);
 

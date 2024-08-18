@@ -28,7 +28,7 @@ public class SuperviseStudentTest
         var teacher = new ApplicationUser("teacher@test.com", "john", "doe", "1234567890", "test");
         var student = new ApplicationUser("student@test.com", "jane", "doe", "987654321", "test123");
 
-        var group = new Group(teacher.Id,"test");
+        var group = new Group(teacher.Id, "test");
 
         var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
@@ -72,7 +72,7 @@ public class SuperviseStudentTest
 
         _dentistTeacherController.ControllerContext = new ControllerContext()
         {
-            HttpContext = new DefaultHttpContext() { User = user }, 
+            HttpContext = new DefaultHttpContext() { User = user },
         };
 
         // Act

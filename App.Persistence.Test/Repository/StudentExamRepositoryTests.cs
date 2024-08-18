@@ -1670,7 +1670,7 @@ public class StudentExamRepositoryTests
         Assert.NotNull(result);
         Assert.IsType<List<ExamDto>>(result);
         Assert.Single(result);
-        Assert.Equal(exam1.Id, result[0].Id); 
+        Assert.Equal(exam1.Id, result[0].Id);
     }
 
     [Fact]
@@ -1724,4 +1724,27 @@ public class StudentExamRepositoryTests
         Assert.IsType<List<ExamDto>>(result);
         Assert.Empty(result);
     }
+
+    [Fact]
+    public async Task PublishExam_ShouldAddExamToContextAndReturnExamDto()
+    {
+        // Arrange
+        var exam = new Exam(DateTime.Now, "Test Exam", "Description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, Guid.NewGuid());
+
+        var exams = new List<Exam>()
+            .AsQueryable()
+            .BuildMockDbSet();
+
+        _mockOralEhrContext.Setup(x => x.Exams).Returns(exams.Object);
+
+        // Act
+        var result = await _studentExamRepository.PublishExam(exam);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.IsType<ExamDto>(result);
+        Assert.Equal(exam.Id, result.Id);
+        _mockOralEhrContext.Verify(x => x.Exams.AddAsync(exam, CancellationToken.None), Times.Once);
+    }
+
 }

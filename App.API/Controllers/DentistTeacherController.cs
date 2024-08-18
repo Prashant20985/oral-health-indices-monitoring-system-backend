@@ -214,7 +214,7 @@ public class DentistTeacherController : BaseController
     /// </summary>
     /// <param name="studentId">The identifier of the student to supervise.</param>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [Authorize(Roles= "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
     [HttpPost("supervise-student/{studentId}")]
     public async Task<ActionResult> SuperviseStudent(string studentId) => HandleOperationResult(
                await Mediator.Send(new SuperviseStudentCommand(User.FindFirstValue(ClaimTypes.NameIdentifier), studentId)));
@@ -224,7 +224,7 @@ public class DentistTeacherController : BaseController
     /// </summary>
     /// <param name="studentId">The identifier of the student to unsupervise.</param>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [Authorize (Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
     [HttpDelete("unsupervise-student/{studentId}")]
     public async Task<ActionResult> UnsuperviseStudent(string studentId) => HandleOperationResult(
                await Mediator.Send(new UnsuperviseStudentCommand(User.FindFirstValue(ClaimTypes.NameIdentifier), studentId)));
@@ -258,7 +258,7 @@ public class DentistTeacherController : BaseController
         [FromQuery] string studentName,
         [FromQuery] string email,
         [FromQuery] int page = 0,
-        [FromQuery] int pageSize = 20) => 
+        [FromQuery] int pageSize = 20) =>
         HandleOperationResult(await Mediator.Send(
             new FetchStudentsSupervisedQuery(
                 User.FindFirstValue(ClaimTypes.NameIdentifier),

@@ -1,7 +1,6 @@
 ﻿using App.Application.PatientOperations.Command.ArchivePatient;
 using App.Domain.Models.Enums;
 using App.Domain.Models.OralHealthExamination;
-using App.Domain.Repository;
 using MediatR;
 using Moq;
 

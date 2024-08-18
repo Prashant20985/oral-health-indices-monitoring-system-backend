@@ -1,6 +1,5 @@
 ﻿using App.Application.StudentOperations.Query.SupervisingDoctors;
 using App.Domain.DTOs.SuperviseDtos.Response;
-using App.Domain.Repository;
 using Moq;
 
 namespace App.Application.Test.StudentOperations.Query.SupervisingDoctors;

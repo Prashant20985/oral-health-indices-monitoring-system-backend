@@ -32,14 +32,14 @@ public class UpdatePatientExaminationCardSummaryTest
             PatientRecommendations = "Patient recommendations",
             NeedForDentalInterventions = "1",
             Description = "Description",
-            ProposedTreatment  = "Proposed treatment"
+            ProposedTreatment = "Proposed treatment"
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<UpdatePatientExaminationCardSummaryCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
         // Act
-        var result = await _patientExaminationCardController.UpdatePatientExaminationCardSummary(patientExaminationCard.Id,summary);
+        var result = await _patientExaminationCardController.UpdatePatientExaminationCardSummary(patientExaminationCard.Id, summary);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);

@@ -2,7 +2,6 @@
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardsAssignedToDoctor;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.DTOs.PatientDtos.Response;
-using App.Domain.Models.OralHealthExamination;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +44,7 @@ public class GetPatientExaminationCardsAssignedToDoctorTest
 
         var patient = new PatientResponseDto
         {
-            Id= Guid.NewGuid()
+            Id = Guid.NewGuid()
         };
 
         var patient2 = new PatientResponseDto
@@ -70,7 +69,7 @@ public class GetPatientExaminationCardsAssignedToDoctorTest
             .ReturnsAsync(OperationResult<List<PatientDetailsWithExaminationCards>>.Success(patientExaminationCardDtos));
 
         // Act
-        var result = await _patientExaminationCardController.GetPatientExaminationCardsAssignedToDoctor(studentId,year,month);
+        var result = await _patientExaminationCardController.GetPatientExaminationCardsAssignedToDoctor(studentId, year, month);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);

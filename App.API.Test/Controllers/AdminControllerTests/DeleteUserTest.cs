@@ -1,6 +1,5 @@
 ﻿using App.Application.AdminOperations.Command.DeleteApplicationUser;
 using App.Application.Core;
-using App.Domain.DTOs;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

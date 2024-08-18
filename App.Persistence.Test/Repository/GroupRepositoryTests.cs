@@ -1,5 +1,7 @@
 ﻿using App.Domain.DTOs.ApplicationUserDtos.Response;
+using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.DTOs.StudentGroupDtos.Response;
+using App.Domain.Models.CreditSchema;
 using App.Domain.Models.Users;
 using App.Persistence.Contexts;
 using App.Persistence.Repository;
@@ -23,6 +25,7 @@ public class GroupRepositoryTests
             cfg.CreateMap<ApplicationUser, StudentResponseDto>()
                 .ForMember(x => x.Groups, o => o.MapFrom(s => s.StudentGroups
                 .Select(x => x.Group.GroupName).ToList()));
+            cfg.CreateMap<Exam, ExamDto>();
         });
         var mapper = mapperConfig.CreateMapper();
         _groupRepository = new GroupRepository(_mockOralEhrContext.Object, mapper);
@@ -347,5 +350,158 @@ public class GroupRepositoryTests
         Assert.IsType<StudentGroupResponseDto>(result);
         Assert.Equal("Group 1", result.GroupName);
         Assert.Single(result.Students);
+    }
+
+    [Fact]
+    public async Task GetGroupDetailsWithExamsListByGroupIdAndStudentId_ShouldReturnStudentGroupWithExamsListResponseDto()
+    {
+        // Arrange
+        var student = new ApplicationUser("test@test.com", "Test", "User", "7418552", "comment");
+        var teacher = new ApplicationUser("test1@test.com", "Test1", "User10", "741855222", "comment");
+
+        var group = new Group(teacher.Id, "Group 1");
+        group.Teacher = teacher;
+
+        var exam1 = new Exam(DateTime.Now, "test", "test", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
+        var exam2 = new Exam(DateTime.Now, "test", "test", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
+
+        exam1.Group = group;
+        exam2.Group = group;
+
+        var studentGroup = new StudentGroup(group.Id, student.Id);
+
+        studentGroup.Group = group;
+
+        group.StudentGroups.Add(studentGroup);
+        group.Exams.Add(exam1);
+        group.Exams.Add(exam2);
+
+        var groups = new List<Group> { group }.AsQueryable();
+        var studentGroups = new List<StudentGroup> { studentGroup }.AsQueryable();
+        var users = new List<ApplicationUser> { student, teacher }.AsQueryable();
+        var exams = new List<Exam> { exam1, exam2 }.AsQueryable();
+
+        var mockGroups = groups.BuildMockDbSet();
+        var mockStudentGroups = studentGroups.BuildMockDbSet();
+        var mockUsers = users.BuildMockDbSet();
+        var mockExams = exams.BuildMockDbSet();
+
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(mockGroups.Object);
+        _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(mockStudentGroups.Object);
+        _mockOralEhrContext.Setup(x => x.Users).Returns(mockUsers.Object);
+        _mockOralEhrContext.Setup(x => x.Exams).Returns(mockExams.Object);
+
+        // Act
+        var result = await _groupRepository.GetGroupDetailsWithExamsListByGroupIdAndStudentId(group.Id, student.Id);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.IsType<StudentGroupWithExamsListResponseDto>(result);
+        Assert.Equal("Group 1", result.GroupName);
+        Assert.Equal(2, result.Exams.Count);
+    }
+
+    [Fact]
+    public async Task GetGroupDetailsWithExamsListByGroupIdAndStudentId_GroupIdNotFound_ShouldReturnNull()
+    {
+        // Arrange
+        var studentId = "student-id";
+        var invalidGroupId = Guid.NewGuid();
+
+        var student = new ApplicationUser("test@test.com", "Test", "User", studentId, "comment");
+
+        var group = new Group("teacher-id", "Group 1");
+
+        var studentGroup = new StudentGroup(group.Id, studentId);
+        group.StudentGroups.Add(studentGroup);
+
+        var groups = new List<Group> { group }.AsQueryable();
+        var studentGroups = new List<StudentGroup> { studentGroup }.AsQueryable();
+        var users = new List<ApplicationUser> { student }.AsQueryable();
+
+        var mockGroups = groups.BuildMockDbSet();
+        var mockStudentGroups = studentGroups.BuildMockDbSet();
+        var mockUsers = users.BuildMockDbSet();
+
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(mockGroups.Object);
+        _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(mockStudentGroups.Object);
+        _mockOralEhrContext.Setup(x => x.Users).Returns(mockUsers.Object);
+
+        // Act
+        var result = await _groupRepository.GetGroupDetailsWithExamsListByGroupIdAndStudentId(invalidGroupId, studentId);
+
+        // Assert
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public async Task GetAllGroupsByStudentIdWithExamsList_ShouldReturnGroupsWithExams()
+    {
+        // Arrange
+        var studentId = "student-id";
+        var teacher = new ApplicationUser("teacher@test.com", "Teacher", "User", "teacher-username", "comment");
+
+        var group1 = new Group(teacher.Id, "Group 1");
+        var group2 = new Group(teacher.Id, "Group 2");
+        group1.Teacher = teacher;
+        group2.Teacher = teacher;
+
+        var exam1 = new Exam(DateTime.Now, "Exam 1", "Description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, group1.Id);
+        var exam2 = new Exam(DateTime.Now, "Exam 2", "Description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, group2.Id);
+
+        var studentGroup1 = new StudentGroup(group1.Id, studentId);
+        var studentGroup2 = new StudentGroup(group2.Id, studentId);
+
+        group1.Exams.Add(exam1);
+        group2.Exams.Add(exam2);
+        group1.StudentGroups.Add(studentGroup1);
+        group2.StudentGroups.Add(studentGroup2);
+
+        var groups = new List<Group> { group1, group2 }.AsQueryable();
+        var studentGroups = new List<StudentGroup> { studentGroup1, studentGroup2 }.AsQueryable();
+        var users = new List<ApplicationUser> { teacher }.AsQueryable();
+        var exams = new List<Exam> { exam1, exam2 }.AsQueryable();
+
+        var mockGroups = groups.BuildMockDbSet();
+        var mockStudentGroups = studentGroups.BuildMockDbSet();
+        var mockUsers = users.BuildMockDbSet();
+        var mockExams = exams.BuildMockDbSet();
+
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(mockGroups.Object);
+        _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(mockStudentGroups.Object);
+        _mockOralEhrContext.Setup(x => x.Users).Returns(mockUsers.Object);
+        _mockOralEhrContext.Setup(x => x.Exams).Returns(mockExams.Object);
+
+        // Act
+        var result = await _groupRepository.GetAllGroupsByStudentIdWithExamsList(studentId);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count);
+        Assert.Contains(result, g => g.GroupName == "Group 1" && g.Exams.Count == 1);
+        Assert.Contains(result, g => g.GroupName == "Group 2" && g.Exams.Count == 1);
+    }
+
+    [Fact]
+    public async Task GetAllGroupsByStudentIdWithExamsList_NoGroupsForStudent_ShouldReturnEmptyList()
+    {
+        // Arrange
+        var studentId = "non-existing-student-id";
+
+        var groups = new List<Group>().AsQueryable();
+        var studentGroups = new List<StudentGroup>().AsQueryable();
+
+        var mockGroups = groups.BuildMockDbSet();
+        var mockStudentGroups = studentGroups.BuildMockDbSet();
+
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(mockGroups.Object);
+        _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(mockStudentGroups.Object);
+
+        // Act
+        var result = await _groupRepository.GetAllGroupsByStudentIdWithExamsList(studentId);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Empty(result);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
-using App.Domain.DTOs.StudentGroupDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

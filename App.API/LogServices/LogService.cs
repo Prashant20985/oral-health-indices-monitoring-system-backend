@@ -78,7 +78,7 @@ public class LogService : ILogService
         var logs = await _logCollection.Find(filter).Skip(skip).Limit(limit).ToListAsync();
         var totalCount = await _logCollection.CountDocumentsAsync(filter);
 
-        return new LogResponseDto { Logs = logs, TotalCount = totalCount};
+        return new LogResponseDto { Logs = logs, TotalCount = totalCount };
     }
 
 }

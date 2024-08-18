@@ -99,7 +99,7 @@ public class UserRepository : IUserRepository
     /// </summary>
     /// <param name="userId">Unique identifier of the user</param>
     /// <returns>ApplicationUser with roles</returns>
-    public async Task<ApplicationUser> GetApplicationUserWithRolesById(string userId) => await 
+    public async Task<ApplicationUser> GetApplicationUserWithRolesById(string userId) => await
         _userManager.Users
             .Include(x => x.ApplicationUserRoles)
             .ThenInclude(x => x.ApplicationRole)

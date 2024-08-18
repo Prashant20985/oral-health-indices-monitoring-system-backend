@@ -1,6 +1,5 @@
 ﻿using App.Application.PatientOperations.Query.PatientDetails;
 using App.Domain.DTOs.Common.Response;
-using App.Domain.Repository;
 using Moq;
 
 namespace App.Application.Test.PatientOperations.Query.PatientDetails;
@@ -42,7 +41,7 @@ public class FetchPatientDetailsHandlerTests : TestHelper
         Assert.Equal(patient.FirstName, fetchedPatient.FirstName);
         Assert.Equal(patient.LastName, fetchedPatient.LastName);
         Assert.Equal(patient.Email, fetchedPatient.Email);
-    } 
+    }
 
     [Fact]
     public async Task Handle_WithInvalidQuery_ShouldReturnFailure()
