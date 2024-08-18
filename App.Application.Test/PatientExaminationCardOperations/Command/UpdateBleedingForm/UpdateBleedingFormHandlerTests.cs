@@ -3,7 +3,6 @@ using App.Application.PatientExaminationCardOperations.Command.UpdateBleedingFor
 using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Common.APIBleeding;
 using App.Domain.Models.OralHealthExamination;
-using MediatR;
 using Moq;
 
 namespace App.Application.Test.PatientExaminationCardOperations.Command.UpdateBleedingForm;

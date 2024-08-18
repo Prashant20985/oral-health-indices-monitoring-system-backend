@@ -915,4 +915,56 @@ public class PatientExaminationCardRepositoryTests
         // Assert
         _mockOralEhrContext.Verify(x => x.PatientExaminationCards.Remove(patientExaminationCard), Times.Once);
     }
+
+    [Fact]
+    public void GetPatientExaminationCardAssignedToDoctor_ShouldReturnCard()
+    {
+        var patientId = Guid.NewGuid();
+        var doctorId = "doctorId";
+        var studentId = "studentId";
+
+        var patientExaminationCard = new PatientExaminationCard(patientId);
+        patientExaminationCard.SetDoctorId(doctorId);
+        patientExaminationCard.SetStudentId(studentId);
+        patientExaminationCard.SetTestMode();
+
+        var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
+        .AsQueryable()
+        .BuildMockDbSet();
+
+        _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
+
+        // Act
+        var result = _patientExaminationCardRepository.GetPatientExaminationCardAssignedToDoctor(doctorId).ToList();
+
+        // Assert
+        Assert.Single(result);
+        Assert.Equal(doctorId, result.First().DoctorId);
+        Assert.False(result.First().IsRegularMode);
+    }
+
+    [Fact]
+    public void GetPatientExaminationCardAssignedToDoctor_ShouldReturnEmptyList()
+    {
+        var patientId = Guid.NewGuid();
+        var doctorId = "doctorId";
+        var studentId = "studentId";
+
+        var patientExaminationCard = new PatientExaminationCard(patientId);
+        patientExaminationCard.SetDoctorId(doctorId);
+        patientExaminationCard.SetStudentId(studentId);
+        patientExaminationCard.SetRegularMode();
+
+        var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
+        .AsQueryable()
+        .BuildMockDbSet();
+
+        _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
+
+        // Act
+        var result = _patientExaminationCardRepository.GetPatientExaminationCardAssignedToDoctor(doctorId).ToList();
+
+        // Assert
+        Assert.Empty(result);
+    }
 }

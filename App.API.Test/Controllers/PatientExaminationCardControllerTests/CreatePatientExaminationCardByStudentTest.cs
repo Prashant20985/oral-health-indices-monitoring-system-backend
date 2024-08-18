@@ -54,7 +54,7 @@ public class CreatePatientExaminationCardByStudentTest
         var riskFactorAssessmentModel = new RiskFactorAssessmentModel { };
         var DMFT_DMFS = new CreateDMFT_DMFSRequestDto { };
         var API = new CreateAPIRequestDto { };
-        var bleeding =  new CreateBleedingRequestDto { };
+        var bleeding = new CreateBleedingRequestDto { };
         var bewe = new CreateBeweRequestDto { };
         var patientExaminationCardCommment = "Test comment";
 

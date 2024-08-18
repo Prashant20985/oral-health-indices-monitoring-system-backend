@@ -2,10 +2,7 @@
 using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.DTOs.StudentGroupDtos.Response;
 using App.Domain.Models.Users;
-using App.Domain.Repository;
 using Moq;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Loader;
 
 namespace App.Application.Test.StudentOperations.Query.StudentGroupsList;
 

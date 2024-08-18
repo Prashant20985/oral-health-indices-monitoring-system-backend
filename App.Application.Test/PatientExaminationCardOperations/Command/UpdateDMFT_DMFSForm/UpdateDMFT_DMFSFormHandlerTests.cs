@@ -4,7 +4,6 @@ using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Common.DMFT_DMFS;
 using App.Domain.Models.OralHealthExamination;
-using MediatR;
 using Moq;
 
 namespace App.Application.Test.PatientExaminationCardOperations.Command.UpdateDMFT_DMFSForm;

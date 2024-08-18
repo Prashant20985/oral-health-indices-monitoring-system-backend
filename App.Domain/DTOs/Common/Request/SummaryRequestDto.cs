@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace App.Domain.DTOs.Common.Request;
+﻿namespace App.Domain.DTOs.Common.Request;
 
 public class SummaryRequestDto
 {

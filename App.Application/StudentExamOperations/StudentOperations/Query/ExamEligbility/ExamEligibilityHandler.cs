@@ -19,7 +19,7 @@ internal sealed class ExamEligibilityHandler(IStudentExamRepository studentExamR
     /// <param name="request">Request to check the eligibility of the student to take the exam.</param>
     /// <param name="cancellationToken">The CancellationToken.</param>
     /// <returns>OperationResult of type bool.</returns>
-    public async Task<OperationResult<bool>> Handle(ExamEligibiltyQuery request, CancellationToken cancellationToken) => 
+    public async Task<OperationResult<bool>> Handle(ExamEligibiltyQuery request, CancellationToken cancellationToken) =>
         await _studentExamRepository.CheckIfStudentHasAlreadyTakenTheExam(request.ExamId, request.StudentId)
             ? OperationResult<bool>.Success(false)
             : OperationResult<bool>.Success(true);

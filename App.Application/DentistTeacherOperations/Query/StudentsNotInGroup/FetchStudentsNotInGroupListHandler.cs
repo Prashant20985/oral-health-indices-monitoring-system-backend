@@ -32,7 +32,7 @@ internal sealed class FetchStudentsNotInGroupListHandler
         var studentsNotInGroupQuery = _groupRepository.GetAllStudentsNotInGroup(request.GroupId);
 
         // Apply additional filters based on the optional parameters.
-        if(!string.IsNullOrEmpty(request.StudentName))
+        if (!string.IsNullOrEmpty(request.StudentName))
             studentsNotInGroupQuery = studentsNotInGroupQuery.Where(p => (p.FirstName + " " + p.LastName).Contains(request.StudentName));
 
 

@@ -18,7 +18,7 @@ namespace App.Application.PatientExaminationCardOperations.Command.CreatePatient
 internal sealed class CreatePatientExaminationCardByDoctorHandler(
     IPatientExaminationCardRepository patientExaminationCardRepository,
     IPatientRepository patientRepository,
-    IUserRepository userRepository, 
+    IUserRepository userRepository,
     IMapper mapper)
     : IRequestHandler<CreatePatientExaminationCardByDoctorCommand, OperationResult<PatientExaminationCardDto>>
 {
@@ -79,7 +79,7 @@ internal sealed class CreatePatientExaminationCardByDoctorHandler(
         var bleedingForm = new Bleeding();
         bleedingForm.SetAssessmentModel(request.InputParams.Bleeding.AssessmentModel);
         bleedingForm.CalculateBleedingResult();
-        
+
         // Add comment to bleeding form
         bleedingForm.AddDoctorComment(request.InputParams.Bleeding.Comment);
 

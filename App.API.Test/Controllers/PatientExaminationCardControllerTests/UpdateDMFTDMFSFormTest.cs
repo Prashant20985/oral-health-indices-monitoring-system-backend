@@ -53,7 +53,7 @@ public class UpdateDMFTDMFSFormTest
         };
 
         var exepctedResponse = new DMFT_DMFSResultResponseDto
-        { 
+        {
             DMFSResult = 1,
             DMFTResult = 1
         };
@@ -64,7 +64,7 @@ public class UpdateDMFTDMFSFormTest
             .ReturnsAsync(OperationResult<DMFT_DMFSResultResponseDto>.Success(exepctedResponse));
 
         // Act
-        var result = await _patientExaminationCardController.UpdateDMFTDMFSForm(patientExaminationCard.Id,prostheticStatus, updateDmft_Dmfs);
+        var result = await _patientExaminationCardController.UpdateDMFTDMFSForm(patientExaminationCard.Id, prostheticStatus, updateDmft_Dmfs);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);

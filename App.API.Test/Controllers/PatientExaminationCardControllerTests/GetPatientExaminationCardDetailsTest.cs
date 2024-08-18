@@ -37,7 +37,7 @@ public class GetPatientExaminationCardDetailsTest
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        Assert.IsType<PatientExaminationCardDto>(okResult.Value);   
+        Assert.IsType<PatientExaminationCardDto>(okResult.Value);
         Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
     }
 

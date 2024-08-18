@@ -11,7 +11,7 @@ public class UpdateDMFT_DMFSRequestDto
     /// Gets or initializes the DMFT/DMFS Assessment Model
     /// </summary>
     public DMFT_DMFSAssessmentModel AssessmentModel { get; init; }
-    
+
     /// <summary>
     /// Gets or initializes the DMFT/DMFS Prosthetic Status
     /// </summary>

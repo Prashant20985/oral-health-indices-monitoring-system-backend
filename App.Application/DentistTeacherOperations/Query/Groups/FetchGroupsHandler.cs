@@ -2,7 +2,6 @@
 using App.Domain.DTOs.StudentGroupDtos.Response;
 using App.Domain.Repository;
 using MediatR;
-using Microsoft.IdentityModel.Tokens;
 
 namespace App.Application.DentistTeacherOperations.Query.Groups;
 
