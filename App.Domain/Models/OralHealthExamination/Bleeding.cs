@@ -27,6 +27,8 @@ public class Bleeding
 
     public void CalculateBleedingResult()
     {
+        if (AssessmentModel is null) return;
+
         int GetCount(string[] quadrant, string value) => quadrant.Count(q => q.Equals(value));
 
         var quadrant1 = AssessmentModel.Quadrant1.ToArray();
