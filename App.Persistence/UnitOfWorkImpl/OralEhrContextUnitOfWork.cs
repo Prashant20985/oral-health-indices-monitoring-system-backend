@@ -20,7 +20,12 @@ public class OralEhrContextUnitOfWork : IUnitOfWork
         _oralEhrContext = oralEhrContext;
     }
 
-    /// <inheritdoc/>
+
+    /// <summary>
+    ///  Saves the changes made in the user context to the database.
+    ///  This method is asynchronous.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default) =>
         await _oralEhrContext.SaveChangesAsync(cancellationToken);
 }

@@ -6,7 +6,14 @@ namespace App.Application.NotificationOperations.DTOs
     /// Represents the Data Transfer Object (DTO) for email content information used in notification operations.
     /// </summary>
     public class EmailContentDto
-    {
+    { 
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="EmailContentDto"/> class.
+        /// </summary>
+        /// <param name="receiverEmail"></param>
+        /// <param name="subject"></param>
+        /// <param name="message"></param>
+        /// <param name="emailType"></param>
         public EmailContentDto(string receiverEmail,
             string subject,
             string message,

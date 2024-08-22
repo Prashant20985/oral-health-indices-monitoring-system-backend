@@ -37,6 +37,7 @@ internal sealed class UnarchivePatientHandler(IPatientRepository patientReposito
         // Unarchive the patient
         patient.UnarchivePatient();
 
+        // Return success
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

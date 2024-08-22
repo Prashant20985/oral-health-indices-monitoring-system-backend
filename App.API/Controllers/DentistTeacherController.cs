@@ -28,7 +28,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace App.API.Controllers;
-
+/// <summary>
+///  Controller for handling dentist teacher operations.
+/// </summary>
 public class DentistTeacherController : BaseController
 {
     /// <summary>

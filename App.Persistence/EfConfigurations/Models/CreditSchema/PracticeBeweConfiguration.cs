@@ -3,20 +3,29 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.CreditSchema;
-
+/// <summary>
+///  Represents the configuration for the PracticeBewe entity.
+/// </summary>
 public class PracticeBeweConfiguration
     : IEntityTypeConfiguration<PracticeBewe>
 {
+    /// <summary>
+    ///  Configures the properties of the PracticeBewe entity and the relationships between entities.
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<PracticeBewe> builder)
     {
+        // Set the primary key
         builder.HasKey(x => x.Id);
 
+        // Set the properties of the PracticeBewe entity
         builder.Property(x => x.BeweResult)
             .HasColumnType("decimal(18,2)");
 
         builder.Property(x => x.Comment)
             .HasMaxLength(500);
 
+        // Set the relationships between entities
         builder.OwnsOne(x => x.AssessmentModel, ownedNavigationBuilder =>
         {
             ownedNavigationBuilder.ToJson();

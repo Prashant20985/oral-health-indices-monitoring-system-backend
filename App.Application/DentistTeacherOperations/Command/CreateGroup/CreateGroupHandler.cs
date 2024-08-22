@@ -18,7 +18,12 @@ internal sealed class CreateGroupHandler : IRequestHandler<CreateGroupCommand, O
     /// <param name="groupRepository">The repository for managing group-related operations.</param>
     public CreateGroupHandler(IGroupRepository groupRepository) => _groupRepository = groupRepository;
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Handles the creation of a new group based on the provided command.
+    /// </summary>
+    /// <param name="request">The command containing the details for creating the group.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>An operation result indicating the success or failure of the operation.</returns>
     public async Task<OperationResult<Unit>> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
     {
         // Check if a group with the same name already exists.

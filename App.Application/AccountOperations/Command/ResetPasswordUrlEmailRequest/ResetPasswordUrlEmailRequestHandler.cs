@@ -43,6 +43,7 @@ internal sealed class ResetPasswordUrlEmailRequestHandler : IRequestHandler<Rese
     /// <returns>An OperationResult of Unit indicating the result of the operation.</returns>
     public async Task<OperationResult<Unit>> Handle(ResetPasswordUrlEmailRequestCommand request, CancellationToken cancellationToken)
     {
+        // Retrieve the user based on the provided email
         var user = await _userRepository.GetUserByUserNameOrEmail(request.Email, cancellationToken);
 
         // Check user validity using the UserValidation helper
@@ -50,7 +51,8 @@ internal sealed class ResetPasswordUrlEmailRequestHandler : IRequestHandler<Rese
 
         if (userValidityResult is not null)
             return OperationResult<Unit>.Failure(userValidityResult.ErrorMessage);
-
+       
+        // Generate a password reset token for the user
         var token = await _userRepository.GenerateResetPasswordToken(user);
         var encodedToken = WebUtility.UrlEncode(token);
         var encodedEmail = WebUtility.UrlEncode(user.Email);
@@ -58,14 +60,17 @@ internal sealed class ResetPasswordUrlEmailRequestHandler : IRequestHandler<Rese
         // Construct the password reset callback URL with the token and email parameters
         var callbackUrl = $"{_httpContextAccessorService.GetOrigin()}/reset-password?token={encodedToken}&email={encodedEmail}";
 
+        // Create the email content for the password reset request
         var emailContent = new EmailContentDto(
             receiverEmail: user.Email,
             subject: "Reset Password",
             message: callbackUrl,
             emailType: EmailType.PasswordReset);
 
+        // Publish the email notification
         await _mediator.Publish(new EmailNotification(emailContent));
 
+        // Return a success result with the Unit value to indicate successful password reset URL request
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

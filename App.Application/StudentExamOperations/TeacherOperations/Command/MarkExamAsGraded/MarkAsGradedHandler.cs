@@ -31,6 +31,7 @@ internal sealed class MarkAsGradedHandler(IStudentExamRepository studentExamRepo
         // Mark the exam as graded
         exam.MarksAsGraded();
 
+        // Return success
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

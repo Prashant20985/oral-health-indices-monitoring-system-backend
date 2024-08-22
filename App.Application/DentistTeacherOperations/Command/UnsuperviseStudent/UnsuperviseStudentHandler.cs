@@ -25,6 +25,7 @@ internal sealed class UnsuperviseStudentHandler(ISuperviseRepository superviseRe
         // Remove the supervise object
         _superviseRepository.RemoveSupervise(supervise);
 
+        // Return a success result with no specific data.
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

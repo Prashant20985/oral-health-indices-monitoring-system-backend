@@ -31,6 +31,7 @@ internal sealed class UpdateRiskFactorAssessmentFormHandler(IPatientExaminationC
         // Set the risk factor assessment model
         riskFactorAssessmentForm.SetRiskFactorAssessmentModel(request.AssessmentModel);
 
+        // Return success
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

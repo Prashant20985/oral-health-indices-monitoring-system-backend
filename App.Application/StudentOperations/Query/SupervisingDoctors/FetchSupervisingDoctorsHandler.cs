@@ -14,7 +14,12 @@ internal sealed class FetchSupervisingDoctorsHandler(ISuperviseRepository superv
 {
     private readonly ISuperviseRepository _superviseRepository = superviseRepository;
 
-
+/// <summary>
+///  Handles the Query to fetch the supervising doctors of a student.
+/// </summary>
+/// <param name="request"></param>
+/// <param name="cancellationToken"></param>
+/// <returns></returns>
     public async Task<OperationResult<List<SupervisingDoctorResponseDto>>> Handle(FetchSupervisingDoctorsQuery request, CancellationToken cancellationToken) =>
         await _superviseRepository.GetAllSupervisingDoctorsByStudentId(request.StudentId) switch
         {

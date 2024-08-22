@@ -3,7 +3,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.API.Controllers;
-
+/// <summary>
+///  The base controller for all API controllers in the application.
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class BaseController : ControllerBase

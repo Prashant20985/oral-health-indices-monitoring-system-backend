@@ -46,8 +46,10 @@ public class LogService : ILogService
     /// <returns>Returns a list of filtered request logs.</returns>
     public async Task<LogResponseDto> GetFilteredLogs(LogQueryParameters query)
     {
+        // Create a list of filters based on the query parameters.
         var filters = new List<FilterDefinition<RequestLogDocument>>();
 
+        // Add filters based on the query parameters.
         if (query.StartDate.HasValue)
         {
             var start = query.StartDate.Value.Date;
@@ -70,14 +72,18 @@ public class LogService : ILogService
             filters.Add(Builders<RequestLogDocument>.Filter.Eq(log => log.Level, query.Level));
         }
 
+        // Combine the filters using the AND operator.
         var filter = filters.Count > 0 ? Builders<RequestLogDocument>.Filter.And(filters) : Builders<RequestLogDocument>.Filter.Empty;
 
+        // Skip and limit the logs based on the page number and page size.
         var skip = (query.PageNumber - 1) * query.PageSize;
         var limit = query.PageSize;
 
+        // Retrieve the logs based on the filter and paging parameters.
         var logs = await _logCollection.Find(filter).Skip(skip).Limit(limit).ToListAsync();
         var totalCount = await _logCollection.CountDocumentsAsync(filter);
 
+        // Return the logs and the total count.
         return new LogResponseDto { Logs = logs, TotalCount = totalCount };
     }
 

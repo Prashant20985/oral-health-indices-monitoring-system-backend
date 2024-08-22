@@ -40,6 +40,10 @@ public class Quadrant
     /// </summary>
     public string Value7 { get; set; }
 
+    /// <summary>
+    /// Converts the quadrant to an array.
+    /// </summary>
+    /// <returns></returns>
     public string[] ToArray() => [Value1, Value2, Value3, Value4, Value5, Value6, Value7];
 }
 

@@ -23,14 +23,18 @@ internal sealed class UpdatePatientHandler(IPatientRepository patientRepository)
     /// <returns>An operation result indicating success or failure.</returns>
     public async Task<OperationResult<Unit>> Handle(UpdatePatientCommand request, CancellationToken cancellationToken)
     {
+        // Retrieve the patient by Id from the repository
         var patient = await _patientRepository.GetPatientById(request.PatientId);
 
+        // Check if the patient exists
         if (patient is null)
             return OperationResult<Unit>.Failure("Patient not found.");
 
+        // Check if the patient is archived
         if (patient.IsArchived)
             return OperationResult<Unit>.Failure("Patient is archived.");
 
+        // Update the patient information
         patient.UpdatePatient(
             firstName: request.UpdatePatient.FirstName,
             lastName: request.UpdatePatient.LastName,
@@ -43,9 +47,13 @@ internal sealed class UpdatePatientHandler(IPatientRepository patientRepository)
             otherData2: CheckNullOrEmpty(request.UpdatePatient.OtherData2),
             otherData3: CheckNullOrEmpty(request.UpdatePatient.OtherData3),
             yearsInSchool: request.UpdatePatient.YearsInSchool);
-
+        
         return OperationResult<Unit>.Success(Unit.Value);
     }
+    
+    /// <summary>
+    /// Checks if the value is null or empty and returns null if it is.
+    /// </summary>
     private static string CheckNullOrEmpty(string value) => string.IsNullOrEmpty(value) ? null : value;
 }
 

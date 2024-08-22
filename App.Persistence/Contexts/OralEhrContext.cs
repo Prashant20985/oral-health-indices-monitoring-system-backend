@@ -6,7 +6,11 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Persistence.Contexts;
-
+/// <summary>
+///  Represents the database context for the OralEhr application.
+///  Inherits from the IdentityDbContext class to provide user and role management functionality.
+/// Contains the database tables for the User, RefreshToken, ApplicationRole, and ApplicationUserRole entities.
+/// </summary>
 public class OralEhrContext : IdentityDbContext<
     ApplicationUser, ApplicationRole, string,
     IdentityUserClaim<string>, ApplicationUserRole,

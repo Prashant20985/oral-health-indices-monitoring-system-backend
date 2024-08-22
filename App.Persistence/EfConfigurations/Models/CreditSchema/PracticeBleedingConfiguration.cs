@@ -4,15 +4,25 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.CreditSchema;
 
+/// <summary>
+///  Represents the configuration for the PracticeBleeding entity.
+/// </summary>
 public class PracticeBleedingConfiguration : IEntityTypeConfiguration<PracticeBleeding>
 {
+    /// <summary>
+    ///  Configures the properties of the PracticeBleeding entity and the relationships between entities.
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<PracticeBleeding> builder)
     {
+        // Set the primary key
         builder.HasKey(k => k.Id);
 
+        // Set the properties of the PracticeBleeding entity
         builder.Property(e => e.Comment)
             .HasMaxLength(500);
 
+        // Set the relationships between entities
         builder.OwnsOne(e => e.AssessmentModel, ownedNavigationBuilder =>
         {
             ownedNavigationBuilder.ToJson();

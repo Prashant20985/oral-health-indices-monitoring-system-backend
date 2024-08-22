@@ -2,6 +2,9 @@
 
 namespace App.Domain.DTOs.StudentGroupDtos.Response;
 
+/// <summary>
+/// Represents a student group with exams list response DTO.
+/// </summary>
 public class StudentGroupWithExamsListResponseDto
 {
     /// <summary>

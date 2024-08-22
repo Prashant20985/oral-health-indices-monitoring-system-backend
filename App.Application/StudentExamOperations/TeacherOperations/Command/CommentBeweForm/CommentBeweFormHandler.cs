@@ -30,6 +30,7 @@ internal sealed class CommentBeweFormHandler(IStudentExamRepository studentExamR
         // Add the doctor comment to the practice BEWE form
         beweForm.AddComment(request.DoctorComment);
 
+        //Return success
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

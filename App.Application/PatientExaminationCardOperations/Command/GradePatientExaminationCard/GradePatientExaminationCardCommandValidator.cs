@@ -13,10 +13,12 @@ public class GradePatientExaminationCardCommandValidator
     /// </summary>
     public GradePatientExaminationCardCommandValidator()
     {
+        // Validate CardId
         RuleFor(command => command.CardId)
             .NotNull()
             .NotEmpty();
 
+        // Validate TotalScore
         RuleFor(command => command.TotalScore)
             .NotNull();
     }

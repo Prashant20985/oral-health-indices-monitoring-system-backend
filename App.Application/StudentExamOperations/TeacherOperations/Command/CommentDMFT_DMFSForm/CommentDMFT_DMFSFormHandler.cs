@@ -31,6 +31,7 @@ internal sealed class CommentDMFT_DMFSFormHandler(IStudentExamRepository student
         // Add the doctor comment to the practice DMFT/DMFS form
         dmftDmfsForm.AddComment(request.DoctorComment);
 
+        //Return success
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

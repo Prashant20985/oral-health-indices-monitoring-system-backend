@@ -39,6 +39,7 @@ internal sealed class UpdateResearchGroupNameHandler : IRequestHandler<UpdateRes
         researchGroup.UpdateGroup(request.UpdateResearchGroup.GroupName,
             request.UpdateResearchGroup.Description);
 
+        // Return a success result with no specific data.
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

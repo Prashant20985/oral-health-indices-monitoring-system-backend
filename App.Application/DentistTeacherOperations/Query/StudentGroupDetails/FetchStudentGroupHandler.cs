@@ -22,11 +22,14 @@ internal sealed class FetchStudentGroupHandler(IGroupRepository groupRepository)
     /// <returns>The result of the operation.</returns>
     public async Task<OperationResult<StudentGroupResponseDto>> Handle(FetchStudentGroupQuery request, CancellationToken cancellationToken)
     {
+        // Retrieve the group details along with the student list based on the provided group ID.
         var group = await _groupRepository.GetGroupDetailsWithStudentList(request.GroupId);
 
+        // Check if the group was found; if not, return a failure result.
         if (group is null)
             return OperationResult<StudentGroupResponseDto>.Failure("Group not found.");
 
+        // Return a success result with the group details.
         return OperationResult<StudentGroupResponseDto>.Success(group);
     }
 }

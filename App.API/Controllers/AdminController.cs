@@ -16,7 +16,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace App.API.Controllers;
-
+/// <summary>
+///  Represents the controller for admin operations.
+/// </summary>
 public class AdminController : BaseController
 {
     /// <summary>

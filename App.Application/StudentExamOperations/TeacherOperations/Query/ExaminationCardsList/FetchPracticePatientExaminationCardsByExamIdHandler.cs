@@ -26,6 +26,7 @@ internal sealed class FetchPracticePatientExaminationCardsByExamIdHandler(IStude
         // Get the practice patient examination cards by exam id
         var examinationCards = await _studentExamRepository.GetPracticePatientExaminationCardsByExamId(request.ExamId);
 
+        // Return the practice patient examination cards list
         return OperationResult<List<PracticePatientExaminationCardDto>>.Success(examinationCards);
     }
 }

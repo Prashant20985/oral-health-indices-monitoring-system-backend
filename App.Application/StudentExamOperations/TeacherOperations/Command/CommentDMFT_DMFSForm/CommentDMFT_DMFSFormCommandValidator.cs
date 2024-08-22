@@ -12,8 +12,10 @@ public class CommentDMFT_DMFSFormCommandValidator : AbstractValidator<CommentDMF
     /// </summary>
     public CommentDMFT_DMFSFormCommandValidator()
     {
+        // Validate the PracticeExaminationCardId property.
         RuleFor(x => x.PracticeExaminationCardId).NotEmpty();
 
+        // Validate the DoctorComment property.
         RuleFor(x => x.DoctorComment)
             .NotEmpty()
             .MaximumLength(500)

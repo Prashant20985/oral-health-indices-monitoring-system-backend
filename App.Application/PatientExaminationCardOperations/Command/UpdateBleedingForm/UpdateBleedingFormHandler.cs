@@ -35,6 +35,7 @@ internal sealed class UpdateBleedingFormHandler(IPatientExaminationCardRepositor
         // Calculate the bleeding result
         bleedingForm.CalculateBleedingResult();
 
+        // Return responseDto with bleeding result, maxilla and mandible
         return OperationResult<BleedingResultResponseDto>.Success(new BleedingResultResponseDto
         {
             BleedingResult = bleedingForm.BleedingResult,

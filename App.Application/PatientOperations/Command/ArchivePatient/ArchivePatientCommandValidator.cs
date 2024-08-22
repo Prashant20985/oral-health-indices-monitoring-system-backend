@@ -12,11 +12,13 @@ public class ArchivePatientCommandValidator : AbstractValidator<ArchivePatientCo
     /// </summary>
     public ArchivePatientCommandValidator()
     {
+        // Validate PatientId
         RuleFor(x => x.PatientId)
             .NotNull()
             .NotEmpty()
             .WithMessage("Patient Id is required.");
 
+        // Validate ArchiveComment
         RuleFor(x => x.ArchiveComment)
             .NotEmpty()
             .NotNull()

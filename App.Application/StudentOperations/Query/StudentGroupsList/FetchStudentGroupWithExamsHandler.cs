@@ -22,9 +22,11 @@ internal sealed class FetchStudentGroupWithExamsHandler(IGroupRepository groupRe
     /// <returns>The operation result with the list of groups with exams.</returns>
     public async Task<OperationResult<List<StudentGroupWithExamsListResponseDto>>> Handle(FetchStudentGroupsWithExamsListQuery request, CancellationToken cancellationToken)
     {
+        // Get all groups with exams for the student
         var studentGroupsWithExams = await _groupRepository
             .GetAllGroupsByStudentIdWithExamsList(request.StudentId);
 
+        // Return the list of groups with exams
         return OperationResult<List<StudentGroupWithExamsListResponseDto>>.Success(studentGroupsWithExams);
     }
 }

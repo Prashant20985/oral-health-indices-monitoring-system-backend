@@ -17,16 +17,34 @@ public class BeweResponseDto
     /// </summary>
     public decimal BeweResult { get; init; }
 
+    /// <summary>
+    ///  Gets or sets the Sectant 1 result.
+    /// </summary>
     public decimal Sectant1 { get; init; }
 
+    /// <summary>
+    ///  Gets or sets the Sectant 2 result.
+    /// </summary>
     public decimal Sectant2 { get; init; }
 
+    /// <summary>
+    ///  Gets or sets the Sectant 3 result.
+    ///  </summary>
     public decimal Sectant3 { get; init; }
 
+    /// <summary>
+    ///  Gets or sets the Sectant 4 result.
+    ///  </summary>
     public decimal Sectant4 { get; init; }
 
+    /// <summary>
+    ///  Gets or sets the Sectant 5 result.
+    /// </summary>
     public decimal Sectant5 { get; init; }
 
+    /// <summary>
+    ///  Gets or sets the Sectant 6 result.
+    ///  </summary>
     public decimal Sectant6 { get; init; }
 
     /// <summary>

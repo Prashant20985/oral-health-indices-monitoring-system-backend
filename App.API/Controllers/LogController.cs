@@ -25,7 +25,9 @@ public class LogController(ILogService logService) : ControllerBase
     [HttpGet("today")]
     public async Task<ActionResult<List<RequestLogDocument>>> GetLogsForTodayAsync()
     {
+        // Get the logs for today.
         var logs = await _logService.GetLogsForTodayAsync();
+        // Return the logs.
         return Ok(logs);
     }
 

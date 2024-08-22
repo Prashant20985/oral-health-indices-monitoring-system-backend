@@ -17,16 +17,35 @@ public class PracticeBeweResponseDto
     /// </summary>
     public decimal BeweResult { get; init; }
 
+    /// <summary>
+    ///  Gets or sets the Sectant1 result.
+    ///  </summary>
     public decimal Sectant1 { get; init; }
-
+    
+    /// <summary>
+    ///  Gets or sets the Sectant2 result.
+    ///  </summary>
     public decimal Sectant2 { get; init; }
-
+    
+    /// <summary>
+    ///  Gets or sets the Sectant3 result.
+    ///  </summary>
     public decimal Sectant3 { get; init; }
 
+    /// <summary>
+    ///  Gets or sets the Sectant4 result.
+    ///  </summary>
     public decimal Sectant4 { get; init; }
 
+    /// <summary>
+    ///  Gets or sets the Sectant5 result.
+    ///  </summary>
     public decimal Sectant5 { get; init; }
 
+    /// <summary>
+    ///  Gets or sets the Sectant6 result.
+    ///  </summary>
+    /// </summary>
     public decimal Sectant6 { get; init; }
 
     /// <summary>

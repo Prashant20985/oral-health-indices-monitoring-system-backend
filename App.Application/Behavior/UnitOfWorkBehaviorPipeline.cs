@@ -25,19 +25,30 @@ public class UnitOfWorkBehaviorPipeline<TRequest, TResponse>
         _unitOfWork = unitOfWork;
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Handles the request by checking for the presence of the OralEhrContextUnitOfWorkAttribute and managing transactions accordingly.
+    /// </summary>
+    /// <param name="request">The request being processed.</param>
+    /// <param name="next">The delegate representing the next handler in the pipeline.</param>
+    /// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+    /// <returns>The response produced by the pipeline.</returns>
     public async Task<TResponse> Handle(
         TRequest request,
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
+        // Check if the request type has the OralEhrContextUnitOfWorkAttribute
         if (request.GetType().GetCustomAttribute<OralEhrContextUnitOfWorkAttribute>() is not null)
         {
+            // If the attribute is present, proceed with the next handler in the pipeline
             var response = await next();
+            // Save changes to the unit of work
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+            // Return the response
             return response;
         }
 
+        // If the attribute is not present, simply proceed with the next handler
         return await next();
     }
 }

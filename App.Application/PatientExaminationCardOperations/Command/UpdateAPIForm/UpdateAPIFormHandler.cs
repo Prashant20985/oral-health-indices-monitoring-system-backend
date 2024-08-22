@@ -35,6 +35,7 @@ internal sealed class UpdateAPIFormHandler(IPatientExaminationCardRepository pat
         // Calculate the API result
         apiForm.CalculateAPIResult();
 
+        //Return responseDto with API result, maxilla and mandible
         return OperationResult<APIResultResponseDto>.Success(new APIResultResponseDto
         {
             APIResult = apiForm.APIResult,

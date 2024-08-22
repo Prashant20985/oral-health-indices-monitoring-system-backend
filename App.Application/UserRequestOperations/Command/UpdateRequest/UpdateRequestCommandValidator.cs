@@ -9,17 +9,13 @@ public class UpdateRequestCommandValidator : AbstractValidator<UpdateRequestComm
 {
     public UpdateRequestCommandValidator()
     {
-        /// <summary>
-        /// Validates the Title property of the UpdateRequestCommand.
-        /// </summary>
+        // Validates the Title property of the UpdateRequestCommand.
         RuleFor(x => x.Title)
             .NotEmpty()
             .NotNull()
             .MaximumLength(500);
 
-        /// <summary>
-        /// Validates the Description property of the UpdateRequestCommand.
-        /// </summary>
+        // Validates the Description property of the UpdateRequestCommand.
         RuleFor(x => x.Description)
             .MaximumLength(500)
             .Unless(x => string.IsNullOrEmpty(x.Description));

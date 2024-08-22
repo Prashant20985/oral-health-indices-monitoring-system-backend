@@ -31,6 +31,7 @@ internal sealed class CommentAPIFormHandler(IStudentExamRepository studentExamRe
         // Add the doctor comment to the practice API form
         apiForm.AddComment(request.DoctorComment);
 
+        //Return success
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

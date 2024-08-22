@@ -9,6 +9,13 @@ namespace App.Domain.Models.Users;
 /// </summary>
 public class ApplicationUserRole : IdentityUserRole<string>
 {
+    /// <summary>
+    /// Gets or sets the user associated with the role.
+    /// </summary>
     public virtual ApplicationUser ApplicationUser { get; set; }
+    
+    /// <summary>
+    ///  Gets or sets the role associated with the user.
+    /// </summary>
     public virtual ApplicationRole ApplicationRole { get; set; }
 }

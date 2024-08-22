@@ -3,14 +3,22 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.OralHealthExamination;
-
+/// <summary>
+///  Represents the configuration for the PatientExaminationCard entity.
+/// </summary>
 internal class PatientExaminationCardConfiguration
     : IEntityTypeConfiguration<PatientExaminationCard>
 {
+    /// <summary>
+    ///  Configures the properties of the PatientExaminationCard entity and the relationships between entities.
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<PatientExaminationCard> builder)
     {
+        // Set the primary key
         builder.HasKey(e => e.Id);
 
+        // Set the properties of the PatientExaminationCard entity
         builder.Property(e => e.DoctorComment)
             .HasMaxLength(500);
 
@@ -32,6 +40,7 @@ internal class PatientExaminationCardConfiguration
         builder.Property(e => e.PatientRecommendations)
             .HasMaxLength(500);
 
+        // Set the relationships between entities
         builder.HasOne(e => e.Patient)
             .WithMany(e => e.PatientExaminationCards)
             .HasForeignKey(e => e.PatientId)

@@ -9,7 +9,7 @@ namespace App.Application.PatientExaminationCardOperations.Command.UpdateDMFT_DM
 public class UpdateDMFT_DMFSFormCommandValidator : AbstractValidator<UpdateDMFT_DMFSFormCommand>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="UpdateDMFT_DMFSFormCommandValidator"/> class.
+    /// Validates the UpdateDMFT_DMFSFormCommand.
     /// </summary>
     public UpdateDMFT_DMFSFormCommandValidator()
     {

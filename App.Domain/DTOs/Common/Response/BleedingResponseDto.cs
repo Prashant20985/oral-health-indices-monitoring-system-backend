@@ -2,6 +2,9 @@
 
 namespace App.Domain.DTOs.Common.Response;
 
+/// <summary>
+///  Represents the Bleeding response DTO.
+/// </summary>
 public class BleedingResponseDto
 {
     /// <summary>

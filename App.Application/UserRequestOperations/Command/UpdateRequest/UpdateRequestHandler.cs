@@ -26,13 +26,17 @@ internal sealed class UpdateRequestHandler : IRequestHandler<UpdateRequestComman
     /// <returns>An OperationResult indicating the success of the update operation.</returns>
     public async Task<OperationResult<Unit>> Handle(UpdateRequestCommand request, CancellationToken cancellationToken)
     {
+        // Get the user request by id
         var userRequest = await _userRequestRepository.GetUserRequestById(request.RequestId);
 
+        // Check if the user request exists
         if (userRequest is null)
             return OperationResult<Unit>.Failure("User request not found");
 
+        // Update the user request's title and description
         userRequest.UpdateRequestTitleAndDescription(request.Title, request.Description);
 
+        // Update the user request
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

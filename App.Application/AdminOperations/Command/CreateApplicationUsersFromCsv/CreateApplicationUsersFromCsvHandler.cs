@@ -52,10 +52,11 @@ internal sealed class CreateApplicationUsersFromCsvHandler
             // If an exception occurs during CSV reading, return a failure result with the error message.
             return OperationResult<string>.Failure(ex.Message);
         }
-
+        // Check if no users were found in the CSV file.
         if (applicationUserToCreate.Count <= 0)
             return OperationResult<string>.Failure("No users found in the CSV file");
 
+        // Initialize lists to track failed and successfully created users.
         var failedToCreateUsers = new List<string>();
         var createdUsers = new List<string>();
 
@@ -84,6 +85,7 @@ internal sealed class CreateApplicationUsersFromCsvHandler
             return OperationResult<string>.Success($"{successMessage} \n{errorMessage}");
         }
 
+        // Return a success result indicating the operation was successful.
         return OperationResult<string>.Success($"{successMessage}");
     }
 }

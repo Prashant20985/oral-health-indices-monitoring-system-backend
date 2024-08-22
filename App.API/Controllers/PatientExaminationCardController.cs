@@ -27,7 +27,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace App.API.Controllers;
-
+/// <summary>
+///  Represents the controller for patient examination card operations.
+/// </summary>
 public class PatientExaminationCardController : BaseController
 {
     /// <summary>

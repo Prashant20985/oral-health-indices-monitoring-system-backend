@@ -12,10 +12,12 @@ public class CommentDMFT_DMFSCommandValidator : AbstractValidator<CommentDMFT_DM
     /// </summary>
     public CommentDMFT_DMFSCommandValidator()
     {
+        // Defining a validation rule for the CardId property
         RuleFor(x => x.CardId)
             .NotNull()
             .NotEmpty();
 
+        // Defining a validation rule for the Comment property
         RuleFor(x => x.Comment)
             .MaximumLength(500);
     }

@@ -88,8 +88,15 @@ public class Exam(DateTime dateOfExamination,
     /// </summary>
     public ICollection<PracticePatientExaminationCard> PracticePatientExaminationCards { get; set; } = new List<PracticePatientExaminationCard>();
 
+    /// <summary>
+    ///  Gets or sets the collection of examination questions associated with this examination.
+    /// </summary>
     public void MarksAsGraded() => ExamStatus = ExamStatus.Graded;
 
+    /// <summary>
+    ///     Marks the examination as published.
+    /// </summary>
+    /// <param name="updateExam"></param>
     public void UpdateExam(UpdateExamDto updateExam)
     {
         DateOfExamination = updateExam.DateOfExamination;

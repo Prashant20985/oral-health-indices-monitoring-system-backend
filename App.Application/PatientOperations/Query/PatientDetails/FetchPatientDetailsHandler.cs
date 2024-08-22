@@ -26,11 +26,14 @@ internal sealed class FetchPatientDetailsHandler(IPatientRepository patientRepos
     /// <returns>An operation result containing the patient examination DTO.</returns>
     public async Task<OperationResult<PatientResponseDto>> Handle(FetchPatientDetailsQuery request, CancellationToken cancellationToken)
     {
+        // Retrieve the patient details
         var patientDetails = await _patientRepository.GetPatientDetails(request.PatientId);
 
+        // Check if the patient exists
         if (patientDetails is null)
             return OperationResult<PatientResponseDto>.Failure("Patient Not Found");
 
+        // Return the patient details
         return OperationResult<PatientResponseDto>.Success(patientDetails);
     }
 }

@@ -11,18 +11,22 @@ public class SummaryValidator
     /// </summary>
     public SummaryValidator()
     {
+        // Validate PatientRecommendations
         RuleFor(x => x.PatientRecommendations)
             .MaximumLength(500);
-
+        
+        // Validate NeedForDentalInterventions
         string[] needForDentalIntervensionValues = ["0", "1", "2", "3", "4"];
         RuleFor(x => x.NeedForDentalInterventions)
             .NotNull()
             .Must(x => needForDentalIntervensionValues.Contains(x)).WithMessage("Invalid Value.")
             .MaximumLength(1);
 
+        // Validate ProposedTreatment
         RuleFor(x => x.ProposedTreatment)
             .MaximumLength(500);
 
+        // Validate Description
         RuleFor(x => x.Description)
             .MaximumLength(500);
     }

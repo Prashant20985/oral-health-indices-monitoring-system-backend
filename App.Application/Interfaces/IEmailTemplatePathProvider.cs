@@ -7,5 +7,10 @@ namespace App.Application.Interfaces;
 /// </summary>
 public interface IEmailTemplatePathProvider
 {
+    /// <summary>
+    /// Gets the template path based on the email type.
+    /// </summary>
+    /// <param name="emailType"></param>
+    /// <returns></returns>
     string GetTemplateContent(EmailType emailType);
 }

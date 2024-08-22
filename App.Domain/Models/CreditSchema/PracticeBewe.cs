@@ -69,18 +69,46 @@ public class PracticeBewe(decimal beweResult)
     /// <param name="comment">The comment to add.</param>
     public void AddComment(string comment) => Comment = comment;
 
+    /// <summary>
+    ///  Adds an assessment model to the assessment.
+    /// </summary>
+    /// <param name="assessmentModel"></param>
     public void SetAssessmentModel(BeweAssessmentModel assessmentModel) => AssessmentModel = assessmentModel;
 
+    /// <summary>
+    ///  Sets the BEWE result of the assessment for sectant 1.
+    /// </summary>
+    /// <param name="sectant1"></param>
     public void SetSectant1(decimal sectant1) => Sectant1 = sectant1;
 
+    /// <summary>
+    ///  Sets the BEWE result of the assessment for sectant 2.
+    /// </summary>
+    /// <param name="sectant2"></param>
     public void SetSectant2(decimal sectant2) => Sectant2 = sectant2;
 
+    /// <summary>
+    ///  Sets the BEWE result of the assessment for sectant 3.
+    /// </summary>
+    /// <param name="sectant3"></param>
     public void SetSectant3(decimal sectant3) => Sectant3 = sectant3;
-
+    
+    /// <summary>
+    /// Sets the BEWE result of the assessment for sectant 4.
+    /// </summary>
+    /// <param name="sectant4"></param>
     public void SetSectant4(decimal sectant4) => Sectant4 = sectant4;
-
+    
+    /// <summary>
+    ///     Sets the BEWE result of the assessment for sectant 5.
+    /// </summary>
+    /// <param name="sectant5"></param>
     public void SetSectant5(decimal sectant5) => Sectant5 = sectant5;
 
+    /// <summary>
+    ///   Sets the BEWE result of the assessment for sectant 6.
+    /// </summary>
+    /// <param name="sectant6"></param>
     public void SetSectant6(decimal sectant6) => Sectant6 = sectant6;
 }
 

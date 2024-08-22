@@ -38,6 +38,7 @@ internal sealed class ArchivePatientHandler(IPatientRepository patientRepository
         // Archive the patient with the provided comment
         patient.ArchivePatient(request.ArchiveComment);
 
+        //Return success
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

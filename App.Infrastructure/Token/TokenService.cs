@@ -77,6 +77,7 @@ public class TokenService : ITokenService
     /// <returns>A list of claims for the user.</returns>
     internal async Task<List<Claim>> GetAllUserClaims(ApplicationUser user)
     {
+        // Create a list of claims for the user
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id),
@@ -84,8 +85,10 @@ public class TokenService : ITokenService
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
+        // Get the roles for the user
         var userRoles = await _userManager.GetRolesAsync(user);
 
+        // Add the roles to the claims
         foreach (var userRole in userRoles)
         {
             var role = await _roleManager.FindByNameAsync(userRole);
@@ -96,6 +99,7 @@ public class TokenService : ITokenService
             }
         }
 
+        // Return the claims
         return claims;
     }
 
@@ -107,13 +111,16 @@ public class TokenService : ITokenService
     /// <returns>A task representing the asynchronous operation.</returns>
     public virtual async Task SetRefreshToken(ApplicationUser user)
     {
+        // Generate a new refresh token
         var refreshToken = GenerateRefreshToken();
 
+        // Add the refresh token to the user
         user.RefreshTokens.Add(refreshToken);
         await _userManager.UpdateAsync(user);
 
+        // Set the refresh token as a cookie
         var httpResponse = _httpContextAccessorService.GetResponse();
-
+        
         var cookieOptions = new CookieOptions
         {
             HttpOnly = true,
@@ -130,9 +137,13 @@ public class TokenService : ITokenService
     /// <returns>The generated refresh token.</returns>
     private RefreshToken GenerateRefreshToken()
     {
+        // Generate a random number for the refresh token
         var randomNumber = new byte[32];
+        
+        // Use a random number generator to create the token
         using var rng = RandomNumberGenerator.Create();
         rng.GetBytes(randomNumber);
+        // Return the refresh token
         return new RefreshToken { Token = Convert.ToBase64String(randomNumber) };
     }
 }

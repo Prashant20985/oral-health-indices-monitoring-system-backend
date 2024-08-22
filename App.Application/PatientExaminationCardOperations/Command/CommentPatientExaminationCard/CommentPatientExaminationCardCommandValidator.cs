@@ -12,10 +12,12 @@ public class CommentPatientExaminationCardCommandValidator : AbstractValidator<C
     /// </summary>
     public CommentPatientExaminationCardCommandValidator()
     {
+        // Defining a validation rule for the Cardid property
         RuleFor(command => command.Cardid)
             .NotNull()
             .NotEmpty();
 
+        // Defining a validation rule for the Comment property
         RuleFor(command => command.Comment)
             .MaximumLength(500);
     }

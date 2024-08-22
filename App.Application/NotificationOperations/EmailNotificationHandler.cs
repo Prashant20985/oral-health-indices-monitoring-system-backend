@@ -92,6 +92,7 @@ internal sealed class EmailNotificationHandler : INotificationHandler<EmailNotif
     /// <param name="batch">The batch of emails to send.</param>
     public async Task SendBatch(List<EmailContentDto> batch)
     {
+        // Send the batched emails concurrently
         var sendTasks = batch.Select(SendEmailAsync);
         await Task.WhenAll(sendTasks);
     }
@@ -102,15 +103,19 @@ internal sealed class EmailNotificationHandler : INotificationHandler<EmailNotif
     /// <param name="emailContent">The email content to send.</param>
     public async Task SendEmailAsync(EmailContentDto emailContent)
     {
+       
+        // Retry 3 times with a delay of 5 seconds between each attempt
         int maxRetryAttempts = 3;
         TimeSpan retryDelay = TimeSpan.FromSeconds(5);
-
+    
+        // Retry sending the email in case of failure
         var retryPolicy = Policy.Handle<Exception>()
             .WaitAndRetryAsync(maxRetryAttempts, attempt => retryDelay, (exception, timeSpan, attempt, context) =>
             {
                 Console.WriteLine($"Retry attempt {attempt} failed: {exception.Message}");
             });
 
+        // Send the email using the email service
         await retryPolicy.ExecuteAsync(async () =>
         {
             var result = await _emailService.SendEmailAsync(

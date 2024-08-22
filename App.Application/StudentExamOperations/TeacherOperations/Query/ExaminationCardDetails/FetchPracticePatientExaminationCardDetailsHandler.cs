@@ -31,6 +31,7 @@ internal sealed class FetchPracticePatientExaminationCardDetailsHandler(IStudent
         if (examinationCardDetails == null)
             return OperationResult<PracticePatientExaminationCardDto>.Failure("Examination Card not found");
 
+        // Return the practice patient examination card details
         return OperationResult<PracticePatientExaminationCardDto>.Success(examinationCardDetails);
     }
 }

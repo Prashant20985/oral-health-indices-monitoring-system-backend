@@ -21,11 +21,14 @@ internal sealed class FetchExamDetailsHandler(IStudentExamRepository studentExam
     /// <returns>An OperationResult of type ExamDto.</returns>
     public async Task<OperationResult<ExamDto>> Handle(FetchExamDetailsQuery request, CancellationToken cancellationToken)
     {
+        // Retrieve the exam details
         var examDetails = await _studentExamRepository.GetExamDtoById(request.ExamId);
 
+        // Check if the exam exists
         if (examDetails == null)
             return OperationResult<ExamDto>.Failure("Exam not found");
 
+        // Return the exam details
         return OperationResult<ExamDto>.Success(examDetails);
     }
 }

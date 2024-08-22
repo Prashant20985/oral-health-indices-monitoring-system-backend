@@ -22,12 +22,15 @@ internal sealed class FetchStudentGroupDetailsWithExamsHandler(IGroupRepository 
     /// <returns>The operation result with student group details.</returns>
     public async Task<OperationResult<StudentGroupWithExamsListResponseDto>> Handle(FetchStudentGroupDetailsWithExamsQuery request, CancellationToken cancellationToken)
     {
+        // Get the group details with exams list by group id and student id
         var studentGroupWithExams = await _groupRepository
             .GetGroupDetailsWithExamsListByGroupIdAndStudentId(request.GroupId, request.StudentId);
 
+        // Check if the group exists
         if (studentGroupWithExams is null)
             return OperationResult<StudentGroupWithExamsListResponseDto>.Failure("Group Not Found");
-
+        
+        // Return the student group details with exams
         return OperationResult<StudentGroupWithExamsListResponseDto>.Success(studentGroupWithExams);
     }
 }

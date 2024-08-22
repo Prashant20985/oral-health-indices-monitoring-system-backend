@@ -4,13 +4,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.OralHealthExamination;
-
+/// <summary>
+///  Represents the configuration for the Bewe entity.
+/// </summary>
 internal class BeweConfiguration : IEntityTypeConfiguration<Bewe>
 {
+    /// <summary>
+    ///  Configures the properties of the Bewe entity and the relationships between entities.
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<Bewe> builder)
     {
+        // Set the primary key
         builder.HasKey(x => x.Id);
 
+        // Set the properties of the Bewe entity
         builder.Property(x => x.BeweResult)
             .HasColumnType("decimal(18,2)");
 
@@ -20,6 +28,7 @@ internal class BeweConfiguration : IEntityTypeConfiguration<Bewe>
         builder.Property(x => x.StudentComment)
             .HasMaxLength(500);
 
+        // Set the relationships between entities
         builder.OwnsOne(x => x.AssessmentModel, ownedNavigationBuilder =>
         {
             ownedNavigationBuilder.ToJson();

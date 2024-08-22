@@ -27,10 +27,12 @@ internal sealed class CreateRequestHandler
     /// <returns>An operation result indicating the success of the operation.</returns>
     public async Task<OperationResult<Unit>> Handle(CreateRequestCommand request, CancellationToken cancellationToken)
     {
+        // Create a new user request
         UserRequest userRequest = new UserRequest(request.CreatedBy, request.RequestTitle, request.Description);
-
+        
         await _userRequestRepository.CreateRequest(userRequest);
 
+        // Return a success result
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }
