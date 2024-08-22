@@ -51,9 +51,15 @@ internal sealed class CreatePatientHandler(IPatientRepository patientRepository)
         // Add the new patient to the repository
         await _patientRepository.CreatePatient(patient);
 
+        // Return success
         return OperationResult<Unit>.Success(Unit.Value);
     }
 
+    /// <summary>
+    ///  Checks if the value is null or empty and returns null if it is.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     private static string CheckNullOrEmpty(string value) => string.IsNullOrEmpty(value) ? null : value;
 }
 

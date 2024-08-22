@@ -22,6 +22,7 @@ internal sealed class FetchExamResultsHandler(IStudentExamRepository studentExam
     /// <returns>The operation result.</returns>
     public async Task<OperationResult<List<StudentExamResultResponseDto>>> Handle(FetchExamResultsQuery request, CancellationToken cancellationToken)
     {
+        // Get the exam by id.
         var exam = await _studentExamRepository.GetExamById(request.ExamId);
 
         // Check if the exam is null.

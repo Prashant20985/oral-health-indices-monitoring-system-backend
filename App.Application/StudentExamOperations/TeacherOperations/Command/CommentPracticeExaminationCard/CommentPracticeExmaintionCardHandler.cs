@@ -31,6 +31,7 @@ internal sealed class CommentPracticeExmaintionCardHandler(IStudentExamRepositor
         // Set the doctor comment to the practice patient examination card
         practicePatientExaminationCard.SetDoctorComment(request.DoctorComment);
 
+        // Return success
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

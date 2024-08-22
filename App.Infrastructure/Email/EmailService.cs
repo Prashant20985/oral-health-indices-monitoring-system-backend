@@ -42,6 +42,7 @@ public class EmailService(IOptions<EmailSettings> emailSettings,
             // Build the email body
             switch (emailType)
             {
+                // Build the email body based on the email type
                 case EmailType.Registration:
                     var registrationTemplate = _emailTemplatePathProvider.GetTemplateContent(EmailType.Registration);
                     var username = message.Split(" ")[0];
@@ -69,6 +70,7 @@ public class EmailService(IOptions<EmailSettings> emailSettings,
                     throw new ArgumentException("Invalid email type.");
             }
 
+            // Set the email subject and body
             mail.Subject = subject;
             mail.Body = body.ToMessageBody();
 

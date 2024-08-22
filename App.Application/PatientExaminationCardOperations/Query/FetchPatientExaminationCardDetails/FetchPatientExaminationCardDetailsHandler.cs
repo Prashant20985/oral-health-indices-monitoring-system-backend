@@ -30,6 +30,7 @@ internal sealed class FetchPatientExaminationCardDetailsHandler(IPatientExaminat
         if (patientExaminationCard is null)
             return OperationResult<PatientExaminationCardDto>.Failure("Examination Card Not Found");
 
+        //Return success
         return OperationResult<PatientExaminationCardDto>.Success(patientExaminationCard);
     }
 }

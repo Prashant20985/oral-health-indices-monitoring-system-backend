@@ -35,6 +35,7 @@ internal sealed class PublishExamHandler(IStudentExamRepository studentExamRepos
         // Publish the exam
         var result = await _studentExamRepository.PublishExam(exam);
 
+        // Return the published exam
         return OperationResult<ExamDto>.Success(result);
     }
 }

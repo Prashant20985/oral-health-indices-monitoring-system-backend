@@ -33,21 +33,28 @@ internal sealed class AddPatientToResearchGroupHandler
     /// <returns>An operation result indicating the success or failure of the operation.</returns>
     public async Task<OperationResult<Unit>> Handle(AddPatientToResearchGroupCommand request, CancellationToken cancellationToken)
     {
+        // Retrieve the patient by ID
         var patient = await _patientRepository.GetPatientById(request.PatientId);
 
+        // Check if the patient exists
         if (patient is null)
             return OperationResult<Unit>.Failure("Patient not found");
 
+        // Check if the patient is already in a research group
         if (patient.ResearchGroupId is not null)
             return OperationResult<Unit>.Failure("Patient is already in a research group");
 
+        // Retrieve the research group by ID
         var researchGroup = await _researchGroupRepository.GetResearchGroupById(request.ResearchGroupId);
 
+        // Check if the research group exists
         if (researchGroup is null)
             return OperationResult<Unit>.Failure("Research group not found");
 
+        // Add the patient to the research group
         patient.AddResearchGroup(request.ResearchGroupId);
 
+        // Return a successful operation result
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

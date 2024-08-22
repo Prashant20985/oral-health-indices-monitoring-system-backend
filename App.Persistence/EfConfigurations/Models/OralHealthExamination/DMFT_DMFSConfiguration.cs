@@ -3,13 +3,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.OralHealthExamination;
-
+/// <summary>
+///  Represents the configuration for the DMFT_DMFS entity.
+/// </summary>
 internal class DMFT_DMFSConfiguration : IEntityTypeConfiguration<DMFT_DMFS>
 {
+    /// <summary>
+    ///  Configures the properties of the DMFT_DMFS entity and the relationships between entities.
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<DMFT_DMFS> builder)
     {
+        // Set the primary key
         builder.HasKey(x => x.Id);
 
+        // Set the properties of the DMFT_DMFS entity
         builder.Property(x => x.DMFTResult)
             .HasColumnType("decimal(18,2)");
 
@@ -25,6 +33,7 @@ internal class DMFT_DMFSConfiguration : IEntityTypeConfiguration<DMFT_DMFS>
         builder.Property(x => x.ProstheticStatus)
             .HasMaxLength(1);
 
+        // Set the relationships between entities
         builder.OwnsOne(x => x.AssessmentModel, ownedNavigationBuilder =>
         {
             ownedNavigationBuilder.ToJson();

@@ -37,19 +37,53 @@ public class Bewe
     /// </summary>
     public decimal Sectant6 { get; private set; }
 
+    /// <summary>
+    ///  Gets or sets the Doctor comment.
+    /// </summary>
     public string DoctorComment { get; private set; }
+    
+    /// <summary>
+    ///  Gets or sets the Student comment.
+    /// </summary>
     public string StudentComment { get; private set; }
+    
+    /// <summary>
+    ///  Gets or sets the Assessment model.
+    /// </summary>
     public BeweAssessmentModel AssessmentModel { get; private set; }
+    
+    /// <summary>
+    ///  Gets or sets the Patient examination result.
+    /// </summary>
     public PatientExaminationResult PatientExaminationResult { get; set; }
-
+    
+    /// <summary>
+    /// Method to add doctor comment.
+    /// </summary>
+    /// <param name="comment"></param>
     public void AddDoctorComment(string comment) => DoctorComment = comment;
 
+    /// <summary>
+    /// method to add student comment.
+    /// </summary>
+    /// <param name="comment"></param>
     public void AddStudentComment(string comment) => StudentComment = comment;
 
+    /// <summary>
+    ///  Method to set the assessment model.
+    /// </summary>
+    /// <param name="beweResult"></param>
     public void SetBeweResult(decimal beweResult) => BeweResult = beweResult;
 
+    /// <summary>
+    ///  Method to set the assessment model.
+    /// </summary>
+    /// <param name="assessmentModel"></param>
     public void SetAssessmentModel(BeweAssessmentModel assessmentModel) => AssessmentModel = assessmentModel;
 
+    /// <summary>
+    ///  Method to calculate the BEWE result.
+    /// </summary>
     public void CalculateBeweResult()
     {
         var sectant1MaxValue = AssessmentModel.Sectant1.FindMaxValue();

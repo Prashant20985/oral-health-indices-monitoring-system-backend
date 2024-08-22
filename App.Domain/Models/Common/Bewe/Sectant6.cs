@@ -27,6 +27,10 @@ public class Sectant6
     /// </summary>
     public FiveSurfaceToothBEWE Tooth_44 { get; set; }
 
+    /// <summary>
+    ///  Finds the maximum value of the teeth in the sectant.
+    /// </summary>
+    /// <returns></returns>
     public int FindMaxValue()
     {
         int maxVal = 0;
@@ -45,6 +49,11 @@ public class Sectant6
         return maxVal;
     }
 
+    /// <summary>
+    ///  Finds the minimum value of the teeth in the sectant.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     private static int GetIntValue(string value)
     {
         if (value.Equals("x") || string.IsNullOrEmpty(value))

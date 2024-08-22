@@ -12,19 +12,23 @@ public class PublishExamCommandValidator : AbstractValidator<PublishExamCommand>
     /// </summary>
     public PublishExamCommandValidator()
     {
+        //  Validate the PublishExam property.
         RuleFor(x => x.PublishExam.DateOfExamination)
             .NotEmpty()
             .OverridePropertyName("DateOfExamination");
 
+        //  Validate the ExamTitle property.
         RuleFor(x => x.PublishExam.ExamTitle)
             .NotEmpty()
             .MaximumLength(100)
             .OverridePropertyName("ExamTitle");
 
+        //  Validate the Description property.
         RuleFor(x => x.PublishExam.Description)
             .MaximumLength(500)
             .OverridePropertyName("Description");
 
+        //  Validate the StartTime property.
         RuleFor(x => x.PublishExam.StartTime)
             .NotEmpty()
             .Must((command, startTime) => startTime < command.PublishExam.EndTime)
@@ -39,16 +43,19 @@ public class PublishExamCommandValidator : AbstractValidator<PublishExamCommand>
             .OverridePropertyName("StartTime");
 
 
+        //  Validate the EndTime property.
         RuleFor(x => x.PublishExam.EndTime)
             .NotEmpty()
             .Must((command, endTime) => endTime > command.PublishExam.StartTime)
             .WithMessage("End time must be greater than start time")
             .OverridePropertyName("EndTime");
 
+        //  Validate the GroupId property.
         RuleFor(x => x.PublishExam.GroupId)
             .NotEmpty()
             .OverridePropertyName("GroupId");
 
+        //  Validate the DurationInterval property.
         RuleFor(x => x.PublishExam.DurationInterval)
             .NotEmpty()
             .GreaterThan(TimeSpan.Zero)

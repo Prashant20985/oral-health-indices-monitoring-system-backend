@@ -15,8 +15,10 @@ namespace App.Persistence.EfConfigurations.Models.Users
         /// <param name="builder">The entity type builder for the StudentGroup model.</param>
         public void Configure(EntityTypeBuilder<StudentGroup> builder)
         {
+            // Set the primary key of the entity as the Id
             builder.HasKey(x => new { x.GroupId, x.StudentId });
 
+            // Set the relationships between entities
             builder.HasOne(x => x.Group)
                 .WithMany(y => y.StudentGroups)
                 .HasForeignKey(x => x.GroupId)

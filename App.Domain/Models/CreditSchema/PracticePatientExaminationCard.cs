@@ -92,16 +92,70 @@ public class PracticePatientExaminationCard(Guid examId, string studentId)
     /// </summary>
     public virtual ApplicationUser Student { get; private set; }
 
+    /// <summary>
+    ///  Sets the unique identifier of the patient associated with this examination.
+    /// </summary>
+    /// <param name="patientId"></param>
     public void SetPatientId(Guid patientId) => PatientId = patientId;
+    
+    /// <summary>
+    ///   Sets the mark obtained by the student in the examination.
+    /// </summary>
+    /// <param name="studentMark"></param>
     public void SetStudentMark(decimal studentMark) => StudentMark = studentMark;
+    
+    /// <summary>
+    ///  Sets the comment provided by the doctor regarding the examination.
+    /// </summary>
+    /// <param name="doctorComment"></param>
     public void SetDoctorComment(string doctorComment) => DoctorComment = doctorComment;
+    
+    /// <summary>
+    ///  Sets examination result.
+    /// </summary>
+    /// <param name="patientExaminationResultId"></param>
     public void SetPatientExaminationResultId(Guid patientExaminationResultId) => PatientExaminationResultId = patientExaminationResultId;
+    
+    /// <summary>
+    ///  Sets risk factor assessment.
+    /// </summary>
+    /// <param name="riskFactorAssessmentId"></param>
     public void SetRiskFactorAssessmentId(Guid riskFactorAssessmentId) => RiskFactorAssessmentId = riskFactorAssessmentId;
+    
+    /// <summary>
+    ///  Sets practice patient examination result.
+    /// </summary>
+    /// <param name="practicePatientExaminationResult"></param>
     public void SetPracticePatientExaminationResult(PracticePatientExaminationResult practicePatientExaminationResult) => PracticePatientExaminationResult = practicePatientExaminationResult;
+    
+    /// <summary>
+    ///  Sets student.
+    /// </summary>
+    /// <param name="student"></param>
     public void SetStudent(ApplicationUser student) => Student = student;
+    
+    /// <summary>
+    ///  Sets description of the examination.
+    /// </summary>
+    /// <param name="description"></param>
     public void SetDescription(string description) => Description = description;
+    
+    /// <summary>
+    ///  Sets patient recommendations.
+    /// </summary>
+    /// <param name="patientRecommendations"></param>
     public void SetPatientRecommendations(string patientRecommendations) => PatientRecommendations = patientRecommendations;
+    
+    /// <summary>
+    ///  Sets need for dental interventions.
+    /// </summary>
+    /// <param name="needForDentalInterventions"></param>
     public void SetNeedForDentalInterventions(string needForDentalInterventions) => NeedForDentalInterventions = needForDentalInterventions;
+    
+    /// <summary>
+    ///  Sets proposed treatment.
+    /// </summary>
+    /// <param name="proposedTreatment"></param>
     public void SetProposedTreatment(string proposedTreatment) => ProposedTreatment = proposedTreatment;
 }
 

@@ -33,6 +33,7 @@ internal sealed class DeletePatientHandler(IPatientRepository patientRepository)
         // Delete the patient from the repository
         await _patientRepository.DeletePatient(request.PatientId);
 
+        // Return success
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

@@ -21,16 +21,21 @@ internal sealed class CommentBeweFormHandler(IPatientExaminationCardRepository p
     /// <returns>Operation Result</returns>
     public async Task<OperationResult<Unit>> Handle(CommentBeweFormCommand request, CancellationToken cancellationToken)
     {
+        // Getting the BEWE form by the card id
         var beweForm = await _patientExaminationCardRepository.GetBeweByCardId(request.CardId);
 
+        // If the BEWE form is not found, return an error
         if (beweForm is null)
-            return OperationResult<Unit>.Failure("Bewe form not found");
-
+            return OperationResult<Unit>.Failure("Bewe form not found"); 
+        // If the BEWE form is found, add the comment
+        // If the request is from a student, add the comment as a student comment
+        // If the request is from a doctor, add the comment as a doctor comment
         if (request.IsStudent)
             beweForm.AddStudentComment(request.Comment);
         else
             beweForm.AddDoctorComment(request.Comment);
 
+        // Returning a successful operation result with a unit value
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

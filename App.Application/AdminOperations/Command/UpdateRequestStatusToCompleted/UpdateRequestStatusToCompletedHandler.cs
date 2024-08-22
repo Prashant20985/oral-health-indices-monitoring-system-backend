@@ -28,11 +28,14 @@ internal sealed class UpdateRequestStatusToCompletedHandler
     /// <returns>An operation result indicating the success or failure of the operation.</returns>
     public async Task<OperationResult<Unit>> Handle(UpdateRequestStatusToCompletedCommand requestStatus, CancellationToken cancellationToken)
     {
+        // Retrieve the user request based on the provided UserRequestId.
         var userRequest = await _userRequestRepository.GetUserRequestById(requestStatus.UserRequestId);
 
+        // If the user request is not found, return a failure result with the message "User request not found".
         if (userRequest is null)
             return OperationResult<Unit>.Failure("User request not found");
 
+        // Set the request status to "Completed" with the provided admin comment.
         userRequest.SetRequestToCompleted(requestStatus.AdminComment);
 
 

@@ -12,8 +12,10 @@ public class CommentPracticeExaminationCardCommandValidator : AbstractValidator<
     /// </summary>
     public CommentPracticeExaminationCardCommandValidator()
     {
+        //  Validate the PracticeExaminationCardId property.
         RuleFor(x => x.PracticeExaminationCardId).NotEmpty();
 
+        //  Validate the DoctorComment property.
         RuleFor(x => x.DoctorComment)
             .NotEmpty()
             .MaximumLength(500)

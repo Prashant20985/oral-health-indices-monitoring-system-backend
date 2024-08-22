@@ -39,6 +39,7 @@ internal sealed class UpdateDMFT_DMFSFormHandler(IPatientExaminationCardReposito
         // Update the DMFT/DMFS form ProstheticStatus
         dmft_dmfsForm.SetProstheticStatus(request.UpdateDMFT_DMFS.ProstheticStatus);
 
+        // Return the DMFT/DMFS form resultn
         return OperationResult<DMFT_DMFSResultResponseDto>.Success(new DMFT_DMFSResultResponseDto
         {
             DMFSResult = dmft_dmfsForm.DMFSResult,

@@ -45,7 +45,8 @@ internal sealed class UpdateBeweFormHandler(IPatientExaminationCardRepository pa
             Sectant5 = beweForm.Sectant5,
             Sectant6 = beweForm.Sectant6
         };
-
+        
+        // Return responseDto with BEWE result and sectants 
         return OperationResult<BeweResultResponseDto>.Success(beweResultResponse);
     }
 }

@@ -15,8 +15,10 @@ public class SuperviseConfiguration : IEntityTypeConfiguration<Supervise>
     /// <param name="builder">The builder used to configure the Supervise entity.</param>
     public void Configure(EntityTypeBuilder<Supervise> builder)
     {
+        // Set the primary key of the entity as the Id
         builder.HasKey(s => s.Id);
 
+        // Set the relationships between entities
         builder.HasOne(s => s.Doctor)
             .WithMany(x => x.SuperviseDoctorNavigation)
             .HasForeignKey(s => s.DoctorId)

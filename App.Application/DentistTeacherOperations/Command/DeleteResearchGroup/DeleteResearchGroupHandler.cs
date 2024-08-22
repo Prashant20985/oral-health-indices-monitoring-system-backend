@@ -38,6 +38,7 @@ internal sealed class DeleteResearchGroupHandler : IRequestHandler<DeleteResearc
         // Delete the research group.
         _researchGroupRepository.DeleteResearchGroup(researchGroup);
 
+        //Return a success result with no specific data.
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

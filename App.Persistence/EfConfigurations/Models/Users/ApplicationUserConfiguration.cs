@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.Users;
-
+/// <summary>
+///  Represents the configuration for the ApplicationUser entity.
+/// </summary>
 internal class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
 {
     /// <summary>
@@ -13,6 +15,7 @@ internal class ApplicationUserConfiguration : IEntityTypeConfiguration<Applicati
     /// <param name="builder">The entity type builder for the ApplicationUser entity.</param>
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
+        // Configures the primary key for the ApplicationUser entity.
         builder.HasKey(x => x.Id);
 
         // Configures the FirstName property of the ApplicationUser entity.

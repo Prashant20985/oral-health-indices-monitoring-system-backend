@@ -26,11 +26,13 @@ internal sealed class AddPracticePatientExaminationCardHandler(IStudentExamRepos
     /// <returns>An operation result with Unit as result.</returns>
     public async Task<OperationResult<Unit>> Handle(AddPracticePatientExaminationCardCommand request, CancellationToken cancellationToken)
     {
+        // Check if the exam exists
         var checkExamExists = await _studentExamRepository.GetExamById(request.ExamId);
-
+        
         if (checkExamExists is null)
             return OperationResult<Unit>.Failure("Given Exam doesn't Exists");
 
+        // Check if the student exists
         var checkIfStudentAlreadyTookTheExam = await _studentExamRepository
             .CheckIfStudentHasAlreadyTakenTheExam(request.ExamId, request.StudentId);
 

@@ -5,5 +5,9 @@
 /// </summary>
 public interface IGeneratePassword
 {
+    /// <summary>
+    /// Generates a random password
+    /// </summary>
+    /// <returns></returns>
     string GenerateRandomPassword();
 }

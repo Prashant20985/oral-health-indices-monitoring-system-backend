@@ -31,6 +31,7 @@ internal class CommentBleedingFormHandler(IStudentExamRepository studentExamRepo
         // Add the doctor comment to the practice Bleeding form
         bleedingForm.AddComment(request.DoctorComment);
 
+        //Return success
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

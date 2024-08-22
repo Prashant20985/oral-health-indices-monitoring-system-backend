@@ -1,5 +1,8 @@
 ﻿namespace App.Domain.DTOs.ExamDtos.Response;
 
+/// <summary>
+///  Represents the examination DTO.
+/// </summary>
 public class ExamDto
 {
     /// <summary>

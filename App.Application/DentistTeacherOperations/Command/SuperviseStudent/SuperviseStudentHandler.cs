@@ -50,6 +50,7 @@ internal sealed class SuperviseStudentHandler(ISuperviseRepository superviseRepo
         // Add the supervise object to the database.
         await _superviseRepository.AddSupervise(supervise);
 
+        // Return a success result with no specific data.
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

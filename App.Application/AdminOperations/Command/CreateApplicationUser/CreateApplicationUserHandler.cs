@@ -15,8 +15,17 @@ namespace App.Application.AdminOperations.Command.CreateApplicationUser;
 internal sealed class CreateApplicationUserHandler
     : IRequestHandler<CreateApplicationUserCommand, OperationResult<Unit>>
 {
+    /// <summary>
+    /// The repository for managing user-related operations.
+    /// </summary>
     private readonly IUserRepository _userRepository;
+    // <summary>
+    /// The instance for generating passwords.
+    /// </summary>
     private readonly IGeneratePassword _generatePassword;
+    /// <summary>
+    /// The mediator for handling communication between application components.
+    /// </summary>
     private readonly IMediator _mediator;
 
     /// <summary>
@@ -79,9 +88,14 @@ internal sealed class CreateApplicationUserHandler
         // Publish an email notification for account registration.
         await _mediator.Publish(new EmailNotification(emailContent), cancellationToken);
 
+        // Return a success result indicating the operation was successful.
         return OperationResult<Unit>.Success(Unit.Value);
     }
 
-    // Helper method to check for null or whitespace and return null if the value is empty.
+     /// <summary>
+    //    /// Helper method to check for null or whitespace and return null if the value is empty.
+    //    /// </summary>
+    //    /// <param name="value">The string value to check.</param>
+    //    /// <returns>The original value if not null or whitespace, otherwise null.</returns>
     private static string CheckNullOrWhiteSpace(string value) => string.IsNullOrWhiteSpace(value) ? null : value;
 }

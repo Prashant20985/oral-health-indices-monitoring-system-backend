@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace App.API.Controllers;
-
+/// <summary>
+///  Represents the controller for student operations.
+/// </summary>
 [Authorize(Roles = "Student")]
 public class StudentController : BaseController
 {

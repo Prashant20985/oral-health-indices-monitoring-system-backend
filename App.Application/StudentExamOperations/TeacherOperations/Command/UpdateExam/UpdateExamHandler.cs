@@ -46,6 +46,7 @@ internal sealed class UpdateExamHandler(IStudentExamRepository studentExamReposi
             ExamStatus = exam.ExamStatus.ToString(),
         };
 
+        // Return updated exam
         return OperationResult<ExamDto>.Success(updatedExam);
     }
 }

@@ -23,6 +23,7 @@ internal sealed class DeleteExamHandler(IStudentExamRepository studentExamReposi
         // Delete the exam
         await _studentExamRepositor.DeleteExam(request.ExamId);
 
+        // Return success
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

@@ -43,6 +43,7 @@ internal sealed class RemovePatientFromResearchGroupHandler
         // Remove the patient from the research group.
         patient.RemoveResearchGroup();
 
+        // Return a success result with no specific data.
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

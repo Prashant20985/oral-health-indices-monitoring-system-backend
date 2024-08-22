@@ -37,6 +37,7 @@ internal sealed class FetchPatientExamiantionCardsHandler(
         var patientExaminationCards = await _patientExaminationCardRepository
             .GetPatientExaminationCardDtosByPatientId(request.PatientId);
 
+        // Return success 
         return OperationResult<List<PatientExaminationCardDto>>.Success(patientExaminationCards);
     }
 }

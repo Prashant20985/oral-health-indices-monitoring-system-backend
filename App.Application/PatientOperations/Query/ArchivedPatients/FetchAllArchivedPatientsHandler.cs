@@ -28,28 +28,35 @@ internal sealed class FetchAllArchivedPatientsHandler(IPatientRepository patient
     /// <returns>An operation result containing a list of archived patient DTOs.</returns>
     public async Task<OperationResult<PaginatedPatientResponseDto>> Handle(FetchAllArchivedPatientsQuery request, CancellationToken cancellationToken)
     {
+        // Retrieve all archived patients
         var query = _patientRepository.GetAllArchivedPatients();
 
+        // Apply optional filters for name
         if (!string.IsNullOrEmpty(request.Name))
             query = query.Where(p => p.FirstName.Contains(request.Name) || p.LastName.Contains(request.Name));
 
+        // Apply optional filters for email
         if (!string.IsNullOrEmpty(request.Email))
             query = query.Where(p => p.Email.Contains(request.Email));
 
+        // Count the total number of patients
         var totalPatientsCount = await query.CountAsync(cancellationToken);
 
+        // Paginate the patients
         var patients = await query
             .Skip(request.Page * request.PageSize)
             .Take(request.PageSize)
             .AsNoTracking()
             .ToListAsync(cancellationToken);
 
+        // Create a paginated response DTO
         var paginatedPatients = new PaginatedPatientResponseDto
         {
             TotalPatientsCount = totalPatientsCount,
             Patients = patients
         };
 
+        // Return the paginated response
         return OperationResult<PaginatedPatientResponseDto>.Success(paginatedPatients);
     }
 }

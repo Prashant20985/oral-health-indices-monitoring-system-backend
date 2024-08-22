@@ -22,6 +22,10 @@ public class PracticeRiskFactorAssessment
     /// </summary>
     public virtual PracticePatientExaminationCard PracticePatientExaminationCard { get; set; }
 
+    /// <summary>
+    /// Sets the risk factor assessment model associated with this assessment.
+    /// </summary>
+    /// <param name="riskFactorAssessmentModel"></param>
     public void SetRiskFactorAssessmentModel(RiskFactorAssessmentModel riskFactorAssessmentModel) =>
         RiskFactorAssessmentModel = riskFactorAssessmentModel;
 }

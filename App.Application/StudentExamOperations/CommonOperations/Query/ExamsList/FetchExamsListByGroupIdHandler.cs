@@ -21,8 +21,10 @@ internal sealed class FetchExamsListByGroupIdHandler(IStudentExamRepository stud
     /// <returns>An OperationResult containing a list of ExamDto.</returns>
     public async Task<OperationResult<List<ExamDto>>> Handle(FetchExamsListByGroupIdQuery request, CancellationToken cancellationToken)
     {
+        // Retrieve the exams by group ID
         var exams = await _studentExamRepository.GetExamDtosByGroupId(request.GroupId);
 
+        // Return the exams list
         return OperationResult<List<ExamDto>>.Success(exams);
     }
 }

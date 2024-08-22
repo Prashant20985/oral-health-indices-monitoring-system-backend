@@ -33,12 +33,14 @@ internal sealed class DeleteApplicationUserHandler
         // Retrieve the user based on the provided username.
         var user = await _userRepository.GetUserByUserNameOrEmail(request.UserName, cancellationToken);
 
+        // If the user is not found, return a failure result with the message "User not found".
         if (user is null)
             return OperationResult<Unit>.Failure("User not found");
 
         // Delete the user with the provided deletion comment.
         user.DeleteUser(request.DeleteComment);
 
+        // If the user is found, return a success result.
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

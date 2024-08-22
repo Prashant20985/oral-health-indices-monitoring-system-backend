@@ -1,30 +1,92 @@
 ﻿using App.Domain.Models.Common.APIBleeding;
 
 namespace App.Domain.Models.OralHealthExamination;
-
+/// <summary>
+/// Represents the Bleeding model.
+/// </summary>
 public class Bleeding
 {
+    /// <summary>
+    /// Gets or sets the Id.
+    /// </summary>
     public Guid Id { get; private set; } = Guid.NewGuid();
+    
+    /// <summary>
+    ///  Gets or sets the Bleeding result.
+    /// </summary>
     public int BleedingResult { get; private set; }
+    
+    
+    /// <summary>
+    ///  Gets or sets the Maxilla.
+    /// </summary>
     public int Maxilla { get; private set; }
+    
+    /// <summary>
+    ///  Gets or sets the Mandible.
+    /// </summary>
     public int Mandible { get; private set; }
+    
+    /// <summary>
+    ///  Gets or sets the Doctor comment.
+    /// </summary>
     public string DoctorComment { get; private set; }
+    
+    /// <summary>
+    ///  Gets or sets the Student comment.
+    /// </summary>
     public string StudentComment { get; private set; }
+    
+    /// <summary>
+    ///  Gets or sets the Assessment model.
+    /// </summary>
     public APIBleedingAssessmentModel AssessmentModel { get; private set; }
+    
+    /// <summary>
+    ///   Gets or sets the Patient examination result.
+    /// </summary>
     public virtual PatientExaminationResult PatientExaminationResult { get; set; }
-
+    
+    /// <summary>
+    ///  Method to set the assessment model.
+    /// </summary>
+    /// <param name="assessmentModel"></param>
     public void SetAssessmentModel(APIBleedingAssessmentModel assessmentModel) => AssessmentModel = assessmentModel;
 
+    /// <summary>
+    ///  Method to add doctor comment.
+    /// </summary>
+    /// <param name="comment"></param>
     public void AddDoctorComment(string comment) => DoctorComment = comment;
 
+    /// <summary>
+    ///     Method to add student comment.
+    /// </summary>
+    /// <param name="comment"></param>
     public void AddStudentComment(string comment) => StudentComment = comment;
 
+    /// <summary>
+    ///  Method to set the bleeding result.
+    /// </summary>
+    /// <param name="bleedingResult"></param>
     public void SetBleedingResult(int bleedingResult) => BleedingResult = bleedingResult;
 
+    /// <summary>
+    ///  Method to set the maxilla.
+    /// </summary>
+    /// <param name="maxilla"></param>
     public void SetMaxilla(int maxilla) => Maxilla = maxilla;
 
+    /// <summary>
+    ///  Method to set the mandible.
+    /// </summary>
+    /// <param name="mandible"></param>
     public void SetMandible(int mandible) => Mandible = mandible;
 
+    
+    /// <summary>
+    ///  Method to calculate the bleeding result.
+    /// </summary>
     public void CalculateBleedingResult()
     {
         if (AssessmentModel is null) return;

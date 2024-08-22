@@ -21,16 +21,22 @@ internal sealed class CommentBleedingFormHandler(IPatientExaminationCardReposito
     /// <returns>The result of the operation</returns>
     public async Task<OperationResult<Unit>> Handle(CommentBleedingFormCommand request, CancellationToken cancellationToken)
     {
+        // Getting the bleeding form by the card id
         var bleedingForm = await _patientExaminationCardRepository.GetBleedingByCardId(request.CardId);
 
+        //  If the bleeding form is not found, return an error
         if (bleedingForm is null)
             return OperationResult<Unit>.Failure("Bleeding form not found");
 
+        // If the bleeding form is found, add the comment
+        // If the request is from a student, add the comment as a student comment
+        // If the request is from a doctor, add the comment as a doctor comment
         if (request.IsStudent)
             bleedingForm.AddStudentComment(request.Comment);
         else
             bleedingForm.AddDoctorComment(request.Comment);
 
+        // Returning a successful operation result with a unit value
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

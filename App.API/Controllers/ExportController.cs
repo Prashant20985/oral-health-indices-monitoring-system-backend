@@ -11,19 +11,29 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 
 namespace App.API.Controllers;
-
+/// <summary>
+///  Controller for handling exporting of examination data to Excel files.
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
 public class ExportController : ControllerBase
 {
+    /// <summary>
+    /// Exports the examination solution data to an Excel file, http post method.
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
     [HttpPost("export-exam-solution")]
     public IActionResult ExportExamSolution([FromBody] PracticePatientExaminationCardDto data)
     {
+        // Create a new Excel package
         using var package = new ExcelPackage();
 
+        // Create a new worksheet for the details
         var detailsSheet = package.Workbook.Worksheets.Add("Details");
 
+        // Add the examination information to the details sheet
         detailsSheet.Cells[1, 1].Value = "Exam Information";
         detailsSheet.Cells[1, 1, 1, 15].Merge = true;
         detailsSheet.Cells[1, 1].Style.Font.Bold = true;
@@ -104,9 +114,11 @@ public class ExportController : ControllerBase
         detailsSheet.Cells[22, 1].Style.Font.Bold = true;
         detailsSheet.Cells[22, 2].Value = data.PracticePatient.Age;
 
+        // Create a new worksheet for the risk factor assessment
         var riskFactorAssessmentSheet = package.Workbook.Worksheets.Add("Risk Factor Assessment");
         AddRiskFactorAssessmentData(riskFactorAssessmentSheet, data.PracticeRiskFactorAssessment.RiskFactorAssessmentModel);
 
+        // Create a new worksheet for the DMFT/DMFS data
         var dmft_dmfsSheet = package.Workbook.Worksheets.Add("DMFT/DMFS");
         dmft_dmfsSheet.Cells[1, 1].Value = "DMFT/DMFS";
         dmft_dmfsSheet.Cells[1, 1, 1, 15].Merge = true;
@@ -132,12 +144,15 @@ public class ExportController : ControllerBase
         dmft_dmfsSheet.Cells[6, 1].Style.Font.Bold = true;
         dmft_dmfsSheet.Cells[6, 2].Value = data.PracticePatientExaminationResult.DMFT_DMFS.Comment;
 
+        // Add the DMFT/DMFS data to the worksheet
         AddDMFT_DMFSUpperMouthData(dmft_dmfsSheet, data.PracticePatientExaminationResult.DMFT_DMFS.AssessmentModel);
         AddDMFT_DMFSLowermouthData(dmft_dmfsSheet, data.PracticePatientExaminationResult.DMFT_DMFS.AssessmentModel);
         AddDMFT_DMFSExtraToothData(dmft_dmfsSheet, data.PracticePatientExaminationResult.DMFT_DMFS.AssessmentModel);
 
+        // Create a new worksheet for the BEWE data
         var beweSheet = package.Workbook.Worksheets.Add("BEWE");
 
+        // Add the BEWE data to the worksheet
         beweSheet.Cells[1, 1].Value = "BEWE";
         beweSheet.Cells[1, 1, 1, 15].Merge = true;
         beweSheet.Cells[1, 1].Style.Font.Bold = true;
@@ -154,10 +169,13 @@ public class ExportController : ControllerBase
         beweSheet.Cells[4, 1].Style.Font.Bold = true;
         beweSheet.Cells[4, 2].Value = data.PracticePatientExaminationResult.Bewe.Comment;
 
+        // Add the BEWE data to the worksheet
         AddBeweData(beweSheet, data.PracticePatientExaminationResult.Bewe.AssessmentModel);
 
+        // Create a new worksheet for the API data
         var apiSheet = package.Workbook.Worksheets.Add("API");
 
+        // Add the API data to the worksheet
         apiSheet.Cells[1, 1].Value = "API";
         apiSheet.Cells[1, 1, 1, 15].Merge = true;
         apiSheet.Cells[1, 1].Style.Font.Bold = true;
@@ -182,10 +200,13 @@ public class ExportController : ControllerBase
         apiSheet.Cells[6, 1].Style.Font.Bold = true;
         apiSheet.Cells[6, 2].Value = data.PracticePatientExaminationResult.API.Comment;
 
+        // Add the API data to the worksheet
         AddAPIBleedingDate(apiSheet, data.PracticePatientExaminationResult.API.AssessmentModel);
 
+        // Create a new worksheet for the bleeding data
         var bleedingSheet = package.Workbook.Worksheets.Add("Bleeding");
 
+        // Add the bleeding data to the worksheet
         bleedingSheet.Cells[1, 1].Value = "Bleeding";
         bleedingSheet.Cells[1, 1, 1, 15].Merge = true;
         bleedingSheet.Cells[1, 1].Style.Font.Bold = true;
@@ -210,10 +231,13 @@ public class ExportController : ControllerBase
         bleedingSheet.Cells[6, 1].Style.Font.Bold = true;
         bleedingSheet.Cells[6, 2].Value = data.PracticePatientExaminationResult.Bleeding.Comment;
 
+        // Add the bleeding data to the worksheet
         AddAPIBleedingDate(bleedingSheet, data.PracticePatientExaminationResult.Bleeding.AssessmentModel);
 
+        // Create a new worksheet for the tooth data
         var summarySheet = package.Workbook.Worksheets.Add("Summary");
 
+        // Add the summary data to the worksheet
         summarySheet.Cells[1, 1].Value = "Summary";
         summarySheet.Cells[1, 1, 1, 15].Merge = true;
         summarySheet.Cells[1, 1].Style.Font.Bold = true;
@@ -241,20 +265,29 @@ public class ExportController : ControllerBase
         summarySheet.Cells[6, 2].Value = data.Summary.PatientRecommendations;
         summarySheet.Cells[6, 2, 6, 15].Merge = true;
 
+        // Save the Excel package to a memory stream
         var stream = new MemoryStream();
         package.SaveAs(stream);
         stream.Position = 0;
 
+        // Return the Excel file as a file result
         return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"{data.StudentName}_ExamSolution.xlsx");
     }
-
+/// <summary>
+///  Exports the examination card data to an Excel file, http post method.
+/// </summary>
+/// <param name="data"></param>
+/// <returns></returns>
     [HttpPost("export-examination-card")]
     public IActionResult ExportExaminationCard([FromBody] PatientDetailsWithExaminationCards data)
     {
+        // Create a new Excel package
         using var package = new ExcelPackage();
 
+        // Create a new worksheet for the details
         var detailsSheet = package.Workbook.Worksheets.Add("Details");
 
+        // Add the examination information to the details sheet
         detailsSheet.Cells[1, 1].Value = "Examination Information";
         detailsSheet.Cells[1, 1, 1, 15].Merge = true;
         detailsSheet.Cells[1, 1].Style.Font.Bold = true;
@@ -355,10 +388,15 @@ public class ExportController : ControllerBase
         detailsSheet.Cells[27, 1].Style.Font.Bold = true;
         detailsSheet.Cells[27, 2].Value = data.Patient.ArchiveComment;
 
+        // Create a new worksheet for the risk factor assessment
         var riskFactorAssessmentSheet = package.Workbook.Worksheets.Add("Risk Factor Assessment");
+        // Add the risk factor assessment data to the worksheet
         AddRiskFactorAssessmentData(riskFactorAssessmentSheet, data.RiskFactorAssessment.RiskFactorAssessmentModel);
 
+        // Create a new worksheet for the DMFT/DMFS data
         var dmft_dmfsSheet = package.Workbook.Worksheets.Add("DMFT/DMFS");
+        
+        // Add the DMFT/DMFS data to the worksheet
         dmft_dmfsSheet.Cells[1, 1].Value = "DMFT/DMFS";
         dmft_dmfsSheet.Cells[1, 1, 1, 15].Merge = true;
         dmft_dmfsSheet.Cells[1, 1].Style.Font.Bold = true;
@@ -387,12 +425,15 @@ public class ExportController : ControllerBase
         dmft_dmfsSheet.Cells[7, 1].Style.Font.Bold = true;
         dmft_dmfsSheet.Cells[7, 2].Value = data.PatientExaminationResult.DMFT_DMFS.StudentComment;
 
+        // Add the DMFT/DMFS data to the worksheet
         AddDMFT_DMFSUpperMouthData(dmft_dmfsSheet, data.PatientExaminationResult.DMFT_DMFS.AssessmentModel);
         AddDMFT_DMFSLowermouthData(dmft_dmfsSheet, data.PatientExaminationResult.DMFT_DMFS.AssessmentModel);
         AddDMFT_DMFSExtraToothData(dmft_dmfsSheet, data.PatientExaminationResult.DMFT_DMFS.AssessmentModel);
 
+        // Create a new worksheet for the BEWE data
         var beweSheet = package.Workbook.Worksheets.Add("BEWE");
 
+        // Add the BEWE data to the worksheet
         beweSheet.Cells[1, 1].Value = "BEWE";
         beweSheet.Cells[1, 1, 1, 15].Merge = true;
         beweSheet.Cells[1, 1].Style.Font.Bold = true;
@@ -413,10 +454,13 @@ public class ExportController : ControllerBase
         beweSheet.Cells[5, 1].Style.Font.Bold = true;
         beweSheet.Cells[5, 2].Value = data.PatientExaminationResult.Bewe.StudentComment;
 
+        // Add the BEWE data to the worksheet
         AddBeweData(beweSheet, data.PatientExaminationResult.Bewe.AssessmentModel);
 
+        // Create a new worksheet for the API data
         var apiSheet = package.Workbook.Worksheets.Add("API");
 
+        //  
         apiSheet.Cells[1, 1].Value = "API";
         apiSheet.Cells[1, 1, 1, 15].Merge = true;
         apiSheet.Cells[1, 1].Style.Font.Bold = true;
@@ -445,10 +489,13 @@ public class ExportController : ControllerBase
         apiSheet.Cells[7, 1].Style.Font.Bold = true;
         apiSheet.Cells[7, 2].Value = data.PatientExaminationResult.API.StudentComment;
 
+        // Add the API data to the worksheet
         AddAPIBleedingDate(apiSheet, data.PatientExaminationResult.API.AssessmentModel);
 
+        // Create a new worksheet for the bleeding data
         var bleedingSheet = package.Workbook.Worksheets.Add("Bleeding");
 
+        // Add the bleeding data to the worksheet
         bleedingSheet.Cells[1, 1].Value = "Bleeding";
         bleedingSheet.Cells[1, 1, 1, 15].Merge = true;
         bleedingSheet.Cells[1, 1].Style.Font.Bold = true;
@@ -477,8 +524,10 @@ public class ExportController : ControllerBase
         bleedingSheet.Cells[7, 1].Style.Font.Bold = true;
         bleedingSheet.Cells[7, 2].Value = data.PatientExaminationResult.Bleeding.StudentComment;
 
+        // Add the bleeding data to the worksheet
         AddAPIBleedingDate(bleedingSheet, data.PatientExaminationResult.Bleeding.AssessmentModel);
 
+        // Create a new worksheet for the summary data
         var summarySheet = package.Workbook.Worksheets.Add("Summary");
 
         summarySheet.Cells[1, 1].Value = "Summary";
@@ -508,15 +557,23 @@ public class ExportController : ControllerBase
         summarySheet.Cells[6, 2].Value = data.Summary.PatientRecommendations;
         summarySheet.Cells[6, 2, 6, 15].Merge = true;
 
+        // Save the Excel package to a memory stream
         var stream = new MemoryStream();
         package.SaveAs(stream);
         stream.Position = 0;
 
+        // Return the Excel file as a file result
         return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"{data.PatientName}_{data.DateOfExamination.ToLongDateString()}.xlsx");
     }
+/// <summary>
+///  Adds the risk factor assessment data to the Excel worksheet.
+/// </summary>
+/// <param name="sheet"></param>
+/// <param name="riskFactorAssessment"></param>
 
     private void AddRiskFactorAssessmentData(ExcelWorksheet sheet, RiskFactorAssessmentModel riskFactorAssessment)
     {
+        // Add the risk factor assessment data to the worksheet
 
         sheet.Cells[1, 1].Value = "Risk Factor Assessment";
         sheet.Cells[1, 1, 1, 15].Merge = true;
@@ -535,6 +592,7 @@ public class ExportController : ControllerBase
         sheet.Cells[3, 4].Value = "High Risk";
         sheet.Cells[3, 4].Style.Font.Bold = true;
 
+        // Add the questions and answers to the worksheet
         var row = 4;
         foreach (var item in riskFactorAssessment.Questions)
         {
@@ -545,15 +603,21 @@ public class ExportController : ControllerBase
             row++;
         }
 
+        // Add color to the cells
         using (var range = sheet.Cells[3, 1, row - 1, 4])
         {
             range.Style.Fill.PatternType = ExcelFillStyle.Solid;
             range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGreen);
         }
     }
-
+/// <summary>
+///  Adds the DMFT/DMFS data for the lower mouth to the Excel worksheet.
+/// </summary>
+/// <param name="sheet"></param>
+/// <param name="data"></param>
     private void AddDMFT_DMFSUpperMouthData(ExcelWorksheet sheet, DMFT_DMFSAssessmentModel data)
     {
+        // Add the DMFT/DMFS data for the upper mouth to the worksheet
         sheet.Cells[10, 1].Value = "Upper Mouth";
         sheet.Cells[10, 1].Style.Font.Bold = true;
         sheet.Cells[10, 1, 10, 33].Merge = true;
@@ -562,8 +626,10 @@ public class ExportController : ControllerBase
         sheet.Cells[10, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[10, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add teeth headers
         string[] upperMouthTeethWithO = ["Tooth 18", "Tooth 17", "Tooth 16", "Tooth 15", "Tooth 14", "Tooth 24", "Tooth 25", "Tooth 26", "Tooth 27", "Tooth 28"];
 
+        // Add teeth headers
         string[] upperMouthTeethWithoutO = ["Tooth 13", "Tooth 12", "Tooth 11", "Tooth 21", "Tooth 22", "Tooth 23"];
 
         // Add teeth headers
@@ -577,6 +643,7 @@ public class ExportController : ControllerBase
             column += 2;
         }
 
+        // Add teeth headers
         foreach (var tooth in upperMouthTeethWithoutO)
         {
             sheet.Cells[11, column].Value = tooth;
@@ -586,6 +653,7 @@ public class ExportController : ControllerBase
             column += 2;
         }
 
+        // Add color to the cells
         sheet.Cells[11, 1, 11, 33].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[11, 1, 11, 33].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
@@ -617,6 +685,7 @@ public class ExportController : ControllerBase
             upperMouth.Tooth_28
         };
 
+      // Populate teeth properties with "O" values
         column = 2;
         for (int i = 0; i < teethPropertiesWithO.Length; i++)
         {
@@ -660,6 +729,7 @@ public class ExportController : ControllerBase
             upperMouth.Tooth_23
         };
 
+        // Populate teeth properties without "O" values
         for (int i = 0; i < teethPropertiesWithoutO.Length; i++)
         {
             var tooth = teethPropertiesWithoutO[i];
@@ -679,8 +749,14 @@ public class ExportController : ControllerBase
         }
     }
 
+/// <summary>
+///  Adds the DMFT/DMFS data for the lower mouth to the Excel worksheet.
+/// </summary>
+/// <param name="sheet"></param>
+/// <param name="data"></param>
     private void AddDMFT_DMFSLowermouthData(ExcelWorksheet sheet, DMFT_DMFSAssessmentModel data)
     {
+        // Add the DMFT/DMFS data for the lower mouth to the worksheet
         sheet.Cells[20, 1].Value = "Lower Mouth";
         sheet.Cells[20, 1].Style.Font.Bold = true;
         sheet.Cells[20, 1, 20, 33].Merge = true;
@@ -689,10 +765,13 @@ public class ExportController : ControllerBase
         sheet.Cells[20, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[20, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add teeth headers
         string[] teethWithO = ["Tooth 48", "Tooth 47", "Tooth 46", "Tooth 45", "Tooth 44", "Tooth 34", "Tooth 35", "Tooth 36", "Tooth 37", "Tooth 38"];
 
+        // Add teeth headers
         string[] teethWithoutO = ["Tooth 43", "Tooth 42", "Tooth 41", "Tooth 31", "Tooth 32", "Tooth 33"];
 
+        // Add teeth headers
         int column = 1;
         foreach (var tooth in teethWithO)
         {
@@ -703,6 +782,7 @@ public class ExportController : ControllerBase
             column += 2;
         }
 
+        // Add teeth headers
         foreach (var tooth in teethWithoutO)
         {
             sheet.Cells[21, column].Value = tooth;
@@ -712,9 +792,11 @@ public class ExportController : ControllerBase
             column += 2;
         }
 
+        // Add color to the cells
         sheet.Cells[21, 1, 21, 33].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[21, 1, 21, 33].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Row header with assessments
         string[] assessmentsWithO = ["R", "B", "O", "L", "D", "M"];
         string[] assessmentsWithoutO = ["R", "B", "L", "D", "M", ""];
 
@@ -726,6 +808,7 @@ public class ExportController : ControllerBase
             sheet.Cells[22 + i, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightCoral);
         }
 
+        // Populate teeth properties with "O" values
         var lowerMouth = data.LowerMouth;
 
         var teethPropertiesWithO = new[]
@@ -742,6 +825,7 @@ public class ExportController : ControllerBase
             lowerMouth.Tooth_38
         };
 
+        // Populate teeth properties with "O" values
         column = 2;
         for (int i = 0; i < teethPropertiesWithO.Length; i++)
         {
@@ -763,6 +847,7 @@ public class ExportController : ControllerBase
             column += 2;
         }
 
+        // Populate teeth properties without "O" values
         int columnWithoutO = 2 + teethPropertiesWithO.Length * 2;
         for (int i = 0; i < assessmentsWithoutO.Length; i++)
         {
@@ -771,6 +856,7 @@ public class ExportController : ControllerBase
             sheet.Cells[22 + i, columnWithoutO - 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGreen);
         }
 
+        // Populate teeth properties without "O" values
         var teethPropertiesWithoutO = new[]
         {
             lowerMouth.Tooth_33,
@@ -781,6 +867,7 @@ public class ExportController : ControllerBase
             lowerMouth.Tooth_33
         };
 
+        // Populate teeth properties without "O" values
         for (int i = 0; i < teethPropertiesWithoutO.Length; i++)
         {
             var tooth = teethPropertiesWithoutO[i];
@@ -790,7 +877,7 @@ public class ExportController : ControllerBase
             sheet.Cells[24, columnWithoutO + i * 2].Value = tooth.L;
             sheet.Cells[25, columnWithoutO + i * 2].Value = tooth.D;
             sheet.Cells[26, columnWithoutO + i * 2].Value = tooth.M;
-
+            // Add color to cells without "O" values
             using (var range = sheet.Cells[22, columnWithoutO + i * 2, 27, columnWithoutO + i * 2 + 1])
             {
                 range.Style.Fill.PatternType = ExcelFillStyle.Solid;
@@ -798,9 +885,14 @@ public class ExportController : ControllerBase
             }
         }
     }
-
+/// <summary>
+///  Adds the DMFT/DMFS data for the extra teeth to the Excel worksheet.
+/// </summary>
+/// <param name="sheet"></param>
+/// <param name="data"></param>
     private void AddDMFT_DMFSExtraToothData(ExcelWorksheet sheet, DMFT_DMFSAssessmentModel data)
     {
+        // Add the DMFT/DMFS data for the extra teeth to the worksheet
         sheet.Cells[30, 1].Value = "Extra Tooth";
         sheet.Cells[30, 1, 30, 10].Merge = true;
         sheet.Cells[30, 1].Style.Font.Bold = true;
@@ -809,6 +901,7 @@ public class ExportController : ControllerBase
         sheet.Cells[30, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[30, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add the DMFT/DMFS data for the extra teeth to the worksheet
         sheet.Cells[31, 1].Value = "Tooth 55";
         sheet.Cells[31, 2].Value = "Tooth 54";
         sheet.Cells[31, 3].Value = "Tooth 53";
@@ -820,9 +913,11 @@ public class ExportController : ControllerBase
         sheet.Cells[31, 9].Value = "Tooth 64";
         sheet.Cells[31, 10].Value = "Tooth 65";
 
+        // Add color to the cells
         sheet.Cells[31, 1, 31, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[31, 1, 31, 10].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
-
+        
+        // Add the DMFT/DMFS data for the upper mouth to the worksheet
         sheet.Cells[32, 1].Value = data.UpperMouth.Tooth_55;
         sheet.Cells[32, 2].Value = data.UpperMouth.Tooth_54;
         sheet.Cells[32, 3].Value = data.UpperMouth.Tooth_53;
@@ -834,9 +929,11 @@ public class ExportController : ControllerBase
         sheet.Cells[32, 9].Value = data.UpperMouth.Tooth_64;
         sheet.Cells[32, 10].Value = data.UpperMouth.Tooth_65;
 
+        // Add color to the cells
         sheet.Cells[32, 1, 32, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[32, 1, 32, 10].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGreen);
 
+        // Add the DMFT/DMFS data for the lower mouth to the worksheet
         sheet.Cells[33, 1].Value = "Tooth 85";
         sheet.Cells[33, 2].Value = "Tooth 84";
         sheet.Cells[33, 3].Value = "Tooth 83";
@@ -848,9 +945,11 @@ public class ExportController : ControllerBase
         sheet.Cells[33, 9].Value = "Tooth 74";
         sheet.Cells[33, 10].Value = "Tooth 75";
 
+        // Add color to the cells
         sheet.Cells[33, 1, 33, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[33, 1, 33, 10].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add the DMFT/DMFS data for the lower mouth to the worksheet
         sheet.Cells[34, 1].Value = data.LowerMouth.Tooth_85;
         sheet.Cells[34, 2].Value = data.LowerMouth.Tooth_84;
         sheet.Cells[34, 3].Value = data.LowerMouth.Tooth_83;
@@ -862,12 +961,18 @@ public class ExportController : ControllerBase
         sheet.Cells[34, 9].Value = data.LowerMouth.Tooth_74;
         sheet.Cells[34, 10].Value = data.LowerMouth.Tooth_75;
 
+        // Add color to the cells
         sheet.Cells[34, 1, 34, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[34, 1, 34, 10].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGreen);
     }
-
+/// <summary>
+///  Adds the BEWE data to the Excel worksheet.
+/// </summary>
+/// <param name="sheet"></param>
+/// <param name="bewe"></param>
     private void AddBeweData(ExcelWorksheet sheet, BeweAssessmentModel bewe)
     {
+        // Add the BEWE data to the worksheet
         int startRow = 7;
         AddSectant1Data(sheet, bewe.Sectant1, startRow);
         startRow += 10;
@@ -881,7 +986,12 @@ public class ExportController : ControllerBase
         startRow += 10;
         AddSectant6Data(sheet, bewe.Sectant6, startRow);
     }
-
+/// <summary>
+///  Adds the sectant 1 data to the Excel worksheet.
+/// </summary>
+/// <param name="sheet"></param>
+/// <param name="sectant"></param>
+/// <param name="startRow"></param>
     private void AddSectant1Data(ExcelWorksheet sheet, Sectant1 sectant, int startRow)
     {
         // Add a title for the sectant
@@ -893,6 +1003,7 @@ public class ExportController : ControllerBase
         sheet.Cells[startRow, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[startRow, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add teeth headers
         var teethWithO = new Dictionary<string, FiveSurfaceToothBEWE>
         {
             { "Tooth_17", sectant.Tooth_17 },
@@ -945,6 +1056,12 @@ public class ExportController : ControllerBase
             column += 2;
         }
     }
+/// <summary>
+///  Adds the sectant 2 data to the Excel worksheet.
+/// </summary>
+/// <param name="sheet"></param>
+/// <param name="sectant"></param>
+/// <param name="startRow"></param>
 
     private void AddSectant2Data(ExcelWorksheet sheet, Sectant2 sectant, int startRow)
     {
@@ -957,6 +1074,7 @@ public class ExportController : ControllerBase
         sheet.Cells[startRow, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[startRow, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add teeth headers
         var teethWithoutO = new Dictionary<string, FourSurfaceTooth>
         {
             { "Tooth_13", sectant.Tooth_13 },
@@ -1011,6 +1129,12 @@ public class ExportController : ControllerBase
         }
     }
 
+/// <summary>
+///  Adds the sectant 3 data to the Excel worksheet.
+/// </summary>
+/// <param name="sheet"></param>
+/// <param name="sectant"></param>
+/// <param name="startRow"></param>
     private void AddSectant3Data(ExcelWorksheet sheet, Sectant3 sectant, int startRow)
     {
         // Add a title for the sectant
@@ -1022,6 +1146,7 @@ public class ExportController : ControllerBase
         sheet.Cells[startRow, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[startRow, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add teeth headers
         var teethWithO = new Dictionary<string, FiveSurfaceToothBEWE>
         {
             { "Tooth_24", sectant.Tooth_24 },
@@ -1074,7 +1199,12 @@ public class ExportController : ControllerBase
             column += 2;
         }
     }
-
+/// <summary>
+///  Adds the sectant 4 data to the Excel worksheet.
+/// </summary>
+/// <param name="sheet"></param>
+/// <param name="sectant"></param>
+/// <param name="startRow"></param>
     private void AddSectant4Data(ExcelWorksheet sheet, Sectant4 sectant, int startRow)
     {
         // Add a title for the sectant
@@ -1086,6 +1216,7 @@ public class ExportController : ControllerBase
         sheet.Cells[startRow, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[startRow, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add teeth headers
         var teethWithO = new Dictionary<string, FiveSurfaceToothBEWE>
         {
             { "Tooth_34", sectant.Tooth_34 },
@@ -1138,7 +1269,12 @@ public class ExportController : ControllerBase
             column += 2;
         }
     }
-
+/// <summary>
+///  Adds the sectant 5 data to the Excel worksheet.
+/// </summary>
+/// <param name="sheet"></param>
+/// <param name="sectant"></param>
+/// <param name="startRow"></param>
     private void AddSectant5Data(ExcelWorksheet sheet, Sectant5 sectant, int startRow)
     {
         // Add a title for the sectant
@@ -1150,6 +1286,7 @@ public class ExportController : ControllerBase
         sheet.Cells[startRow, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[startRow, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add teeth headers
         var teethWithoutO = new Dictionary<string, FourSurfaceTooth>
         {
             { "Tooth_33", sectant.Tooth_33 },
@@ -1203,7 +1340,12 @@ public class ExportController : ControllerBase
             column += 2;
         }
     }
-
+    /// <summary>
+    ///  Adds the sectant 6 data to the Excel worksheet.
+    /// </summary>
+    /// <param name="sheet"></param>
+    /// <param name="sectant"></param>
+    /// <param name="startRow"></param>
     private void AddSectant6Data(ExcelWorksheet sheet, Sectant6 sectant, int startRow)
     {
         // Add a title for the sectant
@@ -1269,8 +1411,14 @@ public class ExportController : ControllerBase
 
     }
 
+    /// <summary>
+    ///  Adds the API Bleeding data to the Excel worksheet.
+    /// </summary>
+    /// <param name="sheet"></param>
+    /// <param name="data"></param>
     private void AddAPIBleedingDate(ExcelWorksheet sheet, APIBleedingAssessmentModel data)
     {
+        // Add the API Bleeding data to the worksheet
         sheet.Cells[9, 1].Value = "Quadrant 1";
         sheet.Cells[9, 1, 9, 7].Merge = true;
         sheet.Cells[9, 1].Style.Font.Bold = true;
@@ -1279,6 +1427,7 @@ public class ExportController : ControllerBase
         sheet.Cells[9, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[9, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add the API Bleeding data for the Quadrant 1 to the worksheet
         sheet.Cells[10, 1].Value = "q17";
         sheet.Cells[10, 2].Value = "q16";
         sheet.Cells[10, 3].Value = "q15";
@@ -1287,9 +1436,11 @@ public class ExportController : ControllerBase
         sheet.Cells[10, 6].Value = "q12";
         sheet.Cells[10, 7].Value = "q11";
 
+        // Add color to the cells
         sheet.Cells[10, 1, 10, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[10, 1, 10, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add the API Bleeding data for the Quadrant 1 to the worksheet
         sheet.Cells[11, 1].Value = data.Quadrant1.Value7;
         sheet.Cells[11, 2].Value = data.Quadrant1.Value6;
         sheet.Cells[11, 3].Value = data.Quadrant1.Value5;
@@ -1298,9 +1449,11 @@ public class ExportController : ControllerBase
         sheet.Cells[11, 6].Value = data.Quadrant1.Value2;
         sheet.Cells[11, 7].Value = data.Quadrant1.Value1;
 
+        // Add color to the cells
         sheet.Cells[11, 1, 11, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[11, 1, 11, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGreen);
 
+        // Add the API Bleeding data for the Quadrant 2 to the worksheet
         sheet.Cells[9, 9].Value = "Quadrant 2";
         sheet.Cells[9, 9, 9, 15].Merge = true;
         sheet.Cells[9, 9].Style.Font.Bold = true;
@@ -1309,6 +1462,7 @@ public class ExportController : ControllerBase
         sheet.Cells[9, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[9, 9].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add the API Bleeding data for the Quadrant 2 to the worksheet
         sheet.Cells[10, 9].Value = "q21";
         sheet.Cells[10, 10].Value = "q22";
         sheet.Cells[10, 11].Value = "q23";
@@ -1317,9 +1471,11 @@ public class ExportController : ControllerBase
         sheet.Cells[10, 14].Value = "q26";
         sheet.Cells[10, 15].Value = "q27";
 
+        // Add color to the cells
         sheet.Cells[10, 9, 10, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[10, 9, 10, 15].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add the API Bleeding data for the Quadrant 2 to the worksheet
         sheet.Cells[11, 9].Value = data.Quadrant2.Value1;
         sheet.Cells[11, 10].Value = data.Quadrant2.Value2;
         sheet.Cells[11, 11].Value = data.Quadrant2.Value3;
@@ -1328,9 +1484,11 @@ public class ExportController : ControllerBase
         sheet.Cells[11, 14].Value = data.Quadrant2.Value6;
         sheet.Cells[11, 15].Value = data.Quadrant2.Value7;
 
+        // Add color to the cells
         sheet.Cells[11, 9, 11, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[11, 9, 11, 15].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGreen);
 
+        // Add the API Bleeding data for the Quadrant 3 to the worksheet
         sheet.Cells[13, 1].Value = "Quadrant 3";
         sheet.Cells[13, 1, 13, 7].Merge = true;
         sheet.Cells[13, 1].Style.Font.Bold = true;
@@ -1339,6 +1497,7 @@ public class ExportController : ControllerBase
         sheet.Cells[13, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[13, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add the API Bleeding data for the Quadrant 3 to the worksheet
         sheet.Cells[14, 1].Value = "q37";
         sheet.Cells[14, 2].Value = "q36";
         sheet.Cells[14, 3].Value = "q35";
@@ -1347,9 +1506,11 @@ public class ExportController : ControllerBase
         sheet.Cells[14, 6].Value = "q32";
         sheet.Cells[14, 7].Value = "q31";
 
+        // Add color to the cells
         sheet.Cells[14, 1, 14, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[14, 1, 14, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add the API Bleeding data for the Quadrant 3 to the worksheet
         sheet.Cells[15, 1].Value = data.Quadrant3.Value7;
         sheet.Cells[15, 2].Value = data.Quadrant3.Value6;
         sheet.Cells[15, 3].Value = data.Quadrant3.Value5;
@@ -1358,9 +1519,11 @@ public class ExportController : ControllerBase
         sheet.Cells[15, 6].Value = data.Quadrant3.Value2;
         sheet.Cells[15, 7].Value = data.Quadrant3.Value1;
 
+        // Add color to the cells
         sheet.Cells[15, 1, 15, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[15, 1, 15, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGreen);
 
+        //  Add the API Bleeding data for the Quadrant 4 to the worksheet
         sheet.Cells[13, 9].Value = "Quadrant 4";
         sheet.Cells[13, 9, 13, 15].Merge = true;
         sheet.Cells[13, 9].Style.Font.Bold = true;
@@ -1369,6 +1532,7 @@ public class ExportController : ControllerBase
         sheet.Cells[13, 9].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[13, 9].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add the API Bleeding data for the Quadrant 4 to the worksheet
         sheet.Cells[14, 9].Value = "q41";
         sheet.Cells[14, 10].Value = "q42";
         sheet.Cells[14, 11].Value = "q43";
@@ -1377,9 +1541,11 @@ public class ExportController : ControllerBase
         sheet.Cells[14, 14].Value = "q46";
         sheet.Cells[14, 15].Value = "q47";
 
+        // Add color to the cells
         sheet.Cells[14, 9, 14, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[14, 9, 14, 15].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
 
+        // Add the API Bleeding data for the Quadrant 4 to the worksheet
         sheet.Cells[15, 9].Value = data.Quadrant4.Value1;
         sheet.Cells[15, 10].Value = data.Quadrant4.Value2;
         sheet.Cells[15, 11].Value = data.Quadrant4.Value3;
@@ -1388,6 +1554,7 @@ public class ExportController : ControllerBase
         sheet.Cells[15, 14].Value = data.Quadrant4.Value6;
         sheet.Cells[15, 15].Value = data.Quadrant4.Value7;
 
+        //  Add color to the cells
         sheet.Cells[15, 9, 15, 15].Style.Fill.PatternType = ExcelFillStyle.Solid;
         sheet.Cells[15, 9, 15, 15].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGreen);
     }

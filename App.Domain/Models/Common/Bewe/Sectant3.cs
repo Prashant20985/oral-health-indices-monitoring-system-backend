@@ -27,6 +27,11 @@ public class Sectant3
     /// </summary>
     public FiveSurfaceToothBEWE Tooth_27 { get; set; }
 
+    
+    /// <summary>
+    ///  Finds the maximum value of the teeth in the sectant.
+    /// </summary>
+    /// <returns></returns>
     public int FindMaxValue()
     {
         int maxVal = 0;

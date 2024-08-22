@@ -2,7 +2,9 @@
 using App.Domain.DTOs.PatientDtos.Response;
 
 namespace App.Domain.DTOs.ExamDtos.Response;
-
+/// <summary>
+///  Represents the Practice Patient Examination Card DTO.
+/// </summary>
 public class PracticePatientExaminationCardDto
 {
     /// <summary>

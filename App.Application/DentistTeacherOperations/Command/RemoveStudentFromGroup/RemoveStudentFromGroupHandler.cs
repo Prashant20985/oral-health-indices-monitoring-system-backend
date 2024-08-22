@@ -23,7 +23,8 @@ internal class RemoveStudentFromGroupHandler : IRequestHandler<RemoveStudentFrom
         // Retrieve the student-group relationship.
         var studentGroup = await _groupRepository.GetStudentGroup(
             request.StudentId, request.GroupId);
-
+        
+        //Check if the student is in the group.
         if (studentGroup is null)
             return OperationResult<Unit>.Failure("Student not in group");
 

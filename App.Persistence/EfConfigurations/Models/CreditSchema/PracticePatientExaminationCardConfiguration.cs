@@ -3,14 +3,22 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.CreditSchema;
-
+/// <summary>
+///  Represents the configuration for the PracticePatientExaminationCard entity.
+/// </summary>
 public class PracticePatientExaminationCardConfiguration
     : IEntityTypeConfiguration<PracticePatientExaminationCard>
 {
+    /// <summary>
+    ///  Configures the properties of the PracticePatientExaminationCard entity and the relationships between entities.
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<PracticePatientExaminationCard> builder)
     {
+        // Set the primary key
         builder.HasKey(e => e.Id);
 
+        // Set the properties of the PracticePatientExaminationCard entity
         builder.Property(x => x.StudentMark)
             .HasPrecision(5, 2);
 
@@ -29,6 +37,7 @@ public class PracticePatientExaminationCardConfiguration
         builder.Property(x => x.PatientRecommendations)
             .HasMaxLength(500);
 
+        // Set the relationships between entities
         builder.HasOne(e => e.PracticeRiskFactorAssessment)
             .WithOne(e => e.PracticePatientExaminationCard)
             .HasForeignKey<PracticePatientExaminationCard>(e => e.RiskFactorAssessmentId)

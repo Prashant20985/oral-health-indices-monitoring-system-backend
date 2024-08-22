@@ -27,7 +27,8 @@ internal sealed class UpdatePatientExaminationCardSummaryHandler(IPatientExamina
         card.SetNeedForDentalInterventions(request.Summary.NeedForDentalInterventions);
         card.SetPatientRecommendations(request.Summary.PatientRecommendations);
         card.SetProposedTreatment(request.Summary.ProposedTreatment);
-
+        
+        // Return success.
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

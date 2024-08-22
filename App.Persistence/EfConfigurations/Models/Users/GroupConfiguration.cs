@@ -15,12 +15,15 @@ internal class GroupConfiguration : IEntityTypeConfiguration<Group>
     /// <param name="builder">The entity type builder for the Group model.</param>
     public void Configure(EntityTypeBuilder<Group> builder)
     {
+        // Set the primary key of the entity as the Id
         builder.HasKey(x => x.Id);
 
+        // Set the properties of the Group entity
         builder.Property(x => x.GroupName)
             .IsRequired()
             .HasMaxLength(256);
 
+        // Set the relationships between entities
         builder.HasOne(x => x.Teacher)
             .WithMany(x => x.Groups)
             .HasForeignKey(x => x.TeacherId)

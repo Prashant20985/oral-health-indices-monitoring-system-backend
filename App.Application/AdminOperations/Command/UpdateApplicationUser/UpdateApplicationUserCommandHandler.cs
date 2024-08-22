@@ -34,9 +34,11 @@ internal sealed class UpdateApplicationUserCommandHandler
         // Retrieve the application user based on the provided username.
         var applicationUser = await _userRepository.GetUserByUserNameOrEmail(request.UserName, cancellationToken);
 
+        // If the user is not found, return a failure result with the message "User not found".
         if (applicationUser is null)
             return OperationResult<Unit>.Failure("User not found");
 
+        // If the user is marked as deleted, return a failure result with the message "Deleted user".
         if (applicationUser.DeletedAt is not null)
             return OperationResult<Unit>.Failure("Deleted user");
 
@@ -48,6 +50,7 @@ internal sealed class UpdateApplicationUserCommandHandler
         // Update the user with the provided updated user data.
         applicationUser.UpdateUser(request.UpdateApplicationUser);
 
+        // Retrieve the current roles of the application user.
         var applicationUserRoles = applicationUser.ApplicationUserRoles
             .Select(x => x.ApplicationRole.Name)
             .ToList();
@@ -55,19 +58,22 @@ internal sealed class UpdateApplicationUserCommandHandler
         // Check if the new role is different from existing roles and update accordingly.
         if (!applicationUserRoles.Contains(request.UpdateApplicationUser.Role))
         {
+            // If the user has existing roles, remove them.
             if (applicationUserRoles.Any())
             {
                 var removeFromRole = await _userRepository
                     .RemoveApplicationUserFromRolesAsync(applicationUser, applicationUserRoles);
-
+               
+                // If removing existing roles fails, return a failure result.
                 if (!removeFromRole.Succeeded)
                     return OperationResult<Unit>.Failure("Failed to remove existing role");
             }
-
+            // Add the user to the new role.
             await _userRepository
                 .AddApplicationUserToRoleAsync(applicationUser, request.UpdateApplicationUser.Role);
         }
 
+        // Return a success result.
         return OperationResult<Unit>.Success(Unit.Value);
     }
 

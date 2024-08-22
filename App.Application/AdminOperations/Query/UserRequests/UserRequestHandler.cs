@@ -30,14 +30,18 @@ internal sealed class UserRequestHandler
     /// <returns>An OperationResult containing a list of user requests with the specified status.</returns>
     public async Task<OperationResult<List<UserRequestResponseDto>>> Handle(UserRequestQuery request, CancellationToken cancellationToken)
     {
+        // Parse the request status from the query string.
         var status = Enum.Parse<RequestStatus>(request.RequestStatus);
+        // Retrieve all user requests with the specified status
         var userRequestsQuery = _userRequestRepository
             .GetAllRequestsByStatus(status);
 
+        // Apply date filter if provided
         if (request.DateSubmitted is not null)
             userRequestsQuery = userRequestsQuery
                 .Where(x => x.DateSubmitted.Date == request.DateSubmitted.Value.Date);
 
+        // Execute the query and return the result
         return OperationResult<List<UserRequestResponseDto>>.Success(await userRequestsQuery.ToListAsync());
     }
 }

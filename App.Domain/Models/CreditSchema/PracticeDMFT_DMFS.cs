@@ -49,8 +49,16 @@ public class PracticeDMFT_DMFS(decimal dMFTResult, decimal dMFSResult)
     /// <param name="comment">The comment to add.</param>
     public void AddComment(string comment) => Comment = comment;
 
+    /// <summary>
+    ///  Adds an assessment model to the assessment.
+    /// </summary>
+    /// <param name="assessmentModel"></param>
     public void SetAssessmentModel(DMFT_DMFSAssessmentModel assessmentModel) => AssessmentModel = assessmentModel;
 
+    /// <summary>
+    ///  Sets the prosthetic status of the patient.
+    /// </summary>
+    /// <param name="prostheticStatus"></param>
     public void SetProstheticStatus(string prostheticStatus) => ProstheticStatus = prostheticStatus;
 }
 

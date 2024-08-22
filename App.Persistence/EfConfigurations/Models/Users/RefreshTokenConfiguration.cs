@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.Users;
 
+/// <summary>
+///  Represents the configuration for the RefreshToken entity.
+/// </summary>
 internal class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
 {
     /// <summary>

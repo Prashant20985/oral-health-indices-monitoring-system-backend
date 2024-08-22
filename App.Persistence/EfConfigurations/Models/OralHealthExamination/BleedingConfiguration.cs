@@ -3,19 +3,28 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.OralHealthExamination;
-
+/// <summary>
+///  Represents the configuration for the Bleeding entity.
+/// </summary>
 public class BleedingConfiguration : IEntityTypeConfiguration<Bleeding>
 {
+    /// <summary>
+    ///  Configures the properties of the Bleeding entity and the relationships between entities.
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<Bleeding> builder)
     {
+        // Set the primary key
         builder.HasKey(k => k.Id);
 
+        // Set the properties of the Bleeding entity
         builder.Property(e => e.DoctorComment)
             .HasMaxLength(500);
 
         builder.Property(e => e.StudentComment)
             .HasMaxLength(500);
 
+        // Set the relationships between entities
         builder.OwnsOne(e => e.AssessmentModel, ownedNavigationBuilder =>
         {
             ownedNavigationBuilder.ToJson();

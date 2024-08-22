@@ -33,12 +33,14 @@ internal sealed class ChangeActivationStatusHandler
         // Retrieve the user based on the provided username.
         var user = await _userRepository.GetUserByUserNameOrEmail(request.UserName, cancellationToken);
 
+        // Check if the user is null and return a failure result if so.
         if (user is null)
             return OperationResult<Unit>.Failure("User not found");
 
         // Toggle the activation status of the user.
         user.ActivationStatusToggle();
 
+        // Return a success result indicating the operation was successful.
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

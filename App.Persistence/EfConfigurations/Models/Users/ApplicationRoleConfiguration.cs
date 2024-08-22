@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.Users;
 
+/// <summary>
+///  Represents the configuration for the ApplicationRole entity.
+/// </summary>
 internal class ApplicationRoleConfiguration : IEntityTypeConfiguration<ApplicationRole>
 {
     /// <summary>

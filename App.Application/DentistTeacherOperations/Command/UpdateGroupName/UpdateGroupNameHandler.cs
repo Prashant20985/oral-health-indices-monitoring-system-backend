@@ -24,9 +24,11 @@ internal sealed class UpdateGroupNameHandler : IRequestHandler<UpdateGroupNameCo
         // Retrive the group.
         var group = await _groupRepository.GetGroupById(request.GroupId);
 
+        // Check if the group exists.
         if (group is null)
             return OperationResult<Unit>.Failure("Group not found");
 
+        // Check if the group name is already taken.
         var checkGroupName = await _groupRepository.GetGroupByName(request.GroupName);
 
         if (checkGroupName is not null)

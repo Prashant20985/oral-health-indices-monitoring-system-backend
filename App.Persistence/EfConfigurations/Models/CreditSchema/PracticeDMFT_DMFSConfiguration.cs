@@ -3,14 +3,23 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Persistence.EfConfigurations.Models.CreditSchema;
-
+/// <summary>
+///  Represents the configuration for the PracticeDMFT_DMFS entity.
+///  The PracticeDMFT_DMFS entity represents the DMFT and DMFS results of a practice.
+/// </summary>
 public class PracticeDMFT_DMFSConfiguration
     : IEntityTypeConfiguration<PracticeDMFT_DMFS>
 {
+    /// <summary>
+    ///  Configures the properties of the PracticeDMFT_DMFS entity and the relationships between entities.
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<PracticeDMFT_DMFS> builder)
     {
+        // Set the primary key
         builder.HasKey(x => x.Id);
 
+        // Set the properties of the PracticeDMFT_DMFS entity
         builder.Property(x => x.DMFTResult)
             .HasColumnType("decimal(18,2)");
 
@@ -23,6 +32,7 @@ public class PracticeDMFT_DMFSConfiguration
         builder.Property(x => x.ProstheticStatus)
             .HasMaxLength(1);
 
+        // Set the relationships between entities
         builder.OwnsOne(x => x.AssessmentModel, ownedNavigationBuilder =>
         {
             ownedNavigationBuilder.ToJson();

@@ -27,13 +27,17 @@ internal sealed class DeleteRequestHandler
     /// <returns>An operation result indicating the success or failure of the operation.</returns>
     public async Task<OperationResult<Unit>> Handle(DeleteRequestCommand request, CancellationToken cancellationToken)
     {
+        // Get the user request by id
         var userRequest = await _userRequestRepository.GetUserRequestById(request.UserRequestId);
 
+        // Check if the user request exists
         if (userRequest is null)
             return OperationResult<Unit>.Failure("Request not found");
 
+        // Delete the user request
         _userRequestRepository.DeleteRequest(userRequest);
 
+        // Return a success 
         return OperationResult<Unit>.Success(Unit.Value);
     }
 }

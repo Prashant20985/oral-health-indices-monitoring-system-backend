@@ -14,6 +14,9 @@ using System.Security.Claims;
 
 namespace App.API.Controllers;
 
+/// <summary>
+///  Represents the controller for patient operations.
+/// </summary>
 public class PatientController : BaseController
 {
     /// <summary>
