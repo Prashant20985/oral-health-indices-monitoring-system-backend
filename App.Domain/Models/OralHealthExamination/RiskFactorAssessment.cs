@@ -10,7 +10,7 @@ public class RiskFactorAssessment
     /// <summary>
     /// Gets the unique identifier for the risk factor assessment.
     /// </summary>
-    public Guid Id { get; private set; }
+    public Guid Id { get; private set; } = Guid.NewGuid();
 
     /// <summary>
     /// Gets the risk factor assessment model.
