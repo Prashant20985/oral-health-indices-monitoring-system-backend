@@ -16,7 +16,7 @@ namespace App.API.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner, Student")]
+[Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
 public class ExportController : ControllerBase
 {
     /// <summary>
@@ -273,11 +273,13 @@ public class ExportController : ControllerBase
         // Return the Excel file as a file result
         return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"{data.StudentName}_ExamSolution.xlsx");
     }
-/// <summary>
-///  Exports the examination card data to an Excel file, http post method.
-/// </summary>
-/// <param name="data"></param>
-/// <returns></returns>
+
+
+    /// <summary>
+    ///  Exports the examination card data to an Excel file, http post method.
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
     [HttpPost("export-examination-card")]
     public IActionResult ExportExaminationCard([FromBody] PatientDetailsWithExaminationCards data)
     {
@@ -565,12 +567,13 @@ public class ExportController : ControllerBase
         // Return the Excel file as a file result
         return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"{data.PatientName}_{data.DateOfExamination.ToLongDateString()}.xlsx");
     }
-/// <summary>
-///  Adds the risk factor assessment data to the Excel worksheet.
-/// </summary>
-/// <param name="sheet"></param>
-/// <param name="riskFactorAssessment"></param>
 
+
+    /// <summary>
+    ///  Adds the risk factor assessment data to the Excel worksheet.
+    /// </summary>
+    /// <param name="sheet"></param>
+    /// <param name="riskFactorAssessment"></param>
     private void AddRiskFactorAssessmentData(ExcelWorksheet sheet, RiskFactorAssessmentModel riskFactorAssessment)
     {
         // Add the risk factor assessment data to the worksheet

@@ -38,7 +38,7 @@ public class DentistTeacherController : BaseController
     /// </summary>
     /// <param name="GroupName">The name of the group to create.</param>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [Authorize(Roles = "Dentist_Teacher_Examiner")]
     [HttpPost("create-group")]
     public async Task<ActionResult> CreateGroup(string GroupName) => HandleOperationResult(
         await Mediator.Send(new CreateGroupCommand(GroupName, User.FindFirstValue(ClaimTypes.NameIdentifier))));
@@ -50,7 +50,7 @@ public class DentistTeacherController : BaseController
     /// <param name="groupId">The identifier of the group to which the student will be added.</param>
     /// <param name="studentId">The identifier of the student to add to the group.</param>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [Authorize(Roles = "Dentist_Teacher_Examiner")]
     [HttpPost("add-student/{groupId}")]
     public async Task<ActionResult> AddStudentToGroup(Guid groupId, string studentId) => HandleOperationResult(
         await Mediator.Send(new AddStudentToGroupCommand(groupId, studentId)));
@@ -62,7 +62,7 @@ public class DentistTeacherController : BaseController
     /// <param name="groupId">The identifier of the group from which the student will be removed.</param>
     /// <param name="studentId">The identifier of the student to remove from the group.</param>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [Authorize(Roles = "Dentist_Teacher_Examiner")]
     [HttpDelete("remove-student/{groupId}")]
     public async Task<ActionResult> RemoveStudentFromGroup(Guid groupId, string studentId) => HandleOperationResult(
     await Mediator.Send(new RemoveStudentFromGroupCommand(groupId, studentId)));
@@ -72,7 +72,7 @@ public class DentistTeacherController : BaseController
     /// </summary>
     /// <param name="groupId">The identifier of the group which will be deleted.</param>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [Authorize(Roles = "Dentist_Teacher_Examiner")]
     [HttpDelete("delete-group/{groupId}")]
     public async Task<ActionResult> DeleteGroup(Guid groupId) => HandleOperationResult(
         await Mediator.Send(new DeleteGroupCommand(groupId)));
@@ -93,7 +93,7 @@ public class DentistTeacherController : BaseController
     /// </summary>
     /// <param name="groupId">The identiffier of the group in which students are not present</param>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [Authorize(Roles = "Dentist_Teacher_Examiner")]
     [HttpGet("students-not-in-group/{groupId}")]
     public async Task<ActionResult<PaginatedStudentResponseDto>> GetStudentsNotInGroup(
         [Required] Guid groupId,
@@ -107,7 +107,7 @@ public class DentistTeacherController : BaseController
     /// Retrieves a list of all groups associated with the currently authentcated teacher. 
     /// </summary>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [Authorize(Roles = "Dentist_Teacher_Examiner")]
     [HttpGet("groups")]
     public async Task<ActionResult<List<StudentGroupResponseDto>>> GetAllGroups() => HandleOperationResult(
         await Mediator.Send(new FetchGroupsQuery(User.FindFirstValue(ClaimTypes.NameIdentifier))));
@@ -116,7 +116,7 @@ public class DentistTeacherController : BaseController
     /// Retrieves details about a student group by group id.
     /// </summary>
     /// <returns>An HTTP response indicating the result of the operation.</returns>
-    [Authorize(Roles = "Dentist_Teacher_Researcher, Dentist_Teacher_Examiner")]
+    [Authorize(Roles = "Dentist_Teacher_Examiner")]
     [HttpGet("group-details/{groupId}")]
     public async Task<ActionResult<StudentGroupResponseDto>> GetGroupDetails(Guid groupId) => HandleOperationResult(
                await Mediator.Send(new FetchStudentGroupQuery(groupId)));
