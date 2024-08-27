@@ -10,8 +10,8 @@ namespace App.Application.Test.PatientExaminationCardOperations.Command.UpdateDM
 
 public class UpdateDMFT_DMFSFormHandlerTests : TestHelper
 {
-    private readonly UpdateDMFT_DMFSFormHandler handler;
     private readonly UpdateDMFT_DMFSFormCommand command;
+    private readonly UpdateDMFT_DMFSFormHandler handler;
 
     public UpdateDMFT_DMFSFormHandlerTests()
     {
@@ -51,7 +51,8 @@ public class UpdateDMFT_DMFSFormHandlerTests : TestHelper
         var patienExaminationCard = new PatientExaminationCard(Guid.NewGuid());
         var dmft_dmfs = new DMFT_DMFS();
 
-        var patientExaminationResult = new PatientExaminationResult(dmft_dmfs.Id, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        var patientExaminationResult =
+            new PatientExaminationResult(dmft_dmfs.Id, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
 
         patienExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 

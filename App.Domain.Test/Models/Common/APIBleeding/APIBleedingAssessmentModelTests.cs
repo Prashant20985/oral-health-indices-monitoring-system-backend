@@ -51,5 +51,4 @@ public class APIBleedingAssessmentModelTests
         Assert.Equal(quadrant3, model.Quadrant3);
         Assert.Equal(quadrant4, model.Quadrant4);
     }
-
 }

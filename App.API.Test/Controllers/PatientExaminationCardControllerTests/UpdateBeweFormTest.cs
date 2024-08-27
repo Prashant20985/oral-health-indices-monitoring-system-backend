@@ -2,6 +2,7 @@
 using App.Application.PatientExaminationCardOperations.Command.UpdateBeweForm;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Common.Bewe;
+using App.Domain.Models.OralHealthExamination;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,18 +28,19 @@ public class UpdateBeweFormTest
         // Arrange
         var patientId = Guid.NewGuid();
         var APIForm = new Domain.Models.OralHealthExamination.API();
-        var beweForm = new Domain.Models.OralHealthExamination.Bewe();
-        var dMFT_dMFSForm = new Domain.Models.OralHealthExamination.DMFT_DMFS();
-        var bleedingForm = new Domain.Models.OralHealthExamination.Bleeding();
-        var patientExaminationResult = new Domain.Models.OralHealthExamination.PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
-        {
-            API = APIForm,
-            Bewe = beweForm,
-            DMFT_DMFS = dMFT_dMFSForm,
-            Bleeding = bleedingForm
-        };
+        var beweForm = new Bewe();
+        var dMFT_dMFSForm = new DMFT_DMFS();
+        var bleedingForm = new Bleeding();
+        var patientExaminationResult =
+            new PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
+            {
+                API = APIForm,
+                Bewe = beweForm,
+                DMFT_DMFS = dMFT_dMFSForm,
+                Bleeding = bleedingForm
+            };
 
-        var patientExaminationCard = new Domain.Models.OralHealthExamination.PatientExaminationCard(patientId)
+        var patientExaminationCard = new PatientExaminationCard(patientId)
         {
             PatientExaminationResult = patientExaminationResult
         };
@@ -53,7 +55,7 @@ public class UpdateBeweFormTest
             Sectant3 = 1.0m,
             Sectant4 = 1.0m,
             Sectant5 = 1.0m,
-            Sectant6 = 1.0m,
+            Sectant6 = 1.0m
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<UpdateBeweFormCommand>(), default))
@@ -74,18 +76,19 @@ public class UpdateBeweFormTest
         // Arrange
         var patientId = Guid.NewGuid();
         var APIForm = new Domain.Models.OralHealthExamination.API();
-        var beweForm = new Domain.Models.OralHealthExamination.Bewe();
-        var dMFT_dMFSForm = new Domain.Models.OralHealthExamination.DMFT_DMFS();
-        var bleedingForm = new Domain.Models.OralHealthExamination.Bleeding();
-        var patientExaminationResult = new Domain.Models.OralHealthExamination.PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
-        {
-            API = APIForm,
-            Bewe = beweForm,
-            DMFT_DMFS = dMFT_dMFSForm,
-            Bleeding = bleedingForm
-        };
+        var beweForm = new Bewe();
+        var dMFT_dMFSForm = new DMFT_DMFS();
+        var bleedingForm = new Bleeding();
+        var patientExaminationResult =
+            new PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
+            {
+                API = APIForm,
+                Bewe = beweForm,
+                DMFT_DMFS = dMFT_dMFSForm,
+                Bleeding = bleedingForm
+            };
 
-        var patientExaminationCard = new Domain.Models.OralHealthExamination.PatientExaminationCard(patientId)
+        var patientExaminationCard = new PatientExaminationCard(patientId)
         {
             PatientExaminationResult = patientExaminationResult
         };

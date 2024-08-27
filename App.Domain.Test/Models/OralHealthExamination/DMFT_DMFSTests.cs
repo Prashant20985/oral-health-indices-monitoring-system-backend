@@ -10,7 +10,7 @@ public class DMFT_DMFSTests
     {
         // Arrange
         var dMFT_DMFS = new DMFT_DMFS();
-        string comment = "Doctor's comment";
+        var comment = "Doctor's comment";
 
         // Act
         dMFT_DMFS.AddDoctorComment(comment);
@@ -24,7 +24,7 @@ public class DMFT_DMFSTests
     {
         // Arrange
         var dMFT_DMFS = new DMFT_DMFS();
-        string comment = "Student's comment";
+        var comment = "Student's comment";
 
         // Act
         dMFT_DMFS.AddStudentComment(comment);
@@ -38,7 +38,7 @@ public class DMFT_DMFSTests
     {
         // Arrange
         var dMFT_DMFS = new DMFT_DMFS();
-        decimal dmftResult = 5.5m;
+        var dmftResult = 5.5m;
 
         // Act
         dMFT_DMFS.SetDMFTResult(dmftResult);
@@ -52,7 +52,7 @@ public class DMFT_DMFSTests
     {
         // Arrange
         var dMFT_DMFS = new DMFT_DMFS();
-        decimal dmfsResult = 10.2m;
+        var dmfsResult = 10.2m;
 
         // Act
         dMFT_DMFS.SetDMFSResult(dmfsResult);
@@ -80,7 +80,7 @@ public class DMFT_DMFSTests
     {
         // Arrange
         var dMFT_DMFS = new DMFT_DMFS();
-        string prostheticStatus = "Status";
+        var prostheticStatus = "Status";
 
         // Act
         dMFT_DMFS.SetProstheticStatus(prostheticStatus);
@@ -88,5 +88,4 @@ public class DMFT_DMFSTests
         // Assert
         Assert.Equal(prostheticStatus, dMFT_DMFS.ProstheticStatus);
     }
-
 }

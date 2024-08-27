@@ -64,7 +64,9 @@ public class GetStudentsNoInGroupTest
         var returnedStudents = Assert.IsAssignableFrom<PaginatedStudentResponseDto>(okObjectResult.Value);
         Assert.Equal(expectedStudents, returnedStudents.Students);
 
-        _mediatorMock.Verify(x => x.Send(It.Is<FetchStudentsNotInGroupListQuery>(q => q.GroupId == groupId), It.IsAny<CancellationToken>()), Times.Once);
+        _mediatorMock.Verify(
+            x => x.Send(It.Is<FetchStudentsNotInGroupListQuery>(q => q.GroupId == groupId),
+                It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -84,7 +86,8 @@ public class GetStudentsNoInGroupTest
         var error = Assert.IsType<BadRequestObjectResult>(badRequestresult.Result);
         Assert.Equal("Failed to fetch students", error.Value);
 
-        _mediatorMock.Verify(x => x.Send(It.Is<FetchStudentsNotInGroupListQuery>(q => q.GroupId == groupId), It.IsAny<CancellationToken>()), Times.Once);
+        _mediatorMock.Verify(
+            x => x.Send(It.Is<FetchStudentsNotInGroupListQuery>(q => q.GroupId == groupId),
+                It.IsAny<CancellationToken>()), Times.Once);
     }
 }
-

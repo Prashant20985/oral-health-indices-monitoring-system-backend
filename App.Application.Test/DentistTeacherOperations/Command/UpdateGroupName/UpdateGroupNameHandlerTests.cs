@@ -20,7 +20,7 @@ public class UpdateGroupNameHandlerTests : TestHelper
     public async Task Handle_WithValidCommand_ShouldUpdateGroupName()
     {
         // Arrange
-        Group group = new Group("teacherId123", "GroupName123");
+        var group = new Group("teacherId123", "GroupName123");
         groupRepositoryMock.Setup(repo => repo.GetGroupById(It.IsAny<Guid>()))
             .ReturnsAsync(group);
 

@@ -7,8 +7,8 @@ namespace App.Application.Test.PatientExaminationCardOperations.Command.CommentD
 
 public class CommentDMFT_DMFSHandlerTests : TestHelper
 {
-    private readonly CommentDMFT_DMFSHandler handler;
     private readonly CommentDMFT_DMFSCommand command;
+    private readonly CommentDMFT_DMFSHandler handler;
 
     public CommentDMFT_DMFSHandlerTests()
     {

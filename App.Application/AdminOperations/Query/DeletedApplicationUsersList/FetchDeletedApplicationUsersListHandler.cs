@@ -14,7 +14,7 @@ internal sealed class FetchDeletedApplicationUsersListHandler
     OperationResult<PaginatedApplicationUserResponseDto>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IApplicationUsersListQuesyFilter _queryFilter;
+    private readonly IApplicationUsersListQueryFilter _queryFilter;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FetchDeletedApplicationUsersListHandler"/> class with the required dependencies.
@@ -22,7 +22,7 @@ internal sealed class FetchDeletedApplicationUsersListHandler
     /// <param name="userRepository">The user repository instance.</param>
     /// <param name="queryFilter">The query filter instance.</param>
     public FetchDeletedApplicationUsersListHandler(IUserRepository userRepository,
-        IApplicationUsersListQuesyFilter queryFilter)
+        IApplicationUsersListQueryFilter queryFilter)
     {
         _userRepository = userRepository;
         _queryFilter = queryFilter;

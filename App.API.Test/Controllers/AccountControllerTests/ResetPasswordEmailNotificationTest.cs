@@ -50,4 +50,3 @@ public class ResetPasswordEmailNotificationTest
         Assert.Equal("Invalid Email or Username", badRequestResult.Value);
     }
 }
-

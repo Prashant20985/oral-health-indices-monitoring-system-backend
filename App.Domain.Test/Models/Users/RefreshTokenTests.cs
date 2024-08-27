@@ -84,5 +84,4 @@ public class RefreshTokenTests
         // Assert
         Assert.True(isActive);
     }
-
 }

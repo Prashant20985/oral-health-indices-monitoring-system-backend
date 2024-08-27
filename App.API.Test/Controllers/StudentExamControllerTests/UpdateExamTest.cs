@@ -26,7 +26,8 @@ public class UpdateExamTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, groupId);
 
         var updateExamDto = new UpdateExamDto
         {
@@ -52,7 +53,7 @@ public class UpdateExamTest
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<UpdateExamCommand>(), default))
-                 .ReturnsAsync(OperationResult<ExamDto>.Success(examDto));
+            .ReturnsAsync(OperationResult<ExamDto>.Success(examDto));
 
 
         // Act
@@ -68,7 +69,8 @@ public class UpdateExamTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, groupId);
 
         var updateExamDto = new UpdateExamDto
         {
@@ -82,7 +84,7 @@ public class UpdateExamTest
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<UpdateExamCommand>(), default))
-                 .ReturnsAsync(OperationResult<ExamDto>.Failure("test"));
+            .ReturnsAsync(OperationResult<ExamDto>.Failure("test"));
 
         // Act
         var result = await _studentExamController.UpdateExam(exam.Id, updateExamDto);
@@ -109,7 +111,7 @@ public class UpdateExamTest
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<UpdateExamCommand>(), default))
-                 .ReturnsAsync(OperationResult<ExamDto>.Failure("Exam not found"));
+            .ReturnsAsync(OperationResult<ExamDto>.Failure("Exam not found"));
 
         // Act
         var result = await _studentExamController.UpdateExam(examId, updateExamDto);

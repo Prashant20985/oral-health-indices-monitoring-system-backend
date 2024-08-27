@@ -1,6 +1,6 @@
 ﻿using App.Application.DentistTeacherOperations.Query.StudentsNotSupervised;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
-using MockQueryable.Moq;
+using MockQueryable.EntityFrameworkCore;
 using Moq;
 
 namespace App.Application.Test.DentistTeacherOperations.Query.StudentsNotSupervised;
@@ -14,10 +14,10 @@ public class FetchStudentsNotSupervisedHandlerTests : TestHelper
         var query = new FetchStudentsNotSupervisedQuery("doctorId", null, null, 0, 10);
 
         var students = new List<StudentResponseDto>
-            {
-                new StudentResponseDto { Id = "studentId1", UserName = "Student1" },
-                new StudentResponseDto { Id = "studentId2", UserName = "Student2" }
-            }.AsQueryable();
+        {
+            new() { Id = "studentId1", UserName = "Student1" },
+            new() { Id = "studentId2", UserName = "Student2" }
+        }.AsQueryable();
 
         var mockSet = students.BuildMock();
         superviseRepositoryMock.Setup(repo => repo.GetAllStudentsNotUnderSupervisionByDoctorId(It.IsAny<string>()))
@@ -32,7 +32,8 @@ public class FetchStudentsNotSupervisedHandlerTests : TestHelper
         Assert.True(result.IsSuccessful);
         Assert.Equal(2, result.ResultValue.TotalStudents);
         Assert.Equal(2, result.ResultValue.Students.Count());
-        superviseRepositoryMock.Verify(repo => repo.GetAllStudentsNotUnderSupervisionByDoctorId(query.DoctorId), Times.Once);
+        superviseRepositoryMock.Verify(repo => repo.GetAllStudentsNotUnderSupervisionByDoctorId(query.DoctorId),
+            Times.Once);
     }
 
     [Fact]
@@ -56,6 +57,7 @@ public class FetchStudentsNotSupervisedHandlerTests : TestHelper
         Assert.True(result.IsSuccessful);
         Assert.Empty(result.ResultValue.Students);
         Assert.Equal(0, result.ResultValue.TotalStudents);
-        superviseRepositoryMock.Verify(repo => repo.GetAllStudentsNotUnderSupervisionByDoctorId(query.DoctorId), Times.Once);
+        superviseRepositoryMock.Verify(repo => repo.GetAllStudentsNotUnderSupervisionByDoctorId(query.DoctorId),
+            Times.Once);
     }
 }

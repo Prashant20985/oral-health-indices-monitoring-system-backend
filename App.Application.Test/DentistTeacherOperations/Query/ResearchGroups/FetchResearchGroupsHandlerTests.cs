@@ -21,7 +21,7 @@ public class FetchResearchGroupsHandlerTests : TestHelper
         // Arrange
         var researchGroups = new List<ResearchGroupResponseDto>
         {
-            new ResearchGroupResponseDto
+            new()
             {
                 GroupName = "Research group",
                 Description = "Research Group Description"
@@ -45,10 +45,7 @@ public class FetchResearchGroupsHandlerTests : TestHelper
     public async Task Handle_WithInvalidQuery_ShouldReturnEmpty()
     {
         // Arrange
-        var researchGroups = new List<ResearchGroupResponseDto>
-        {
-
-        }.AsQueryable().BuildMockDbSet();
+        var researchGroups = new List<ResearchGroupResponseDto>().AsQueryable().BuildMockDbSet();
 
         researchGroupRepositoryMock.Setup(repo => repo.GetAllResearchGroups())
             .Returns(researchGroups.Object);
@@ -60,4 +57,3 @@ public class FetchResearchGroupsHandlerTests : TestHelper
         Assert.Empty(result.ResultValue);
     }
 }
-

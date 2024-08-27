@@ -1,7 +1,7 @@
 ﻿using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
 using App.Application.AdminOperations.Query.DeletedApplicationUsersList;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
-using MockQueryable.Moq;
+using MockQueryable.EntityFrameworkCore;
 using Moq;
 
 namespace App.Application.Test.AdminOperations.Query.DeletedApplicationUsersList;
@@ -27,13 +27,17 @@ public class FetchDeletedApplicationUsersListHandlerTests : TestHelper
         };
 
         var users = new List<ApplicationUserResponseDto> { user1, user2 };
-        var filteredUsers = new PaginatedApplicationUserResponseDto { Users = new List<ApplicationUserResponseDto> { user1, user2 }, TotalUsersCount = 1 };
+        var filteredUsers = new PaginatedApplicationUserResponseDto
+            { Users = new List<ApplicationUserResponseDto> { user1, user2 }, TotalUsersCount = 1 };
 
-        userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery("testUser")).Returns(users.AsQueryable().BuildMock());
+        userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery("testUser"))
+            .Returns(users.AsQueryable().BuildMock());
 
         queryFilterMock.Setup(filter =>
-                filter.ApplyFilters(It.IsAny<IQueryable<ApplicationUserResponseDto>>(), It.IsAny<ApplicationUserPaginationAndSearchParams>(), CancellationToken.None))
-            .ReturnsAsync((IQueryable<ApplicationUserResponseDto> query, ApplicationUserPaginationAndSearchParams param, CancellationToken ct) =>
+                filter.ApplyFilters(It.IsAny<IQueryable<ApplicationUserResponseDto>>(),
+                    It.IsAny<ApplicationUserPaginationAndSearchParams>(), CancellationToken.None))
+            .ReturnsAsync((IQueryable<ApplicationUserResponseDto> query, ApplicationUserPaginationAndSearchParams param,
+                CancellationToken ct) =>
             {
                 return filteredUsers;
             });

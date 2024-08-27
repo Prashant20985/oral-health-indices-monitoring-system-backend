@@ -1,4 +1,5 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.StudentExamOperations.StudentOperations.Query;
 using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.Models.CreditSchema;
@@ -6,7 +7,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.StudentExamControllerTests;
 
@@ -28,7 +28,8 @@ public class GetStudentExamSolutionTest
         // Arrange
         var studentId = Guid.NewGuid();
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, groupId);
 
         var practicepatientExaminationCardDto = new PracticePatientExaminationCardDto
         {
@@ -41,16 +42,17 @@ public class GetStudentExamSolutionTest
 
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, studentId.ToString())
+            new(ClaimTypes.NameIdentifier, studentId.ToString())
         }));
 
-        _studentExamController.ControllerContext = new ControllerContext()
+        _studentExamController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = claimsPrincipal }
+            HttpContext = new DefaultHttpContext { User = claimsPrincipal }
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchStudentExamSolutionQuery>(), default))
-                .ReturnsAsync(OperationResult<PracticePatientExaminationCardDto>.Success(practicepatientExaminationCardDto));
+            .ReturnsAsync(
+                OperationResult<PracticePatientExaminationCardDto>.Success(practicepatientExaminationCardDto));
 
 
         // Act
@@ -69,20 +71,21 @@ public class GetStudentExamSolutionTest
         // Arrange
         var studentId = Guid.NewGuid();
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, groupId);
 
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, studentId.ToString())
+            new(ClaimTypes.NameIdentifier, studentId.ToString())
         }));
 
-        _studentExamController.ControllerContext = new ControllerContext()
+        _studentExamController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = claimsPrincipal }
+            HttpContext = new DefaultHttpContext { User = claimsPrincipal }
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchStudentExamSolutionQuery>(), default))
-                .ReturnsAsync(OperationResult<PracticePatientExaminationCardDto>.Failure("Examination card not found"));
+            .ReturnsAsync(OperationResult<PracticePatientExaminationCardDto>.Failure("Examination card not found"));
 
         // Act
         var result = await _studentExamController.GetStudentExamSolution(exam.Id);

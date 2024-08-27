@@ -21,7 +21,7 @@ public class DeleteResearchGroupHandlerTests : TestHelper
     {
         // Arrange
         researchGroupRepositoryMock.Setup(repo => repo.GetResearchGroupById(It.IsAny<Guid>()))
-            .ReturnsAsync(value: new ResearchGroup("researchGroupId123", "Group", "doctorId"));
+            .ReturnsAsync(new ResearchGroup("researchGroupId123", "Group", "doctorId"));
 
         // Act
         var result = await handler.Handle(command, CancellationToken.None);

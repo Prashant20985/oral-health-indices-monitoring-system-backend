@@ -11,11 +11,11 @@ namespace App.Application.Test.AdminOperations.Command.CreateApplicationUser;
 
 public class CreateApplicationUserHandlerTests : TestHelper
 {
-    private readonly CreateApplicationUserRequestDto createApplicationUserDto;
     private readonly ApplicationUser applicationUser;
-    private readonly Mock<IGeneratePassword> generatePasswordMock;
     private readonly CreateApplicationUserCommand createApplicationUserCommand;
+    private readonly CreateApplicationUserRequestDto createApplicationUserDto;
     private readonly CreateApplicationUserHandler createApplicationUserHandler;
+    private readonly Mock<IGeneratePassword> generatePasswordMock;
 
     public CreateApplicationUserHandlerTests()
     {
@@ -30,15 +30,16 @@ public class CreateApplicationUserHandlerTests : TestHelper
         };
 
         applicationUser = new ApplicationUser(
-            email: "test@example.com",
-            firstName: "John",
-            lastName: "Doe",
-            phoneNumber: "12345678",
-            guestUserComment: "xyz");
+            "test@example.com",
+            "John",
+            "Doe",
+            "12345678",
+            "xyz");
 
         generatePasswordMock = new Mock<IGeneratePassword>();
         createApplicationUserCommand = new CreateApplicationUserCommand(createApplicationUserDto);
-        createApplicationUserHandler = new CreateApplicationUserHandler(userRepositoryMock.Object, generatePasswordMock.Object, mediatorMock.Object);
+        createApplicationUserHandler = new CreateApplicationUserHandler(userRepositoryMock.Object,
+            generatePasswordMock.Object, mediatorMock.Object);
     }
 
     [Fact]
@@ -104,4 +105,3 @@ public class CreateApplicationUserHandlerTests : TestHelper
         mediatorMock.Verify(m => m.Publish(It.IsAny<EmailNotification>(), CancellationToken.None), Times.Never);
     }
 }
-

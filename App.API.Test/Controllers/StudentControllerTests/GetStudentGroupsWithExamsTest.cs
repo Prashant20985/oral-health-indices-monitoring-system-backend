@@ -1,4 +1,5 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.StudentOperations.Query.StudentGroupsList;
 using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.DTOs.StudentGroupDtos.Response;
@@ -8,7 +9,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.StudentControllerTests;
 
@@ -40,7 +40,8 @@ public class GetStudentGroupsWithExamsTest
         var group = new Group(teacher.Id, "test123");
         group.Teacher = teacher;
         var studentGroup = new StudentGroup(group.Id, student.Id);
-        var exam = new Exam(DateTime.Now, "test123", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
+        var exam = new Exam(DateTime.Now, "test123", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, group.Id);
         group.Exams.Add(exam);
 
         group.StudentGroups.Add(studentGroup);
@@ -48,13 +49,15 @@ public class GetStudentGroupsWithExamsTest
         var group2 = new Group(teacher.Id, "test234");
         group2.Teacher = teacher;
         var studentGroup2 = new StudentGroup(group2.Id, student.Id);
-        var exam2 = new Exam(DateTime.Now.AddDays(1), "test234", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group2.Id);
+        var exam2 = new Exam(DateTime.Now.AddDays(1), "test234", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, group2.Id);
         group2.StudentGroups.Add(studentGroup2);
         group2.Exams.Add(exam2);
 
         var studentGroupWithExamsDtos = new List<StudentGroupWithExamsListResponseDto>
         {
-            new StudentGroupWithExamsListResponseDto {
+            new()
+            {
                 Id = group.Id,
                 GroupName = group.GroupName,
                 Teacher = $"{group.Teacher.FirstName} {group.Teacher.LastName} ({group.Teacher.UserName})",
@@ -71,7 +74,8 @@ public class GetStudentGroupsWithExamsTest
                     ExamStatus = x.ExamStatus.ToString()
                 }).ToList()
             },
-            new StudentGroupWithExamsListResponseDto {
+            new()
+            {
                 Id = group2.Id,
                 GroupName = group2.GroupName,
                 Teacher = $"{group2.Teacher.FirstName} {group2.Teacher.LastName} ({group2.Teacher.UserName})",
@@ -91,7 +95,8 @@ public class GetStudentGroupsWithExamsTest
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchStudentGroupsWithExamsListQuery>(), default))
-            .ReturnsAsync(OperationResult<List<StudentGroupWithExamsListResponseDto>>.Success(studentGroupWithExamsDtos));
+            .ReturnsAsync(
+                OperationResult<List<StudentGroupWithExamsListResponseDto>>.Success(studentGroupWithExamsDtos));
 
         _studentController.ControllerContext = new ControllerContext
         {
@@ -117,7 +122,9 @@ public class GetStudentGroupsWithExamsTest
         }, "mock"));
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchStudentGroupsWithExamsListQuery>(), default))
-            .ReturnsAsync(OperationResult<List<StudentGroupWithExamsListResponseDto>>.Failure("No groups found for the student."));
+            .ReturnsAsync(
+                OperationResult<List<StudentGroupWithExamsListResponseDto>>.Failure(
+                    "No groups found for the student."));
 
         _studentController.ControllerContext = new ControllerContext
         {

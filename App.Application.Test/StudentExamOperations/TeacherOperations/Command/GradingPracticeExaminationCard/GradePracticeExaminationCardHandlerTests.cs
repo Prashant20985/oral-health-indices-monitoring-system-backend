@@ -7,8 +7,8 @@ namespace App.Application.Test.StudentExamOperations.TeacherOperations.Command.G
 
 public class GradePracticeExaminationCardHandlerTests : TestHelper
 {
-    private readonly GradePracticeExaminationCardHandler handler;
     private readonly GradePracticeExaminationCardCommand command;
+    private readonly GradePracticeExaminationCardHandler handler;
 
     public GradePracticeExaminationCardHandlerTests()
     {
@@ -54,7 +54,8 @@ public class GradePracticeExaminationCardHandlerTests : TestHelper
     {
         // Arrange
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), "studentId");
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, Guid.NewGuid());
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, Guid.NewGuid());
 
         studentExamRepositoryMock.Setup(x => x.GetPracticePatientExaminationCardById(It.IsAny<Guid>()))
             .ReturnsAsync(practicePatientExaminationCard);
@@ -63,7 +64,8 @@ public class GradePracticeExaminationCardHandlerTests : TestHelper
             .ReturnsAsync(exam);
 
         // Act
-        var result = await handler.Handle(new GradePracticeExaminationCardCommand(Guid.NewGuid(), 1000), CancellationToken.None);
+        var result = await handler.Handle(new GradePracticeExaminationCardCommand(Guid.NewGuid(), 1000),
+            CancellationToken.None);
 
         // Assert
         Assert.False(result.IsSuccessful);
@@ -75,7 +77,8 @@ public class GradePracticeExaminationCardHandlerTests : TestHelper
     {
         // Arrange
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), "studentId");
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 100, Guid.NewGuid());
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 100, Guid.NewGuid());
 
         studentExamRepositoryMock.Setup(x => x.GetPracticePatientExaminationCardById(It.IsAny<Guid>()))
             .ReturnsAsync(practicePatientExaminationCard);
