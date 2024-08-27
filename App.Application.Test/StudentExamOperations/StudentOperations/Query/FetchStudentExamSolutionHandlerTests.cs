@@ -24,7 +24,8 @@ public class FetchStudentExamSolutionHandlerTests : TestHelper
             Id = Guid.NewGuid()
         };
 
-        studentExamRepositoryMock.Setup(x => x.GetPracticePatientExaminationCardByExamIdAndStudentId(It.IsAny<Guid>(), It.IsAny<string>()))
+        studentExamRepositoryMock.Setup(x =>
+                x.GetPracticePatientExaminationCardByExamIdAndStudentId(It.IsAny<Guid>(), It.IsAny<string>()))
             .ReturnsAsync(practicePatientExaminationCard);
 
         // Act
@@ -40,7 +41,8 @@ public class FetchStudentExamSolutionHandlerTests : TestHelper
     public async Task Handle_WhenExamDoesNotExist_ShouldReturnFailure()
     {
         // Arrange
-        studentExamRepositoryMock.Setup(x => x.GetPracticePatientExaminationCardByExamIdAndStudentId(It.IsAny<Guid>(), It.IsAny<string>()))
+        studentExamRepositoryMock.Setup(x =>
+                x.GetPracticePatientExaminationCardByExamIdAndStudentId(It.IsAny<Guid>(), It.IsAny<string>()))
             .ReturnsAsync(value: null);
 
         // Act
@@ -51,5 +53,4 @@ public class FetchStudentExamSolutionHandlerTests : TestHelper
         Assert.Null(result.ResultValue);
         Assert.Equal("Examination card not found", result.ErrorMessage);
     }
-
 }

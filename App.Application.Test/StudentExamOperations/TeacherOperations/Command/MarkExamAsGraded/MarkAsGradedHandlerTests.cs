@@ -8,8 +8,8 @@ namespace App.Application.Test.StudentExamOperations.TeacherOperations.Command.M
 
 public class MarkAsGradedHandlerTests : TestHelper
 {
-    private readonly MarkAsGradedHandler handler;
     private readonly MarkAsGradedCommand command;
+    private readonly MarkAsGradedHandler handler;
 
     public MarkAsGradedHandlerTests()
     {
@@ -36,7 +36,8 @@ public class MarkAsGradedHandlerTests : TestHelper
     public async Task Handle_WhenExamExists_ShouldReturnSuccessResult()
     {
         // Arrange
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, Guid.NewGuid());
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, Guid.NewGuid());
 
         studentExamRepositoryMock.Setup(x => x.GetExamById(It.IsAny<Guid>()))
             .ReturnsAsync(exam);

@@ -31,8 +31,8 @@ public class GetPatientExaminationCardsTest
 
         var patientExaminationCardDtos = new List<PatientExaminationCardDto>
         {
-            new PatientExaminationCardDto {Id = patientExaminationCard.Id},
-            new PatientExaminationCardDto { Id = patientRxaminationCard2.Id}
+            new() { Id = patientExaminationCard.Id },
+            new() { Id = patientRxaminationCard2.Id }
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchPatientExaminationCardsQuery>(), default))

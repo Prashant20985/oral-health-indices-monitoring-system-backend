@@ -1,7 +1,6 @@
-﻿namespace App.Domain.Test.Models.CreditSchema;
+﻿using App.Domain.Models.CreditSchema;
 
-using App.Domain.Models.CreditSchema;
-using Xunit;
+namespace App.Domain.Test.Models.CreditSchema;
 
 public class PracticePatientExaminationResultTests
 {
@@ -9,13 +8,14 @@ public class PracticePatientExaminationResultTests
     public void Constructor_ShouldInitializeProperties()
     {
         // Arrange
-        Guid beweId = Guid.NewGuid();
-        Guid dMFT_DMFSId = Guid.NewGuid();
-        Guid aPIId = Guid.NewGuid();
-        Guid bleedingId = Guid.NewGuid();
+        var beweId = Guid.NewGuid();
+        var dMFT_DMFSId = Guid.NewGuid();
+        var aPIId = Guid.NewGuid();
+        var bleedingId = Guid.NewGuid();
 
         // Act
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(beweId, dMFT_DMFSId, aPIId, bleedingId);
+        var practicePatientExaminationResult =
+            new PracticePatientExaminationResult(beweId, dMFT_DMFSId, aPIId, bleedingId);
 
         // Assert
         Assert.NotEqual(Guid.Empty, practicePatientExaminationResult.Id);
@@ -34,7 +34,8 @@ public class PracticePatientExaminationResultTests
     public void SetBewe_ShouldSetBewe()
     {
         // Arrange
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        var practicePatientExaminationResult =
+            new PracticePatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
         var bewe = new PracticeBewe(18);
 
         // Act
@@ -48,7 +49,8 @@ public class PracticePatientExaminationResultTests
     public void SetDMFT_DMFS_ShouldSetDMFT_DMFS()
     {
         // Arrange
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        var practicePatientExaminationResult =
+            new PracticePatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
         var dMFT_DMFS = new PracticeDMFT_DMFS(18, 18);
 
         // Act
@@ -62,7 +64,8 @@ public class PracticePatientExaminationResultTests
     public void SetAPI_ShouldSetAPI()
     {
         // Arrange
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        var practicePatientExaminationResult =
+            new PracticePatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
         var api = new PracticeAPI(16, 16, 16);
 
         // Act
@@ -76,7 +79,8 @@ public class PracticePatientExaminationResultTests
     public void SetBleeding_ShouldSetBleeding()
     {
         // Arrange
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        var practicePatientExaminationResult =
+            new PracticePatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
         var bleeding = new PracticeBleeding(16, 16, 16);
 
         // Act
@@ -90,7 +94,8 @@ public class PracticePatientExaminationResultTests
     public void SetPracticePatientExaminationCard_ShouldSetPracticePatientExaminationCard()
     {
         // Arrange
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        var practicePatientExaminationResult =
+            new PracticePatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), "student123");
 
         // Act

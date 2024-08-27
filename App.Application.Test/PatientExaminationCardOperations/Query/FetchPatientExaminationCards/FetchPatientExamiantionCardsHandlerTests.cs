@@ -13,7 +13,8 @@ public class FetchPatientExamiantionCardsHandlerTests : TestHelper
 
     public FetchPatientExamiantionCardsHandlerTests()
     {
-        handler = new FetchPatientExamiantionCardsHandler(patientExaminationCardRepositoryMock.Object, patientRepositoryMock.Object);
+        handler = new FetchPatientExamiantionCardsHandler(patientExaminationCardRepositoryMock.Object,
+            patientRepositoryMock.Object);
         query = new FetchPatientExaminationCardsQuery(Guid.NewGuid());
     }
 
@@ -37,7 +38,8 @@ public class FetchPatientExamiantionCardsHandlerTests : TestHelper
     public async Task Handle_WhenPatientExists_ShouldReturnPatientExaminationCards()
     {
         // Arrange
-        var patient = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 18, "test", "test", "test", "test", 1, "doctorId");
+        var patient = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 18, "test", "test",
+            "test", "test", 1, "doctorId");
         var patientExaminationCard = new PatientExaminationCardDto
         {
             Id = Guid.NewGuid()

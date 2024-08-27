@@ -25,19 +25,21 @@ public class CommentPracticeBeweFormTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, groupId);
         var studentId = Guid.NewGuid().ToString();
 
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
+            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
 
         var comment = "This is a test comment.";
 
         _mediator.Setup(x => x.Send(It.IsAny<CommentBeweFormCommand>(), default))
-                 .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
+            .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
         // Act
         var result = await _studentExamController.CommentPracticeBeweForm(practicePatientExaminationResult.Id, comment);
@@ -52,19 +54,21 @@ public class CommentPracticeBeweFormTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, groupId);
         var studentId = Guid.NewGuid().ToString();
 
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
+            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
 
         var comment = "";
 
         _mediator.Setup(x => x.Send(It.IsAny<CommentBeweFormCommand>(), default))
-                 .ReturnsAsync(OperationResult<Unit>.Failure("Comment cannot be empty."));
+            .ReturnsAsync(OperationResult<Unit>.Failure("Comment cannot be empty."));
 
         // Act
         var result = await _studentExamController.CommentPracticeBeweForm(practicePatientExaminationResult.Id, comment);
@@ -81,10 +85,12 @@ public class CommentPracticeBeweFormTest
         var practicePatientExaminationCardId = Guid.NewGuid();
 
         _mediator.Setup(x => x.Send(It.IsAny<CommentBeweFormCommand>(), default))
-                 .ReturnsAsync(OperationResult<Unit>.Failure("PracticePatientExaminationCard not found."));
+            .ReturnsAsync(OperationResult<Unit>.Failure("PracticePatientExaminationCard not found."));
 
         // Act
-        var result = await _studentExamController.CommentPracticeBeweForm(practicePatientExaminationCardId, "This is a test comment.");
+        var result =
+            await _studentExamController.CommentPracticeBeweForm(practicePatientExaminationCardId,
+                "This is a test comment.");
 
         // Assert
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);

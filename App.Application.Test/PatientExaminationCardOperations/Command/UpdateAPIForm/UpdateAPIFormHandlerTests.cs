@@ -9,8 +9,8 @@ namespace App.Application.Test.PatientExaminationCardOperations.Command.UpdateAP
 
 public class UpdateAPIFormHandlerTests : TestHelper
 {
-    private readonly UpdateAPIFormHandler handler;
     private readonly UpdateAPIFormCommand command;
+    private readonly UpdateAPIFormHandler handler;
 
     public UpdateAPIFormHandlerTests()
     {
@@ -24,7 +24,7 @@ public class UpdateAPIFormHandlerTests : TestHelper
                 Value4 = "+",
                 Value5 = "+",
                 Value6 = "-",
-                Value7 = "+",
+                Value7 = "+"
             },
             Quadrant2 = new Quadrant
             {
@@ -34,7 +34,7 @@ public class UpdateAPIFormHandlerTests : TestHelper
                 Value4 = "+",
                 Value5 = "+",
                 Value6 = "-",
-                Value7 = "+",
+                Value7 = "+"
             },
             Quadrant3 = new Quadrant
             {
@@ -44,7 +44,7 @@ public class UpdateAPIFormHandlerTests : TestHelper
                 Value4 = "+",
                 Value5 = "+",
                 Value6 = "-",
-                Value7 = "+",
+                Value7 = "+"
             },
             Quadrant4 = new Quadrant
             {
@@ -54,7 +54,7 @@ public class UpdateAPIFormHandlerTests : TestHelper
                 Value4 = "+",
                 Value5 = "+",
                 Value6 = "-",
-                Value7 = "+",
+                Value7 = "+"
             }
         };
 
@@ -84,7 +84,8 @@ public class UpdateAPIFormHandlerTests : TestHelper
         var patienExaminationCard = new PatientExaminationCard(Guid.NewGuid());
         var api = new API();
 
-        var patientExaminationResult = new PatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), api.Id, Guid.NewGuid());
+        var patientExaminationResult =
+            new PatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), api.Id, Guid.NewGuid());
 
         patienExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 

@@ -1,18 +1,18 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.UserRequestOperations.Query.RequestsListByUserId;
 using App.Domain.DTOs.UserRequestDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.UserRequestControllerTests;
 
 public class GetRequestsByUserIdTest
 {
-    private readonly TestableUserRequestController _userRequestController;
     private readonly Mock<IMediator> _mediatorMock;
+    private readonly TestableUserRequestController _userRequestController;
 
     public GetRequestsByUserIdTest()
     {
@@ -31,7 +31,7 @@ public class GetRequestsByUserIdTest
             RequestTitle = "test",
             Description = "test",
             DateSubmitted = DateTime.Now,
-            RequestStatus = "test",
+            RequestStatus = "test"
         };
 
         var userClaims = new ClaimsPrincipal(new ClaimsIdentity(new[]
@@ -40,7 +40,8 @@ public class GetRequestsByUserIdTest
         }));
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<FetchRequestsListByUserIdQuery>(), default))
-            .ReturnsAsync(OperationResult<List<UserRequestResponseDto>>.Success(new List<UserRequestResponseDto> { userRequest }));
+            .ReturnsAsync(OperationResult<List<UserRequestResponseDto>>.Success(new List<UserRequestResponseDto>
+                { userRequest }));
 
         _userRequestController.ControllerContext = new ControllerContext
         {
@@ -48,7 +49,8 @@ public class GetRequestsByUserIdTest
         };
 
         // Act
-        var result = await _userRequestController.GetRequestsByUserId(userRequest.RequestStatus, userRequest.DateSubmitted);
+        var result =
+            await _userRequestController.GetRequestsByUserId(userRequest.RequestStatus, userRequest.DateSubmitted);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
@@ -66,7 +68,7 @@ public class GetRequestsByUserIdTest
             RequestTitle = "test",
             Description = "test",
             DateSubmitted = DateTime.Now,
-            RequestStatus = "test",
+            RequestStatus = "test"
         };
 
         var userClaims = new ClaimsPrincipal(new ClaimsIdentity(new[]
@@ -83,7 +85,8 @@ public class GetRequestsByUserIdTest
         };
 
         // Act
-        var result = await _userRequestController.GetRequestsByUserId(userRequest.RequestStatus, userRequest.DateSubmitted);
+        var result =
+            await _userRequestController.GetRequestsByUserId(userRequest.RequestStatus, userRequest.DateSubmitted);
 
         // Assert
         var badResult = Assert.IsType<BadRequestObjectResult>(result);

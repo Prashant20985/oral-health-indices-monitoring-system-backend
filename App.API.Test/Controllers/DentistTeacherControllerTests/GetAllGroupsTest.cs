@@ -1,4 +1,5 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.DentistTeacherOperations.Query.Groups;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
 using App.Domain.DTOs.StudentGroupDtos.Response;
@@ -6,7 +7,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.DentistTeacherControllerTests;
 
@@ -76,7 +76,7 @@ public class GetAllGroupsTest
         // Arrange
         var userClaims = new ClaimsPrincipal(new ClaimsIdentity(new[]
         {
-        new Claim(ClaimTypes.Name, "Dentist_Teacher_Researcher")
+            new Claim(ClaimTypes.Name, "Dentist_Teacher_Researcher")
         }));
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchGroupsQuery>(), default))
@@ -97,5 +97,4 @@ public class GetAllGroupsTest
 
         _mediatorMock.Verify(x => x.Send(It.IsAny<FetchGroupsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
     }
-
 }

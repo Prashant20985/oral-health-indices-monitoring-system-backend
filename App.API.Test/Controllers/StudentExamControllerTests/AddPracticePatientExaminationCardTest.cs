@@ -1,4 +1,5 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.StudentExamOperations.StudentOperations.Command.AddPracticePatientExmaintionCard;
 using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.ExamDtos.Request;
@@ -12,7 +13,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.StudentExamControllerTests;
 
@@ -33,13 +33,14 @@ public class AddPracticePatientExaminationCardTest
     {
         // Arrange
         var group1Id = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group1Id);
+        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, group1Id);
 
         var student1Id = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, student1Id);
 
-        var patientDto = new CreatePatientDto()
+        var patientDto = new CreatePatientDto
         {
             FirstName = "Patient1",
             LastName = "Patient1",
@@ -85,7 +86,7 @@ public class AddPracticePatientExaminationCardTest
         var summary = new SummaryRequestDto();
 
         var cardInputModel = new PracticePatientExaminationCardInputModel
-            (patientDto,
+        (patientDto,
             summary,
             riskFactorAssessmentModel,
             PracticeAPI,
@@ -95,16 +96,17 @@ public class AddPracticePatientExaminationCardTest
 
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, student1Id),
-            new Claim(ClaimTypes.Role, "Student")
+            new(ClaimTypes.NameIdentifier, student1Id),
+            new(ClaimTypes.Role, "Student")
         }));
 
-        _studentExamController.ControllerContext = new ControllerContext()
+        _studentExamController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = claimsPrincipal }
+            HttpContext = new DefaultHttpContext { User = claimsPrincipal }
         };
 
-        _mediator.Setup(x => x.Send(It.IsAny<AddPracticePatientExaminationCardCommand>(), It.IsAny<CancellationToken>()))
+        _mediator.Setup(
+                x => x.Send(It.IsAny<AddPracticePatientExaminationCardCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
         // Act
@@ -120,13 +122,14 @@ public class AddPracticePatientExaminationCardTest
     {
         // Arrange
         var group1Id = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group1Id);
+        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, group1Id);
 
         var student1Id = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, student1Id);
 
-        var patientDto = new CreatePatientDto()
+        var patientDto = new CreatePatientDto
         {
             FirstName = "Patient1",
             LastName = "Patient1",
@@ -172,7 +175,7 @@ public class AddPracticePatientExaminationCardTest
         var summary = new SummaryRequestDto();
 
         var cardInputModel = new PracticePatientExaminationCardInputModel
-            (patientDto,
+        (patientDto,
             summary,
             riskFactorAssessmentModel,
             PracticeAPI,
@@ -183,16 +186,17 @@ public class AddPracticePatientExaminationCardTest
 
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, student1Id),
-            new Claim(ClaimTypes.Role, "Student")
+            new(ClaimTypes.NameIdentifier, student1Id),
+            new(ClaimTypes.Role, "Student")
         }));
 
-        _studentExamController.ControllerContext = new ControllerContext()
+        _studentExamController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = claimsPrincipal }
+            HttpContext = new DefaultHttpContext { User = claimsPrincipal }
         };
 
-        _mediator.Setup(x => x.Send(It.IsAny<AddPracticePatientExaminationCardCommand>(), It.IsAny<CancellationToken>()))
+        _mediator.Setup(
+                x => x.Send(It.IsAny<AddPracticePatientExaminationCardCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(OperationResult<Unit>.Failure("Error"));
 
         // Act
@@ -208,13 +212,14 @@ public class AddPracticePatientExaminationCardTest
     {
         // Arrange
         var group1Id = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group1Id);
+        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, group1Id);
 
         var student1Id = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, student1Id);
 
-        var patientDto = new CreatePatientDto()
+        var patientDto = new CreatePatientDto
         {
             FirstName = "Patient1",
             LastName = "Patient1",
@@ -260,7 +265,7 @@ public class AddPracticePatientExaminationCardTest
         var summary = new SummaryRequestDto();
 
         var cardInputModel = new PracticePatientExaminationCardInputModel
-            (patientDto,
+        (patientDto,
             summary,
             riskFactorAssessmentModel,
             PracticeAPI,
@@ -271,13 +276,13 @@ public class AddPracticePatientExaminationCardTest
 
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, student1Id),
-            new Claim(ClaimTypes.Role, "Dentist_Teacher_Examiner")
+            new(ClaimTypes.NameIdentifier, student1Id),
+            new(ClaimTypes.Role, "Dentist_Teacher_Examiner")
         }));
 
-        _studentExamController.ControllerContext = new ControllerContext()
+        _studentExamController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = claimsPrincipal }
+            HttpContext = new DefaultHttpContext { User = claimsPrincipal }
         };
 
         // Act
@@ -293,13 +298,14 @@ public class AddPracticePatientExaminationCardTest
     {
         // Arrange
         var group1Id = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group1Id);
+        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, group1Id);
 
         var student1Id = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, student1Id);
 
-        var patientDto = new CreatePatientDto()
+        var patientDto = new CreatePatientDto
         {
             FirstName = "Patient1",
             LastName = "Patient1",
@@ -345,7 +351,7 @@ public class AddPracticePatientExaminationCardTest
         var summary = new SummaryRequestDto();
 
         var cardInputModel = new PracticePatientExaminationCardInputModel
-            (patientDto,
+        (patientDto,
             summary,
             riskFactorAssessmentModel,
             PracticeAPI,
@@ -356,16 +362,17 @@ public class AddPracticePatientExaminationCardTest
 
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, student1Id),
-            new Claim(ClaimTypes.Role, "Student")
+            new(ClaimTypes.NameIdentifier, student1Id),
+            new(ClaimTypes.Role, "Student")
         }));
 
-        _studentExamController.ControllerContext = new ControllerContext()
+        _studentExamController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = claimsPrincipal }
+            HttpContext = new DefaultHttpContext { User = claimsPrincipal }
         };
 
-        _mediator.Setup(x => x.Send(It.IsAny<AddPracticePatientExaminationCardCommand>(), It.IsAny<CancellationToken>()))
+        _mediator.Setup(
+                x => x.Send(It.IsAny<AddPracticePatientExaminationCardCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(OperationResult<Unit>.Failure("Exam Not Found"));
 
         // Act
@@ -381,7 +388,8 @@ public class AddPracticePatientExaminationCardTest
     {
         // Arrange
         var group1Id = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group1Id);
+        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, group1Id);
 
         var student1Id = Guid.NewGuid().ToString();
 
@@ -389,7 +397,7 @@ public class AddPracticePatientExaminationCardTest
 
         exam.MarksAsGraded();
 
-        var patientDto = new CreatePatientDto()
+        var patientDto = new CreatePatientDto
         {
             FirstName = "Patient1",
             LastName = "Patient1",
@@ -435,7 +443,7 @@ public class AddPracticePatientExaminationCardTest
         var summary = new SummaryRequestDto();
 
         var cardInputModel = new PracticePatientExaminationCardInputModel
-            (patientDto,
+        (patientDto,
             summary,
             riskFactorAssessmentModel,
             PracticeAPI,
@@ -446,16 +454,17 @@ public class AddPracticePatientExaminationCardTest
 
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, student1Id),
-            new Claim(ClaimTypes.Role, "Student")
+            new(ClaimTypes.NameIdentifier, student1Id),
+            new(ClaimTypes.Role, "Student")
         }));
 
-        _studentExamController.ControllerContext = new ControllerContext()
+        _studentExamController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = claimsPrincipal }
+            HttpContext = new DefaultHttpContext { User = claimsPrincipal }
         };
 
-        _mediator.Setup(x => x.Send(It.IsAny<AddPracticePatientExaminationCardCommand>(), It.IsAny<CancellationToken>()))
+        _mediator.Setup(
+                x => x.Send(It.IsAny<AddPracticePatientExaminationCardCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(OperationResult<Unit>.Failure("Exam Already Completed"));
 
         // Act

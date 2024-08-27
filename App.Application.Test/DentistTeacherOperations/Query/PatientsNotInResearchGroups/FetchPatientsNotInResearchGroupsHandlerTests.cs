@@ -20,25 +20,25 @@ public class FetchPatientsNotInResearchGroupsHandlerTests : TestHelper
     {
         // Arrange
         var patients = new List<ResearchGroupPatientResponseDto>
+        {
+            new()
             {
-               new ResearchGroupPatientResponseDto
-               {
-                   Id = Guid.NewGuid(),
-                   FirstName = "Patient",
-                   LastName = "Patient1",
-                   Email = "test@test.com"
-               },
-               new ResearchGroupPatientResponseDto
-               {
-                   Id = Guid.NewGuid(),
-                   FirstName = "Patient",
-                   LastName = "Patient1",
-                   Email = "test@test.com"
-               }
-            }.AsQueryable().BuildMockDbSet();
+                Id = Guid.NewGuid(),
+                FirstName = "Patient",
+                LastName = "Patient1",
+                Email = "test@test.com"
+            },
+            new()
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "Patient",
+                LastName = "Patient1",
+                Email = "test@test.com"
+            }
+        }.AsQueryable().BuildMockDbSet();
 
         researchGroupRepositoryMock.Setup(repo => repo.GetAllPatientsNotInAnyResearchGroup())
-        .Returns(patients.Object);
+            .Returns(patients.Object);
 
         // Act
         var result = await handler.Handle(query, CancellationToken.None);

@@ -8,8 +8,8 @@ namespace App.Application.Test.PatientExaminationCardOperations.Command.UpdatePa
 
 public class UpdatePatientExaminationCardSummaryHandlerTests : TestHelper
 {
-    private readonly UpdatePatientExaminationCardSummaryHandler handler;
     private readonly UpdatePatientExaminationCardSummaryCommand command;
+    private readonly UpdatePatientExaminationCardSummaryHandler handler;
 
     public UpdatePatientExaminationCardSummaryHandlerTests()
     {

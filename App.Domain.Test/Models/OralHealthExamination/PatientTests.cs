@@ -25,7 +25,7 @@ public class PatientTests
 
         // Act
         var patient = new Patient(firstName, lastName, email, gender, ethnicGroup, location, age, otherGroup, otherData,
-                                  otherData2, otherData3, yearsInSchool, doctorId);
+            otherData2, otherData3, yearsInSchool, doctorId);
 
         // Assert
         Assert.Equal(firstName, patient.FirstName);
@@ -48,7 +48,7 @@ public class PatientTests
     {
         // Arrange
         var patient = new Patient("John", "Doe", "john.doe@example.com", Gender.Male, "GroupA", "LocationA", 30,
-                                  "OtherGroupA", "OtherDataA", "OtherDataB", "OtherDataC", 10, "doctorId");
+            "OtherGroupA", "OtherDataA", "OtherDataB", "OtherDataC", 10, "doctorId");
 
         var comment = "Archived for testing";
 
@@ -65,7 +65,7 @@ public class PatientTests
     {
         // Arrange
         var patient = new Patient("John", "Doe", "john.doe@example.com", Gender.Male, "GroupA", "LocationA", 30,
-                                  "OtherGroupA", "OtherDataA", "OtherDataB", "OtherDataC", 10, "doctorId");
+            "OtherGroupA", "OtherDataA", "OtherDataB", "OtherDataC", 10, "doctorId");
 
         patient.ArchivePatient("Archived for testing");
 
@@ -82,7 +82,7 @@ public class PatientTests
     {
         // Arrange
         var patient = new Patient("John", "Doe", "john.doe@example.com", Gender.Male, "GroupA", "LocationA", 30,
-                                  "OtherGroupA", "OtherDataA", "OtherDataB", "OtherDataC", 10, "doctorId");
+            "OtherGroupA", "OtherDataA", "OtherDataB", "OtherDataC", 10, "doctorId");
 
         var newFirstName = "Jane";
         var newLastName = "Smith";
@@ -129,7 +129,7 @@ public class PatientTests
     {
         // Arrange
         var patient = new Patient("John", "Doe", "john.doe@example.com", Gender.Male, "GroupA", "LocationA", 30,
-                                  "OtherGroupA", "OtherDataA", "OtherDataB", "OtherDataC", 10, "doctorId");
+            "OtherGroupA", "OtherDataA", "OtherDataB", "OtherDataC", 10, "doctorId");
 
         var researchGroupId = Guid.NewGuid();
 
@@ -145,7 +145,7 @@ public class PatientTests
     {
         // Arrange
         var patient = new Patient("John", "Doe", "john.doe@example.com", Gender.Male, "GroupA", "LocationA", 30,
-                                  "OtherGroupA", "OtherDataA", "OtherDataB", "OtherDataC", 10, "doctorId");
+            "OtherGroupA", "OtherDataA", "OtherDataB", "OtherDataC", 10, "doctorId");
 
         var researchGroupId = Guid.NewGuid();
         patient.AddResearchGroup(researchGroupId);

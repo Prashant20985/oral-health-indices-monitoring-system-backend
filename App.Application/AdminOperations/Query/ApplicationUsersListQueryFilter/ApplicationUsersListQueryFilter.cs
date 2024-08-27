@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
 
-public class ApplicationUsersListQueryFilter : IApplicationUsersListQuesyFilter
+public class ApplicationUsersListQueryFilter : IApplicationUsersListQueryFilter
 {
     /// <summary>
     /// Apply filters to the given query based on search parameters and return a paged result.

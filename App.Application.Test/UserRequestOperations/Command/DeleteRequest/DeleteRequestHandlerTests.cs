@@ -33,7 +33,8 @@ public class DeleteRequestHandlerTests : TestHelper
         var handler = new DeleteRequestHandler(userRequestRepositoryMock.Object);
         var command = new DeleteRequestCommand(Guid.NewGuid());
 
-        userRequestRepositoryMock.Setup(repo => repo.GetUserRequestById(command.UserRequestId)).ReturnsAsync(value: null);
+        userRequestRepositoryMock.Setup(repo => repo.GetUserRequestById(command.UserRequestId))
+            .ReturnsAsync(value: null);
 
         // Act
         var result = await handler.Handle(command, CancellationToken.None);

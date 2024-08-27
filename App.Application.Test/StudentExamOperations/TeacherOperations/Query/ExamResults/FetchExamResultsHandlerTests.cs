@@ -20,11 +20,12 @@ public class FetchExamResultsHandlerTests : TestHelper
     public async Task Handle_WhenExamExists_ShouldReturnExamDetails()
     {
         // Arrange
-        var exam = new Exam(DateTime.Now, "test", "test", TimeOnly.MinValue, TimeOnly.MinValue, TimeSpan.MaxValue, 110, Guid.NewGuid());
+        var exam = new Exam(DateTime.Now, "test", "test", TimeOnly.MinValue, TimeOnly.MinValue, TimeSpan.MaxValue, 110,
+            Guid.NewGuid());
 
         var examResults = new List<StudentExamResultResponseDto>
         {
-            new StudentExamResultResponseDto
+            new()
             {
                 UserName = "test",
                 FirstName = "test",
@@ -32,7 +33,7 @@ public class FetchExamResultsHandlerTests : TestHelper
                 Email = "test@test.com",
                 StudentMark = 100
             },
-            new StudentExamResultResponseDto
+            new()
             {
                 UserName = "test2",
                 FirstName = "test2",
@@ -65,7 +66,7 @@ public class FetchExamResultsHandlerTests : TestHelper
 
         studentExamRepositoryMock
             .Setup(repo => repo.GetExamById(examId))
-            .ReturnsAsync(value:null);
+            .ReturnsAsync(value: null);
 
 
         // Act
@@ -75,5 +76,4 @@ public class FetchExamResultsHandlerTests : TestHelper
         Assert.False(result.IsSuccessful);
         Assert.Equal("Exam not found.", result.ErrorMessage);
     }
-
 }

@@ -27,14 +27,14 @@ public class FetchStudentGroupWithExamsHandlerTests : TestHelper
 
         var studentGroupWithExams = new List<StudentGroupWithExamsListResponseDto>
         {
-            new StudentGroupWithExamsListResponseDto
+            new()
             {
                 Id = Guid.NewGuid(),
                 GroupName = "test",
                 Teacher = "teacher",
                 Exams = new List<ExamDto>
                 {
-                    new ExamDto
+                    new()
                     {
                         Id = Guid.NewGuid(),
                         DateOfExamination = DateTime.Now

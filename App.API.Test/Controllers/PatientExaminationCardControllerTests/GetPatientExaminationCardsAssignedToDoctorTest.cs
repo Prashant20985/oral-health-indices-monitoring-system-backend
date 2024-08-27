@@ -1,4 +1,5 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.PatientExaminationCardOperations.Query.FetchPatientExaminationCardsAssignedToDoctor;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.DTOs.PatientDtos.Response;
@@ -6,7 +7,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.PatientExaminationCardControllerTests;
 
@@ -22,14 +22,14 @@ public class GetPatientExaminationCardsAssignedToDoctorTest
         _patientExaminationCardController.ExposeSetMediator(_mediator.Object);
 
         var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
-           {
-                new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Role, "Dentist_Teacher_Researcher")
-           }, "mock"));
-
-        _patientExaminationCardController.ControllerContext = new ControllerContext()
         {
-            HttpContext = new DefaultHttpContext() { User = user }
+            new(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
+            new(ClaimTypes.Role, "Dentist_Teacher_Researcher")
+        }, "mock"));
+
+        _patientExaminationCardController.ControllerContext = new ControllerContext
+        {
+            HttpContext = new DefaultHttpContext { User = user }
         };
     }
 
@@ -54,22 +54,24 @@ public class GetPatientExaminationCardsAssignedToDoctorTest
 
         var patientExaminationCardDtos = new List<PatientDetailsWithExaminationCards>
         {
-            new PatientDetailsWithExaminationCards { Patient = patient },
-            new PatientDetailsWithExaminationCards { Patient = patient2 }
+            new() { Patient = patient },
+            new() { Patient = patient2 }
         };
 
         var expectedResponse = new List<PatientDetailsWithExaminationCards>
         {
-            new PatientDetailsWithExaminationCards {},
-            new PatientDetailsWithExaminationCards {}
+            new(),
+            new()
         };
 
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchPatientExaminationCardsAssignedToDoctorQuery>(), default))
-            .ReturnsAsync(OperationResult<List<PatientDetailsWithExaminationCards>>.Success(patientExaminationCardDtos));
+            .ReturnsAsync(
+                OperationResult<List<PatientDetailsWithExaminationCards>>.Success(patientExaminationCardDtos));
 
         // Act
-        var result = await _patientExaminationCardController.GetPatientExaminationCardsAssignedToDoctor(studentId, year, month);
+        var result =
+            await _patientExaminationCardController.GetPatientExaminationCardsAssignedToDoctor(studentId, year, month);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);

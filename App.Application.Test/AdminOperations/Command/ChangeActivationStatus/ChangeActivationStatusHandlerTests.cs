@@ -13,11 +13,11 @@ public class ChangeActivationStatusHandlerTests : TestHelper
     public ChangeActivationStatusHandlerTests()
     {
         applicationUser = new ApplicationUser(
-            email: "test@example.com",
-            firstName: "John",
-            lastName: "Doe",
-            phoneNumber: "12345678",
-            guestUserComment: "xyz");
+            "test@example.com",
+            "John",
+            "Doe",
+            "12345678",
+            "xyz");
 
         command = new ChangeActivationStatusCommand(applicationUser.UserName);
         handler = new ChangeActivationStatusHandler(userRepositoryMock.Object);
@@ -28,7 +28,7 @@ public class ChangeActivationStatusHandlerTests : TestHelper
     {
         // Arrange
         userRepositoryMock.Setup(u => u.GetUserByUserNameOrEmail(applicationUser.UserName, CancellationToken.None))
-           .ReturnsAsync(applicationUser);
+            .ReturnsAsync(applicationUser);
 
         // Act
         var result = await handler.Handle(command, CancellationToken.None);
@@ -45,7 +45,7 @@ public class ChangeActivationStatusHandlerTests : TestHelper
         applicationUser.ActivationStatusToggle();
 
         userRepositoryMock.Setup(u => u.GetUserByUserNameOrEmail(applicationUser.UserName, CancellationToken.None))
-           .ReturnsAsync(applicationUser);
+            .ReturnsAsync(applicationUser);
 
         // Act
         var result = await handler.Handle(command, CancellationToken.None);
@@ -61,7 +61,7 @@ public class ChangeActivationStatusHandlerTests : TestHelper
         // Arrange
         var invalidEmail = "test@test,com";
         userRepositoryMock.Setup(u => u.GetUserByUserNameOrEmail(invalidEmail, CancellationToken.None))
-           .ReturnsAsync(value: null);
+            .ReturnsAsync(value: null);
 
         // Act
         var result = await handler.Handle(command, CancellationToken.None);

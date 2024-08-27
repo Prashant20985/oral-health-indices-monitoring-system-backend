@@ -22,8 +22,8 @@ public class FetchGroupsHandlerTests : TestHelper
         groupRepositoryMock.Setup(repo => repo.GetAllGroupsWithStudentsList(It.IsAny<string>()))
             .ReturnsAsync(new List<StudentGroupResponseDto>
             {
-                new StudentGroupResponseDto { Id = Guid.NewGuid(), GroupName = "Group1" },
-                new StudentGroupResponseDto { Id = Guid.NewGuid(), GroupName = "Group2" }
+                new() { Id = Guid.NewGuid(), GroupName = "Group1" },
+                new() { Id = Guid.NewGuid(), GroupName = "Group2" }
             });
 
         // Act

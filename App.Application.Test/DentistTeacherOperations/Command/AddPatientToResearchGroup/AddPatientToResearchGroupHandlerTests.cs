@@ -11,19 +11,22 @@ public class AddPatientToResearchGroupHandlerTests : TestHelper
 
     public AddPatientToResearchGroupHandlerTests()
     {
-        handler = new AddPatientToResearchGroupHandler(patientRepositoryMock.Object, researchGroupRepositoryMock.Object);
+        handler = new AddPatientToResearchGroupHandler(patientRepositoryMock.Object,
+            researchGroupRepositoryMock.Object);
     }
 
     [Fact]
     public async Task Handle_WithValidCommand_ShouldAddPatientToResearchGroup()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
         var researchGroup1 = new ResearchGroup("test", "test", "doctorId");
 
 
         patientRepositoryMock.Setup(repo => repo.GetPatientById(patient1.Id)).ReturnsAsync(patient1);
-        researchGroupRepositoryMock.Setup(repo => repo.GetResearchGroupById(researchGroup1.Id)).ReturnsAsync(researchGroup1);
+        researchGroupRepositoryMock.Setup(repo => repo.GetResearchGroupById(researchGroup1.Id))
+            .ReturnsAsync(researchGroup1);
 
         var command = new AddPatientToResearchGroupCommand(researchGroup1.Id, patient1.Id);
 
@@ -43,7 +46,8 @@ public class AddPatientToResearchGroupHandlerTests : TestHelper
         var researchGroup1 = new ResearchGroup("test", "test", "doctorId");
 
         patientRepositoryMock.Setup(repo => repo.GetPatientById(It.IsAny<Guid>())).ReturnsAsync(value: null);
-        researchGroupRepositoryMock.Setup(repo => repo.GetResearchGroupById(researchGroup1.Id)).ReturnsAsync(researchGroup1);
+        researchGroupRepositoryMock.Setup(repo => repo.GetResearchGroupById(researchGroup1.Id))
+            .ReturnsAsync(researchGroup1);
 
         var command = new AddPatientToResearchGroupCommand(researchGroup1.Id, Guid.NewGuid());
 
@@ -56,5 +60,4 @@ public class AddPatientToResearchGroupHandlerTests : TestHelper
         patientRepositoryMock.Verify(repo => repo.GetPatientById(It.IsAny<Guid>()), Times.Once);
         researchGroupRepositoryMock.Verify(repo => repo.GetResearchGroupById(researchGroup1.Id), Times.Never);
     }
-
 }

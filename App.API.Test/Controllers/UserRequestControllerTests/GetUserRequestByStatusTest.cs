@@ -10,8 +10,8 @@ namespace App.API.Test.Controllers.UserRequestControllerTests;
 
 public class GetUserRequestByStatusTest
 {
-    private readonly TestableUserRequestController _userRequestController;
     private readonly Mock<IMediator> _mediatorMock;
+    private readonly TestableUserRequestController _userRequestController;
 
     public GetUserRequestByStatusTest()
     {
@@ -30,14 +30,15 @@ public class GetUserRequestByStatusTest
             RequestTitle = "test",
             Description = "test",
             DateSubmitted = DateTime.Now,
-            RequestStatus = "test",
+            RequestStatus = "test"
         };
         ;
         _mediatorMock.Setup(m => m.Send(It.IsAny<UserRequestQuery>(), default))
             .ReturnsAsync(OperationResult<List<UserRequestResponseDto>>.Success(new List<UserRequestResponseDto>()));
 
         // Act
-        var result = await _userRequestController.GetUserRequestByStatus(userRequest.RequestStatus, userRequest.DateSubmitted);
+        var result =
+            await _userRequestController.GetUserRequestByStatus(userRequest.RequestStatus, userRequest.DateSubmitted);
 
         // Assert
         Assert.IsType<ActionResult<List<UserRequestResponseDto>>>(result);
@@ -56,14 +57,15 @@ public class GetUserRequestByStatusTest
             RequestTitle = "test",
             Description = "test",
             DateSubmitted = DateTime.Now,
-            RequestStatus = "test",
+            RequestStatus = "test"
         };
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<UserRequestQuery>(), default))
             .ReturnsAsync(OperationResult<List<UserRequestResponseDto>>.Failure("test"));
 
         // Act
-        var result = await _userRequestController.GetUserRequestByStatus(userRequest.RequestStatus, userRequest.DateSubmitted);
+        var result =
+            await _userRequestController.GetUserRequestByStatus(userRequest.RequestStatus, userRequest.DateSubmitted);
 
         // Assert
         Assert.IsType<ActionResult<List<UserRequestResponseDto>>>(result);

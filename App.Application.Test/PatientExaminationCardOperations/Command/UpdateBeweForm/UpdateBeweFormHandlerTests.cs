@@ -10,8 +10,8 @@ namespace App.Application.Test.PatientExaminationCardOperations.Command.UpdateBe
 
 public class UpdateBeweFormHandlerTests : TestHelper
 {
-    private readonly UpdateBeweFormHandler handler;
     private readonly UpdateBeweFormCommand command;
+    private readonly UpdateBeweFormHandler handler;
 
     public UpdateBeweFormHandlerTests()
     {
@@ -22,7 +22,7 @@ public class UpdateBeweFormHandlerTests : TestHelper
                 Tooth_17 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                 Tooth_16 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                 Tooth_15 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
-                Tooth_14 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
+                Tooth_14 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" }
             },
             Sectant2 = new Sectant2
             {
@@ -31,21 +31,21 @@ public class UpdateBeweFormHandlerTests : TestHelper
                 Tooth_11 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
                 Tooth_21 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
                 Tooth_22 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
-                Tooth_23 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
+                Tooth_23 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" }
             },
             Sectant3 = new Sectant3
             {
                 Tooth_24 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                 Tooth_25 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                 Tooth_26 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
-                Tooth_27 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
+                Tooth_27 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" }
             },
             Sectant4 = new Sectant4
             {
                 Tooth_34 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                 Tooth_35 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                 Tooth_36 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
-                Tooth_37 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
+                Tooth_37 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" }
             },
             Sectant5 = new Sectant5
             {
@@ -54,14 +54,14 @@ public class UpdateBeweFormHandlerTests : TestHelper
                 Tooth_41 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
                 Tooth_31 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
                 Tooth_32 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
-                Tooth_33 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
+                Tooth_33 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" }
             },
             Sectant6 = new Sectant6
             {
                 Tooth_47 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                 Tooth_46 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                 Tooth_45 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
-                Tooth_44 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
+                Tooth_44 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" }
             }
         };
 
@@ -91,7 +91,8 @@ public class UpdateBeweFormHandlerTests : TestHelper
         var patienExaminationCard = new PatientExaminationCard(Guid.NewGuid());
         var bewe = new Bewe();
 
-        var patientExaminationResult = new PatientExaminationResult(bewe.Id, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        var patientExaminationResult =
+            new PatientExaminationResult(bewe.Id, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
 
         patienExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 
