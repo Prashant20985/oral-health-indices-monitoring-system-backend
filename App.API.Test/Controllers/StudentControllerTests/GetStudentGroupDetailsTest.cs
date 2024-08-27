@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using App.Application.Core;
+﻿using App.Application.Core;
 using App.Application.StudentOperations.Query.StudentGroupDetails;
 using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.DTOs.StudentGroupDtos.Response;
@@ -9,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Security.Claims;
 
 namespace App.API.Test.Controllers.StudentControllerTests;
 
@@ -39,8 +39,7 @@ public class GetStudentGroupDetailsTest
         var group = new Group(teacher.Id, "test123");
         group.Teacher = teacher;
         var studentGroup = new StudentGroup(group.Id, student.Id);
-        var exam = new Exam(DateTime.Now, "test123", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, group.Id);
+        var exam = new Exam(DateTime.Now, "test123", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
         group.Exams.Add(exam);
 
         group.StudentGroups.Add(studentGroup);
@@ -63,9 +62,7 @@ public class GetStudentGroupDetailsTest
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchStudentGroupDetailsWithExamsQuery>(), default))
-            .ReturnsAsync(
-                OperationResult<StudentGroupWithExamsListResponseDto>.Success(
-                    expectedStudentGroupWithExamsListResponseDto));
+            .ReturnsAsync(OperationResult<StudentGroupWithExamsListResponseDto>.Success(expectedStudentGroupWithExamsListResponseDto));
 
         _studentController.ControllerContext = new ControllerContext
         {
@@ -79,14 +76,10 @@ public class GetStudentGroupDetailsTest
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
         var studentGroupWithExamsListResponseDto = Assert.IsType<StudentGroupWithExamsListResponseDto>(okResult.Value);
         Assert.Equal(expectedStudentGroupWithExamsListResponseDto.Id, studentGroupWithExamsListResponseDto.Id);
-        Assert.Equal(expectedStudentGroupWithExamsListResponseDto.GroupName,
-            studentGroupWithExamsListResponseDto.GroupName);
-        Assert.Equal(expectedStudentGroupWithExamsListResponseDto.Teacher,
-            studentGroupWithExamsListResponseDto.Teacher);
-        Assert.Equal(expectedStudentGroupWithExamsListResponseDto.Exams.Count,
-            studentGroupWithExamsListResponseDto.Exams.Count);
-        Assert.Equal(expectedStudentGroupWithExamsListResponseDto.Exams[0].DateOfExamination,
-            studentGroupWithExamsListResponseDto.Exams[0].DateOfExamination);
+        Assert.Equal(expectedStudentGroupWithExamsListResponseDto.GroupName, studentGroupWithExamsListResponseDto.GroupName);
+        Assert.Equal(expectedStudentGroupWithExamsListResponseDto.Teacher, studentGroupWithExamsListResponseDto.Teacher);
+        Assert.Equal(expectedStudentGroupWithExamsListResponseDto.Exams.Count, studentGroupWithExamsListResponseDto.Exams.Count);
+        Assert.Equal(expectedStudentGroupWithExamsListResponseDto.Exams[0].DateOfExamination, studentGroupWithExamsListResponseDto.Exams[0].DateOfExamination);
     }
 
     [Fact]
@@ -99,8 +92,7 @@ public class GetStudentGroupDetailsTest
         }, "mock"));
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchStudentGroupDetailsWithExamsQuery>(), default))
-            .ReturnsAsync(
-                OperationResult<StudentGroupWithExamsListResponseDto>.Failure("No groups found for the student."));
+            .ReturnsAsync(OperationResult<StudentGroupWithExamsListResponseDto>.Failure("No groups found for the student."));
 
         _studentController.ControllerContext = new ControllerContext
         {

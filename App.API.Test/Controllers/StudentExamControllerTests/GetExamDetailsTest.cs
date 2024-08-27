@@ -25,8 +25,7 @@ public class GetExamDetailsTest
     {
         // Arrange
         var examId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, examId);
+        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, examId);
 
         var expectedExamDetails = new ExamDto
         {
@@ -71,4 +70,5 @@ public class GetExamDetailsTest
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(actionResult.Result);
         Assert.Equal("exam not found", badRequestResult.Value);
     }
+
 }

@@ -72,3 +72,4 @@ public class ReadCsvTests
         Assert.Throws<HeaderValidationException>(() => readCsv.ReadApplicationUsersFromCsv(fileMock.Object));
     }
 }
+

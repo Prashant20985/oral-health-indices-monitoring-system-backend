@@ -7,6 +7,7 @@ namespace App.Application.Test.DentistTeacherOperations.Command.SuperviseStudent
 
 public class SuperviseStudentHandlerTests : TestHelper
 {
+
     private readonly SuperviseStudentHandler handler;
 
     public SuperviseStudentHandlerTests()
@@ -21,12 +22,10 @@ public class SuperviseStudentHandlerTests : TestHelper
         var command = new SuperviseStudentCommand("DoctorId", "StudentId");
 
         var student = new ApplicationUser("test@test.com", "test", "test", "123456789", "test");
-        student.ApplicationUserRoles.Add(new ApplicationUserRole
-            { ApplicationRole = new ApplicationRole { Name = "Student" } });
+        student.ApplicationUserRoles.Add(new ApplicationUserRole { ApplicationRole = new ApplicationRole { Name = "Student" } });
 
         var teacher = new ApplicationUser("test1@test.com", "test1", "test1", "987654321", "test1");
-        teacher.ApplicationUserRoles.Add(new ApplicationUserRole
-            { ApplicationRole = new ApplicationRole { Name = "Dentist_Teacher_Examiner" } });
+        teacher.ApplicationUserRoles.Add(new ApplicationUserRole { ApplicationRole = new ApplicationRole { Name = "Dentist_Teacher_Examiner" } });
 
         userRepositoryMock.Setup(repo => repo.GetApplicationUserWithRolesById(command.StudentId))
             .ReturnsAsync(student);
@@ -34,8 +33,7 @@ public class SuperviseStudentHandlerTests : TestHelper
         userRepositoryMock.Setup(repo => repo.GetApplicationUserWithRolesById(command.DoctorId))
             .ReturnsAsync(teacher);
 
-        superviseRepositoryMock.Setup(repo =>
-                repo.CheckStudentAlreadyUnderDoctorSupervison(command.StudentId, command.DoctorId))
+        superviseRepositoryMock.Setup(repo => repo.CheckStudentAlreadyUnderDoctorSupervison(command.StudentId, command.DoctorId))
             .ReturnsAsync(false);
 
         // Act
@@ -47,8 +45,7 @@ public class SuperviseStudentHandlerTests : TestHelper
         superviseRepositoryMock.Verify(repo => repo.AddSupervise(It.IsAny<Supervise>()), Times.Once);
         userRepositoryMock.Verify(repo => repo.GetApplicationUserWithRolesById(command.StudentId), Times.Once);
         userRepositoryMock.Verify(repo => repo.GetApplicationUserWithRolesById(command.DoctorId), Times.Once);
-        superviseRepositoryMock.Verify(
-            repo => repo.CheckStudentAlreadyUnderDoctorSupervison(command.StudentId, command.DoctorId), Times.Once);
+        superviseRepositoryMock.Verify(repo => repo.CheckStudentAlreadyUnderDoctorSupervison(command.StudentId, command.DoctorId), Times.Once);
     }
 
     [Fact]
@@ -68,8 +65,7 @@ public class SuperviseStudentHandlerTests : TestHelper
         Assert.Equal("Student Not Found.", result.ErrorMessage);
         userRepositoryMock.Verify(repo => repo.GetApplicationUserWithRolesById(command.StudentId), Times.Once);
         userRepositoryMock.Verify(repo => repo.GetApplicationUserWithRolesById(command.DoctorId), Times.Never);
-        superviseRepositoryMock.Verify(
-            repo => repo.CheckStudentAlreadyUnderDoctorSupervison(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        superviseRepositoryMock.Verify(repo => repo.CheckStudentAlreadyUnderDoctorSupervison(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
         superviseRepositoryMock.Verify(repo => repo.AddSupervise(It.IsAny<Supervise>()), Times.Never);
     }
 
@@ -81,8 +77,7 @@ public class SuperviseStudentHandlerTests : TestHelper
 
         var user = new ApplicationUser("test@test.com", "test", "test", "123456789", "test");
         // The user is not a student (no "Student" role).
-        user.ApplicationUserRoles.Add(new ApplicationUserRole
-            { ApplicationRole = new ApplicationRole { Name = "AnotherRole" } });
+        user.ApplicationUserRoles.Add(new ApplicationUserRole { ApplicationRole = new ApplicationRole { Name = "AnotherRole" } });
 
         userRepositoryMock.Setup(repo => repo.GetApplicationUserWithRolesById(command.StudentId))
             .ReturnsAsync(user);
@@ -95,8 +90,7 @@ public class SuperviseStudentHandlerTests : TestHelper
         Assert.Equal("User is not a student.", result.ErrorMessage);
         userRepositoryMock.Verify(repo => repo.GetApplicationUserWithRolesById(command.StudentId), Times.Once);
         userRepositoryMock.Verify(repo => repo.GetApplicationUserWithRolesById(command.DoctorId), Times.Never);
-        superviseRepositoryMock.Verify(
-            repo => repo.CheckStudentAlreadyUnderDoctorSupervison(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        superviseRepositoryMock.Verify(repo => repo.CheckStudentAlreadyUnderDoctorSupervison(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
         superviseRepositoryMock.Verify(repo => repo.AddSupervise(It.IsAny<Supervise>()), Times.Never);
     }
 
@@ -108,8 +102,7 @@ public class SuperviseStudentHandlerTests : TestHelper
 
 
         var student = new ApplicationUser("test@test.com", "test", "test", "123456789", "test");
-        student.ApplicationUserRoles.Add(new ApplicationUserRole
-            { ApplicationRole = new ApplicationRole { Name = "Student" } });
+        student.ApplicationUserRoles.Add(new ApplicationUserRole { ApplicationRole = new ApplicationRole { Name = "Student" } });
 
         userRepositoryMock.Setup(repo => repo.GetApplicationUserWithRolesById(command.StudentId))
             .ReturnsAsync(student);
@@ -125,8 +118,7 @@ public class SuperviseStudentHandlerTests : TestHelper
         Assert.Equal("Doctor Not Found.", result.ErrorMessage);
         userRepositoryMock.Verify(repo => repo.GetApplicationUserWithRolesById(command.StudentId), Times.Once);
         userRepositoryMock.Verify(repo => repo.GetApplicationUserWithRolesById(command.DoctorId), Times.Once);
-        superviseRepositoryMock.Verify(
-            repo => repo.CheckStudentAlreadyUnderDoctorSupervison(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        superviseRepositoryMock.Verify(repo => repo.CheckStudentAlreadyUnderDoctorSupervison(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
         superviseRepositoryMock.Verify(repo => repo.AddSupervise(It.IsAny<Supervise>()), Times.Never);
     }
 
@@ -137,13 +129,11 @@ public class SuperviseStudentHandlerTests : TestHelper
         var command = new SuperviseStudentCommand("DoctorId", "StudentId");
 
         var student = new ApplicationUser("test@test.com", "test", "test", "123456789", "test");
-        student.ApplicationUserRoles.Add(new ApplicationUserRole
-            { ApplicationRole = new ApplicationRole { Name = "Student" } });
+        student.ApplicationUserRoles.Add(new ApplicationUserRole { ApplicationRole = new ApplicationRole { Name = "Student" } });
 
         var user = new ApplicationUser("test1@test.com", "test1", "test1", "987654321", "test1");
 
-        user.ApplicationUserRoles.Add(new ApplicationUserRole
-            { ApplicationRole = new ApplicationRole { Name = "AnotherRole" } });
+        user.ApplicationUserRoles.Add(new ApplicationUserRole { ApplicationRole = new ApplicationRole { Name = "AnotherRole" } });
 
         userRepositoryMock.Setup(repo => repo.GetApplicationUserWithRolesById(command.StudentId))
             .ReturnsAsync(student);
@@ -159,8 +149,7 @@ public class SuperviseStudentHandlerTests : TestHelper
         Assert.Equal("User is not a Doctor.", result.ErrorMessage);
         userRepositoryMock.Verify(repo => repo.GetApplicationUserWithRolesById(command.StudentId), Times.Once);
         userRepositoryMock.Verify(repo => repo.GetApplicationUserWithRolesById(command.DoctorId), Times.Once);
-        superviseRepositoryMock.Verify(
-            repo => repo.CheckStudentAlreadyUnderDoctorSupervison(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        superviseRepositoryMock.Verify(repo => repo.CheckStudentAlreadyUnderDoctorSupervison(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
         superviseRepositoryMock.Verify(repo => repo.AddSupervise(It.IsAny<Supervise>()), Times.Never);
     }
 
@@ -171,12 +160,10 @@ public class SuperviseStudentHandlerTests : TestHelper
         var command = new SuperviseStudentCommand("DoctorId", "StudentId");
 
         var student = new ApplicationUser("test@test.com", "test", "test", "123456789", "test");
-        student.ApplicationUserRoles.Add(new ApplicationUserRole
-            { ApplicationRole = new ApplicationRole { Name = "Student" } });
+        student.ApplicationUserRoles.Add(new ApplicationUserRole { ApplicationRole = new ApplicationRole { Name = "Student" } });
 
         var teacher = new ApplicationUser("test1@test.com", "test1", "test1", "987654321", "test1");
-        teacher.ApplicationUserRoles.Add(new ApplicationUserRole
-            { ApplicationRole = new ApplicationRole { Name = "Dentist_Teacher_Examiner" } });
+        teacher.ApplicationUserRoles.Add(new ApplicationUserRole { ApplicationRole = new ApplicationRole { Name = "Dentist_Teacher_Examiner" } });
 
         userRepositoryMock.Setup(repo => repo.GetApplicationUserWithRolesById(command.StudentId))
             .ReturnsAsync(student);
@@ -184,8 +171,7 @@ public class SuperviseStudentHandlerTests : TestHelper
         userRepositoryMock.Setup(repo => repo.GetApplicationUserWithRolesById(command.DoctorId))
             .ReturnsAsync(teacher);
 
-        superviseRepositoryMock.Setup(repo =>
-                repo.CheckStudentAlreadyUnderDoctorSupervison(command.StudentId, command.DoctorId))
+        superviseRepositoryMock.Setup(repo => repo.CheckStudentAlreadyUnderDoctorSupervison(command.StudentId, command.DoctorId))
             .ReturnsAsync(true);
 
         // Act
@@ -196,8 +182,7 @@ public class SuperviseStudentHandlerTests : TestHelper
         Assert.Equal("Student is already under supervision.", result.ErrorMessage);
         userRepositoryMock.Verify(repo => repo.GetApplicationUserWithRolesById(command.StudentId), Times.Once);
         userRepositoryMock.Verify(repo => repo.GetApplicationUserWithRolesById(command.DoctorId), Times.Once);
-        superviseRepositoryMock.Verify(
-            repo => repo.CheckStudentAlreadyUnderDoctorSupervison(command.StudentId, command.DoctorId), Times.Once);
+        superviseRepositoryMock.Verify(repo => repo.CheckStudentAlreadyUnderDoctorSupervison(command.StudentId, command.DoctorId), Times.Once);
         superviseRepositoryMock.Verify(repo => repo.AddSupervise(It.IsAny<Supervise>()), Times.Never);
     }
 }

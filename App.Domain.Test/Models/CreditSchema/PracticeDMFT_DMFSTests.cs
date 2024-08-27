@@ -9,8 +9,8 @@ public class PracticeDMFT_DMFSTests
     public void Constructor_ShouldInitializeProperties()
     {
         // Arrange
-        var dMFTResult = 3.5m;
-        var dMFSResult = 7.2m;
+        decimal dMFTResult = 3.5m;
+        decimal dMFSResult = 7.2m;
 
         // Act
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(dMFTResult, dMFSResult);
@@ -30,7 +30,7 @@ public class PracticeDMFT_DMFSTests
     {
         // Arrange
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(3.5m, 7.2m);
-        var comment = "This is a test comment.";
+        string comment = "This is a test comment.";
 
         // Act
         practiceDMFT_DMFS.AddComment(comment);
@@ -58,7 +58,7 @@ public class PracticeDMFT_DMFSTests
     {
         // Arrange
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(3.5m, 7.2m);
-        var prostheticStatus = "Complete";
+        string prostheticStatus = "Complete";
 
         // Act
         practiceDMFT_DMFS.SetProstheticStatus(prostheticStatus);
@@ -67,3 +67,4 @@ public class PracticeDMFT_DMFSTests
         Assert.Equal(prostheticStatus, practiceDMFT_DMFS.ProstheticStatus);
     }
 }
+

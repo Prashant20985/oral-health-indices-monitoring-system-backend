@@ -25,8 +25,7 @@ public class CommentPracticeAPIFormTest
     {
         //Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
         var studentId = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
@@ -34,13 +33,12 @@ public class CommentPracticeAPIFormTest
         var practiceBleeding = new PracticeBleeding(22, 22, 22);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
 
         var comment = "This is a test comment.";
 
         _mediator.Setup(x => x.Send(It.IsAny<CommentAPIFormCommand>(), default))
-            .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
+                 .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
         // Act
         var result = await _studentExamController.CommentPracticeApiForm(practicePatientExaminationResult.Id, comment);
@@ -55,8 +53,7 @@ public class CommentPracticeAPIFormTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
         var studentId = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
@@ -64,13 +61,12 @@ public class CommentPracticeAPIFormTest
         var practiceBleeding = new PracticeBleeding(22, 22, 22);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
 
         var comment = "";
 
         _mediator.Setup(x => x.Send(It.IsAny<CommentAPIFormCommand>(), default))
-            .ReturnsAsync(OperationResult<Unit>.Failure("Comment cannot be empty."));
+                 .ReturnsAsync(OperationResult<Unit>.Failure("Comment cannot be empty."));
 
         // Act
         var result = await _studentExamController.CommentPracticeApiForm(practicePatientExaminationResult.Id, comment);
@@ -87,7 +83,7 @@ public class CommentPracticeAPIFormTest
         var practicePatientExaminationResultId = Guid.NewGuid();
 
         _mediator.Setup(x => x.Send(It.IsAny<CommentAPIFormCommand>(), default))
-            .ReturnsAsync(OperationResult<Unit>.Failure("PracticePatientExaminationCard not found."));
+                 .ReturnsAsync(OperationResult<Unit>.Failure("PracticePatientExaminationCard not found."));
 
         // Act
         var result = await _studentExamController.CommentPracticeApiForm(Guid.NewGuid(), "This is a test comment.");

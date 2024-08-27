@@ -8,9 +8,9 @@ namespace App.Application.Test.AdminOperations.Query.UserDetails;
 
 public class FetchUserDetailsHandlerTests : TestHelper
 {
+    private readonly IMapper mapper;
     private readonly ApplicationUser applicationUser;
     private readonly FetchUserDetailsHandler handler;
-    private readonly IMapper mapper;
     private readonly FetchUserDetailsQuery query;
     private readonly string UserName;
 
@@ -57,7 +57,9 @@ public class FetchUserDetailsHandlerTests : TestHelper
 
     private IMapper GetMapper()
     {
-        return new MapperConfiguration(cfg => { cfg.CreateMap<ApplicationUser, ApplicationUserResponseDto>(); })
-            .CreateMapper();
+        return new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<ApplicationUser, ApplicationUserResponseDto>();
+        }).CreateMapper();
     }
 }

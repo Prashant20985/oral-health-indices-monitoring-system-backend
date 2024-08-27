@@ -7,8 +7,8 @@ namespace App.Application.Test.StudentExamOperations.TeacherOperations.Command.C
 
 public class CommentBleedingFormCommandTests : TestHelper
 {
-    private readonly CommentBleedingFormCommand command;
     private readonly CommentBleedingFormHandler handler;
+    private readonly CommentBleedingFormCommand command;
 
     public CommentBleedingFormCommandTests()
     {

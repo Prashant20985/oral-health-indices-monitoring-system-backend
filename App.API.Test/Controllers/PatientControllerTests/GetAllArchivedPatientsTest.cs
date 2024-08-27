@@ -27,44 +27,42 @@ public class GetAllArchivedPatientsTest
     {
         // Arrange
         var expectedPatients = new List<PatientResponseDto>
-        {
-            new()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "John",
-                LastName = "Doe",
-                Email = "john.doe@example",
-                Gender = Gender.Male.ToString(),
-                EthnicGroup = "Caucasian",
-                OtherGroup = "Other",
-                YearsInSchool = 1,
-                OtherData = "Other data",
-                OtherData2 = "Other data 2",
-                OtherData3 = "Other data 3",
-                Location = "Location",
-                Age = 20,
-                IsArchived = true
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Jane",
-                LastName = "Doe",
-                Email = "jane.doe@example",
-                Gender = Gender.Female.ToString(),
-                EthnicGroup = "Caucasian",
-                OtherGroup = "Other",
-                YearsInSchool = 1,
-                OtherData = "Other data",
-                OtherData2 = "Other data 2",
-                OtherData3 = "Other data 3",
-                Location = "Location",
-                Age = 20,
-                IsArchived = true
-            }
-        };
+    {
+        new PatientResponseDto {
+            Id = Guid.NewGuid(),
+            FirstName = "John",
+            LastName = "Doe",
+            Email = "john.doe@example",
+            Gender = Gender.Male.ToString(),
+            EthnicGroup = "Caucasian",
+            OtherGroup = "Other",
+            YearsInSchool = 1,
+            OtherData = "Other data",
+            OtherData2 = "Other data 2",
+            OtherData3 = "Other data 3",
+            Location = "Location",
+            Age = 20,
+            IsArchived = true
+        },
+        new PatientResponseDto {
+            Id = Guid.NewGuid(),
+            FirstName = "Jane",
+            LastName = "Doe",
+            Email = "jane.doe@example",
+            Gender = Gender.Female.ToString(),
+            EthnicGroup = "Caucasian",
+            OtherGroup = "Other",
+            YearsInSchool = 1,
+            OtherData = "Other data",
+            OtherData2 = "Other data 2",
+            OtherData3 = "Other data 3",
+            Location = "Location",
+            Age = 20,
+            IsArchived = true
+        }
+    };
 
-        var paginatedPatientResponseDto = new PaginatedPatientResponseDto
+        PaginatedPatientResponseDto paginatedPatientResponseDto = new PaginatedPatientResponseDto
         {
             Patients = expectedPatients,
             TotalPatientsCount = expectedPatients.Count
@@ -72,7 +70,7 @@ public class GetAllArchivedPatientsTest
 
         _mediator.Setup(x => x.Send(It.IsAny<FetchAllArchivedPatientsQuery>(), default))
             .ReturnsAsync(OperationResult<PaginatedPatientResponseDto>
-                .Success(paginatedPatientResponseDto));
+            .Success(paginatedPatientResponseDto));
 
         // Act
         var result = await _patientcontroller.FetchAllArchivedPatients("John", "john.doe@example");
@@ -89,7 +87,7 @@ public class GetAllArchivedPatientsTest
         // Arrange
         _mediator.Setup(x => x.Send(It.IsAny<FetchAllArchivedPatientsQuery>(), default))
             .ReturnsAsync(OperationResult<PaginatedPatientResponseDto>
-                .Failure("Failed to fetch archived patients"));
+                       .Failure("Failed to fetch archived patients"));
 
         // Act
         var result = await _patientcontroller.FetchAllArchivedPatients("John", "john.doe@example");

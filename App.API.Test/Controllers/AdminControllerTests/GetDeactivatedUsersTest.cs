@@ -6,66 +6,67 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
-namespace App.API.Test.Controllers.AdminControllerTests;
-
-public class GetDeactivatedUsersTest
+namespace App.API.Test.Controllers.AdminControllerTests
 {
-    private readonly TestableAdminController _adminController;
-    private readonly Mock<IMediator> _mediatorMock;
-
-    public GetDeactivatedUsersTest()
+    public class GetDeactivatedUsersTest
     {
-        _mediatorMock = new Mock<IMediator>();
-        _adminController = new TestableAdminController();
-        _adminController.ExposeSetMediator(_mediatorMock.Object);
-    }
+        private readonly TestableAdminController _adminController;
+        private readonly Mock<IMediator> _mediatorMock;
 
-    [Fact]
-    public async Task GetDeactivatedUsers_Returns_OkResult()
-    {
-        //Arrange
-        var deactivatedUsers = new List<ApplicationUserResponseDto>
+        public GetDeactivatedUsersTest()
         {
-            new()
-            {
-                FirstName = "Test",
-                LastName = "Test",
-                Email = "test@test.com",
-                UserType = "RegularUser",
-                Role = "Admin",
-                UserName = "test",
-                IsAccountActive = false
-            },
-            new()
-            {
-                FirstName = "Test",
-                LastName = "Test",
-                Email = "test2@test.com",
-                UserType = "RegularUser",
-                Role = "Admin",
-                UserName = "test2",
-                IsAccountActive = false
-            }
-        };
+            _mediatorMock = new Mock<IMediator>();
+            _adminController = new TestableAdminController();
+            _adminController.ExposeSetMediator(_mediatorMock.Object);
+        }
 
-        var paginatedDeactivatedUsers = new PaginatedApplicationUserResponseDto
+        [Fact]
+        public async Task GetDeactivatedUsers_Returns_OkResult()
         {
-            Users = deactivatedUsers,
-            TotalUsersCount = deactivatedUsers.Count
-        };
+            //Arrange
+            var deactivatedUsers = new List<ApplicationUserResponseDto>()
+            {
+                new ApplicationUserResponseDto
+                {
+                    FirstName = "Test",
+                    LastName = "Test",
+                    Email = "test@test.com",
+                    UserType = "RegularUser",
+                    Role = "Admin",
+                    UserName = "test",
+                    IsAccountActive = false,
+                },
+                new ApplicationUserResponseDto
+                {
+                    FirstName = "Test",
+                    LastName = "Test",
+                    Email = "test2@test.com",
+                    UserType = "RegularUser",
+                    Role = "Admin",
+                    UserName = "test2",
+                    IsAccountActive = false
+                }
+            };
 
-        var searchParams = new ApplicationUserPaginationAndSearchParams();
+            PaginatedApplicationUserResponseDto paginatedDeactivatedUsers = new PaginatedApplicationUserResponseDto
+            {
+                Users = deactivatedUsers,
+                TotalUsersCount = deactivatedUsers.Count
+            };
 
-        _mediatorMock.Setup(m => m.Send(It.IsAny<FetchDeactivatedApplicationUsersListQuery>(), default))
-            .ReturnsAsync(OperationResult<PaginatedApplicationUserResponseDto>.Success(paginatedDeactivatedUsers));
+            var searchParams = new ApplicationUserPaginationAndSearchParams();
 
-        // Act
-        var result = await _adminController.GetDeactivatedUsers(searchParams);
+            _mediatorMock.Setup(m => m.Send(It.IsAny<FetchDeactivatedApplicationUsersListQuery>(), default))
+                .ReturnsAsync(OperationResult<PaginatedApplicationUserResponseDto>.Success(paginatedDeactivatedUsers));
 
-        // Assert
-        var actionResult = Assert.IsType<ActionResult<PaginatedApplicationUserResponseDto>>(result);
-        var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-        var model = Assert.IsType<PaginatedApplicationUserResponseDto>(okObjectResult.Value);
-        Assert.Equal(deactivatedUsers.Count, model.Users.Count);
+            // Act
+            var result = await _adminController.GetDeactivatedUsers(searchParams);
+
+            // Assert
+            var actionResult = Assert.IsType<ActionResult<PaginatedApplicationUserResponseDto>>(result);
+            var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
+            var model = Assert.IsType<PaginatedApplicationUserResponseDto>(okObjectResult.Value);
+            Assert.Equal(deactivatedUsers.Count, model.Users.Count);
+        }
     }
 }

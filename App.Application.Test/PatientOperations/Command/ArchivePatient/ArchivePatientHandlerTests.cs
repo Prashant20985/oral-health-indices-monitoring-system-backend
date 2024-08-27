@@ -8,8 +8,8 @@ namespace App.Application.Test.PatientOperations.Command.ArchivePatient;
 
 public class ArchivePatientHandlerTests : TestHelper
 {
-    private readonly ArchivePatientCommand command;
     private readonly ArchivePatientHandler handler;
+    private readonly ArchivePatientCommand command;
 
     public ArchivePatientHandlerTests()
     {
@@ -21,8 +21,7 @@ public class ArchivePatientHandlerTests : TestHelper
     public async Task Handle_WithValidCommand_ShouldArchivePatient()
     {
         // Arrange
-        var patient = new Patient("test", "test", "test@123", Gender.Male, "test", "test", 12, "test", "test", "test",
-            "test", 2, "doctor123");
+        var patient = new Patient("test", "test", "test@123", Gender.Male, "test", "test", 12, "test", "test", "test", "test", 2, "doctor123");
 
         patientRepositoryMock.Setup(repo => repo.GetPatientById(It.IsAny<Guid>()))
             .ReturnsAsync(patient);
@@ -57,8 +56,7 @@ public class ArchivePatientHandlerTests : TestHelper
     public async Task Handle_WithArchivedPatient_ShouldReturnFailureResult()
     {
         // Arrange
-        var patient = new Patient("test", "test", "test@123", Gender.Male, "test", "test", 12, "test", "test", "test",
-            "test", 2, "doctor123");
+        var patient = new Patient("test", "test", "test@123", Gender.Male, "test", "test", 12, "test", "test", "test", "test", 2, "doctor123");
         patient.ArchivePatient("test");
 
         patientRepositoryMock.Setup(repo => repo.GetPatientById(It.IsAny<Guid>()))

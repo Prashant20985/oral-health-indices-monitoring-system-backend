@@ -83,7 +83,7 @@ public static class ApplicationExtension
         services.AddScoped<IGeneratePassword, GeneratePassword>();
 
         // Add a scoped dependency for IQueryFilter with the implementation of QueryFilter.
-        services.AddScoped<IApplicationUsersListQueryFilter, ApplicationUsersListQueryFilter>();
+        services.AddScoped<IApplicationUsersListQuesyFilter, ApplicationUsersListQueryFilter>();
 
         // Add a scoped dependency for IUserRequestRepository with the implementation of UserRequestRepository.
         services.AddScoped<IUserRequestRepository, UserRequestRepository>();

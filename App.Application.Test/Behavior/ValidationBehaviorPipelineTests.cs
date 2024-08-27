@@ -9,15 +9,14 @@ namespace App.Application.Test.Behavior;
 
 public class ValidationBehaviorTests
 {
+    private readonly Mock<IValidator<SampleRequest>> validatorMock;
     private readonly SampleRequest request;
     private readonly ValidationBehaviorPipeline<SampleRequest, OperationResult<SampleResponse>> validationBehavior;
-    private readonly Mock<IValidator<SampleRequest>> validatorMock;
 
     public ValidationBehaviorTests()
     {
         validatorMock = new Mock<IValidator<SampleRequest>>();
-        validationBehavior =
-            new ValidationBehaviorPipeline<SampleRequest, OperationResult<SampleResponse>>(validatorMock.Object);
+        validationBehavior = new ValidationBehaviorPipeline<SampleRequest, OperationResult<SampleResponse>>(validatorMock.Object);
         request = new SampleRequest();
     }
 
@@ -43,8 +42,8 @@ public class ValidationBehaviorTests
         // Arrange
         var validationErrors = new List<ValidationFailure>
         {
-            new("PropertyName", "Error message 1"),
-            new("AnotherProperty", "Error message 2")
+            new ValidationFailure("PropertyName", "Error message 1"),
+            new ValidationFailure("AnotherProperty", "Error message 2")
         };
 
         validatorMock.Setup(v => v.ValidateAsync(It.IsAny<SampleRequest>(), It.IsAny<CancellationToken>()))

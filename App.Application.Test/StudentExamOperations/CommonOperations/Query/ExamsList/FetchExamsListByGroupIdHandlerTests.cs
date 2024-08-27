@@ -21,12 +21,12 @@ public class FetchExamsListByGroupIdHandlerTests : TestHelper
         // Arrange
         var examsList = new List<ExamDto>
         {
-            new()
+            new ExamDto
             {
                 Id = Guid.NewGuid(),
                 DateOfExamination = DateTime.Now
             },
-            new()
+            new ExamDto
             {
                 Id = Guid.NewGuid(),
                 DateOfExamination = DateTime.Now

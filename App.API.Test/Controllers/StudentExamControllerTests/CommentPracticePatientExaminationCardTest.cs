@@ -25,20 +25,17 @@ public class CommentPracticePatientExaminationCardTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
         var studentId = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
         var comment = "This is a test comment.";
 
         _mediator.Setup(x => x.Send(It.IsAny<CommentPracticeExaminationCardCommand>(), default))
-            .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
+                 .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
         // Act
-        var result =
-            await _studentExamController.CommentPracticePatientExaminationCard(practicePatientExaminationCard.Id,
-                comment);
+        var result = await _studentExamController.CommentPracticePatientExaminationCard(practicePatientExaminationCard.Id, comment);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
@@ -50,20 +47,17 @@ public class CommentPracticePatientExaminationCardTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
         var studentId = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
         var comment = "";
 
         _mediator.Setup(x => x.Send(It.IsAny<CommentPracticeExaminationCardCommand>(), default))
-            .ReturnsAsync(OperationResult<Unit>.Failure("Comment cannot be empty."));
+                 .ReturnsAsync(OperationResult<Unit>.Failure("Comment cannot be empty."));
 
         // Act
-        var result =
-            await _studentExamController.CommentPracticePatientExaminationCard(practicePatientExaminationCard.Id,
-                comment);
+        var result = await _studentExamController.CommentPracticePatientExaminationCard(practicePatientExaminationCard.Id, comment);
 
         // Assert
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
@@ -71,19 +65,16 @@ public class CommentPracticePatientExaminationCardTest
     }
 
     [Fact]
-    public async Task
-        CommentPracticePatientExaminationCard_WithInvalidPracticePatientExaminationCard_ShouldReturnBadRequest()
+    public async Task CommentPracticePatientExaminationCard_WithInvalidPracticePatientExaminationCard_ShouldReturnBadRequest()
     {
         // Arrange
         var practicePatientExaminationCardId = Guid.NewGuid();
 
         _mediator.Setup(x => x.Send(It.IsAny<CommentPracticeExaminationCardCommand>(), default))
-            .ReturnsAsync(OperationResult<Unit>.Failure("PracticePatientExaminationCard not found."));
+                 .ReturnsAsync(OperationResult<Unit>.Failure("PracticePatientExaminationCard not found."));
 
         // Act
-        var result =
-            await _studentExamController.CommentPracticePatientExaminationCard(practicePatientExaminationCardId,
-                "This is a test comment.");
+        var result = await _studentExamController.CommentPracticePatientExaminationCard(practicePatientExaminationCardId, "This is a test comment.");
 
         // Assert
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);

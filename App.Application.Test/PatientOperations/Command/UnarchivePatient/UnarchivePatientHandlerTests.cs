@@ -21,8 +21,7 @@ public class UnarchivePatientHandlerTests : TestHelper
     public async Task Handle_WithValidCommand_ShouldUnarchivePatient()
     {
         // Arrange
-        var archivedPatient = new Patient("test", "test", "test@123", Gender.Male, "test", "test", 12, "test", "test",
-            "test", "test", 2, "doctor123");
+        var archivedPatient = new Patient("test", "test", "test@123", Gender.Male, "test", "test", 12, "test", "test", "test", "test", 2, "doctor123");
         archivedPatient.ArchivePatient("test");
 
         patientRepositoryMock.Setup(repo => repo.GetPatientById(It.IsAny<Guid>()))
@@ -59,8 +58,7 @@ public class UnarchivePatientHandlerTests : TestHelper
     public async Task Handle_WithUnarchivedPatient_ShouldReturnFailureResult()
     {
         // Arrange
-        var nonArchivedPatient = new Patient("test", "test", "test@123", Gender.Male, "test", "test", 12, "test",
-            "test", "test", "test", 2, "doctor123");
+        var nonArchivedPatient = new Patient("test", "test", "test@123", Gender.Male, "test", "test", 12, "test", "test", "test", "test", 2, "doctor123");
 
         patientRepositoryMock.Setup(repo => repo.GetPatientById(It.IsAny<Guid>()))
             .ReturnsAsync(nonArchivedPatient);

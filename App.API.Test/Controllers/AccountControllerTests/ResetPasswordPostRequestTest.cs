@@ -47,8 +47,7 @@ public class ResetPasswordPostRequestTest
     [InlineData("simplepass", "Password does not meet complexity requirements.")]
     [InlineData("Pass123", "Password does not meet complexity requirements.")]
     [InlineData("ComplexP@ss", "Password does not meet complexity requirements.")]
-    public async Task ResetPassword_InvalidPassword_ReturnsFailureResultWithErrorMessage(string invalidPassword,
-        string errorMessage)
+    public async Task ResetPassword_InvalidPassword_ReturnsFailureResultWithErrorMessage(string invalidPassword, string errorMessage)
     {
         // Arrange
         var invalidResetPasswordDto = new ResetPasswordDto
@@ -56,7 +55,7 @@ public class ResetPasswordPostRequestTest
             Token = "testToken",
             Email = "test@example.com",
             Password = invalidPassword,
-            ConfirmPassword = invalidPassword
+            ConfirmPassword = invalidPassword,
         };
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<ResetPasswordCommand>(), default))
@@ -71,3 +70,4 @@ public class ResetPasswordPostRequestTest
         Assert.Equal(errorMessage, badRequestResult.Value);
     }
 }
+
