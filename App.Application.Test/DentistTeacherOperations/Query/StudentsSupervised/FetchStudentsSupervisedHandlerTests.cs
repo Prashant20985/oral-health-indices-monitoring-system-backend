@@ -1,6 +1,7 @@
-﻿using App.Application.DentistTeacherOperations.Query.StudentsSupervised;
+﻿
+using App.Application.DentistTeacherOperations.Query.StudentsSupervised;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
-using MockQueryable.EntityFrameworkCore;
+using MockQueryable.Moq;
 using Moq;
 
 namespace App.Application.Test.DentistTeacherOperations.Query.StudentsSupervised;
@@ -14,10 +15,10 @@ public class FetchStudentsSupervisedHandlerTests : TestHelper
         var query = new FetchStudentsSupervisedQuery("doctorId", null, null, 0, 10);
 
         var students = new List<StudentResponseDto>
-        {
-            new() { Id = "studentId1", UserName = "Student1" },
-            new() { Id = "studentId2", UserName = "Student2" }
-        }.AsQueryable();
+            {
+                new StudentResponseDto { Id = "studentId1", UserName = "Student1" },
+                new StudentResponseDto { Id = "studentId2", UserName = "Student2" }
+            }.AsQueryable();
 
         var mockSet = students.BuildMock();
         superviseRepositoryMock.Setup(repo => repo.GetAllStudentsUnderSupervisionByDoctorId(It.IsAny<string>()))
@@ -32,8 +33,7 @@ public class FetchStudentsSupervisedHandlerTests : TestHelper
         Assert.True(result.IsSuccessful);
         Assert.Equal(2, result.ResultValue.TotalStudents);
         Assert.Equal(2, result.ResultValue.Students.Count());
-        superviseRepositoryMock.Verify(repo => repo.GetAllStudentsUnderSupervisionByDoctorId(query.DoctorId),
-            Times.Once);
+        superviseRepositoryMock.Verify(repo => repo.GetAllStudentsUnderSupervisionByDoctorId(query.DoctorId), Times.Once);
     }
 
     [Fact]

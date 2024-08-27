@@ -31,7 +31,7 @@ public class FetchStudentGroupDetailsWithExamsHandlerTests : TestHelper
             Teacher = "teacher",
             Exams = new List<ExamDto>
             {
-                new()
+                new ExamDto
                 {
                     Id = Guid.NewGuid(),
                     DateOfExamination = DateTime.Now
@@ -39,8 +39,7 @@ public class FetchStudentGroupDetailsWithExamsHandlerTests : TestHelper
             }
         };
 
-        groupRepositoryMock.Setup(x =>
-                x.GetGroupDetailsWithExamsListByGroupIdAndStudentId(It.IsAny<Guid>(), It.IsAny<string>()))
+        groupRepositoryMock.Setup(x => x.GetGroupDetailsWithExamsListByGroupIdAndStudentId(It.IsAny<Guid>(), It.IsAny<string>()))
             .ReturnsAsync(studentGroupWithExams);
 
         // Act
@@ -60,8 +59,7 @@ public class FetchStudentGroupDetailsWithExamsHandlerTests : TestHelper
     public async Task Handle_WhenStudentGroupDoesNotExist_ShouldReturnFailure()
     {
         // Arrange
-        groupRepositoryMock.Setup(x =>
-                x.GetGroupDetailsWithExamsListByGroupIdAndStudentId(It.IsAny<Guid>(), It.IsAny<string>()))
+        groupRepositoryMock.Setup(x => x.GetGroupDetailsWithExamsListByGroupIdAndStudentId(It.IsAny<Guid>(), It.IsAny<string>()))
             .ReturnsAsync(() => null);
 
         // Act

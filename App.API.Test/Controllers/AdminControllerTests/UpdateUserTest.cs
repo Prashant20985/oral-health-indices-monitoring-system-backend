@@ -5,41 +5,42 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
-namespace App.API.Test.Controllers.AdminControllerTests;
-
-public class UpdateUserTest
+namespace App.API.Test.Controllers.AdminControllerTests
 {
-    private readonly TestableAdminController _adminController;
-    private readonly Mock<IMediator> _mediatorMock;
-
-    public UpdateUserTest()
+    public class UpdateUserTest
     {
-        _mediatorMock = new Mock<IMediator>();
-        _adminController = new TestableAdminController();
-        _adminController.ExposeSetMediator(_mediatorMock.Object);
-    }
+        private readonly TestableAdminController _adminController;
+        private readonly Mock<IMediator> _mediatorMock;
 
-    [Fact]
-    public async Task UpdateUser_Returns_OkResult()
-    {
-        // Arrange
-        var userName = "testuser";
-        var updateApplicationUserDto = new UpdateApplicationUserRequestDto
+        public UpdateUserTest()
         {
-            FirstName = "Updated",
-            LastName = "User",
-            Role = "Admin",
-            PhoneNumber = "987654321",
-            GuestUserComment = "test"
-        };
+            _mediatorMock = new Mock<IMediator>();
+            _adminController = new TestableAdminController();
+            _adminController.ExposeSetMediator(_mediatorMock.Object);
+        }
 
-        _mediatorMock.Setup(m => m.Send(It.IsAny<UpdateApplicationUserCommand>(), default))
-            .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
+        [Fact]
+        public async Task UpdateUser_Returns_OkResult()
+        {
+            // Arrange
+            var userName = "testuser";
+            var updateApplicationUserDto = new UpdateApplicationUserRequestDto
+            {
+                FirstName = "Updated",
+                LastName = "User",
+                Role = "Admin",
+                PhoneNumber = "987654321",
+                GuestUserComment = "test"
+            };
 
-        // Act
-        var result = await _adminController.UpdateUser(userName, updateApplicationUserDto);
+            _mediatorMock.Setup(m => m.Send(It.IsAny<UpdateApplicationUserCommand>(), default))
+                .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
-        // Assert
-        Assert.IsType<OkObjectResult>(result);
+            // Act
+            var result = await _adminController.UpdateUser(userName, updateApplicationUserDto);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result);
+        }
     }
 }

@@ -3,7 +3,6 @@ using App.Application.PatientExaminationCardOperations.Command.UpdateDMFT_DMFSFo
 using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.Models.Common.DMFT_DMFS;
-using App.Domain.Models.OralHealthExamination;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,19 +28,18 @@ public class UpdateDMFTDMFSFormTest
         // Arrange
         var patientId = Guid.NewGuid();
         var APIForm = new Domain.Models.OralHealthExamination.API();
-        var beweForm = new Bewe();
-        var dMFT_dMFSForm = new DMFT_DMFS();
-        var bleedingForm = new Bleeding();
-        var patientExaminationResult =
-            new PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
-            {
-                API = APIForm,
-                Bewe = beweForm,
-                DMFT_DMFS = dMFT_dMFSForm,
-                Bleeding = bleedingForm
-            };
+        var beweForm = new Domain.Models.OralHealthExamination.Bewe();
+        var dMFT_dMFSForm = new Domain.Models.OralHealthExamination.DMFT_DMFS();
+        var bleedingForm = new Domain.Models.OralHealthExamination.Bleeding();
+        var patientExaminationResult = new Domain.Models.OralHealthExamination.PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
+        {
+            API = APIForm,
+            Bewe = beweForm,
+            DMFT_DMFS = dMFT_dMFSForm,
+            Bleeding = bleedingForm
+        };
 
-        var patientExaminationCard = new PatientExaminationCard(patientId)
+        var patientExaminationCard = new Domain.Models.OralHealthExamination.PatientExaminationCard(patientId)
         {
             PatientExaminationResult = patientExaminationResult
         };
@@ -66,9 +64,7 @@ public class UpdateDMFTDMFSFormTest
             .ReturnsAsync(OperationResult<DMFT_DMFSResultResponseDto>.Success(exepctedResponse));
 
         // Act
-        var result =
-            await _patientExaminationCardController.UpdateDMFTDMFSForm(patientExaminationCard.Id, prostheticStatus,
-                updateDmft_Dmfs);
+        var result = await _patientExaminationCardController.UpdateDMFTDMFSForm(patientExaminationCard.Id, prostheticStatus, updateDmft_Dmfs);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
@@ -101,9 +97,7 @@ public class UpdateDMFTDMFSFormTest
             .ReturnsAsync(OperationResult<DMFT_DMFSResultResponseDto>.Failure("Dmft Dmfs Form not Found"));
 
         // Act
-        var result =
-            await _patientExaminationCardController.UpdateDMFTDMFSForm(patientExaminationCardId, prostheticStatus,
-                updateDmft_Dmfs);
+        var result = await _patientExaminationCardController.UpdateDMFTDMFSForm(patientExaminationCardId, prostheticStatus, updateDmft_Dmfs);
 
         // Assert
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);

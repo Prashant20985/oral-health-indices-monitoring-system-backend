@@ -9,22 +9,22 @@ public class PracticePatientTests
     public void Constructor_ShouldInitializeProperties()
     {
         // Arrange
-        var firstName = "John";
-        var lastName = "Doe";
-        var email = "john.doe@example.com";
-        var gender = Gender.Male;
-        var ethnicGroup = "GroupA";
-        var location = "LocationA";
-        var age = 30;
-        var otherGroup = "OtherGroupA";
-        var otherData = "OtherDataA";
-        var otherData2 = "OtherDataB";
-        var otherData3 = "OtherDataC";
-        var yearsInSchool = 12;
+        string firstName = "John";
+        string lastName = "Doe";
+        string email = "john.doe@example.com";
+        Gender gender = Gender.Male;
+        string ethnicGroup = "GroupA";
+        string location = "LocationA";
+        int age = 30;
+        string otherGroup = "OtherGroupA";
+        string otherData = "OtherDataA";
+        string otherData2 = "OtherDataB";
+        string otherData3 = "OtherDataC";
+        int yearsInSchool = 12;
 
         // Act
         var practicePatient = new PracticePatient(firstName, lastName, email, gender, ethnicGroup, location, age,
-            otherGroup, otherData, otherData2, otherData3, yearsInSchool);
+                                                  otherGroup, otherData, otherData2, otherData3, yearsInSchool);
 
         // Assert
         Assert.NotEqual(Guid.Empty, practicePatient.Id);
@@ -43,3 +43,4 @@ public class PracticePatientTests
         Assert.Null(practicePatient.PracticePatientExaminationCard);
     }
 }
+

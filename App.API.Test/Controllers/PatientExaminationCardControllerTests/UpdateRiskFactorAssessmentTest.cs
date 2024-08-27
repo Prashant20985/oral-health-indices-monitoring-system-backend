@@ -1,7 +1,6 @@
 ﻿using App.Application.Core;
 using App.Application.PatientExaminationCardOperations.Command.UpdateRiskFactorAssessmentForm;
 using App.Domain.Models.Common.RiskFactorAssessment;
-using App.Domain.Models.OralHealthExamination;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,20 +26,19 @@ public class UpdateRiskFactorAssessmentTest
         // Arrange
         var patientId = Guid.NewGuid();
         var APIForm = new Domain.Models.OralHealthExamination.API();
-        var beweForm = new Bewe();
-        var dMFT_dMFSForm = new DMFT_DMFS();
-        var bleedingForm = new Bleeding();
-        var riskFactorAssessmentForm = new RiskFactorAssessment();
-        var patientExaminationResult =
-            new PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
-            {
-                API = APIForm,
-                Bewe = beweForm,
-                DMFT_DMFS = dMFT_dMFSForm,
-                Bleeding = bleedingForm
-            };
+        var beweForm = new Domain.Models.OralHealthExamination.Bewe();
+        var dMFT_dMFSForm = new Domain.Models.OralHealthExamination.DMFT_DMFS();
+        var bleedingForm = new Domain.Models.OralHealthExamination.Bleeding();
+        var riskFactorAssessmentForm = new Domain.Models.OralHealthExamination.RiskFactorAssessment();
+        var patientExaminationResult = new Domain.Models.OralHealthExamination.PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
+        {
+            API = APIForm,
+            Bewe = beweForm,
+            DMFT_DMFS = dMFT_dMFSForm,
+            Bleeding = bleedingForm
+        };
 
-        var patientExaminationCard = new PatientExaminationCard(patientId)
+        var patientExaminationCard = new Domain.Models.OralHealthExamination.PatientExaminationCard(patientId)
         {
             PatientExaminationResult = patientExaminationResult,
             RiskFactorAssessment = riskFactorAssessmentForm
@@ -54,9 +52,7 @@ public class UpdateRiskFactorAssessmentTest
             .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
         // Act
-        var result =
-            await _patientExaminationCardController.UpdateRiskFactorAssessment(patientExaminationCard.Id,
-                assessmentModel);
+        var result = await _patientExaminationCardController.UpdateRiskFactorAssessment(patientExaminationCard.Id, assessmentModel);
 
         // Assert
         Assert.IsType<OkObjectResult>(result);
@@ -69,20 +65,19 @@ public class UpdateRiskFactorAssessmentTest
         // Arrange
         var patientId = Guid.NewGuid();
         var APIForm = new Domain.Models.OralHealthExamination.API();
-        var beweForm = new Bewe();
-        var dMFT_dMFSForm = new DMFT_DMFS();
-        var bleedingForm = new Bleeding();
-        var riskFactorAssessmentForm = new RiskFactorAssessment();
-        var patientExaminationResult =
-            new PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
-            {
-                API = APIForm,
-                Bewe = beweForm,
-                DMFT_DMFS = dMFT_dMFSForm,
-                Bleeding = bleedingForm
-            };
+        var beweForm = new Domain.Models.OralHealthExamination.Bewe();
+        var dMFT_dMFSForm = new Domain.Models.OralHealthExamination.DMFT_DMFS();
+        var bleedingForm = new Domain.Models.OralHealthExamination.Bleeding();
+        var riskFactorAssessmentForm = new Domain.Models.OralHealthExamination.RiskFactorAssessment();
+        var patientExaminationResult = new Domain.Models.OralHealthExamination.PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
+        {
+            API = APIForm,
+            Bewe = beweForm,
+            DMFT_DMFS = dMFT_dMFSForm,
+            Bleeding = bleedingForm
+        };
 
-        var patientExaminationCard = new PatientExaminationCard(patientId)
+        var patientExaminationCard = new Domain.Models.OralHealthExamination.PatientExaminationCard(patientId)
         {
             PatientExaminationResult = patientExaminationResult,
             RiskFactorAssessment = riskFactorAssessmentForm
@@ -96,8 +91,7 @@ public class UpdateRiskFactorAssessmentTest
             .ReturnsAsync(OperationResult<Unit>.Failure("Risk Factor Assessment Form Not Found"));
 
         // Act
-        var result =
-            await _patientExaminationCardController.UpdateRiskFactorAssessment(Guid.NewGuid(), assessmentModel);
+        var result = await _patientExaminationCardController.UpdateRiskFactorAssessment(Guid.NewGuid(), assessmentModel);
 
         // Assert
         Assert.IsType<BadRequestObjectResult>(result);

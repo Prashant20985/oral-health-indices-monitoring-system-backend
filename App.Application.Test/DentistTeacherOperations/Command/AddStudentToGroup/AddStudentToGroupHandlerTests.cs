@@ -6,9 +6,8 @@ namespace App.Application.Test.DentistTeacherOperations.Command.AddStudentToGrou
 
 public class AddStudentToGroupHandlerTests : TestHelper
 {
-    private readonly AddStudentToGroupCommand command;
     private readonly AddStudentToGroupHandler handler;
-
+    private readonly AddStudentToGroupCommand command;
     public AddStudentToGroupHandlerTests()
     {
         command = new AddStudentToGroupCommand(Guid.NewGuid(), "studentId");

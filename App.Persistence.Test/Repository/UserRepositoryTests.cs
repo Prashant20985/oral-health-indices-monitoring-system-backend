@@ -3,16 +3,16 @@ using App.Domain.Models.Users;
 using App.Persistence.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using MockQueryable.EntityFrameworkCore;
+using MockQueryable.Moq;
 using Moq;
 
 namespace App.Persistence.Test.Repository;
 
 public class UserRepositoryTests
 {
-    private readonly ApplicationUser applicationUser;
-    private readonly Mock<UserManager<ApplicationUser>> userManagerMock;
     private readonly UserRepository userRepository;
+    private readonly Mock<UserManager<ApplicationUser>> userManagerMock;
+    private readonly ApplicationUser applicationUser;
 
     public UserRepositoryTests()
     {
@@ -20,7 +20,7 @@ public class UserRepositoryTests
         var mapper = mapperConfig.CreateMapper();
         userManagerMock = GetUserManagerMock();
         userRepository = new UserRepository(userManagerMock.Object, mapper);
-        applicationUser = new ApplicationUser("user@test.com", "Test", "User", "741852963", null);
+        applicationUser = new("user@test.com", "Test", "User", "741852963", null);
     }
 
     [Fact]
@@ -30,7 +30,7 @@ public class UserRepositoryTests
         var role = "UserRole";
 
         userManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<ApplicationUser>(), role))
-            .ReturnsAsync(IdentityResult.Success);
+                       .ReturnsAsync(IdentityResult.Success);
 
         // Act
         var result = await userRepository.AddApplicationUserToRoleAsync(applicationUser, role);
@@ -46,10 +46,10 @@ public class UserRepositoryTests
         var role = "UserRole";
 
         userManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<ApplicationUser>(), role))
-            .ReturnsAsync(IdentityResult.Success);
+                       .ReturnsAsync(IdentityResult.Success);
 
         userManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<ApplicationUser>(), role))
-            .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "Role assignment failed" }));
+                           .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "Role assignment failed" }));
 
         // Act
         var result = await userRepository.AddApplicationUserToRoleAsync(applicationUser, role);
@@ -68,7 +68,7 @@ public class UserRepositoryTests
         var newPassword = "NewPass";
 
         userManagerMock.Setup(x => x.ChangePasswordAsync(It.IsAny<ApplicationUser>(), currentPassword, newPassword))
-            .ReturnsAsync(IdentityResult.Success);
+                       .ReturnsAsync(IdentityResult.Success);
 
         // Act
         var result = await userRepository.ChangePassword(applicationUser, currentPassword, newPassword);
@@ -85,7 +85,7 @@ public class UserRepositoryTests
         var newPassword = "NewPass";
 
         userManagerMock.Setup(x => x.ChangePasswordAsync(It.IsAny<ApplicationUser>(), currentPassword, newPassword))
-            .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "Failed to change password" }));
+                       .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "Failed to change password" }));
 
         // Act
         var result = await userRepository.ChangePassword(applicationUser, currentPassword, newPassword);
@@ -103,7 +103,7 @@ public class UserRepositoryTests
         var password = "CorrectPassword";
 
         userManagerMock.Setup(x => x.CheckPasswordAsync(applicationUser, password))
-            .ReturnsAsync(true);
+                       .ReturnsAsync(true);
 
         // Act
         var result = await userRepository.CheckPassword(applicationUser, password);
@@ -119,7 +119,7 @@ public class UserRepositoryTests
         var password = "IncorrectPassword";
 
         userManagerMock.Setup(x => x.CheckPasswordAsync(applicationUser, password))
-            .ReturnsAsync(false);
+                       .ReturnsAsync(false);
 
         // Act
         var result = await userRepository.CheckPassword(applicationUser, password);
@@ -135,7 +135,7 @@ public class UserRepositoryTests
         var password = "TestPassword";
 
         userManagerMock.Setup(x => x.CreateAsync(applicationUser, password))
-            .ReturnsAsync(IdentityResult.Success);
+                       .ReturnsAsync(IdentityResult.Success);
 
         // Act
         var result = await userRepository.CreateApplicationUserAsync(applicationUser, password);
@@ -151,7 +151,7 @@ public class UserRepositoryTests
         var password = "TestPassword";
 
         userManagerMock.Setup(x => x.CreateAsync(applicationUser, password))
-            .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "An error occurred." }));
+                       .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "An error occurred." }));
 
         // Act
         var result = await userRepository.CreateApplicationUserAsync(applicationUser, password);
@@ -168,7 +168,7 @@ public class UserRepositoryTests
         var resetPasswordToken = "TestToken";
 
         userManagerMock.Setup(x => x.GeneratePasswordResetTokenAsync(applicationUser))
-            .ReturnsAsync(resetPasswordToken);
+                       .ReturnsAsync(resetPasswordToken);
 
         // Act
         var result = await userRepository.GenerateResetPasswordToken(applicationUser);
@@ -248,7 +248,7 @@ public class UserRepositoryTests
         var role = new ApplicationRole { Name = "Admin" };
         applicationUser.ApplicationUserRoles.Add(new ApplicationUserRole { ApplicationRole = role });
 
-        var applicationUsers = new List<ApplicationUser> { applicationUser };
+        var applicationUsers = new List<ApplicationUser>() { applicationUser };
         var mockUserQueryable = applicationUsers.AsQueryable().BuildMock();
 
         userManagerMock.Setup(um => um.Users).Returns(mockUserQueryable);
@@ -272,7 +272,7 @@ public class UserRepositoryTests
         applicationUser.ApplicationUserRoles.Add(new ApplicationUserRole { ApplicationRole = role });
         applicationUser.RefreshTokens.Add(refreshToken);
 
-        var applicationUsers = new List<ApplicationUser> { applicationUser };
+        var applicationUsers = new List<ApplicationUser>() { applicationUser };
         var mockUserQueryable = applicationUsers.AsQueryable().BuildMock();
 
         userManagerMock.Setup(um => um.Users).Returns(mockUserQueryable);
@@ -358,8 +358,7 @@ public class UserRepositoryTests
     private static Mock<UserManager<ApplicationUser>> GetUserManagerMock()
     {
         var storeMock = new Mock<IUserStore<ApplicationUser>>();
-        Mock<UserManager<ApplicationUser>> userManagerMock =
-            new(storeMock.Object, null, null, null, null, null, null, null, null);
+        Mock<UserManager<ApplicationUser>> userManagerMock = new(storeMock.Object, null, null, null, null, null, null, null, null);
 
         return userManagerMock;
     }

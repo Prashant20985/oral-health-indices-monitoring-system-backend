@@ -23,7 +23,7 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
     public CreatePatientExaminationCardByDoctorHandlerTests()
     {
         MapperConfiguration mapperConfiguration = new(cfg => cfg.AddProfile<MappingProfile>());
-        var mapper = mapperConfiguration.CreateMapper();
+        IMapper mapper = mapperConfiguration.CreateMapper();
 
         var riskFactorAssesmentModel = new RiskFactorAssessmentModel();
 
@@ -45,7 +45,7 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
                     Tooth_17 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                     Tooth_16 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                     Tooth_15 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
-                    Tooth_14 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" }
+                    Tooth_14 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                 },
                 Sectant2 = new Sectant2
                 {
@@ -54,21 +54,21 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
                     Tooth_11 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
                     Tooth_21 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
                     Tooth_22 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
-                    Tooth_23 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" }
+                    Tooth_23 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
                 },
                 Sectant3 = new Sectant3
                 {
                     Tooth_24 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                     Tooth_25 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                     Tooth_26 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
-                    Tooth_27 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" }
+                    Tooth_27 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                 },
                 Sectant4 = new Sectant4
                 {
                     Tooth_34 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                     Tooth_35 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                     Tooth_36 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
-                    Tooth_37 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" }
+                    Tooth_37 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                 },
                 Sectant5 = new Sectant5
                 {
@@ -77,14 +77,14 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
                     Tooth_41 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
                     Tooth_31 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
                     Tooth_32 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
-                    Tooth_33 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" }
+                    Tooth_33 = new FourSurfaceTooth { B = "2", L = "3", D = "3", M = "3" },
                 },
                 Sectant6 = new Sectant6
                 {
                     Tooth_47 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                     Tooth_46 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                     Tooth_45 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
-                    Tooth_44 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" }
+                    Tooth_44 = new FiveSurfaceToothBEWE { O = "1", B = "2", L = "3", D = "3", M = "3" },
                 }
             }
         };
@@ -103,7 +103,7 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
                     Value4 = "+",
                     Value5 = "+",
                     Value6 = "-",
-                    Value7 = "+"
+                    Value7 = "+",
                 },
                 Quadrant2 = new Quadrant
                 {
@@ -113,7 +113,7 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
                     Value4 = "+",
                     Value5 = "+",
                     Value6 = "-",
-                    Value7 = "+"
+                    Value7 = "+",
                 },
                 Quadrant3 = new Quadrant
                 {
@@ -123,7 +123,7 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
                     Value4 = "+",
                     Value5 = "+",
                     Value6 = "-",
-                    Value7 = "+"
+                    Value7 = "+",
                 },
                 Quadrant4 = new Quadrant
                 {
@@ -133,7 +133,7 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
                     Value4 = "+",
                     Value5 = "+",
                     Value6 = "-",
-                    Value7 = "+"
+                    Value7 = "+",
                 }
             }
         };
@@ -159,7 +159,7 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
                     Value4 = "-",
                     Value5 = "+",
                     Value6 = "+",
-                    Value7 = "-"
+                    Value7 = "-",
                 },
                 Quadrant2 = new Quadrant
                 {
@@ -169,7 +169,7 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
                     Value4 = "-",
                     Value5 = "+",
                     Value6 = "+",
-                    Value7 = "-"
+                    Value7 = "-",
                 },
                 Quadrant3 = new Quadrant
                 {
@@ -179,7 +179,7 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
                     Value4 = "-",
                     Value5 = "+",
                     Value6 = "+",
-                    Value7 = "-"
+                    Value7 = "-",
                 },
                 Quadrant4 = new Quadrant
                 {
@@ -189,7 +189,7 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
                     Value4 = "-",
                     Value5 = "+",
                     Value6 = "+",
-                    Value7 = "-"
+                    Value7 = "-",
                 }
             }
         };
@@ -231,8 +231,7 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
     public async Task Handle_WhenPatientExists_ShouldReturnSuccessResult()
     {
         // Arrange
-        var patient = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 18, "test", "test",
-            "test", "test", 1, "doctorId");
+        var patient = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 18, "test", "test", "test", "test", 1, "doctorId");
         var applicationRoleDoctor = new ApplicationRole { Name = "Dentist_Teacher_Researcher" };
         var applicationUserDoctor = new ApplicationUser("test2@test.com", "Jhon", "Doe", "741852863", null)
         {
@@ -249,11 +248,9 @@ public class CreatePatientExaminationCardByDoctorHandlerTests : TestHelper
         patientExaminationCardRepositoryMock.Setup(x => x.AddAPI(It.IsAny<API>()));
         patientExaminationCardRepositoryMock.Setup(x => x.AddBleeding(It.IsAny<Bleeding>()));
         patientExaminationCardRepositoryMock.Setup(x => x.AddDMFT_DMFS(It.IsAny<DMFT_DMFS>()));
-        patientExaminationCardRepositoryMock.Setup(x =>
-            x.AddPatientExaminationResult(It.IsAny<PatientExaminationResult>()));
+        patientExaminationCardRepositoryMock.Setup(x => x.AddPatientExaminationResult(It.IsAny<PatientExaminationResult>()));
         patientExaminationCardRepositoryMock.Setup(x => x.AddRiskFactorAssessment(It.IsAny<RiskFactorAssessment>()));
-        patientExaminationCardRepositoryMock.Setup(x =>
-            x.AddPatientExaminationCard(It.IsAny<PatientExaminationCard>()));
+        patientExaminationCardRepositoryMock.Setup(x => x.AddPatientExaminationCard(It.IsAny<PatientExaminationCard>()));
 
         // Act
         var result = await handler.Handle(command, CancellationToken.None);

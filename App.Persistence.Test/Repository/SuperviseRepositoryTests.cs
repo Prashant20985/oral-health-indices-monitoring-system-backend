@@ -20,11 +20,11 @@ public class SuperviseRepositoryTests
         var mapperConfig = new MapperConfiguration(cfg =>
         {
             cfg.CreateMap<ApplicationUser, StudentResponseDto>()
-                .ForMember(x => x.Groups, o => o.MapFrom(s => s.StudentGroups
-                    .Select(x => x.Group.GroupName).ToList()));
+            .ForMember(x => x.Groups, o => o.MapFrom(s => s.StudentGroups
+            .Select(x => x.Group.GroupName).ToList()));
             cfg.CreateMap<ApplicationUser, SupervisingDoctorResponseDto>()
-                .ForMember(x => x.Id, o => o.MapFrom(s => s.Id))
-                .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.FirstName} {s.LastName}"));
+            .ForMember(x => x.Id, o => o.MapFrom(s => (s.Id)))
+            .ForMember(x => x.DoctorName, o => o.MapFrom(s => $"{s.FirstName} {s.LastName}"));
         });
         var mapper = mapperConfig.CreateMapper();
         _superviseRepository = new SuperviseRepository(_mockOralEhrContext.Object, mapper);
@@ -39,8 +39,8 @@ public class SuperviseRepositoryTests
         var supervise = new Supervise(doctorId, studentId);
 
         var supervises = new List<Supervise> { supervise }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Supervises).Returns(supervises.Object);
 
@@ -52,8 +52,7 @@ public class SuperviseRepositoryTests
     }
 
     [Fact]
-    public async Task
-        CheckStudentAlreadyUnderDoctorSupervision_ShouldReturnTrue_WhenStudentAlreadyUnderDoctorSupervision()
+    public async Task CheckStudentAlreadyUnderDoctorSupervision_ShouldReturnTrue_WhenStudentAlreadyUnderDoctorSupervision()
     {
         // Arrange
         var doctorId = "doctorId";
@@ -61,8 +60,8 @@ public class SuperviseRepositoryTests
         var supervise = new Supervise(doctorId, studentId);
 
         var supervises = new List<Supervise> { supervise }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Supervises).Returns(supervises.Object);
 
@@ -82,8 +81,8 @@ public class SuperviseRepositoryTests
         var supervise = new Supervise(doctorId, studentId);
 
         var supervises = new List<Supervise> { supervise }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Supervises).Returns(supervises.Object);
 
@@ -100,19 +99,19 @@ public class SuperviseRepositoryTests
         // Arrange
         var applicationUserRoles = new List<ApplicationUserRole>
         {
-            new() { ApplicationRole = new ApplicationRole { Name = "Doctor" } }
+            new ApplicationUserRole { ApplicationRole =  new ApplicationRole { Name = "Doctor"}}
         };
 
         var doctor = new ApplicationUser("test1@test.com", "Test1", "User1", "74185521", "comment")
-            { ApplicationUserRoles = applicationUserRoles };
+        { ApplicationUserRoles = applicationUserRoles };
 
         var applicationUserRoles1 = new List<ApplicationUserRole>
         {
-            new() { ApplicationRole = new ApplicationRole { Name = "Student" } }
+            new ApplicationUserRole { ApplicationRole =  new ApplicationRole { Name = "Student"}}
         };
 
         var student = new ApplicationUser("test@test.com", "Test", "User", "7418552", "comment")
-            { ApplicationUserRoles = applicationUserRoles1 };
+        { ApplicationUserRoles = applicationUserRoles1 };
 
 
         var group = new Group(doctor.Id, "test");
@@ -126,24 +125,24 @@ public class SuperviseRepositoryTests
         supervise.Student = student;
 
         var students = new List<ApplicationUser> { student, doctor }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var mockApplicationUserRoles = applicationUserRoles.AsQueryable().BuildMockDbSet();
 
         var mockApplicationUserRoles1 = applicationUserRoles1.AsQueryable().BuildMockDbSet();
 
         var groups = new List<Group> { group }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var studentGroups = new List<StudentGroup> { studentGroup }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var supervises = new List<Supervise> { supervise }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Supervises).Returns(supervises.Object);
         _mockOralEhrContext.Setup(x => x.Users).Returns(students.Object);
@@ -169,11 +168,11 @@ public class SuperviseRepositoryTests
         // Arrange
         var applicationUserRoles = new List<ApplicationUserRole>
         {
-            new() { ApplicationRole = new ApplicationRole { Name = "Doctor" } }
+            new ApplicationUserRole { ApplicationRole = new ApplicationRole { Name = "Doctor" } }
         };
 
         var doctor = new ApplicationUser("test1@test.com", "Test1", "User1", "74185521", "comment")
-            { ApplicationUserRoles = applicationUserRoles };
+        { ApplicationUserRoles = applicationUserRoles };
 
         var emptyStudentList = new List<ApplicationUser>().AsQueryable().BuildMockDbSet();
 
@@ -205,19 +204,19 @@ public class SuperviseRepositoryTests
         // Arrange
         var applicationUserRoles = new List<ApplicationUserRole>
         {
-            new() { ApplicationRole = new ApplicationRole { Name = "Doctor" } }
+            new ApplicationUserRole { ApplicationRole =  new ApplicationRole { Name = "Doctor"}}
         };
 
         var doctor = new ApplicationUser("test1@test.com", "Test1", "User1", "74185521", "comment")
-            { ApplicationUserRoles = applicationUserRoles };
+        { ApplicationUserRoles = applicationUserRoles };
 
         var applicationUserRoles1 = new List<ApplicationUserRole>
         {
-            new() { ApplicationRole = new ApplicationRole { Name = "Student" } }
+            new ApplicationUserRole { ApplicationRole =  new ApplicationRole { Name = "Student"}}
         };
 
         var student = new ApplicationUser("test@test.com", "Test", "User", "7418552", "comment")
-            { ApplicationUserRoles = applicationUserRoles1 };
+        { ApplicationUserRoles = applicationUserRoles1 };
 
 
         var group = new Group(doctor.Id, "test");
@@ -231,24 +230,24 @@ public class SuperviseRepositoryTests
         supervise.Student = student;
 
         var students = new List<ApplicationUser> { student, doctor }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var mockApplicationUserRoles = applicationUserRoles.AsQueryable().BuildMockDbSet();
 
         var mockApplicationUserRoles1 = applicationUserRoles1.AsQueryable().BuildMockDbSet();
 
         var groups = new List<Group> { group }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var studentGroups = new List<StudentGroup> { studentGroup }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var supervises = new List<Supervise> { supervise }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Supervises).Returns(supervises.Object);
         _mockOralEhrContext.Setup(x => x.Users).Returns(students.Object);
@@ -275,11 +274,11 @@ public class SuperviseRepositoryTests
         // Arrange
         var applicationUserRoles = new List<ApplicationUserRole>
         {
-            new() { ApplicationRole = new ApplicationRole { Name = "Doctor" } }
+            new ApplicationUserRole { ApplicationRole = new ApplicationRole { Name = "Doctor" } }
         };
 
         var doctor = new ApplicationUser("test1@test.com", "Test1", "User1", "74185521", "comment")
-            { ApplicationUserRoles = applicationUserRoles };
+        { ApplicationUserRoles = applicationUserRoles };
 
         var emptyStudentList = new List<ApplicationUser>().AsQueryable().BuildMockDbSet();
 
@@ -314,8 +313,8 @@ public class SuperviseRepositoryTests
         var supervise = new Supervise(doctorId, studentId);
 
         var supervises = new List<Supervise> { supervise }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Supervises).Returns(supervises.Object);
 
@@ -335,8 +334,8 @@ public class SuperviseRepositoryTests
         var supervise = new Supervise(doctorId, studentId);
 
         var supervises = new List<Supervise> { supervise }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Supervises).Returns(supervises.Object);
 
@@ -359,8 +358,8 @@ public class SuperviseRepositoryTests
         var supervise = new Supervise(doctorId, studentId);
 
         var supervises = new List<Supervise> { supervise }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Supervises).Returns(supervises.Object);
 
@@ -377,28 +376,28 @@ public class SuperviseRepositoryTests
         // Arrange
         var applicationUserRoles = new List<ApplicationUserRole>
         {
-            new() { ApplicationRole = new ApplicationRole { Name = "Doctor" } }
+            new ApplicationUserRole { ApplicationRole =  new ApplicationRole { Name = "Doctor"}}
         };
 
         var doctor = new ApplicationUser("test1@test.com", "Test1", "User1", "74185521", "comment")
-            { ApplicationUserRoles = applicationUserRoles };
+        { ApplicationUserRoles = applicationUserRoles };
 
         var doctor2 = new ApplicationUser("test4@test.com", "Test4", "User4", "74185521", "comment")
-            { ApplicationUserRoles = applicationUserRoles };
+        { ApplicationUserRoles = applicationUserRoles };
 
         var applicationUserRoles1 = new List<ApplicationUserRole>
         {
-            new() { ApplicationRole = new ApplicationRole { Name = "Student" } }
+            new ApplicationUserRole { ApplicationRole =  new ApplicationRole { Name = "Student"}}
         };
 
         var student = new ApplicationUser("test@test.com", "Test", "User", "7418552", "comment")
-            { ApplicationUserRoles = applicationUserRoles1 };
+        { ApplicationUserRoles = applicationUserRoles1 };
 
         var student2 = new ApplicationUser("test2@test.com", "Test2", "User2", "7418552", "comment")
-            { ApplicationUserRoles = applicationUserRoles1 };
+        { ApplicationUserRoles = applicationUserRoles1 };
 
         var student3 = new ApplicationUser("test3@test.com", "Tes3t", "User3", "7418552", "comment")
-            { ApplicationUserRoles = applicationUserRoles1 };
+        { ApplicationUserRoles = applicationUserRoles1 };
 
         var supervise = new Supervise(doctor.Id, student.Id);
 
@@ -413,16 +412,16 @@ public class SuperviseRepositoryTests
         student2.SuperviseStudentNavigation = new List<Supervise> { supervise2 };
 
         var users = new List<ApplicationUser> { student, doctor, student2, student3, doctor2 }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var mockApplicationUserRoles = applicationUserRoles.AsQueryable().BuildMockDbSet();
 
         var mockApplicationUserRoles1 = applicationUserRoles1.AsQueryable().BuildMockDbSet();
 
         var supervises = new List<Supervise> { supervise }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Supervises).Returns(supervises.Object);
         _mockOralEhrContext.Setup(x => x.Users).Returns(users.Object);
@@ -443,28 +442,27 @@ public class SuperviseRepositoryTests
     }
 
     [Fact]
-    public void
-        GetAllStudentsNotUnderSupervisionByDoctorId_ShouldReturnEmpty_WhenAllStudentsAreUnderSupervisionOfDoctor()
+    public void GetAllStudentsNotUnderSupervisionByDoctorId_ShouldReturnEmpty_WhenAllStudentsAreUnderSupervisionOfDoctor()
     {
         // Arrange
         var applicationUserRoles = new List<ApplicationUserRole>
         {
-            new() { ApplicationRole = new ApplicationRole { Name = "Doctor" } }
+            new ApplicationUserRole { ApplicationRole =  new ApplicationRole { Name = "Doctor"}}
         };
 
         var doctor = new ApplicationUser("test1@test.com", "Test1", "User1", "74185521", "comment")
-            { ApplicationUserRoles = applicationUserRoles };
+        { ApplicationUserRoles = applicationUserRoles };
 
         var applicationUserRoles1 = new List<ApplicationUserRole>
         {
-            new() { ApplicationRole = new ApplicationRole { Name = "Student" } }
+            new ApplicationUserRole { ApplicationRole =  new ApplicationRole { Name = "Student"}}
         };
 
         var student = new ApplicationUser("test@test.com", "Test", "User", "7418552", "comment")
-            { ApplicationUserRoles = applicationUserRoles1 };
+        { ApplicationUserRoles = applicationUserRoles1 };
 
         var student2 = new ApplicationUser("test2@test.com", "Test2", "User2", "7418552", "comment")
-            { ApplicationUserRoles = applicationUserRoles1 };
+        { ApplicationUserRoles = applicationUserRoles1 };
 
         var supervise = new Supervise(doctor.Id, student.Id);
 
@@ -479,16 +477,16 @@ public class SuperviseRepositoryTests
         student2.SuperviseStudentNavigation = new List<Supervise> { supervise2 };
 
         var users = new List<ApplicationUser> { student, doctor, student2 }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var mockApplicationUserRoles = applicationUserRoles.AsQueryable().BuildMockDbSet();
 
         var mockApplicationUserRoles1 = applicationUserRoles1.AsQueryable().BuildMockDbSet();
 
         var supervises = new List<Supervise> { supervise }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Supervises).Returns(supervises.Object);
         _mockOralEhrContext.Setup(x => x.Users).Returns(users.Object);

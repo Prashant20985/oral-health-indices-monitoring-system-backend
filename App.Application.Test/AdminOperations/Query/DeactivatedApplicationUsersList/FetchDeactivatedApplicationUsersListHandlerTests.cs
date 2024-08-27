@@ -1,7 +1,7 @@
 ﻿using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
 using App.Application.AdminOperations.Query.DeactivatedApplicationUsersList;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
-using MockQueryable.EntityFrameworkCore;
+using MockQueryable.Moq;
 using Moq;
 
 namespace App.Application.Test.AdminOperations.Query.DeactivatedApplicationUsersList;
@@ -16,35 +16,30 @@ public class FetchDeactivatedApplicationUsersListHandlerTests : TestHelper
         {
             FirstName = "Jhon",
             LastName = "Doe",
-            IsAccountActive = true
+            IsAccountActive = true,
         };
 
         var user2 = new ApplicationUserResponseDto
         {
             FirstName = "Bruce",
             LastName = "Wayne",
-            IsAccountActive = false
+            IsAccountActive = false,
         };
 
         var users = new List<ApplicationUserResponseDto> { user1, user2 };
-        var filteredUsers = new PaginatedApplicationUserResponseDto
-            { Users = new List<ApplicationUserResponseDto> { user1 }, TotalUsersCount = 1 };
+        var filteredUsers = new PaginatedApplicationUserResponseDto { Users = new List<ApplicationUserResponseDto> { user1 }, TotalUsersCount = 1 };
 
-        userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery("testUser"))
-            .Returns(users.AsQueryable().BuildMock());
+        userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery("testUser")).Returns(users.AsQueryable().BuildMock());
 
         queryFilterMock.Setup(filter =>
-                filter.ApplyFilters(It.IsAny<IQueryable<ApplicationUserResponseDto>>(),
-                    It.IsAny<ApplicationUserPaginationAndSearchParams>(), CancellationToken.None))
-            .ReturnsAsync((IQueryable<ApplicationUserResponseDto> query, ApplicationUserPaginationAndSearchParams param,
-                CancellationToken ct) =>
+                filter.ApplyFilters(It.IsAny<IQueryable<ApplicationUserResponseDto>>(), It.IsAny<ApplicationUserPaginationAndSearchParams>(), CancellationToken.None))
+            .ReturnsAsync((IQueryable<ApplicationUserResponseDto> query, ApplicationUserPaginationAndSearchParams param, CancellationToken ct) =>
             {
                 return filteredUsers;
             });
 
         var query = new FetchDeactivatedApplicationUsersListQuery(new ApplicationUserPaginationAndSearchParams());
-        var handler =
-            new FetchDeactivatedApplicationUsersListHandler(userRepositoryMock.Object, queryFilterMock.Object);
+        var handler = new FetchDeactivatedApplicationUsersListHandler(userRepositoryMock.Object, queryFilterMock.Object);
 
         // Act 
         var result = await handler.Handle(query, CancellationToken.None);

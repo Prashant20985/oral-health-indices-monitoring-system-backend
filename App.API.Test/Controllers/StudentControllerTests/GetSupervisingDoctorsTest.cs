@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using App.Application.Core;
+﻿using App.Application.Core;
 using App.Application.StudentOperations.Query.SupervisingDoctors;
 using App.Domain.DTOs.SuperviseDtos.Response;
 using App.Domain.Models.Users;
@@ -7,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Security.Claims;
 
 namespace App.API.Test.Controllers.StudentControllerTests;
 
@@ -42,12 +42,12 @@ public class GetSupervisingDoctorsTest
 
         var expectedSupervisingDoctors = new List<SupervisingDoctorResponseDto>
         {
-            new()
+            new SupervisingDoctorResponseDto
             {
                 Id = supervisor1.Id,
                 DoctorName = $"{supervisor1.FirstName} {supervisor1.LastName}"
             },
-            new()
+            new SupervisingDoctorResponseDto
             {
                 Id = supervisor2.Id,
                 DoctorName = $"{supervisor2.FirstName} {supervisor2.LastName}"

@@ -43,7 +43,7 @@ public class PatientExaminationCardRepositoryTests
 
         var patientExaminationResult = new PatientExaminationResult(bewe.Id, dmft_dmfs.Id, api.Id, bleeding.Id)
         {
-            API = api
+            API = api,
         };
 
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid())
@@ -54,28 +54,28 @@ public class PatientExaminationCardRepositoryTests
         patientExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 
         var apis = new List<API> { api }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bewes = new List<Bewe> { bewe }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var dmft_dmfses = new List<DMFT_DMFS> { dmft_dmfs }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bleedings = new List<Bleeding> { bleeding }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationResults = new List<PatientExaminationResult> { patientExaminationResult }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Bewes).Returns(bewes.Object);
         _mockOralEhrContext.Setup(x => x.Bleedings).Returns(bleedings.Object);
@@ -111,7 +111,7 @@ public class PatientExaminationCardRepositoryTests
 
         var patientExaminationResult = new PatientExaminationResult(bewe.Id, dmft_dmfs.Id, api.Id, bleeding.Id)
         {
-            API = api
+            API = api,
         };
 
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid())
@@ -122,28 +122,28 @@ public class PatientExaminationCardRepositoryTests
         patientExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 
         var apis = new List<API> { api }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bewes = new List<Bewe> { bewe }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var dmft_dmfses = new List<DMFT_DMFS> { dmft_dmfs }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bleedings = new List<Bleeding> { bleeding }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationResults = new List<PatientExaminationResult> { patientExaminationResult }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Bewes).Returns(bewes.Object);
         _mockOralEhrContext.Setup(x => x.Bleedings).Returns(bleedings.Object);
@@ -170,7 +170,7 @@ public class PatientExaminationCardRepositoryTests
 
         var patientExaminationResult = new PatientExaminationResult(bewe.Id, dmft_dmfs.Id, api.Id, bleeding.Id)
         {
-            Bewe = bewe
+            Bewe = bewe,
         };
 
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid())
@@ -181,28 +181,28 @@ public class PatientExaminationCardRepositoryTests
         patientExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 
         var apis = new List<API> { api }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bewes = new List<Bewe> { bewe }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var dmft_dmfses = new List<DMFT_DMFS> { dmft_dmfs }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bleedings = new List<Bleeding> { bleeding }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationResults = new List<PatientExaminationResult> { patientExaminationResult }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Bewes).Returns(bewes.Object);
         _mockOralEhrContext.Setup(x => x.Bleedings).Returns(bleedings.Object);
@@ -231,7 +231,7 @@ public class PatientExaminationCardRepositoryTests
 
         var patientExaminationResult = new PatientExaminationResult(bewe.Id, dmft_dmfs.Id, api.Id, bleeding.Id)
         {
-            Bewe = bewe
+            Bewe = bewe,
         };
 
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid())
@@ -242,28 +242,28 @@ public class PatientExaminationCardRepositoryTests
         patientExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 
         var apis = new List<API> { api }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bewes = new List<Bewe> { bewe }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var dmft_dmfses = new List<DMFT_DMFS> { dmft_dmfs }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bleedings = new List<Bleeding> { bleeding }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationResults = new List<PatientExaminationResult> { patientExaminationResult }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Bewes).Returns(bewes.Object);
         _mockOralEhrContext.Setup(x => x.Bleedings).Returns(bleedings.Object);
@@ -290,7 +290,7 @@ public class PatientExaminationCardRepositoryTests
 
         var patientExaminationResult = new PatientExaminationResult(bewe.Id, dmft_dmfs.Id, api.Id, bleeding.Id)
         {
-            DMFT_DMFS = dmft_dmfs
+            DMFT_DMFS = dmft_dmfs,
         };
 
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid())
@@ -301,28 +301,28 @@ public class PatientExaminationCardRepositoryTests
         patientExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 
         var apis = new List<API> { api }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bewes = new List<Bewe> { bewe }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var dmft_dmfses = new List<DMFT_DMFS> { dmft_dmfs }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bleedings = new List<Bleeding> { bleeding }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationResults = new List<PatientExaminationResult> { patientExaminationResult }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Bewes).Returns(bewes.Object);
         _mockOralEhrContext.Setup(x => x.Bleedings).Returns(bleedings.Object);
@@ -351,7 +351,7 @@ public class PatientExaminationCardRepositoryTests
 
         var patientExaminationResult = new PatientExaminationResult(bewe.Id, dmft_dmfs.Id, api.Id, bleeding.Id)
         {
-            DMFT_DMFS = dmft_dmfs
+            DMFT_DMFS = dmft_dmfs,
         };
 
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid())
@@ -362,28 +362,28 @@ public class PatientExaminationCardRepositoryTests
         patientExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 
         var apis = new List<API> { api }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bewes = new List<Bewe> { bewe }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var dmft_dmfses = new List<DMFT_DMFS> { dmft_dmfs }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bleedings = new List<Bleeding> { bleeding }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationResults = new List<PatientExaminationResult> { patientExaminationResult }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Bewes).Returns(bewes.Object);
         _mockOralEhrContext.Setup(x => x.Bleedings).Returns(bleedings.Object);
@@ -410,7 +410,7 @@ public class PatientExaminationCardRepositoryTests
 
         var patientExaminationResult = new PatientExaminationResult(bewe.Id, dmft_dmfs.Id, api.Id, bleeding.Id)
         {
-            Bleeding = bleeding
+            Bleeding = bleeding,
         };
 
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid())
@@ -421,28 +421,28 @@ public class PatientExaminationCardRepositoryTests
         patientExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 
         var apis = new List<API> { api }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bewes = new List<Bewe> { bewe }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var dmft_dmfses = new List<DMFT_DMFS> { dmft_dmfs }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bleedings = new List<Bleeding> { bleeding }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationResults = new List<PatientExaminationResult> { patientExaminationResult }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Bewes).Returns(bewes.Object);
         _mockOralEhrContext.Setup(x => x.Bleedings).Returns(bleedings.Object);
@@ -471,7 +471,7 @@ public class PatientExaminationCardRepositoryTests
 
         var patientExaminationResult = new PatientExaminationResult(bewe.Id, dmft_dmfs.Id, api.Id, bleeding.Id)
         {
-            Bleeding = bleeding
+            Bleeding = bleeding,
         };
 
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid())
@@ -482,28 +482,28 @@ public class PatientExaminationCardRepositoryTests
         patientExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 
         var apis = new List<API> { api }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bewes = new List<Bewe> { bewe }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var dmft_dmfses = new List<DMFT_DMFS> { dmft_dmfs }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bleedings = new List<Bleeding> { bleeding }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationResults = new List<PatientExaminationResult> { patientExaminationResult }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Bewes).Returns(bewes.Object);
         _mockOralEhrContext.Setup(x => x.Bleedings).Returns(bleedings.Object);
@@ -526,8 +526,8 @@ public class PatientExaminationCardRepositoryTests
         var patientExaminationCard = new PatientExaminationCard(patientId);
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
 
@@ -547,8 +547,8 @@ public class PatientExaminationCardRepositoryTests
         var patientExaminationCard = new PatientExaminationCard(patientId);
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
 
@@ -567,16 +567,16 @@ public class PatientExaminationCardRepositoryTests
 
         var patientExaminationCardDto = new PatientExaminationCardDto
         {
-            Id = patientExaminationCard.Id
+            Id = patientExaminationCard.Id,
         };
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationCardDtos = new List<PatientExaminationCardDto> { patientExaminationCardDto }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
 
@@ -596,16 +596,16 @@ public class PatientExaminationCardRepositoryTests
 
         var patientExaminationCardDto = new PatientExaminationCardDto
         {
-            Id = patientExaminationCard.Id
+            Id = patientExaminationCard.Id,
         };
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationCardDtos = new List<PatientExaminationCardDto> { patientExaminationCardDto }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
 
@@ -626,16 +626,16 @@ public class PatientExaminationCardRepositoryTests
 
         var patientExaminationCardDto = new PatientExaminationCardDto
         {
-            Id = patientExaminationCard.Id
+            Id = patientExaminationCard.Id,
         };
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationCardDtos = new List<PatientExaminationCardDto> { patientExaminationCardDto }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
 
@@ -662,12 +662,12 @@ public class PatientExaminationCardRepositoryTests
         patientExaminationCard.SetRiskFactorAssesmentId(riskFactorAssessment.Id);
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var riskFactorAssessments = new List<RiskFactorAssessment> { riskFactorAssessment }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
         _mockOralEhrContext.Setup(x => x.RiskFactorAssessments).Returns(riskFactorAssessments.Object);
@@ -695,12 +695,12 @@ public class PatientExaminationCardRepositoryTests
         patientExaminationCard.SetRiskFactorAssesmentId(riskFactorAssessment.Id);
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var riskFactorAssessments = new List<RiskFactorAssessment> { riskFactorAssessment }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
         _mockOralEhrContext.Setup(x => x.RiskFactorAssessments).Returns(riskFactorAssessments.Object);
@@ -718,8 +718,8 @@ public class PatientExaminationCardRepositoryTests
         var api = new API();
 
         var apis = new List<API> { api }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.APIs).Returns(apis.Object);
 
@@ -736,8 +736,8 @@ public class PatientExaminationCardRepositoryTests
         var bewe = new Bewe();
 
         var bewes = new List<Bewe> { bewe }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Bewes).Returns(bewes.Object);
 
@@ -754,8 +754,8 @@ public class PatientExaminationCardRepositoryTests
         var dmft_dmfs = new DMFT_DMFS();
 
         var dmft_dmfses = new List<DMFT_DMFS> { dmft_dmfs }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.DMFT_DMFSs).Returns(dmft_dmfses.Object);
 
@@ -772,8 +772,8 @@ public class PatientExaminationCardRepositoryTests
         var bleeding = new Bleeding();
 
         var bleedings = new List<Bleeding> { bleeding }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Bleedings).Returns(bleedings.Object);
 
@@ -791,8 +791,8 @@ public class PatientExaminationCardRepositoryTests
         var patientExaminationCard = new PatientExaminationCard(patientId);
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
 
@@ -800,8 +800,7 @@ public class PatientExaminationCardRepositoryTests
         await _patientExaminationCardRepository.AddPatientExaminationCard(patientExaminationCard);
 
         // Assert
-        _mockOralEhrContext.Verify(
-            x => x.PatientExaminationCards.AddAsync(patientExaminationCard, CancellationToken.None), Times.Once);
+        _mockOralEhrContext.Verify(x => x.PatientExaminationCards.AddAsync(patientExaminationCard, CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -817,8 +816,8 @@ public class PatientExaminationCardRepositoryTests
         var patientExaminationResult = new PatientExaminationResult(bewe.Id, dmft_dmfs.Id, api.Id, bleeding.Id);
 
         var patientExaminationResults = new List<PatientExaminationResult> { patientExaminationResult }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.PatientExaminationResults).Returns(patientExaminationResults.Object);
 
@@ -826,8 +825,7 @@ public class PatientExaminationCardRepositoryTests
         await _patientExaminationCardRepository.AddPatientExaminationResult(patientExaminationResult);
 
         // Assert
-        _mockOralEhrContext.Verify(
-            x => x.PatientExaminationResults.AddAsync(patientExaminationResult, CancellationToken.None), Times.Once);
+        _mockOralEhrContext.Verify(x => x.PatientExaminationResults.AddAsync(patientExaminationResult, CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -836,8 +834,8 @@ public class PatientExaminationCardRepositoryTests
         var riskFactorAssessment = new RiskFactorAssessment();
 
         var riskFactorAssessments = new List<RiskFactorAssessment> { riskFactorAssessment }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.RiskFactorAssessments).Returns(riskFactorAssessments.Object);
 
@@ -845,8 +843,7 @@ public class PatientExaminationCardRepositoryTests
         await _patientExaminationCardRepository.AddRiskFactorAssessment(riskFactorAssessment);
 
         // Assert
-        _mockOralEhrContext.Verify(x => x.RiskFactorAssessments.AddAsync(riskFactorAssessment, CancellationToken.None),
-            Times.Once);
+        _mockOralEhrContext.Verify(x => x.RiskFactorAssessments.AddAsync(riskFactorAssessment, CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -877,32 +874,32 @@ public class PatientExaminationCardRepositoryTests
         };
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var apis = new List<API> { api }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bewes = new List<Bewe> { bewe }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var dmft_dmfses = new List<DMFT_DMFS> { dmft_dmfs }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var bleedings = new List<Bleeding> { bleeding }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var patientExaminationResults = new List<PatientExaminationResult> { patientExaminationResult }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var riskFactorAssessments = new List<RiskFactorAssessment> { riskFactorAssessment }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Bewes).Returns(bewes.Object);
         _mockOralEhrContext.Setup(x => x.Bleedings).Returns(bleedings.Object);
@@ -932,8 +929,8 @@ public class PatientExaminationCardRepositoryTests
         patientExaminationCard.SetTestMode();
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
 
@@ -959,8 +956,8 @@ public class PatientExaminationCardRepositoryTests
         patientExaminationCard.SetRegularMode();
 
         var patientExaminationCards = new List<PatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.PatientExaminationCards).Returns(patientExaminationCards.Object);
 

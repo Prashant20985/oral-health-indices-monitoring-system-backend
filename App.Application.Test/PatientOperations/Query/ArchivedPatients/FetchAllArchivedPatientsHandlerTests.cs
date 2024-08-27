@@ -1,7 +1,7 @@
 ﻿using App.Application.PatientOperations.Query.ArchivedPatients;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.DTOs.PatientDtos.Response;
-using MockQueryable.EntityFrameworkCore;
+using MockQueryable.Moq;
 using Moq;
 
 namespace App.Application.Test.PatientOperations.Query.ArchivedPatients;
@@ -23,8 +23,8 @@ public class FetchAllArchivedPatientsHandlerTests : TestHelper
         // Arrange
         var archivedPatients = new List<PatientResponseDto>
         {
-            new() { Id = Guid.NewGuid(), FirstName = "test", LastName = "test", Email = "test@test.com" },
-            new() { Id = Guid.NewGuid(), FirstName = "test", LastName = "test", Email = "test@test.com" }
+                new PatientResponseDto { Id = Guid.NewGuid(), FirstName = "test", LastName = "test", Email = "test@test.com"},
+                new PatientResponseDto { Id = Guid.NewGuid(), FirstName = "test", LastName = "test", Email = "test@test.com"}
         }.AsQueryable().BuildMock();
 
         patientRepositoryMock.Setup(repo => repo.GetAllArchivedPatients())
@@ -40,4 +40,5 @@ public class FetchAllArchivedPatientsHandlerTests : TestHelper
         Assert.Equal(archivedPatients.Count(), fetchedPatients.Patients.Count);
         patientRepositoryMock.Verify(repo => repo.GetAllArchivedPatients(), Times.Once);
     }
+
 }

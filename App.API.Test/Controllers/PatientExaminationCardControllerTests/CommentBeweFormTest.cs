@@ -1,11 +1,11 @@
-﻿using System.Security.Claims;
-using App.Application.Core;
+﻿using App.Application.Core;
 using App.Application.PatientExaminationCardOperations.Command.CommentBeweForm;
 using App.Domain.Models.OralHealthExamination;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Security.Claims;
 
 namespace App.API.Test.Controllers.PatientExaminationCardControllerTests;
 
@@ -22,12 +22,12 @@ public class CommentBeweFormTest
 
         var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new(ClaimTypes.Role, "Student")
-        }, "mock"));
+                new Claim(ClaimTypes.Role, "Student")
+           }, "mock"));
 
-        _patientExaminationCardController.ControllerContext = new ControllerContext
+        _patientExaminationCardController.ControllerContext = new ControllerContext()
         {
-            HttpContext = new DefaultHttpContext { User = user }
+            HttpContext = new DefaultHttpContext() { User = user }
         };
     }
 
@@ -40,14 +40,13 @@ public class CommentBeweFormTest
         var beweForm = new Bewe();
         var dMFT_dMFSForm = new DMFT_DMFS();
         var bleedingForm = new Bleeding();
-        var patientExaminationResult =
-            new PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
-            {
-                API = APIForm,
-                Bewe = beweForm,
-                DMFT_DMFS = dMFT_dMFSForm,
-                Bleeding = bleedingForm
-            };
+        var patientExaminationResult = new PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
+        {
+            API = APIForm,
+            Bewe = beweForm,
+            DMFT_DMFS = dMFT_dMFSForm,
+            Bleeding = bleedingForm
+        };
 
         var patientExaminationCard = new PatientExaminationCard(patientId)
         {
@@ -78,14 +77,13 @@ public class CommentBeweFormTest
         var beweForm = new Bewe();
         var dMFT_dMFSForm = new DMFT_DMFS();
         var bleedingForm = new Bleeding();
-        var patientExaminationResult =
-            new PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
-            {
-                API = APIForm,
-                Bewe = beweForm,
-                DMFT_DMFS = dMFT_dMFSForm,
-                Bleeding = bleedingForm
-            };
+        var patientExaminationResult = new PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
+        {
+            API = APIForm,
+            Bewe = beweForm,
+            DMFT_DMFS = dMFT_dMFSForm,
+            Bleeding = bleedingForm
+        };
 
         var patientExaminationCard = new PatientExaminationCard(patientId)
         {
@@ -117,9 +115,7 @@ public class CommentBeweFormTest
             .ReturnsAsync(OperationResult<Unit>.Failure("Patient examination card not found."));
 
         // Act
-        var result =
-            await _patientExaminationCardController.CommentBeweForm(patientExaminationCardId,
-                "This is a test comment.");
+        var result = await _patientExaminationCardController.CommentBeweForm(patientExaminationCardId, "This is a test comment.");
 
         // Assert
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);

@@ -14,8 +14,7 @@ public class ExaminationCardsAssignedToDoctorHandlerTests : TestHelper
 
     public ExaminationCardsAssignedToDoctorHandlerTests()
     {
-        handler = new FetchPatientExaminationCardsAssignedToDoctorHandler(patientExaminationCardRepositoryMock.Object,
-            mapperMock.Object);
+        handler = new FetchPatientExaminationCardsAssignedToDoctorHandler(patientExaminationCardRepositoryMock.Object, mapperMock.Object);
     }
 
     [Fact]
@@ -33,9 +32,9 @@ public class ExaminationCardsAssignedToDoctorHandlerTests : TestHelper
         card.SetTestMode();
 
         var queryableExaminationCards = new List<PatientExaminationCard>
-        {
-            card
-        }.AsQueryable().BuildMockDbSet();
+            {
+                card
+            }.AsQueryable().BuildMockDbSet();
 
         patientExaminationCardRepositoryMock
             .Setup(repo => repo.GetPatientExaminationCardAssignedToDoctor(It.IsAny<string>()))

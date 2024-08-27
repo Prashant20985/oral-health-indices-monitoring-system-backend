@@ -1,6 +1,6 @@
 ﻿using App.Application.DentistTeacherOperations.Query.StudentsNotInGroup;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
-using MockQueryable.EntityFrameworkCore;
+using MockQueryable.Moq;
 using Moq;
 
 namespace App.Application.Test.DentistTeacherOperations.Query.StudentsNotInGroup;
@@ -14,8 +14,8 @@ public class FetchStudentsNotInGroupListHandlerTests : TestHelper
 
         var studentNotInGroupIQueryable = new List<StudentResponseDto>
         {
-            new() { Id = "studentId1", UserName = "Student1" },
-            new() { Id = "studentId2", UserName = "Student2" }
+            new StudentResponseDto { Id = "studentId1", UserName = "Student1" },
+            new StudentResponseDto { Id = "studentId2", UserName = "Student2" }
         }.AsQueryable().BuildMock();
 
         groupRepositoryMock.Setup(repo => repo.GetAllStudentsNotInGroup(It.IsAny<Guid>()))

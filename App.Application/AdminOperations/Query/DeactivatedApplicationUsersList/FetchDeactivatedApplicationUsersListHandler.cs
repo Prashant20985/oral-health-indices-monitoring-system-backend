@@ -15,7 +15,7 @@ internal sealed class FetchDeactivatedApplicationUsersListHandler
     OperationResult<PaginatedApplicationUserResponseDto>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IApplicationUsersListQueryFilter _queryFilter;
+    private readonly IApplicationUsersListQuesyFilter _queryFilter;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FetchDeactivatedApplicationUsersListHandler"/> class with the required dependencies.
@@ -23,7 +23,7 @@ internal sealed class FetchDeactivatedApplicationUsersListHandler
     /// <param name="userRepository">The user repository instance.</param>
     /// <param name="queryFilter">The query filter instance.</param>
     public FetchDeactivatedApplicationUsersListHandler(IUserRepository userRepository,
-        IApplicationUsersListQueryFilter queryFilter)
+        IApplicationUsersListQuesyFilter queryFilter)
     {
         _userRepository = userRepository;
         _queryFilter = queryFilter;

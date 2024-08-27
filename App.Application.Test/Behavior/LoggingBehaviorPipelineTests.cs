@@ -30,12 +30,12 @@ public class LoggingBehaviorTests : TestHelper
 
         // Assert
         loggerMock.VerifyLog(
-            logger => logger.LogInformation(
-                "Starting Request {@ExecutedBy}, {@RequestName}, {@DateTimeUtc}",
-                "TestUser",
-                "SampleRequest",
-                It.IsAny<DateTime>()),
-            Times.Once);
+             logger => logger.LogInformation(
+                 "Starting Request {@ExecutedBy}, {@RequestName}, {@DateTimeUtc}",
+                 "TestUser",
+                 "SampleRequest",
+                 It.IsAny<DateTime>()),
+             Times.Once);
 
         loggerMock.VerifyLog(
             logger => logger.LogInformation(
@@ -62,12 +62,12 @@ public class LoggingBehaviorTests : TestHelper
 
         // Assert
         loggerMock.VerifyLog(
-            logger => logger.LogInformation(
-                "Starting Request {@ExecutedBy}, {@RequestName}, {@DateTimeUtc}",
-                "TestUser",
-                "SampleRequest",
-                It.IsAny<DateTime>()),
-            Times.Once);
+             logger => logger.LogInformation(
+                 "Starting Request {@ExecutedBy}, {@RequestName}, {@DateTimeUtc}",
+                 "TestUser",
+                 "SampleRequest",
+                 It.IsAny<DateTime>()),
+             Times.Once);
 
         loggerMock.VerifyLog(
             logger => logger.LogCritical(

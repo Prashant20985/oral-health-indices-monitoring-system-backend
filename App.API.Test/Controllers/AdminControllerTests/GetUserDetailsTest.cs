@@ -5,56 +5,57 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
-namespace App.API.Test.Controllers.AdminControllerTests;
-
-public class GetUserDetailsTest
+namespace App.API.Test.Controllers.AdminControllerTests
 {
-    private readonly TestableAdminController _adminController;
-    private readonly Mock<IMediator> _mediatorMock;
-
-    public GetUserDetailsTest()
+    public class GetUserDetailsTest
     {
-        _mediatorMock = new Mock<IMediator>();
-        _adminController = new TestableAdminController();
-        _adminController.ExposeSetMediator(_mediatorMock.Object);
-    }
+        private readonly TestableAdminController _adminController;
+        private readonly Mock<IMediator> _mediatorMock;
 
-    [Fact]
-    public async Task GetUserDetails_Returns_OkResult()
-    {
-        //Arrange
-        var user = new ApplicationUserResponseDto
+        public GetUserDetailsTest()
         {
-            FirstName = "Test",
-            LastName = "Test",
-            Email = "test@test.com",
-            UserType = "RegularUser",
-            Role = "Admin",
-            UserName = "test",
-            PhoneNumber = "123456789",
-            IsAccountActive = true
-        };
+            _mediatorMock = new Mock<IMediator>();
+            _adminController = new TestableAdminController();
+            _adminController.ExposeSetMediator(_mediatorMock.Object);
+        }
 
-        var userName = "test";
+        [Fact]
+        public async Task GetUserDetails_Returns_OkResult()
+        {
+            //Arrange
+            var user = new ApplicationUserResponseDto
+            {
+                FirstName = "Test",
+                LastName = "Test",
+                Email = "test@test.com",
+                UserType = "RegularUser",
+                Role = "Admin",
+                UserName = "test",
+                PhoneNumber = "123456789",
+                IsAccountActive = true
+            };
 
-        _mediatorMock.Setup(m => m.Send(It.IsAny<FetchUserDetailsQuery>(), default))
-            .ReturnsAsync(OperationResult<ApplicationUserResponseDto>.Success(user));
+            var userName = "test";
 
-        // Act
-        var result = await _adminController.GetUserDetails(userName);
+            _mediatorMock.Setup(m => m.Send(It.IsAny<FetchUserDetailsQuery>(), default))
+                .ReturnsAsync(OperationResult<ApplicationUserResponseDto>.Success(user));
 
-        // Assert
-        var actionResult = Assert.IsType<ActionResult<ApplicationUserResponseDto>>(result);
-        var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-        var model = Assert.IsType<ApplicationUserResponseDto>(okObjectResult.Value);
+            // Act
+            var result = await _adminController.GetUserDetails(userName);
 
-        Assert.Equal(user.FirstName, model.FirstName);
-        Assert.Equal(user.LastName, model.LastName);
-        Assert.Equal(user.Email, model.Email);
-        Assert.Equal(user.UserType, model.UserType);
-        Assert.Equal(user.Role, model.Role);
-        Assert.Equal(user.UserName, model.UserName);
-        Assert.Equal(user.IsAccountActive, model.IsAccountActive);
-        Assert.Equal(user.PhoneNumber, model.PhoneNumber);
+            // Assert
+            var actionResult = Assert.IsType<ActionResult<ApplicationUserResponseDto>>(result);
+            var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
+            var model = Assert.IsType<ApplicationUserResponseDto>(okObjectResult.Value);
+
+            Assert.Equal(user.FirstName, model.FirstName);
+            Assert.Equal(user.LastName, model.LastName);
+            Assert.Equal(user.Email, model.Email);
+            Assert.Equal(user.UserType, model.UserType);
+            Assert.Equal(user.Role, model.Role);
+            Assert.Equal(user.UserName, model.UserName);
+            Assert.Equal(user.IsAccountActive, model.IsAccountActive);
+            Assert.Equal(user.PhoneNumber, model.PhoneNumber);
+        }
     }
 }

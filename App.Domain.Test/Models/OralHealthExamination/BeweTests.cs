@@ -28,7 +28,7 @@ public class BeweTests
                 Tooth_17 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
                 Tooth_16 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
                 Tooth_15 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
-                Tooth_14 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" }
+                Tooth_14 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
             },
             Sectant2 = new Sectant2
             {
@@ -37,21 +37,21 @@ public class BeweTests
                 Tooth_11 = new FourSurfaceTooth { B = "2", L = "", D = "", M = "" },
                 Tooth_21 = new FourSurfaceTooth { B = "2", L = "", D = "", M = "" },
                 Tooth_22 = new FourSurfaceTooth { B = "2", L = "", D = "", M = "" },
-                Tooth_23 = new FourSurfaceTooth { B = "2", L = "", D = "", M = "" }
+                Tooth_23 = new FourSurfaceTooth { B = "2", L = "", D = "", M = "" },
             },
             Sectant3 = new Sectant3
             {
                 Tooth_24 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
                 Tooth_25 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
                 Tooth_26 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
-                Tooth_27 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" }
+                Tooth_27 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
             },
             Sectant4 = new Sectant4
             {
                 Tooth_34 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
                 Tooth_35 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
                 Tooth_36 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
-                Tooth_37 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" }
+                Tooth_37 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
             },
             Sectant5 = new Sectant5
             {
@@ -60,14 +60,14 @@ public class BeweTests
                 Tooth_41 = new FourSurfaceTooth { B = "2", L = "", D = "", M = "" },
                 Tooth_31 = new FourSurfaceTooth { B = "2", L = "", D = "", M = "" },
                 Tooth_32 = new FourSurfaceTooth { B = "2", L = "", D = "", M = "" },
-                Tooth_33 = new FourSurfaceTooth { B = "2", L = "", D = "", M = "" }
+                Tooth_33 = new FourSurfaceTooth { B = "2", L = "", D = "", M = "" },
             },
             Sectant6 = new Sectant6
             {
                 Tooth_47 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
                 Tooth_46 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
                 Tooth_45 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
-                Tooth_44 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" }
+                Tooth_44 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
             }
         };
         var bewe = new Bewe();
@@ -97,7 +97,7 @@ public class BeweTests
                 Tooth_17 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
                 Tooth_16 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
                 Tooth_15 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
-                Tooth_14 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" }
+                Tooth_14 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
             },
             Sectant2 = new Sectant2
             {
@@ -106,21 +106,21 @@ public class BeweTests
                 Tooth_11 = new FourSurfaceTooth { B = "3", L = "", D = "", M = "" },
                 Tooth_21 = new FourSurfaceTooth { B = "3", L = "", D = "", M = "" },
                 Tooth_22 = new FourSurfaceTooth { B = "3", L = "", D = "", M = "" },
-                Tooth_23 = new FourSurfaceTooth { B = "3", L = "", D = "", M = "" }
+                Tooth_23 = new FourSurfaceTooth { B = "3", L = "", D = "", M = "" },
             },
             Sectant3 = new Sectant3
             {
                 Tooth_24 = new FiveSurfaceToothBEWE { O = "", B = "", L = "", D = "", M = "" },
                 Tooth_25 = new FiveSurfaceToothBEWE { O = "", B = "", L = "", D = "", M = "" },
                 Tooth_26 = new FiveSurfaceToothBEWE { O = "", B = "", L = "", D = "", M = "" },
-                Tooth_27 = new FiveSurfaceToothBEWE { O = "", B = "", L = "", D = "", M = "" }
+                Tooth_27 = new FiveSurfaceToothBEWE { O = "", B = "", L = "", D = "", M = "" },
             },
             Sectant4 = new Sectant4
             {
                 Tooth_34 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
                 Tooth_35 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
                 Tooth_36 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
-                Tooth_37 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" }
+                Tooth_37 = new FiveSurfaceToothBEWE { O = "", B = "2", L = "", D = "", M = "" },
             },
             Sectant5 = new Sectant5
             {
@@ -129,14 +129,14 @@ public class BeweTests
                 Tooth_41 = new FourSurfaceTooth { B = "1", L = "", D = "", M = "" },
                 Tooth_31 = new FourSurfaceTooth { B = "1", L = "", D = "", M = "" },
                 Tooth_32 = new FourSurfaceTooth { B = "1", L = "", D = "", M = "" },
-                Tooth_33 = new FourSurfaceTooth { B = "1", L = "", D = "", M = "" }
+                Tooth_33 = new FourSurfaceTooth { B = "1", L = "", D = "", M = "" },
             },
             Sectant6 = new Sectant6
             {
                 Tooth_47 = new FiveSurfaceToothBEWE { O = "", B = "", L = "", D = "", M = "" },
                 Tooth_46 = new FiveSurfaceToothBEWE { O = "", B = "", L = "", D = "", M = "" },
                 Tooth_45 = new FiveSurfaceToothBEWE { O = "", B = "", L = "", D = "", M = "" },
-                Tooth_44 = new FiveSurfaceToothBEWE { O = "", B = "", L = "", D = "", M = "" }
+                Tooth_44 = new FiveSurfaceToothBEWE { O = "", B = "", L = "", D = "", M = "" },
             }
         };
 

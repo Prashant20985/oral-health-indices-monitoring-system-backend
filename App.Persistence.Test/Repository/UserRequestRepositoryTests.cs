@@ -60,10 +60,8 @@ public class UserRequestRepositoryTests
     {
         // Arrange
         var applicationUser = new ApplicationUser("test@test.com", "FirstName", "LastName", "7418529", null);
-        var request1 = new UserRequest("CreatedById1", "Request Title1", "Request Description")
-            { ApplicationUser = applicationUser };
-        var request2 = new UserRequest("CreatedById2", "Request Title2", "Request Description")
-            { ApplicationUser = applicationUser };
+        var request1 = new UserRequest("CreatedById1", "Request Title1", "Request Description") { ApplicationUser = applicationUser };
+        var request2 = new UserRequest("CreatedById2", "Request Title2", "Request Description") { ApplicationUser = applicationUser };
 
         var requests = new List<UserRequest> { request1, request2 }.AsQueryable();
 
@@ -86,10 +84,8 @@ public class UserRequestRepositoryTests
     {
         // Arrange
         var applicationUser = new ApplicationUser("test@test.com", "FirstName", "LastName", "7418529", null);
-        var request1 = new UserRequest("CreatedById1", "Request Title1", "Request Description")
-            { ApplicationUser = applicationUser };
-        var request2 = new UserRequest("CreatedById2", "Request Title2", "Request Description")
-            { ApplicationUser = applicationUser };
+        var request1 = new UserRequest("CreatedById1", "Request Title1", "Request Description") { ApplicationUser = applicationUser };
+        var request2 = new UserRequest("CreatedById2", "Request Title2", "Request Description") { ApplicationUser = applicationUser };
         request1.SetRequestToInProgress();
 
         var requests = new List<UserRequest> { request1, request2 }.AsQueryable();
@@ -112,10 +108,8 @@ public class UserRequestRepositoryTests
     {
         // Arrange
         var applicationUser = new ApplicationUser("test@test.com", "FirstName", "LastName", "7418529", null);
-        var request1 = new UserRequest("CreatedById1", "Request Title1", "Request Description")
-            { ApplicationUser = applicationUser };
-        var request2 = new UserRequest("CreatedById2", "Request Title2", "Request Description")
-            { ApplicationUser = applicationUser };
+        var request1 = new UserRequest("CreatedById1", "Request Title1", "Request Description") { ApplicationUser = applicationUser };
+        var request2 = new UserRequest("CreatedById2", "Request Title2", "Request Description") { ApplicationUser = applicationUser };
         request1.SetRequestToCompleted("Completed");
 
         var requests = new List<UserRequest> { request1, request2 }.AsQueryable();
@@ -139,10 +133,8 @@ public class UserRequestRepositoryTests
     {
         // Arrange
         var applicationUser = new ApplicationUser("test@test.com", "FirstName", "LastName", "7418529", null);
-        var request1 = new UserRequest(applicationUser.Id, "Request Title1", "Request Description")
-            { ApplicationUser = applicationUser };
-        var request2 = new UserRequest(applicationUser.Id, "Request Title2", "Request Description")
-            { ApplicationUser = applicationUser };
+        var request1 = new UserRequest(applicationUser.Id, "Request Title1", "Request Description") { ApplicationUser = applicationUser };
+        var request2 = new UserRequest(applicationUser.Id, "Request Title2", "Request Description") { ApplicationUser = applicationUser };
 
         var requests = new List<UserRequest> { request1, request2 }.AsQueryable();
 
@@ -167,10 +159,8 @@ public class UserRequestRepositoryTests
     {
         // Arrange
         var applicationUser = new ApplicationUser("test@test.com", "FirstName", "LastName", "7418529", null);
-        var request1 = new UserRequest(applicationUser.Id, "Request Title1", "Request Description")
-            { ApplicationUser = applicationUser };
-        var request2 = new UserRequest(applicationUser.Id, "Request Title2", "Request Description")
-            { ApplicationUser = applicationUser };
+        var request1 = new UserRequest(applicationUser.Id, "Request Title1", "Request Description") { ApplicationUser = applicationUser };
+        var request2 = new UserRequest(applicationUser.Id, "Request Title2", "Request Description") { ApplicationUser = applicationUser };
         request1.SetRequestToInProgress();
 
         var requests = new List<UserRequest> { request1, request2 }.AsQueryable();
@@ -194,10 +184,8 @@ public class UserRequestRepositoryTests
     {
         // Arrange
         var applicationUser = new ApplicationUser("test@test.com", "FirstName", "LastName", "7418529", null);
-        var request1 = new UserRequest(applicationUser.Id, "Request Title1", "Request Description")
-            { ApplicationUser = applicationUser };
-        var request2 = new UserRequest(applicationUser.Id, "Request Title2", "Request Description")
-            { ApplicationUser = applicationUser };
+        var request1 = new UserRequest(applicationUser.Id, "Request Title1", "Request Description") { ApplicationUser = applicationUser };
+        var request2 = new UserRequest(applicationUser.Id, "Request Title2", "Request Description") { ApplicationUser = applicationUser };
         request1.SetRequestToCompleted("Completed");
 
         var requests = new List<UserRequest> { request1, request2 }.AsQueryable();

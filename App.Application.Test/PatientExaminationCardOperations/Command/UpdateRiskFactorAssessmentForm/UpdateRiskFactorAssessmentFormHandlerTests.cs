@@ -8,8 +8,8 @@ namespace App.Application.Test.PatientExaminationCardOperations.Command.UpdateRi
 
 public class UpdateRiskFactorAssessmentFormHandlerTests : TestHelper
 {
-    private readonly UpdateRiskFactorAssessmentFormCommand command;
     private readonly UpdateRiskFactorAssessmentFormHandler handler;
+    private readonly UpdateRiskFactorAssessmentFormCommand command;
 
     public UpdateRiskFactorAssessmentFormHandlerTests()
     {

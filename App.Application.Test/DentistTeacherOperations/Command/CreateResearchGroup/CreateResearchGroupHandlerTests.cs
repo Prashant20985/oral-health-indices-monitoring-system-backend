@@ -64,4 +64,5 @@ public class CreateResearchGroupHandlerTests : TestHelper
         researchGroupRepositoryMock.Verify(repo => repo.GetResearchGroupByName("test"), Times.Once);
         researchGroupRepositoryMock.Verify(repo => repo.CreateResearchGroup(It.IsAny<ResearchGroup>()), Times.Never);
     }
+
 }

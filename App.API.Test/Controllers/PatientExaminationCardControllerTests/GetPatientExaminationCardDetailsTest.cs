@@ -33,8 +33,7 @@ public class GetPatientExaminationCardDetailsTest
             .ReturnsAsync(OperationResult<PatientExaminationCardDto>.Success(patientExaminationCardDto));
 
         // Act
-        var result =
-            await _patientExaminationCardController.GetPatientExaminationCardDetails(patientExaminationCard.Id);
+        var result = await _patientExaminationCardController.GetPatientExaminationCardDetails(patientExaminationCard.Id);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);

@@ -7,8 +7,8 @@ namespace App.Application.Test.StudentExamOperations.TeacherOperations.Command.D
 
 public class DeleteExamHandlerTests : TestHelper
 {
-    private readonly DeleteExamCommand command;
     private readonly DeleteExamHandler handler;
+    private readonly DeleteExamCommand command;
 
     public DeleteExamHandlerTests()
     {
@@ -20,8 +20,7 @@ public class DeleteExamHandlerTests : TestHelper
     public async Task Handle_WhenExamExists_ShouldReturnSuccessResult()
     {
         // Arrange
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, Guid.NewGuid());
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, Guid.NewGuid());
 
         studentExamRepositoryMock.Setup(x => x.GetExamById(It.IsAny<Guid>()))
             .ReturnsAsync(exam);

@@ -5,43 +5,44 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
-namespace App.API.Test.Controllers.AdminControllerTests;
-
-public class ChangeActivationStatusTest
+namespace App.API.Test.Controllers.AdminControllerTests
 {
-    private readonly TestableAdminController _adminController;
-    private readonly Mock<IMediator> _mediatorMock;
-
-    public ChangeActivationStatusTest()
+    public class ChangeActivationStatusTest
     {
-        _mediatorMock = new Mock<IMediator>();
-        _adminController = new TestableAdminController();
-        _adminController.ExposeSetMediator(_mediatorMock.Object);
-    }
+        private readonly TestableAdminController _adminController;
+        private readonly Mock<IMediator> _mediatorMock;
 
-    [Fact]
-    public async Task ChangeActivationStatus_Returns_OkResult()
-    {
-        // Arrange
-        var user = new ApplicationUserResponseDto
+        public ChangeActivationStatusTest()
         {
-            FirstName = "Test",
-            LastName = "Test",
-            Email = "test@test.com",
-            UserType = "RegularUser",
-            Role = "Admin",
-            UserName = "test",
-            PhoneNumber = "123456789",
-            IsAccountActive = false
-        };
+            _mediatorMock = new Mock<IMediator>();
+            _adminController = new TestableAdminController();
+            _adminController.ExposeSetMediator(_mediatorMock.Object);
+        }
 
-        _mediatorMock.Setup(m => m.Send(It.IsAny<ChangeActivationStatusCommand>(), default))
-            .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
+        [Fact]
+        public async Task ChangeActivationStatus_Returns_OkResult()
+        {
+            // Arrange
+            var user = new ApplicationUserResponseDto
+            {
+                FirstName = "Test",
+                LastName = "Test",
+                Email = "test@test.com",
+                UserType = "RegularUser",
+                Role = "Admin",
+                UserName = "test",
+                PhoneNumber = "123456789",
+                IsAccountActive = false
+            };
 
-        // Act
-        var result = await _adminController.ChangeActivationStatus(user.UserName);
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ChangeActivationStatusCommand>(), default))
+                .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
-        // Assert
-        Assert.IsType<OkObjectResult>(result);
+            // Act
+            var result = await _adminController.ChangeActivationStatus(user.UserName);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result);
+        }
     }
 }

@@ -11,8 +11,8 @@ namespace App.API.Test.Controllers.DentistTeacherControllerTests;
 
 public class GetGroupDetailsTest
 {
-    private readonly TestableDentistTeacherController _dentistTeacherController;
     private readonly Mock<IMediator> _mediatorMock;
+    private readonly TestableDentistTeacherController _dentistTeacherController;
 
     public GetGroupDetailsTest()
     {
@@ -38,12 +38,12 @@ public class GetGroupDetailsTest
             GroupName = group.GroupName,
             Students = new List<StudentResponseDto>
             {
-                new()
+                new StudentResponseDto
                 {
                     Id = student.Id,
                     Email = student.Email,
                     FirstName = student.FirstName,
-                    LastName = student.LastName
+                    LastName = student.LastName,
                 }
             }
         };
