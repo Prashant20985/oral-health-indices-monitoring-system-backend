@@ -7,8 +7,8 @@ namespace App.Application.Test.PatientExaminationCardOperations.Command.GradePat
 
 public class GradePatientExaminationCardHandlerTests : TestHelper
 {
-    private readonly GradePatientExaminationCardHandler handler;
     private readonly GradePatientExaminationCardCommand command;
+    private readonly GradePatientExaminationCardHandler handler;
 
     public GradePatientExaminationCardHandlerTests()
     {

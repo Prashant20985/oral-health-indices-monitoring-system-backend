@@ -19,7 +19,8 @@ public class RemovePatientFromResearchGroupHandlerTests : TestHelper
     public async Task Handle_WithValidCommand_ShouldRemovePatientFromResearchGroup()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
         var researchGroup = new ResearchGroup("test", "test", "test");
         patient1.AddResearchGroup(researchGroup.Id);
 

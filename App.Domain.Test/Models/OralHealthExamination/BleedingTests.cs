@@ -26,10 +26,14 @@ public class BleedingTests
         // Arrange
         var assessmentModel = new APIBleedingAssessmentModel
         {
-            Quadrant1 = new Quadrant { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant2 = new Quadrant { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant3 = new Quadrant { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant4 = new Quadrant { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" }
+            Quadrant1 = new Quadrant
+                { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant2 = new Quadrant
+                { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant3 = new Quadrant
+                { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant4 = new Quadrant
+                { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" }
         };
 
         var bleeding = new Bleeding();
@@ -50,10 +54,14 @@ public class BleedingTests
         // Arrange
         var assessmentModel = new APIBleedingAssessmentModel
         {
-            Quadrant1 = new Quadrant { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant2 = new Quadrant { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant3 = new Quadrant { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant4 = new Quadrant { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" }
+            Quadrant1 = new Quadrant
+                { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant2 = new Quadrant
+                { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant3 = new Quadrant
+                { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant4 = new Quadrant
+                { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" }
         };
 
         var bleeding = new Bleeding();
@@ -75,10 +83,14 @@ public class BleedingTests
         // Arrange
         var assessmentModel = new APIBleedingAssessmentModel
         {
-            Quadrant1 = new Quadrant { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant2 = new Quadrant { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant3 = new Quadrant { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant4 = new Quadrant { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" }
+            Quadrant1 = new Quadrant
+                { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant2 = new Quadrant
+                { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant3 = new Quadrant
+                { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant4 = new Quadrant
+                { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" }
         };
 
         var bleeding = new Bleeding();
@@ -94,4 +106,3 @@ public class BleedingTests
         Assert.Equal(67, bleeding.Mandible);
     }
 }
-

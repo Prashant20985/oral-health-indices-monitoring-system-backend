@@ -1,11 +1,11 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.DentistTeacherOperations.Command.UnsuperviseStudent;
 using App.Domain.Models.Users;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.DentistTeacherControllerTests;
 
@@ -34,16 +34,16 @@ public class UnsuperviseStudentTest
 
         var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, "Dentist_Teacher_Researcher"),
-            new Claim(ClaimTypes.Name, "Dentist_Teacher_Examiner"),
+            new(ClaimTypes.NameIdentifier, "Dentist_Teacher_Researcher"),
+            new(ClaimTypes.Name, "Dentist_Teacher_Examiner")
         }, "mock"));
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<UnsuperviseStudentCommand>(), default))
             .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
-        _dentistTeacherController.ControllerContext = new ControllerContext()
+        _dentistTeacherController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = user }
+            HttpContext = new DefaultHttpContext { User = user }
         };
 
         // Act
@@ -65,16 +65,16 @@ public class UnsuperviseStudentTest
 
         var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, "Dentist_Teacher_Researcher"),
-            new Claim(ClaimTypes.Name, "Dentist_Teacher_Examiner"),
+            new(ClaimTypes.NameIdentifier, "Dentist_Teacher_Researcher"),
+            new(ClaimTypes.Name, "Dentist_Teacher_Examiner")
         }, "mock"));
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<UnsuperviseStudentCommand>(), default))
             .ReturnsAsync(OperationResult<Unit>.Failure("Student not in supervison"));
 
-        _dentistTeacherController.ControllerContext = new ControllerContext()
+        _dentistTeacherController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = user },
+            HttpContext = new DefaultHttpContext { User = user }
         };
 
         // Act

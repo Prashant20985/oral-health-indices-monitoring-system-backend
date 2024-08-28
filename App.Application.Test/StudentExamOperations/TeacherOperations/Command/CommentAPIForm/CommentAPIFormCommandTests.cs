@@ -7,8 +7,8 @@ namespace App.Application.Test.StudentExamOperations.TeacherOperations.Command.C
 
 public class CommentAPIFormCommandTests : TestHelper
 {
-    private readonly CommentAPIFormHandler handler;
     private readonly CommentAPIFormCommand command;
+    private readonly CommentAPIFormHandler handler;
 
     public CommentAPIFormCommandTests()
     {

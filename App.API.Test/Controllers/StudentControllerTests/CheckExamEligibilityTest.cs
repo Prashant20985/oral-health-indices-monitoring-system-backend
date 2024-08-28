@@ -1,4 +1,5 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.StudentExamOperations.StudentOperations.Query.ExamEligbility;
 using App.Domain.Models.CreditSchema;
 using App.Domain.Models.Users;
@@ -6,7 +7,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.StudentControllerTests;
 
@@ -37,7 +37,8 @@ public class CheckExamEligibilityTest
         var group = new Group(teacher.Id, "test123");
         group.Teacher = teacher;
         var studentGroup = new StudentGroup(group.Id, student.Id);
-        var exam = new Exam(DateTime.Now, "test123", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
+        var exam = new Exam(DateTime.Now, "test123", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, group.Id);
         group.Exams.Add(exam);
 
 
@@ -74,11 +75,12 @@ public class CheckExamEligibilityTest
         var group = new Group(teacher.Id, "test123");
         group.Teacher = teacher;
         var studentGroup = new StudentGroup(group.Id, student.Id);
-        var exam = new Exam(DateTime.Now, "test123", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
+        var exam = new Exam(DateTime.Now, "test123", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, group.Id);
         group.Exams.Add(exam);
 
         _mediator.Setup(x => x.Send(It.IsAny<ExamEligibiltyQuery>(), default))
-        .ReturnsAsync(OperationResult<bool>.Success(false));
+            .ReturnsAsync(OperationResult<bool>.Success(false));
 
         _studentController.ControllerContext = new ControllerContext
         {

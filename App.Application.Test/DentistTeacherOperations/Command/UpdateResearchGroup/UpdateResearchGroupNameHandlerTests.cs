@@ -54,7 +54,8 @@ public class UpdateResearchGroupNameHandlerTests : TestHelper
         var command = new UpdateResearchGroupCommand(researchGroupId, UpdateResearchGroup);
 
         researchGroupRepositoryMock.Setup(x => x.GetResearchGroupById(researchGroupId))
-            .ReturnsAsync(value: null); ;
+            .ReturnsAsync(value: null);
+        ;
 
         // Act
         var result = await handler.Handle(command, CancellationToken.None);

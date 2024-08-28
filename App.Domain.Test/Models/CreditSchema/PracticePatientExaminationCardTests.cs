@@ -9,8 +9,8 @@ public class PracticePatientExaminationCardTests
     public void Constructor_ShouldInitializeProperties()
     {
         // Arrange
-        Guid examId = Guid.NewGuid();
-        string studentId = "student123";
+        var examId = Guid.NewGuid();
+        var studentId = "student123";
 
         // Act
         var practicePatientExaminationCard = new PracticePatientExaminationCard(examId, studentId);
@@ -39,7 +39,7 @@ public class PracticePatientExaminationCardTests
     {
         // Arrange
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), "student123");
-        Guid patientId = Guid.NewGuid();
+        var patientId = Guid.NewGuid();
 
         // Act
         practicePatientExaminationCard.SetPatientId(patientId);
@@ -53,7 +53,7 @@ public class PracticePatientExaminationCardTests
     {
         // Arrange
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), "student123");
-        decimal studentMark = 95.5m;
+        var studentMark = 95.5m;
 
         // Act
         practicePatientExaminationCard.SetStudentMark(studentMark);
@@ -67,7 +67,7 @@ public class PracticePatientExaminationCardTests
     {
         // Arrange
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), "student123");
-        string doctorComment = "Good progress.";
+        var doctorComment = "Good progress.";
 
         // Act
         practicePatientExaminationCard.SetDoctorComment(doctorComment);
@@ -81,7 +81,7 @@ public class PracticePatientExaminationCardTests
     {
         // Arrange
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), "student123");
-        Guid patientExaminationResultId = Guid.NewGuid();
+        var patientExaminationResultId = Guid.NewGuid();
 
         // Act
         practicePatientExaminationCard.SetPatientExaminationResultId(patientExaminationResultId);
@@ -95,7 +95,7 @@ public class PracticePatientExaminationCardTests
     {
         // Arrange
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), "student123");
-        Guid riskFactorAssessmentId = Guid.NewGuid();
+        var riskFactorAssessmentId = Guid.NewGuid();
 
         // Act
         practicePatientExaminationCard.SetRiskFactorAssessmentId(riskFactorAssessmentId);
@@ -110,7 +110,8 @@ public class PracticePatientExaminationCardTests
         // Arrange
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), "student123");
 
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        var practicePatientExaminationResult =
+            new PracticePatientExaminationResult(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
 
         // Act
         practicePatientExaminationCard.SetPracticePatientExaminationResult(practicePatientExaminationResult);
@@ -138,7 +139,7 @@ public class PracticePatientExaminationCardTests
     {
         // Arrange
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), "student123");
-        string description = "Detailed examination description.";
+        var description = "Detailed examination description.";
 
         // Act
         practicePatientExaminationCard.SetDescription(description);
@@ -152,7 +153,7 @@ public class PracticePatientExaminationCardTests
     {
         // Arrange
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), "student123");
-        string patientRecommendations = "Regular check-ups recommended.";
+        var patientRecommendations = "Regular check-ups recommended.";
 
         // Act
         practicePatientExaminationCard.SetPatientRecommendations(patientRecommendations);
@@ -166,7 +167,7 @@ public class PracticePatientExaminationCardTests
     {
         // Arrange
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), "student123");
-        string needForDentalInterventions = "Requires cavity filling.";
+        var needForDentalInterventions = "Requires cavity filling.";
 
         // Act
         practicePatientExaminationCard.SetNeedForDentalInterventions(needForDentalInterventions);
@@ -180,7 +181,7 @@ public class PracticePatientExaminationCardTests
     {
         // Arrange
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), "student123");
-        string proposedTreatment = "Propose root canal treatment.";
+        var proposedTreatment = "Propose root canal treatment.";
 
         // Act
         practicePatientExaminationCard.SetProposedTreatment(proposedTreatment);

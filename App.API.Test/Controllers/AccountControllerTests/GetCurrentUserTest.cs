@@ -1,11 +1,11 @@
-﻿using App.Application.AccountOperations.DTOs.Response;
+﻿using System.Security.Claims;
+using App.Application.AccountOperations.DTOs.Response;
 using App.Application.AccountOperations.Query.CurrentUser;
 using App.Application.Core;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.AccountControllerTests;
 
@@ -64,5 +64,4 @@ public class GetCurrentUserTest
         // Assert
         Assert.IsType<NotFoundResult>(result.Result);
     }
-
 }

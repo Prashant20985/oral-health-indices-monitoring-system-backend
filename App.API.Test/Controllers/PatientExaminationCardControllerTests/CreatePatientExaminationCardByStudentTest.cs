@@ -1,4 +1,5 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.PatientExaminationCardOperations.Command.CreatePatientExaminationCardByStudent;
 using App.Domain.DTOs.Common.Request;
 using App.Domain.DTOs.Common.Response;
@@ -8,7 +9,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.PatientExaminationCardControllerTests;
 
@@ -25,13 +25,13 @@ public class CreatePatientExaminationCardByStudentTest
 
         var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-                new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Role, "Student")
-           }, "mock"));
+            new(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
+            new(ClaimTypes.Role, "Student")
+        }, "mock"));
 
-        _patientExaminationCardController.ControllerContext = new ControllerContext()
+        _patientExaminationCardController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = user }
+            HttpContext = new DefaultHttpContext { User = user }
         };
     }
 
@@ -51,15 +51,15 @@ public class CreatePatientExaminationCardByStudentTest
 
         var doctorId = Guid.NewGuid().ToString();
 
-        var riskFactorAssessmentModel = new RiskFactorAssessmentModel { };
-        var DMFT_DMFS = new CreateDMFT_DMFSRequestDto { };
-        var API = new CreateAPIRequestDto { };
-        var bleeding = new CreateBleedingRequestDto { };
-        var bewe = new CreateBeweRequestDto { };
+        var riskFactorAssessmentModel = new RiskFactorAssessmentModel();
+        var DMFT_DMFS = new CreateDMFT_DMFSRequestDto();
+        var API = new CreateAPIRequestDto();
+        var bleeding = new CreateBleedingRequestDto();
+        var bewe = new CreateBeweRequestDto();
         var patientExaminationCardCommment = "Test comment";
 
         var inputParams = new CreatePatientExaminationCardByStudentInputParams
-            (doctorId,
+        (doctorId,
             patientExaminationCardCommment,
             summary,
             riskFactorAssessmentModel,
@@ -86,17 +86,16 @@ public class CreatePatientExaminationCardByStudentTest
                 ProposedTreatment = "Test Proposed Treatment",
                 Description = "Test Description"
             },
-            RiskFactorAssessment = new RiskFactorAssessmentDto
-            {
-
-            }
+            RiskFactorAssessment = new RiskFactorAssessmentDto()
         };
 
-        _mediator.Setup(x => x.Send(It.IsAny<CreatePatientExaminationCardByStudentCommand>(), It.IsAny<CancellationToken>()))
+        _mediator.Setup(x =>
+                x.Send(It.IsAny<CreatePatientExaminationCardByStudentCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(OperationResult<PatientExaminationCardDto>.Success(expectedResponse));
 
         // Act
-        var result = await _patientExaminationCardController.CreatePatientExaminationCardByStudent(patientId, inputParams);
+        var result =
+            await _patientExaminationCardController.CreatePatientExaminationCardByStudent(patientId, inputParams);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);

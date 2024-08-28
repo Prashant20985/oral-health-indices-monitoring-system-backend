@@ -1,4 +1,5 @@
-﻿using App.Application.AdminOperations.Command.CreateApplicationUser;
+﻿using System.Text;
+using App.Application.AdminOperations.Command.CreateApplicationUser;
 using App.Application.AdminOperations.Command.CreateApplicationUsersFromCsv;
 using App.Application.Core;
 using App.Application.Interfaces;
@@ -12,37 +13,38 @@ namespace App.Application.Test.AdminOperations.Command.CreateApplicationUsersFro
 
 public class CreateApplicationUsersFromCsvHandlerTests : TestHelper
 {
-    private readonly List<CreateApplicationUserFromCsvRequestDto> createApplicationUserFromCsvDtos;
-    private readonly Mock<IReadCsv> readCsvMock;
-    private readonly Mock<IFormFile> fileMock;
     private readonly CreateApplicationUsersFromCsvCommand command;
+    private readonly List<CreateApplicationUserFromCsvRequestDto> createApplicationUserFromCsvDtos;
+    private readonly Mock<IFormFile> fileMock;
     private readonly CreateApplicationUsersFromCsvHandler handler;
+    private readonly Mock<IReadCsv> readCsvMock;
 
     public CreateApplicationUsersFromCsvHandlerTests()
     {
-        createApplicationUserFromCsvDtos = new List<CreateApplicationUserFromCsvRequestDto>()
+        createApplicationUserFromCsvDtos = new List<CreateApplicationUserFromCsvRequestDto>
         {
-             new CreateApplicationUserFromCsvRequestDto
-             {
-                 FirstName = "Jhon",
-                 LastName = "Doe",
-                 Email = "test@test.com",
-                 PhoneNumber = "1234567890",
-                 GuestUserComment = null
-             },
-             new CreateApplicationUserFromCsvRequestDto
-             {
-                 FirstName = "Bruce",
-                 LastName = "Wayne",
-                 Email = "batman@test.com",
-                 PhoneNumber = "1234567190",
-                 GuestUserComment = null
-             }
+            new()
+            {
+                FirstName = "Jhon",
+                LastName = "Doe",
+                Email = "test@test.com",
+                PhoneNumber = "1234567890",
+                GuestUserComment = null
+            },
+            new()
+            {
+                FirstName = "Bruce",
+                LastName = "Wayne",
+                Email = "batman@test.com",
+                PhoneNumber = "1234567190",
+                GuestUserComment = null
+            }
         };
 
         readCsvMock = new Mock<IReadCsv>();
         fileMock = new Mock<IFormFile>();
-        var mapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<CreateApplicationUserFromCsvRequestDto, CreateApplicationUserRequestDto>());
+        var mapperConfig = new MapperConfiguration(cfg =>
+            cfg.CreateMap<CreateApplicationUserFromCsvRequestDto, CreateApplicationUserRequestDto>());
         var mapper = mapperConfig.CreateMapper();
         command = new CreateApplicationUsersFromCsvCommand(fileMock.Object);
         handler = new CreateApplicationUsersFromCsvHandler(mediatorMock.Object, readCsvMock.Object, mapper);
@@ -52,13 +54,14 @@ public class CreateApplicationUsersFromCsvHandlerTests : TestHelper
     public async Task CreateApplicationUsersFromCsv_Success_ReturnsSuccessResult()
     {
         // Arrange
-        var csvData = "FirstName,LastName,Email,PhoneNumber,GuestUserComment\nJhon,Doe,test@test.com,1234567890,\nBruce,Wayne,batman@test.com,1234567190,";
-        var fileStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(csvData));
+        var csvData =
+            "FirstName,LastName,Email,PhoneNumber,GuestUserComment\nJhon,Doe,test@test.com,1234567890,\nBruce,Wayne,batman@test.com,1234567190,";
+        var fileStream = new MemoryStream(Encoding.UTF8.GetBytes(csvData));
 
         fileMock.Setup(f => f.OpenReadStream()).Returns(fileStream);
 
         readCsvMock.Setup(csv => csv.ReadApplicationUsersFromCsv(fileMock.Object))
-                .Returns(createApplicationUserFromCsvDtos);
+            .Returns(createApplicationUserFromCsvDtos);
 
         mediatorMock.Setup(m => m.Send(It.IsAny<CreateApplicationUserCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
@@ -77,8 +80,9 @@ public class CreateApplicationUsersFromCsvHandlerTests : TestHelper
     public async Task CreateApplicationUsersFromCsv_Failure_ReturnsFailureResult()
     {
         // Arrange
-        var csvData = "FirstName,LastName,Email,PhoneNumber,GuestUserComment\nJhon,Doe,test@test.com,1234567890,\nBruce,Wayne,batman@test.com,1234567190,";
-        var fileStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(csvData));
+        var csvData =
+            "FirstName,LastName,Email,PhoneNumber,GuestUserComment\nJhon,Doe,test@test.com,1234567890,\nBruce,Wayne,batman@test.com,1234567190,";
+        var fileStream = new MemoryStream(Encoding.UTF8.GetBytes(csvData));
 
         fileMock.Setup(f => f.OpenReadStream()).Returns(fileStream);
 
@@ -102,7 +106,7 @@ public class CreateApplicationUsersFromCsvHandlerTests : TestHelper
     {
         // Arrange
         var csvData = "FirstName,LastName,Email,PhoneNumber,GuestUserComment";
-        var fileStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(csvData));
+        var fileStream = new MemoryStream(Encoding.UTF8.GetBytes(csvData));
 
         fileMock.Setup(f => f.OpenReadStream()).Returns(fileStream);
 

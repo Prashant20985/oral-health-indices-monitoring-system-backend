@@ -7,8 +7,8 @@ namespace App.Application.Test.DentistTeacherOperations.Command.RemoveStudentFro
 
 public class RemoveStudentFromGroupHandlerTests : TestHelper
 {
-    private readonly RemoveStudentFromGroupHandler handler;
     private readonly RemoveStudentFromGroupCommand command;
+    private readonly RemoveStudentFromGroupHandler handler;
 
     public RemoveStudentFromGroupHandlerTests()
     {

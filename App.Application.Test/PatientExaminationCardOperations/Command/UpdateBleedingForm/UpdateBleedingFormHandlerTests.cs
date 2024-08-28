@@ -9,8 +9,8 @@ namespace App.Application.Test.PatientExaminationCardOperations.Command.UpdateBl
 
 public class UpdateBleedingFormHandlerTests : TestHelper
 {
-    private readonly UpdateBleedingFormHandler handler;
     private readonly UpdateBleedingFormCommand command;
+    private readonly UpdateBleedingFormHandler handler;
 
     public UpdateBleedingFormHandlerTests()
     {
@@ -24,7 +24,7 @@ public class UpdateBleedingFormHandlerTests : TestHelper
                 Value4 = "-",
                 Value5 = "+",
                 Value6 = "+",
-                Value7 = "-",
+                Value7 = "-"
             },
             Quadrant2 = new Quadrant
             {
@@ -34,7 +34,7 @@ public class UpdateBleedingFormHandlerTests : TestHelper
                 Value4 = "-",
                 Value5 = "+",
                 Value6 = "+",
-                Value7 = "-",
+                Value7 = "-"
             },
             Quadrant3 = new Quadrant
             {
@@ -44,7 +44,7 @@ public class UpdateBleedingFormHandlerTests : TestHelper
                 Value4 = "-",
                 Value5 = "+",
                 Value6 = "+",
-                Value7 = "-",
+                Value7 = "-"
             },
             Quadrant4 = new Quadrant
             {
@@ -54,7 +54,7 @@ public class UpdateBleedingFormHandlerTests : TestHelper
                 Value4 = "-",
                 Value5 = "+",
                 Value6 = "+",
-                Value7 = "-",
+                Value7 = "-"
             }
         };
 
@@ -84,7 +84,8 @@ public class UpdateBleedingFormHandlerTests : TestHelper
         var patienExaminationCard = new PatientExaminationCard(Guid.NewGuid());
         var bleeding = new Bleeding();
 
-        var patientExaminationResult = new PatientExaminationResult(bleeding.Id, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        var patientExaminationResult =
+            new PatientExaminationResult(bleeding.Id, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
 
         patienExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 

@@ -10,8 +10,8 @@ namespace App.API.Test.Controllers.UserRequestControllerTests;
 
 public class DeleteRequestTest
 {
-    private readonly TestableUserRequestController _userRequestController;
     private readonly Mock<IMediator> _mediatorMock;
+    private readonly TestableUserRequestController _userRequestController;
 
     public DeleteRequestTest()
     {
@@ -30,7 +30,7 @@ public class DeleteRequestTest
             RequestTitle = "test",
             Description = "test",
             DateSubmitted = DateTime.Now,
-            RequestStatus = "test",
+            RequestStatus = "test"
         };
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteRequestCommand>(), default))
@@ -54,7 +54,7 @@ public class DeleteRequestTest
             RequestTitle = "test",
             Description = "test",
             DateSubmitted = DateTime.Now,
-            RequestStatus = "test",
+            RequestStatus = "test"
         };
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteRequestCommand>(), default))

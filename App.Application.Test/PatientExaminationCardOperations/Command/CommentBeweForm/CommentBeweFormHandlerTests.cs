@@ -7,8 +7,8 @@ namespace App.Application.Test.PatientExaminationCardOperations.Command.CommentB
 
 public class CommentBeweFormHandlerTests : TestHelper
 {
-    private readonly CommentBeweFormHandler handler;
     private readonly CommentBeweFormCommand command;
+    private readonly CommentBeweFormHandler handler;
 
     public CommentBeweFormHandlerTests()
     {

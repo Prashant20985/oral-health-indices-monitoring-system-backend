@@ -1,17 +1,17 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.UserRequestOperations.Command.CreateRequest;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.UserRequestControllerTests;
 
 public class CreateRequestTest
 {
-    private readonly TestableUserRequestController _userRequestController;
     private readonly Mock<IMediator> _mediatorMock;
+    private readonly TestableUserRequestController _userRequestController;
 
     public CreateRequestTest()
     {
@@ -43,7 +43,6 @@ public class CreateRequestTest
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
         Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
-
     }
 
     [Fact]

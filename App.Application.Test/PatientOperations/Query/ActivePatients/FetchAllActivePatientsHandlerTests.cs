@@ -1,7 +1,7 @@
 ﻿using App.Application.PatientOperations.Query.ActivePatients;
 using App.Domain.DTOs.Common.Response;
 using App.Domain.DTOs.PatientDtos.Response;
-using MockQueryable.Moq;
+using MockQueryable.EntityFrameworkCore;
 using Moq;
 
 namespace App.Application.Test.PatientOperations.Query.ActivePatients;
@@ -22,10 +22,10 @@ public class FetchAllActivePatientsHandlerTests : TestHelper
     {
         // Arrange
         var activePatients = new List<PatientResponseDto>
-            {
-                new PatientResponseDto { Id = Guid.NewGuid(), FirstName = "test", LastName = "test", Email = "test@test.com" },
-                new PatientResponseDto { Id = Guid.NewGuid(), FirstName = "test", LastName = "test", Email = "test@test.com" }
-            }.AsQueryable().BuildMock();
+        {
+            new() { Id = Guid.NewGuid(), FirstName = "test", LastName = "test", Email = "test@test.com" },
+            new() { Id = Guid.NewGuid(), FirstName = "test", LastName = "test", Email = "test@test.com" }
+        }.AsQueryable().BuildMock();
 
         patientRepositoryMock.Setup(repo => repo.GetAllActivePatients())
             .Returns(activePatients);

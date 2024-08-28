@@ -1,4 +1,5 @@
-﻿using App.Application.AdminOperations.Query.ActiveApplicationUsersList;
+﻿using System.Security.Claims;
+using App.Application.AdminOperations.Query.ActiveApplicationUsersList;
 using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
 using App.Application.Core;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
@@ -6,7 +7,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.AdminControllerTests;
 
@@ -31,9 +31,9 @@ public class GetActiveUsersTest
             new Claim(ClaimTypes.NameIdentifier, "testUser")
         }));
 
-        var activeUsers = new List<ApplicationUserResponseDto>()
+        var activeUsers = new List<ApplicationUserResponseDto>
         {
-            new ApplicationUserResponseDto
+            new()
             {
                 FirstName = "Test",
                 LastName = "Test",
@@ -41,9 +41,9 @@ public class GetActiveUsersTest
                 UserType = "RegularUser",
                 Role = "Admin",
                 UserName = "test",
-                IsAccountActive = true,
+                IsAccountActive = true
             },
-            new ApplicationUserResponseDto
+            new()
             {
                 FirstName = "Test",
                 LastName = "Test",
@@ -55,7 +55,7 @@ public class GetActiveUsersTest
             }
         };
 
-        PaginatedApplicationUserResponseDto paginatedActiveUsers = new PaginatedApplicationUserResponseDto
+        var paginatedActiveUsers = new PaginatedApplicationUserResponseDto
         {
             Users = activeUsers,
             TotalUsersCount = activeUsers.Count

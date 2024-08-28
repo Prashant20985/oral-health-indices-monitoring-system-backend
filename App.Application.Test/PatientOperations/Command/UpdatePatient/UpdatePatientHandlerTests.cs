@@ -15,20 +15,20 @@ public class UpdatePatientHandlerTests : TestHelper
     public UpdatePatientHandlerTests()
     {
         command = new UpdatePatientCommand(Guid.NewGuid(),
-                                           new UpdatePatientDto
-                                           {
-                                               Age = 18,
-                                               EthnicGroup = "test",
-                                               FirstName = "test",
-                                               Gender = "Male",
-                                               LastName = "test",
-                                               Location = "test",
-                                               OtherData = "test",
-                                               OtherData2 = "test",
-                                               OtherData3 = "test",
-                                               OtherGroup = "test",
-                                               YearsInSchool = 2
-                                           });
+            new UpdatePatientDto
+            {
+                Age = 18,
+                EthnicGroup = "test",
+                FirstName = "test",
+                Gender = "Male",
+                LastName = "test",
+                Location = "test",
+                OtherData = "test",
+                OtherData2 = "test",
+                OtherData3 = "test",
+                OtherGroup = "test",
+                YearsInSchool = 2
+            });
         handler = new UpdatePatientHandler(patientRepositoryMock.Object);
     }
 
@@ -36,7 +36,8 @@ public class UpdatePatientHandlerTests : TestHelper
     public async Task Handle_WithValidCommand_ShouldUpdatePatient()
     {
         //Arrange
-        Patient patient = new Patient("test1", "test1", "test@123", Gender.Male, "test1", "test1", 12, "test1", "test1", "test1", "test1", 2, "doctor123");
+        var patient = new Patient("test1", "test1", "test@123", Gender.Male, "test1", "test1", 12, "test1", "test1",
+            "test1", "test1", 2, "doctor123");
 
         patientRepositoryMock.Setup(repo => repo.GetPatientById(It.IsAny<Guid>()))
             .ReturnsAsync(patient);

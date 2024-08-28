@@ -1,4 +1,5 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.StudentExamOperations.StudentOperations.Query.UpcomingExams;
 using App.Domain.DTOs.ExamDtos.Response;
 using App.Domain.Models.CreditSchema;
@@ -6,7 +7,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.StudentExamControllerTests;
 
@@ -28,11 +28,12 @@ public class GetUpcomingExamsTest
         // Arrange
         var studentId = Guid.NewGuid();
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.MaxValue, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.MaxValue, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, groupId);
 
         var upcomingExams = new List<ExamDto>
         {
-            new ExamDto
+            new()
             {
                 Id = exam.Id,
                 DateOfExamination = exam.DateOfExamination,
@@ -48,16 +49,16 @@ public class GetUpcomingExamsTest
 
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, studentId.ToString())
+            new(ClaimTypes.NameIdentifier, studentId.ToString())
         }));
 
-        _studentExamController.ControllerContext = new ControllerContext()
+        _studentExamController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = claimsPrincipal }
+            HttpContext = new DefaultHttpContext { User = claimsPrincipal }
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<UpcominExamsQuery>(), default))
-                .ReturnsAsync(OperationResult<List<ExamDto>>.Success(upcomingExams));
+            .ReturnsAsync(OperationResult<List<ExamDto>>.Success(upcomingExams));
 
         // Act
         var result = await _studentExamController.GetUpcomingExams();
@@ -77,16 +78,16 @@ public class GetUpcomingExamsTest
         var groupId = Guid.NewGuid();
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, studentId.ToString())
+            new(ClaimTypes.NameIdentifier, studentId.ToString())
         }));
 
-        _studentExamController.ControllerContext = new ControllerContext()
+        _studentExamController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = claimsPrincipal }
+            HttpContext = new DefaultHttpContext { User = claimsPrincipal }
         };
 
         _mediator.Setup(x => x.Send(It.IsAny<UpcominExamsQuery>(), default))
-                .ReturnsAsync(OperationResult<List<ExamDto>>.Failure("Upcoming exams not found."));
+            .ReturnsAsync(OperationResult<List<ExamDto>>.Failure("Upcoming exams not found."));
 
         // Act
         var result = await _studentExamController.GetUpcomingExams();

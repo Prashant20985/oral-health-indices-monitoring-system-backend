@@ -1,4 +1,5 @@
 ﻿using App.Application.AdminOperations.Command.UpdateRequestStatusToCompleted;
+using App.Domain.Models.Enums;
 using App.Domain.Models.Users;
 using Moq;
 
@@ -29,7 +30,7 @@ public class UpdateRequestStatusToCompletedHandlerTests : TestHelper
 
         // Assert
         Assert.True(result.IsSuccessful);
-        Assert.Equal(Domain.Models.Enums.RequestStatus.Completed, userRequest.RequestStatus);
+        Assert.Equal(RequestStatus.Completed, userRequest.RequestStatus);
         Assert.Equal("Test comment", userRequest.AdminComment);
     }
 

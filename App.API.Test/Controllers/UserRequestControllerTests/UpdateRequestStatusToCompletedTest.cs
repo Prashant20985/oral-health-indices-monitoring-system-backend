@@ -10,8 +10,8 @@ namespace App.API.Test.Controllers.UserRequestControllerTests;
 
 public class UpdateRequestStatusToCompletedTest
 {
-    private readonly TestableUserRequestController _userRequestController;
     private readonly Mock<IMediator> _mediatorMock;
+    private readonly TestableUserRequestController _userRequestController;
 
     public UpdateRequestStatusToCompletedTest()
     {
@@ -30,7 +30,7 @@ public class UpdateRequestStatusToCompletedTest
             RequestTitle = "test",
             Description = "test",
             DateSubmitted = DateTime.Now,
-            RequestStatus = "test",
+            RequestStatus = "test"
         };
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<UpdateRequestStatusToCompletedCommand>(), default))
@@ -54,7 +54,7 @@ public class UpdateRequestStatusToCompletedTest
             RequestTitle = "test",
             Description = "test",
             DateSubmitted = DateTime.Now,
-            RequestStatus = "test",
+            RequestStatus = "test"
         };
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<UpdateRequestStatusToCompletedCommand>(), default))

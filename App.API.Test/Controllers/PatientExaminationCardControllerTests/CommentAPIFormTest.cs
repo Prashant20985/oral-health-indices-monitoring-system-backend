@@ -1,11 +1,11 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.PatientExaminationCardOperations.Command.CommentAPIForm;
 using App.Domain.Models.OralHealthExamination;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.PatientExaminationCardControllerTests;
 
@@ -22,12 +22,12 @@ public class CommentAPIFormTest
 
         var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-                new Claim(ClaimTypes.Role, "Student")
-           }, "mock"));
+            new(ClaimTypes.Role, "Student")
+        }, "mock"));
 
-        _patientExaminationCardController.ControllerContext = new ControllerContext()
+        _patientExaminationCardController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = user }
+            HttpContext = new DefaultHttpContext { User = user }
         };
     }
 
@@ -40,13 +40,14 @@ public class CommentAPIFormTest
         var beweForm = new Bewe();
         var dMFT_dMFSForm = new DMFT_DMFS();
         var bleedingForm = new Bleeding();
-        var patientExaminationResult = new PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
-        {
-            API = APIForm,
-            Bewe = beweForm,
-            DMFT_DMFS = dMFT_dMFSForm,
-            Bleeding = bleedingForm
-        };
+        var patientExaminationResult =
+            new PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
+            {
+                API = APIForm,
+                Bewe = beweForm,
+                DMFT_DMFS = dMFT_dMFSForm,
+                Bleeding = bleedingForm
+            };
 
         var patientExaminationCard = new PatientExaminationCard(patientId)
         {
@@ -58,7 +59,7 @@ public class CommentAPIFormTest
         patientExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 
         _mediator.Setup(x => x.Send(It.IsAny<CommentAPIFormCommnand>(), default))
-                 .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
+            .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
         // Act
         var result = await _patientExaminationCardController.CommentAPIForm(patientExaminationCard.Id, comment);
@@ -77,13 +78,14 @@ public class CommentAPIFormTest
         var beweForm = new Bewe();
         var dMFT_dMFSForm = new DMFT_DMFS();
         var bleedingForm = new Bleeding();
-        var patientExaminationResult = new PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
-        {
-            API = APIForm,
-            Bewe = beweForm,
-            DMFT_DMFS = dMFT_dMFSForm,
-            Bleeding = bleedingForm
-        };
+        var patientExaminationResult =
+            new PatientExaminationResult(beweForm.Id, dMFT_dMFSForm.Id, APIForm.Id, bleedingForm.Id)
+            {
+                API = APIForm,
+                Bewe = beweForm,
+                DMFT_DMFS = dMFT_dMFSForm,
+                Bleeding = bleedingForm
+            };
 
         var patientExaminationCard = new PatientExaminationCard(patientId)
         {
@@ -95,7 +97,7 @@ public class CommentAPIFormTest
         patientExaminationCard.SetPatientExaminationResultId(patientExaminationResult.Id);
 
         _mediator.Setup(x => x.Send(It.IsAny<CommentAPIFormCommnand>(), default))
-                 .ReturnsAsync(OperationResult<Unit>.Failure("Comment cannot be empty."));
+            .ReturnsAsync(OperationResult<Unit>.Failure("Comment cannot be empty."));
 
         // Act
         var result = await _patientExaminationCardController.CommentAPIForm(patientExaminationCard.Id, comment);
@@ -115,7 +117,8 @@ public class CommentAPIFormTest
             .ReturnsAsync(OperationResult<Unit>.Failure("Patient examination card not found."));
 
         // Act
-        var result = await _patientExaminationCardController.CommentAPIForm(patientExaminationCardId, "This is a test comment.");
+        var result =
+            await _patientExaminationCardController.CommentAPIForm(patientExaminationCardId, "This is a test comment.");
 
         // Assert
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);

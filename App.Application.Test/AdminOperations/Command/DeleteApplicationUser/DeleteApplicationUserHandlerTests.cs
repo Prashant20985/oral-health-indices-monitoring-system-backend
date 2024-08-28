@@ -13,11 +13,11 @@ public class DeleteApplicationUserHandlerTests : TestHelper
     public DeleteApplicationUserHandlerTests()
     {
         applicationUser = new ApplicationUser(
-            email: "test@example.com",
-            firstName: "John",
-            lastName: "Doe",
-            phoneNumber: "12345678",
-            guestUserComment: "xyz");
+            "test@example.com",
+            "John",
+            "Doe",
+            "12345678",
+            "xyz");
 
         command = new DeleteApplicationUserCommand(applicationUser.UserName, "Test Delete");
         handler = new DeleteApplicationUserHandler(userRepositoryMock.Object);
@@ -28,7 +28,7 @@ public class DeleteApplicationUserHandlerTests : TestHelper
     {
         // Arrange
         userRepositoryMock.Setup(u => u.GetUserByUserNameOrEmail(applicationUser.UserName, CancellationToken.None))
-           .ReturnsAsync(applicationUser);
+            .ReturnsAsync(applicationUser);
 
         // Act
         var result = await handler.Handle(command, CancellationToken.None);
@@ -44,7 +44,7 @@ public class DeleteApplicationUserHandlerTests : TestHelper
     {
         // Arrange
         userRepositoryMock.Setup(u => u.GetUserByUserNameOrEmail(applicationUser.UserName, CancellationToken.None))
-           .ReturnsAsync(value: null);
+            .ReturnsAsync(value: null);
 
         // Act
         var result = await handler.Handle(command, CancellationToken.None);

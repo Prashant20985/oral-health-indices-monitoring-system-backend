@@ -9,7 +9,7 @@ public class PracticeBeweTests
     public void Constructor_ShouldInitializeProperties()
     {
         // Arrange
-        decimal beweResult = 5.5m;
+        var beweResult = 5.5m;
 
         // Act
         var practiceBewe = new PracticeBewe(beweResult);
@@ -33,7 +33,7 @@ public class PracticeBeweTests
     {
         // Arrange
         var practiceBewe = new PracticeBewe(5.5m);
-        string comment = "This is a test comment.";
+        var comment = "This is a test comment.";
 
         // Act
         practiceBewe.AddComment(comment);
@@ -61,7 +61,7 @@ public class PracticeBeweTests
     {
         // Arrange
         var practiceBewe = new PracticeBewe(5.5m);
-        decimal sectant1 = 1.1m;
+        var sectant1 = 1.1m;
 
         // Act
         practiceBewe.SetSectant1(sectant1);
@@ -75,7 +75,7 @@ public class PracticeBeweTests
     {
         // Arrange
         var practiceBewe = new PracticeBewe(5.5m);
-        decimal sectant2 = 2.2m;
+        var sectant2 = 2.2m;
 
         // Act
         practiceBewe.SetSectant2(sectant2);
@@ -89,7 +89,7 @@ public class PracticeBeweTests
     {
         // Arrange
         var practiceBewe = new PracticeBewe(5.5m);
-        decimal sectant3 = 3.3m;
+        var sectant3 = 3.3m;
 
         // Act
         practiceBewe.SetSectant3(sectant3);
@@ -103,7 +103,7 @@ public class PracticeBeweTests
     {
         // Arrange
         var practiceBewe = new PracticeBewe(5.5m);
-        decimal sectant4 = 4.4m;
+        var sectant4 = 4.4m;
 
         // Act
         practiceBewe.SetSectant4(sectant4);
@@ -117,7 +117,7 @@ public class PracticeBeweTests
     {
         // Arrange
         var practiceBewe = new PracticeBewe(5.5m);
-        decimal sectant5 = 5.5m;
+        var sectant5 = 5.5m;
 
         // Act
         practiceBewe.SetSectant5(sectant5);
@@ -131,7 +131,7 @@ public class PracticeBeweTests
     {
         // Arrange
         var practiceBewe = new PracticeBewe(5.5m);
-        decimal sectant6 = 6.6m;
+        var sectant6 = 6.6m;
 
         // Act
         practiceBewe.SetSectant6(sectant6);
@@ -139,5 +139,4 @@ public class PracticeBeweTests
         // Assert
         Assert.Equal(sectant6, practiceBewe.Sectant6);
     }
-
 }

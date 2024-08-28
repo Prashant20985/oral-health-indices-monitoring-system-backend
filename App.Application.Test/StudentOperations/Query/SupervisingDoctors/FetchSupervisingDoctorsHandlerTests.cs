@@ -21,7 +21,7 @@ public class FetchSupervisingDoctorsHandlerTests : TestHelper
         // Arrange
         var supervisingDoctors = new List<SupervisingDoctorResponseDto>
         {
-            new SupervisingDoctorResponseDto
+            new()
             {
                 Id = Guid.NewGuid().ToString(),
                 DoctorName = "doctor"
