@@ -6,27 +6,27 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
-namespace App.API.Test.Controllers.AdminControllerTests;
-
-public class GetDeletedUsersTest
+namespace App.API.Test.Controllers.AdminControllerTests
 {
-    private readonly TestableAdminController _adminController;
-    private readonly Mock<IMediator> _mediatorMock;
-
-    public GetDeletedUsersTest()
+    public class GetDeletedUsersTest
     {
-        _mediatorMock = new Mock<IMediator>();
-        _adminController = new TestableAdminController();
-        _adminController.ExposeSetMediator(_mediatorMock.Object);
-    }
+        private readonly TestableAdminController _adminController;
+        private readonly Mock<IMediator> _mediatorMock;
 
-    [Fact]
-    public async Task GetDeletedUsers_Returns_OkResult()
-    {
-        //Arrange
-        var deletedUsers = new List<ApplicationUserResponseDto>
+        public GetDeletedUsersTest()
         {
-            new()
+            _mediatorMock = new Mock<IMediator>();
+            _adminController = new TestableAdminController();
+            _adminController.ExposeSetMediator(_mediatorMock.Object);
+        }
+
+        [Fact]
+        public async Task GetDeletedUsers_Returns_OkResult()
+        {
+            //Arrange
+            var deletedUsers = new List<ApplicationUserResponseDto>()
+        {
+            new ApplicationUserResponseDto
             {
                 FirstName = "Test",
                 LastName = "Test",
@@ -38,7 +38,7 @@ public class GetDeletedUsersTest
                 DeletedAt = DateTime.Now,
                 DeleteUserComment = "Testing"
             },
-            new()
+            new ApplicationUserResponseDto
             {
                 FirstName = "Test",
                 LastName = "Test",
@@ -52,24 +52,25 @@ public class GetDeletedUsersTest
             }
         };
 
-        var paginatedDeletedUsers = new PaginatedApplicationUserResponseDto
-        {
-            Users = deletedUsers,
-            TotalUsersCount = deletedUsers.Count
-        };
+            PaginatedApplicationUserResponseDto paginatedDeletedUsers = new PaginatedApplicationUserResponseDto
+            {
+                Users = deletedUsers,
+                TotalUsersCount = deletedUsers.Count
+            };
 
-        var searchParams = new ApplicationUserPaginationAndSearchParams();
+            var searchParams = new ApplicationUserPaginationAndSearchParams();
 
-        _mediatorMock.Setup(m => m.Send(It.IsAny<FetchDeletedApplicationUsersListQuery>(), default))
-            .ReturnsAsync(OperationResult<PaginatedApplicationUserResponseDto>.Success(paginatedDeletedUsers));
+            _mediatorMock.Setup(m => m.Send(It.IsAny<FetchDeletedApplicationUsersListQuery>(), default))
+                .ReturnsAsync(OperationResult<PaginatedApplicationUserResponseDto>.Success(paginatedDeletedUsers));
 
-        // Act
-        var result = await _adminController.GetDeletedUsers(searchParams);
+            // Act
+            var result = await _adminController.GetDeletedUsers(searchParams);
 
-        // Assert
-        var actionResult = Assert.IsType<ActionResult<PaginatedApplicationUserResponseDto>>(result);
-        var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-        var model = Assert.IsType<PaginatedApplicationUserResponseDto>(okObjectResult.Value);
-        Assert.Equal(deletedUsers.Count, model.Users.Count);
+            // Assert
+            var actionResult = Assert.IsType<ActionResult<PaginatedApplicationUserResponseDto>>(result);
+            var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
+            var model = Assert.IsType<PaginatedApplicationUserResponseDto>(okObjectResult.Value);
+            Assert.Equal(deletedUsers.Count, model.Users.Count);
+        }
     }
 }

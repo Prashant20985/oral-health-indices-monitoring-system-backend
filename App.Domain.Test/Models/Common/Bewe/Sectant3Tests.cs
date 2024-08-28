@@ -89,4 +89,5 @@ public class Sectant3Tests
         // Assert
         Assert.Equal(12, maxValue);
     }
+
 }

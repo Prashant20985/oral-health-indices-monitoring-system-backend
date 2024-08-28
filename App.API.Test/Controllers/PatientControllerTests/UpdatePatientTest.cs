@@ -9,8 +9,8 @@ namespace App.API.Test.Controllers.PatientControllerTests;
 
 public class UpdatePatientTest
 {
-    private readonly Mock<IMediator> _mediatorMock;
     private readonly TestablePatientController _patientController;
+    private readonly Mock<IMediator> _mediatorMock;
 
     public UpdatePatientTest()
     {

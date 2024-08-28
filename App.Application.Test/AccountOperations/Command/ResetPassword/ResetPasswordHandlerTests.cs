@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Moq;
 
 namespace App.Application.Test.AccountOperations.Command.ResetPassword;
-
 public class ResetPasswordHandlerTests : TestHelper
 {
     [Fact]
@@ -25,10 +24,9 @@ public class ResetPasswordHandlerTests : TestHelper
         });
 
         userRepositoryMock.Setup(u => u.GetUserByUserNameOrEmail(user.Email, CancellationToken.None))
-            .ReturnsAsync(user);
+                .ReturnsAsync(user);
 
-        userRepositoryMock.Setup(u => u.ResetPassword(user, resetPasswordCommand.ResetPassword.Token,
-                resetPasswordCommand.ResetPassword.Password))
+        userRepositoryMock.Setup(u => u.ResetPassword(user, resetPasswordCommand.ResetPassword.Token, resetPasswordCommand.ResetPassword.Password))
             .ReturnsAsync(IdentityResult.Success);
 
         var resetPasswordHandler = new ResetPasswordHandler(mediatorMock.Object, userRepositoryMock.Object);
@@ -86,8 +84,7 @@ public class ResetPasswordHandlerTests : TestHelper
         userRepositoryMock.Setup(u => u.GetUserByUserNameOrEmail(user.Email, CancellationToken.None))
             .ReturnsAsync(user);
 
-        userRepositoryMock.Setup(u => u.ResetPassword(user, resetPasswordCommand.ResetPassword.Token,
-                resetPasswordCommand.ResetPassword.Password))
+        userRepositoryMock.Setup(u => u.ResetPassword(user, resetPasswordCommand.ResetPassword.Token, resetPasswordCommand.ResetPassword.Password))
             .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "Password reset failed." }));
 
         var resetPasswordHandler = new ResetPasswordHandler(mediatorMock.Object, userRepositoryMock.Object);

@@ -6,12 +6,12 @@ namespace App.Application.Test.Behavior;
 
 public class UnitOfWorkBehaviorPipelineTests : TestHelper
 {
+
     [Fact]
     public async Task Handle_UnitOfWorkAttribute_AppliesTransaction()
     {
         // Arrange
-        var behavior =
-            new UnitOfWorkBehaviorPipeline<SampleRequestWithUnitOfWorkAttribute, SampleResponse>(unitOfWork.Object);
+        var behavior = new UnitOfWorkBehaviorPipeline<SampleRequestWithUnitOfWorkAttribute, SampleResponse>(unitOfWork.Object);
 
         var request = new SampleRequestWithUnitOfWorkAttribute();
         var cancellationToken = CancellationToken.None;

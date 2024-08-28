@@ -5,65 +5,66 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Moq;
 
-namespace App.API.Test.Controllers.LogControllerTests;
-
-public class GetLogsForTodayAsyncTest
+namespace App.API.Test.Controllers.LogControllerTests
 {
-    private readonly LogController _logController;
-    private readonly Mock<ILogService> _mockLogService;
-
-    public GetLogsForTodayAsyncTest()
+    public class GetLogsForTodayAsyncTest
     {
-        _mockLogService = new Mock<ILogService>();
+        private readonly Mock<ILogService> _mockLogService;
+        private readonly LogController _logController;
 
-        _logController = new LogController(_mockLogService.Object);
-    }
-
-    [Fact]
-    public async Task GetLogsForTodayAsync_ShouldReturnOkResult_WithListOfLogs()
-    {
-        // Arrange
-        var mockLogs = new List<RequestLogDocument>
+        public GetLogsForTodayAsyncTest()
         {
-            new()
+            _mockLogService = new Mock<ILogService>();
+
+            _logController = new LogController(_mockLogService.Object);
+        }
+
+        [Fact]
+        public async Task GetLogsForTodayAsync_ShouldReturnOkResult_WithListOfLogs()
+        {
+            // Arrange
+            var mockLogs = new List<RequestLogDocument>
             {
-                Id = ObjectId.GenerateNewId(),
-                Timestamp = DateTime.UtcNow.Date,
-                MessageTemplate = "Test log 1",
-                RenderedMessage = "Test",
-                Level = "Info",
-                Properties = new RequestLogProperties
+                new RequestLogDocument
                 {
-                    ExecutedBy = "User123",
-                    RequestName = "GET /api/test",
-                    DateTimeUtc = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
-                }
-            },
-            new()
-            {
-                Id = ObjectId.GenerateNewId(),
-                Timestamp = DateTime.UtcNow.Date,
-                MessageTemplate = "Test log 2",
-                RenderedMessage = "Test",
-                Level = "Debug",
-                Properties = new RequestLogProperties
+                    Id = ObjectId.GenerateNewId(),
+                    Timestamp = DateTime.UtcNow.Date,
+                    MessageTemplate = "Test log 1",
+                    RenderedMessage = "Test",
+                    Level = "Info",
+                    Properties = new RequestLogProperties
+                    {
+                        ExecutedBy = "User123",
+                        RequestName = "GET /api/test",
+                        DateTimeUtc = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
+                    }
+                },
+                new RequestLogDocument
                 {
-                    ExecutedBy = "Admin456",
-                    RequestName = "POST /api/data",
-                    DateTimeUtc = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
+                    Id = ObjectId.GenerateNewId(),
+                    Timestamp = DateTime.UtcNow.Date,
+                    MessageTemplate = "Test log 2",
+                    RenderedMessage = "Test",
+                    Level = "Debug",
+                    Properties = new RequestLogProperties
+                    {
+                        ExecutedBy = "Admin456",
+                        RequestName = "POST /api/data",
+                        DateTimeUtc = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
+                    }
                 }
-            }
-        };
+            };
 
-        _mockLogService.Setup(service => service.GetLogsForTodayAsync())
-            .ReturnsAsync(mockLogs);
+            _mockLogService.Setup(service => service.GetLogsForTodayAsync())
+                          .ReturnsAsync(mockLogs);
 
-        // Act
-        var result = await _logController.GetLogsForTodayAsync();
+            // Act
+            var result = await _logController.GetLogsForTodayAsync();
 
-        // Assert
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var logs = Assert.IsAssignableFrom<List<RequestLogDocument>>(okResult.Value);
-        Assert.Equal(2, logs.Count);
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var logs = Assert.IsAssignableFrom<List<RequestLogDocument>>(okResult.Value);
+            Assert.Equal(2, logs.Count);
+        }
     }
 }

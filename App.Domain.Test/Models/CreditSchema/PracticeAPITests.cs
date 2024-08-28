@@ -9,9 +9,9 @@ public class PracticeAPITests
     public void Constructor_ShouldInitializeProperties()
     {
         // Arrange
-        var aPIResult = 85;
-        var maxilla = 40;
-        var mandible = 45;
+        int aPIResult = 85;
+        int maxilla = 40;
+        int mandible = 45;
 
         // Act
         var practiceAPI = new PracticeAPI(aPIResult, maxilla, mandible);
@@ -31,7 +31,7 @@ public class PracticeAPITests
     {
         // Arrange
         var practiceAPI = new PracticeAPI(85, 40, 45);
-        var comment = "This is a test comment.";
+        string comment = "This is a test comment.";
 
         // Act
         practiceAPI.AddComment(comment);

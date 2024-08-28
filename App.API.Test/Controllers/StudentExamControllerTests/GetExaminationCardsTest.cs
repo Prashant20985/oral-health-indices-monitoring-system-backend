@@ -25,11 +25,9 @@ public class GetExaminationCardsTest
     {
         // Arrange
         var group1Id = Guid.NewGuid();
-        var exam1 = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, group1Id);
+        var exam1 = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group1Id);
         var group2Id = Guid.NewGuid();
-        var exam2 = new Exam(DateTime.Now, "Exam2", "Description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, group2Id);
+        var exam2 = new Exam(DateTime.Now, "Exam2", "Description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group2Id);
 
         var student1Id = Guid.NewGuid().ToString();
         var student2Id = Guid.NewGuid().ToString();
@@ -39,13 +37,14 @@ public class GetExaminationCardsTest
 
         var expectedExaminationCards = new List<PracticePatientExaminationCardDto>
         {
-            new()
+            new PracticePatientExaminationCardDto
             {
-                Id = patientExaminationCard1.Id
+                Id = patientExaminationCard1.Id,
+
             },
-            new()
+            new PracticePatientExaminationCardDto
             {
-                Id = patientExaminationCard2.Id
+                Id = patientExaminationCard2.Id,
             }
         };
 

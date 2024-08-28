@@ -3,9 +3,9 @@ using App.Domain.Models.Users;
 using Moq;
 
 namespace App.Application.Test.AccountOperations.Command.RefreshToken;
-
 public class RefreshTokenHandlerTests : TestHelper
 {
+
     [Fact]
     public async Task Handle_ValidRequest_ReturnsSuccessResultWithUserLoginResponseDto()
     {
@@ -16,13 +16,13 @@ public class RefreshTokenHandlerTests : TestHelper
         var user = new ApplicationUser("test@example.com", "John", "Doe", "12345678", "xyz")
         {
             RefreshTokens = new List<Domain.Models.Users.RefreshToken>
-            {
-                new() { Token = refreshToken }
-            }
+                {
+                    new Domain.Models.Users.RefreshToken { Token = refreshToken }
+                }
         };
 
         userRepositoryMock.Setup(u => u.GetUserByUserNameWithRefreshToken(userName, CancellationToken.None))
-            .ReturnsAsync(user);
+                .ReturnsAsync(user);
 
         tokenServiceMock.Setup(t => t.CreateToken(user))
             .ReturnsAsync("token");

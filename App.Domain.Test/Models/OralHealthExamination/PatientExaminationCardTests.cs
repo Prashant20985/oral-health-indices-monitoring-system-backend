@@ -35,7 +35,7 @@ public class PatientExaminationCardTests
     {
         // Arrange
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid());
-        var doctorId = "doctorId";
+        string doctorId = "doctorId";
 
         // Act
         patientExaminationCard.SetDoctorId(doctorId);
@@ -49,7 +49,7 @@ public class PatientExaminationCardTests
     {
         // Arrange
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid());
-        var studentId = "studentId";
+        string studentId = "studentId";
 
         // Act
         patientExaminationCard.SetStudentId(studentId);
@@ -63,7 +63,7 @@ public class PatientExaminationCardTests
     {
         // Arrange
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid());
-        var riskFactorAssesmentId = Guid.NewGuid();
+        Guid riskFactorAssesmentId = Guid.NewGuid();
 
         // Act
         patientExaminationCard.SetRiskFactorAssesmentId(riskFactorAssesmentId);
@@ -77,7 +77,7 @@ public class PatientExaminationCardTests
     {
         // Arrange
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid());
-        var patientExaminationResultId = Guid.NewGuid();
+        Guid patientExaminationResultId = Guid.NewGuid();
 
         // Act
         patientExaminationCard.SetPatientExaminationResultId(patientExaminationResultId);
@@ -91,7 +91,7 @@ public class PatientExaminationCardTests
     {
         // Arrange
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid());
-        var totalScore = 95.5m;
+        decimal totalScore = 95.5m;
 
         // Act
         patientExaminationCard.SetTotalScore(totalScore);
@@ -105,7 +105,7 @@ public class PatientExaminationCardTests
     {
         // Arrange
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid());
-        var comment = "Doctor's comment";
+        string comment = "Doctor's comment";
 
         // Act
         patientExaminationCard.AddDoctorComment(comment);
@@ -119,7 +119,7 @@ public class PatientExaminationCardTests
     {
         // Arrange
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid());
-        var comment = "Student's comment";
+        string comment = "Student's comment";
 
         // Act
         patientExaminationCard.AddStudentComment(comment);
@@ -133,7 +133,7 @@ public class PatientExaminationCardTests
     {
         // Arrange
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid());
-        var needForDentalInterventions = "Need for dental interventions";
+        string needForDentalInterventions = "Need for dental interventions";
 
         // Act
         patientExaminationCard.SetNeedForDentalInterventions(needForDentalInterventions);
@@ -147,7 +147,7 @@ public class PatientExaminationCardTests
     {
         // Arrange
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid());
-        var proposedTreatment = "Proposed treatment";
+        string proposedTreatment = "Proposed treatment";
 
         // Act
         patientExaminationCard.SetProposedTreatment(proposedTreatment);
@@ -161,7 +161,7 @@ public class PatientExaminationCardTests
     {
         // Arrange
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid());
-        var description = "Description";
+        string description = "Description";
 
         // Act
         patientExaminationCard.SetDescription(description);
@@ -175,7 +175,7 @@ public class PatientExaminationCardTests
     {
         // Arrange
         var patientExaminationCard = new PatientExaminationCard(Guid.NewGuid());
-        var patientRecommendations = "Patient recommendations";
+        string patientRecommendations = "Patient recommendations";
 
         // Act
         patientExaminationCard.SetPatientRecommendations(patientRecommendations);

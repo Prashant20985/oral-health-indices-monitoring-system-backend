@@ -23,7 +23,7 @@ public class StudentExamRepositoryTests
         var mapperConfig = new MapperConfiguration(cfg =>
         {
             cfg.CreateMap<Exam, ExamDto>()
-                .ForMember(x => x.ExamStatus, o => o.MapFrom(s => Enum.GetName(s.ExamStatus)));
+            .ForMember(x => x.ExamStatus, o => o.MapFrom(s => Enum.GetName(s.ExamStatus)));
             cfg.CreateMap<PracticePatient, PatientResponseDto>();
             cfg.CreateMap<PracticeRiskFactorAssessment, RiskFactorAssessmentDto>();
             cfg.CreateMap<PracticeBewe, PracticeBeweResponseDto>();
@@ -51,19 +51,17 @@ public class StudentExamRepositoryTests
         var practicePatientExaminationCard2 = new PracticePatientExaminationCard(examId2, studentId2);
 
         var practicePatientExaminationCards = new List<PracticePatientExaminationCard>
-            {
-                practicePatientExaminationCard1,
-                practicePatientExaminationCard2
-            }
-            .AsQueryable()
-            .BuildMockDbSet();
+        {
+            practicePatientExaminationCard1,
+            practicePatientExaminationCard2
+        }
+        .AsQueryable()
+        .BuildMockDbSet();
 
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
 
         // Act
-        var result =
-            await _studentExamRepository.GetPracticePatientExaminationCardById(practicePatientExaminationCard1.Id);
+        var result = await _studentExamRepository.GetPracticePatientExaminationCardById(practicePatientExaminationCard1.Id);
 
         // Assert
         Assert.Equal(practicePatientExaminationCard1, result);
@@ -87,15 +85,14 @@ public class StudentExamRepositoryTests
         var practicePatientExaminationCard2 = new PracticePatientExaminationCard(examId2, studentId2);
 
         var practicePatientExaminationCards = new List<PracticePatientExaminationCard>
-            {
-                practicePatientExaminationCard1,
-                practicePatientExaminationCard2
-            }
-            .AsQueryable()
-            .BuildMockDbSet();
+        {
+            practicePatientExaminationCard1,
+            practicePatientExaminationCard2
+        }
+        .AsQueryable()
+        .BuildMockDbSet();
 
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
 
         // Act
         var result = await _studentExamRepository.GetPracticePatientExaminationCardById(Guid.NewGuid());
@@ -111,24 +108,22 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
         var groupId2 = Guid.NewGuid();
 
-        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
-        var exam2 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId2);
+        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam2 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId2);
 
         var exams = new List<Exam>
-            {
-                exam1,
-                exam2
-            }
-            .AsQueryable()
-            .BuildMockDbSet();
+        {
+            exam1,
+            exam2
+        }
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Exams).Returns(exams.Object);
         _mockOralEhrContext.Setup(x => x.Exams.FindAsync(exam1.Id))
-            .ReturnsAsync(exam1);
+                .ReturnsAsync(exam1);
         _mockOralEhrContext.Setup(x => x.Exams.FindAsync(exam2.Id))
-            .ReturnsAsync(exam2);
+                .ReturnsAsync(exam2);
 
         // Act
         var result = await _studentExamRepository.GetExamById(exam1.Id);
@@ -150,24 +145,22 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
         var groupId2 = Guid.NewGuid();
 
-        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
-        var exam2 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId2);
+        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam2 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId2);
 
         var exams = new List<Exam>
-            {
-                exam1,
-                exam2
-            }
-            .AsQueryable()
-            .BuildMockDbSet();
+        {
+            exam1,
+            exam2
+        }
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Exams).Returns(exams.Object);
         _mockOralEhrContext.Setup(x => x.Exams.FindAsync(exam1.Id))
-            .ReturnsAsync(exam1);
+                .ReturnsAsync(exam1);
         _mockOralEhrContext.Setup(x => x.Exams.FindAsync(exam2.Id))
-            .ReturnsAsync(exam2);
+                .ReturnsAsync(exam2);
 
         // Act
         var result = await _studentExamRepository.GetExamById(Guid.NewGuid());
@@ -183,30 +176,24 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
         var groupId2 = Guid.NewGuid();
 
-        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
-        var exam2 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam3 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam4 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam5 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam6 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId2);
+        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam2 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam3 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam4 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam5 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam6 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId2);
 
         var exams = new List<Exam>
-            {
-                exam1,
-                exam2,
-                exam3,
-                exam4,
-                exam5,
-                exam6
-            }
-            .AsQueryable()
-            .BuildMockDbSet();
+        {
+            exam1,
+            exam2,
+            exam3,
+            exam4,
+            exam5,
+            exam6
+        }
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Exams).Returns(exams.Object);
 
@@ -228,30 +215,24 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
         var groupId2 = Guid.NewGuid();
 
-        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
-        var exam2 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam3 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam4 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam5 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam6 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId2);
+        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam2 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam3 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam4 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam5 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam6 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId2);
 
         var exams = new List<Exam>
-            {
-                exam1,
-                exam2,
-                exam3,
-                exam4,
-                exam5,
-                exam6
-            }
-            .AsQueryable()
-            .BuildMockDbSet();
+        {
+            exam1,
+            exam2,
+            exam3,
+            exam4,
+            exam5,
+            exam6
+        }
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Exams).Returns(exams.Object);
 
@@ -271,30 +252,24 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
         var groupId2 = Guid.NewGuid();
 
-        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
-        var exam2 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam3 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam4 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam5 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam6 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId2);
+        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam2 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam3 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam4 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam5 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam6 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId2);
 
         var exams = new List<Exam>
-            {
-                exam1,
-                exam2,
-                exam3,
-                exam4,
-                exam5,
-                exam6
-            }
-            .AsQueryable()
-            .BuildMockDbSet();
+        {
+            exam1,
+            exam2,
+            exam3,
+            exam4,
+            exam5,
+            exam6
+        }
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Exams).Returns(exams.Object);
 
@@ -315,30 +290,24 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
         var groupId2 = Guid.NewGuid();
 
-        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
-        var exam2 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam3 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam4 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam5 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId);
-        var exam6 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, groupId2);
+        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam2 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam3 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam4 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam5 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId);
+        var exam6 = new Exam(DateTime.Now, "title2", "description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, groupId2);
 
         var exams = new List<Exam>
-            {
-                exam1,
-                exam2,
-                exam3,
-                exam4,
-                exam5,
-                exam6
-            }
-            .AsQueryable()
-            .BuildMockDbSet();
+        {
+            exam1,
+            exam2,
+            exam3,
+            exam4,
+            exam5,
+            exam6
+        }
+        .AsQueryable()
+        .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Exams).Returns(exams.Object);
 
@@ -353,23 +322,20 @@ public class StudentExamRepositoryTests
     public async Task GetPracticePatientExaminationCardsByExamId_ShouldReturnCards()
     {
         // Arrange
-        var teacher =
-            new ApplicationUser("teacher@test.com", "TeacherFirstName", "TeacherLastName", "12345678", "hello");
+        var teacher = new ApplicationUser("teacher@test.com", "TeacherFirstName", "TeacherLastName", "12345678", "hello");
 
         var group = new Group(teacher.Id, "group1")
         {
             Teacher = teacher
         };
 
-        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, group.Id);
+        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
 
         var student1 = new ApplicationUser("test@test.com", "John", "Doe", "123456789", "hello");
 
-        student1.StudentGroups.Add(new StudentGroup(group.Id, student1.Id) { Group = group, Student = student1 });
+        student1.StudentGroups.Add(new StudentGroup(group.Id, student1.Id.ToString()) { Group = group, Student = student1 });
 
-        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw",
-            19, "test", "test", "test", "test", 2);
+        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw", 19, "test", "test", "test", "test", 2);
 
         var card1 = new PracticePatientExaminationCard(exam1.Id, student1.Id);
         var practiceRiskFactorAssessment = new PracticeRiskFactorAssessment();
@@ -377,8 +343,7 @@ public class StudentExamRepositoryTests
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
         {
             Bewe = practiceBewe,
             DMFT_DMFS = practiceDMFT_DMFS,
@@ -406,15 +371,12 @@ public class StudentExamRepositoryTests
         var groups = new List<Group> { group }.AsQueryable().BuildMockDbSet();
         var exams = new List<Exam> { exam1 }.AsQueryable().BuildMockDbSet();
         var paraticepatients = new List<PracticePatient> { practicePatient }.AsQueryable().BuildMockDbSet();
-        var practiceRiskFactorAssessments = new List<PracticeRiskFactorAssessment> { practiceRiskFactorAssessment }
-            .AsQueryable().BuildMockDbSet();
+        var practiceRiskFactorAssessments = new List<PracticeRiskFactorAssessment> { practiceRiskFactorAssessment }.AsQueryable().BuildMockDbSet();
         var practiceBewes = new List<PracticeBewe> { practiceBewe }.AsQueryable().BuildMockDbSet();
         var practiceDMFT_DMFSs = new List<PracticeDMFT_DMFS> { practiceDMFT_DMFS }.AsQueryable().BuildMockDbSet();
         var practiceAPIs = new List<PracticeAPI> { practiceAPI }.AsQueryable().BuildMockDbSet();
         var practiceBleedings = new List<PracticeBleeding> { practiceBleeding }.AsQueryable().BuildMockDbSet();
-        var practicePatientExaminationResults =
-            new List<PracticePatientExaminationResult> { practicePatientExaminationResult }.AsQueryable()
-                .BuildMockDbSet();
+        var practicePatientExaminationResults = new List<PracticePatientExaminationResult> { practicePatientExaminationResult }.AsQueryable().BuildMockDbSet();
 
         var cards = new List<PracticePatientExaminationCard> { card1 }
             .AsQueryable()
@@ -429,8 +391,7 @@ public class StudentExamRepositoryTests
         _mockOralEhrContext.Setup(x => x.PracticeDMFT_DMFSs).Returns(practiceDMFT_DMFSs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeAPIs).Returns(practiceAPIs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeBleedings).Returns(practiceBleedings.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults)
-            .Returns(practicePatientExaminationResults.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(practicePatientExaminationResults.Object);
         _mockOralEhrContext.Setup(x => x.Users).Returns(users.Object);
 
 
@@ -445,23 +406,20 @@ public class StudentExamRepositoryTests
     public async Task GetPracticePatientExaminationCardsByExamId_ShouldReturnEmptyList()
     {
         // Arrange
-        var teacher =
-            new ApplicationUser("teacher@test.com", "TeacherFirstName", "TeacherLastName", "12345678", "hello");
+        var teacher = new ApplicationUser("teacher@test.com", "TeacherFirstName", "TeacherLastName", "12345678", "hello");
 
         var group = new Group(teacher.Id, "group1")
         {
             Teacher = teacher
         };
 
-        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, group.Id);
+        var exam1 = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
 
         var student1 = new ApplicationUser("test@test.com", "John", "Doe", "123456789", "hello");
 
-        student1.StudentGroups.Add(new StudentGroup(group.Id, student1.Id) { Group = group, Student = student1 });
+        student1.StudentGroups.Add(new StudentGroup(group.Id, student1.Id.ToString()) { Group = group, Student = student1 });
 
-        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw",
-            19, "test", "test", "test", "test", 2);
+        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw", 19, "test", "test", "test", "test", 2);
 
         var card1 = new PracticePatientExaminationCard(exam1.Id, student1.Id);
         var practiceRiskFactorAssessment = new PracticeRiskFactorAssessment();
@@ -469,8 +427,7 @@ public class StudentExamRepositoryTests
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
         {
             Bewe = practiceBewe,
             DMFT_DMFS = practiceDMFT_DMFS,
@@ -498,15 +455,12 @@ public class StudentExamRepositoryTests
         var groups = new List<Group> { group }.AsQueryable().BuildMockDbSet();
         var exams = new List<Exam> { exam1 }.AsQueryable().BuildMockDbSet();
         var paraticepatients = new List<PracticePatient> { practicePatient }.AsQueryable().BuildMockDbSet();
-        var practiceRiskFactorAssessments = new List<PracticeRiskFactorAssessment> { practiceRiskFactorAssessment }
-            .AsQueryable().BuildMockDbSet();
+        var practiceRiskFactorAssessments = new List<PracticeRiskFactorAssessment> { practiceRiskFactorAssessment }.AsQueryable().BuildMockDbSet();
         var practiceBewes = new List<PracticeBewe> { practiceBewe }.AsQueryable().BuildMockDbSet();
         var practiceDMFT_DMFSs = new List<PracticeDMFT_DMFS> { practiceDMFT_DMFS }.AsQueryable().BuildMockDbSet();
         var practiceAPIs = new List<PracticeAPI> { practiceAPI }.AsQueryable().BuildMockDbSet();
         var practiceBleedings = new List<PracticeBleeding> { practiceBleeding }.AsQueryable().BuildMockDbSet();
-        var practicePatientExaminationResults =
-            new List<PracticePatientExaminationResult> { practicePatientExaminationResult }.AsQueryable()
-                .BuildMockDbSet();
+        var practicePatientExaminationResults = new List<PracticePatientExaminationResult> { practicePatientExaminationResult }.AsQueryable().BuildMockDbSet();
 
         var cards = new List<PracticePatientExaminationCard> { card1 }
             .AsQueryable()
@@ -521,8 +475,7 @@ public class StudentExamRepositoryTests
         _mockOralEhrContext.Setup(x => x.PracticeDMFT_DMFSs).Returns(practiceDMFT_DMFSs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeAPIs).Returns(practiceAPIs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeBleedings).Returns(practiceBleedings.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults)
-            .Returns(practicePatientExaminationResults.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(practicePatientExaminationResults.Object);
         _mockOralEhrContext.Setup(x => x.Users).Returns(users.Object);
 
 
@@ -540,12 +493,10 @@ public class StudentExamRepositoryTests
         //Arrange
         var groupId = Guid.NewGuid();
 
-        var teacher =
-            new ApplicationUser("teacher@test.com", "TeacherFirstName", "TeacherLastName", "12345678", "hello");
+        var teacher = new ApplicationUser("teacher@test.com", "TeacherFirstName", "TeacherLastName", "12345678", "hello");
         var group = new Group(teacher.Id, "group1");
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, group.Id);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
 
         var student = new ApplicationUser("test@test.com", "John", "Doe", "12345678", "hello");
 
@@ -579,12 +530,10 @@ public class StudentExamRepositoryTests
         //Arrange
         var groupId = Guid.NewGuid();
 
-        var teacher =
-            new ApplicationUser("teacher@test.com", "TeacherFirstName", "TeacherLastName", "12345678", "hello");
+        var teacher = new ApplicationUser("teacher@test.com", "TeacherFirstName", "TeacherLastName", "12345678", "hello");
         var group = new Group(teacher.Id, "group1");
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, group.Id);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
 
         var student = new ApplicationUser("test@test.com", "John", "Doe", "12345678", "hello");
 
@@ -617,24 +566,21 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
 
         var practiceRiskFactorAssessment = new PracticeRiskFactorAssessment();
-        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw",
-            19, "test", "test", "test", "test", 2);
+        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw", 19, "test", "test", "test", "test", 2);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
         practiceAPI.AddComment("test");
         practiceBleeding.AddComment("test");
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
         {
             API = practiceAPI,
             Bleeding = practiceBleeding
         };
 
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
         var patientExaminationCard = new PracticePatientExaminationCard(exam.Id, "studentId");
 
@@ -669,13 +615,12 @@ public class StudentExamRepositoryTests
             .AsQueryable()
             .BuildMockDbSet();
 
-        var practicePatientExaminationResults = new List<PracticePatientExaminationResult>
-                { practicePatientExaminationResult }
-            .AsQueryable()
+        var practicePatientExaminationResults = new List<PracticePatientExaminationResult> { practicePatientExaminationResult }
+        .AsQueryable()
             .BuildMockDbSet();
 
         var practicePatientExaminationCards = new List<PracticePatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Exams).Returns(exams.Object);
@@ -684,10 +629,8 @@ public class StudentExamRepositoryTests
         _mockOralEhrContext.Setup(x => x.PracticeBewes).Returns(practiceBewes.Object);
         _mockOralEhrContext.Setup(x => x.PracticeDMFT_DMFSs).Returns(practiceDMFT_DMFSs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeAPIs).Returns(practiceAPIs.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults)
-            .Returns(practicePatientExaminationResults.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(practicePatientExaminationResults.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
 
         // Act
         var result = await _studentExamRepository.GetPracticeAPIByCardId(patientExaminationCard.Id);
@@ -706,24 +649,21 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
 
         var practiceRiskFactorAssessment = new PracticeRiskFactorAssessment();
-        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw",
-            19, "test", "test", "test", "test", 2);
+        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw", 19, "test", "test", "test", "test", 2);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
         practiceAPI.AddComment("test");
         practiceBleeding.AddComment("test");
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
         {
             API = practiceAPI,
             Bleeding = practiceBleeding
         };
 
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
         var patientExaminationCard = new PracticePatientExaminationCard(exam.Id, "studentId");
 
@@ -762,8 +702,7 @@ public class StudentExamRepositoryTests
             .AsQueryable()
             .BuildMockDbSet();
 
-        var practicePatientExaminationResults = new List<PracticePatientExaminationResult>
-                { practicePatientExaminationResult }
+        var practicePatientExaminationResults = new List<PracticePatientExaminationResult> { practicePatientExaminationResult }
             .AsQueryable()
             .BuildMockDbSet();
 
@@ -777,10 +716,8 @@ public class StudentExamRepositoryTests
         _mockOralEhrContext.Setup(x => x.PracticeBewes).Returns(practiceBewes.Object);
         _mockOralEhrContext.Setup(x => x.PracticeDMFT_DMFSs).Returns(practiceDMFT_DMFSs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeAPIs).Returns(practiceAPIs.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults)
-            .Returns(practicePatientExaminationResults.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(practicePatientExaminationResults.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
 
         // Act
         var result = await _studentExamRepository.GetPracticeBleedingByCardId(patientExaminationCard.Id);
@@ -799,24 +736,21 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
 
         var practiceRiskFactorAssessment = new PracticeRiskFactorAssessment();
-        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw",
-            19, "test", "test", "test", "test", 2);
+        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw", 19, "test", "test", "test", "test", 2);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
         practiceAPI.AddComment("test");
         practiceBleeding.AddComment("test");
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
         {
             API = practiceAPI,
             Bleeding = practiceBleeding
         };
 
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
         var patientExaminationCard = new PracticePatientExaminationCard(exam.Id, "studentId");
 
@@ -855,8 +789,7 @@ public class StudentExamRepositoryTests
             .AsQueryable()
             .BuildMockDbSet();
 
-        var practicePatientExaminationResults = new List<PracticePatientExaminationResult>
-                { practicePatientExaminationResult }
+        var practicePatientExaminationResults = new List<PracticePatientExaminationResult> { practicePatientExaminationResult }
             .AsQueryable()
             .BuildMockDbSet();
 
@@ -870,10 +803,8 @@ public class StudentExamRepositoryTests
         _mockOralEhrContext.Setup(x => x.PracticeBewes).Returns(practiceBewes.Object);
         _mockOralEhrContext.Setup(x => x.PracticeDMFT_DMFSs).Returns(practiceDMFT_DMFSs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeAPIs).Returns(practiceAPIs.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults)
-            .Returns(practicePatientExaminationResults.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(practicePatientExaminationResults.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
 
         // Act
         var result = await _studentExamRepository.GetPracticeAPIByCardId(Guid.NewGuid());
@@ -889,24 +820,21 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
 
         var practiceRiskFactorAssessment = new PracticeRiskFactorAssessment();
-        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw",
-            19, "test", "test", "test", "test", 2);
+        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw", 19, "test", "test", "test", "test", 2);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
         practiceAPI.AddComment("test");
         practiceBleeding.AddComment("test");
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
         {
             API = practiceAPI,
             Bleeding = practiceBleeding
         };
 
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
         var patientExaminationCard = new PracticePatientExaminationCard(exam.Id, "studentId");
 
@@ -945,8 +873,7 @@ public class StudentExamRepositoryTests
             .AsQueryable()
             .BuildMockDbSet();
 
-        var practicePatientExaminationResults = new List<PracticePatientExaminationResult>
-                { practicePatientExaminationResult }
+        var practicePatientExaminationResults = new List<PracticePatientExaminationResult> { practicePatientExaminationResult }
             .AsQueryable()
             .BuildMockDbSet();
 
@@ -960,10 +887,8 @@ public class StudentExamRepositoryTests
         _mockOralEhrContext.Setup(x => x.PracticeBewes).Returns(practiceBewes.Object);
         _mockOralEhrContext.Setup(x => x.PracticeDMFT_DMFSs).Returns(practiceDMFT_DMFSs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeAPIs).Returns(practiceAPIs.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults)
-            .Returns(practicePatientExaminationResults.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(practicePatientExaminationResults.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
 
         // Act
         var result = await _studentExamRepository.GetPracticeBleedingByCardId(Guid.NewGuid());
@@ -979,16 +904,14 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
 
         var practiceRiskFactorAssessment = new PracticeRiskFactorAssessment();
-        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw",
-            19, "test", "test", "test", "test", 2);
+        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw", 19, "test", "test", "test", "test", 2);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
         practiceAPI.AddComment("test");
         practiceBleeding.AddComment("test");
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
         {
             API = practiceAPI,
             Bleeding = practiceBleeding,
@@ -996,8 +919,7 @@ public class StudentExamRepositoryTests
         };
 
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
         var patientExaminationCard = new PracticePatientExaminationCard(exam.Id, "studentId");
 
@@ -1036,8 +958,7 @@ public class StudentExamRepositoryTests
             .AsQueryable()
             .BuildMockDbSet();
 
-        var practicePatientExaminationResults = new List<PracticePatientExaminationResult>
-                { practicePatientExaminationResult }
+        var practicePatientExaminationResults = new List<PracticePatientExaminationResult> { practicePatientExaminationResult }
             .AsQueryable()
             .BuildMockDbSet();
 
@@ -1051,10 +972,8 @@ public class StudentExamRepositoryTests
         _mockOralEhrContext.Setup(x => x.PracticeBewes).Returns(practiceBewes.Object);
         _mockOralEhrContext.Setup(x => x.PracticeDMFT_DMFSs).Returns(practiceDMFT_DMFSs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeAPIs).Returns(practiceAPIs.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults)
-            .Returns(practicePatientExaminationResults.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(practicePatientExaminationResults.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
         // Act
         var result = await _studentExamRepository.GetPracticeDMFT_DMFSByCardId(patientExaminationCard.Id);
 
@@ -1072,16 +991,14 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
 
         var practiceRiskFactorAssessment = new PracticeRiskFactorAssessment();
-        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw",
-            19, "test", "test", "test", "test", 2);
+        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw", 19, "test", "test", "test", "test", 2);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
         practiceAPI.AddComment("test");
         practiceBleeding.AddComment("test");
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
         {
             API = practiceAPI,
             Bleeding = practiceBleeding,
@@ -1089,8 +1006,7 @@ public class StudentExamRepositoryTests
         };
 
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
         var patientExaminationCard = new PracticePatientExaminationCard(exam.Id, "studentId");
 
@@ -1129,8 +1045,7 @@ public class StudentExamRepositoryTests
             .AsQueryable()
             .BuildMockDbSet();
 
-        var practicePatientExaminationResults = new List<PracticePatientExaminationResult>
-                { practicePatientExaminationResult }
+        var practicePatientExaminationResults = new List<PracticePatientExaminationResult> { practicePatientExaminationResult }
             .AsQueryable()
             .BuildMockDbSet();
 
@@ -1144,10 +1059,8 @@ public class StudentExamRepositoryTests
         _mockOralEhrContext.Setup(x => x.PracticeBewes).Returns(practiceBewes.Object);
         _mockOralEhrContext.Setup(x => x.PracticeDMFT_DMFSs).Returns(practiceDMFT_DMFSs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeAPIs).Returns(practiceAPIs.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults)
-            .Returns(practicePatientExaminationResults.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(practicePatientExaminationResults.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
         var result = await _studentExamRepository.GetPracticeDMFT_DMFSByCardId(Guid.NewGuid());
 
         // Assert
@@ -1161,16 +1074,14 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
 
         var practiceRiskFactorAssessment = new PracticeRiskFactorAssessment();
-        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw",
-            19, "test", "test", "test", "test", 2);
+        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw", 19, "test", "test", "test", "test", 2);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
         practiceAPI.AddComment("test");
         practiceBleeding.AddComment("test");
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
         {
             API = practiceAPI,
             Bleeding = practiceBleeding,
@@ -1178,8 +1089,7 @@ public class StudentExamRepositoryTests
         };
 
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
         var patientExaminationCard = new PracticePatientExaminationCard(exam.Id, "studentId");
 
@@ -1218,8 +1128,7 @@ public class StudentExamRepositoryTests
             .AsQueryable()
             .BuildMockDbSet();
 
-        var practicePatientExaminationResults = new List<PracticePatientExaminationResult>
-                { practicePatientExaminationResult }
+        var practicePatientExaminationResults = new List<PracticePatientExaminationResult> { practicePatientExaminationResult }
             .AsQueryable()
             .BuildMockDbSet();
 
@@ -1233,10 +1142,8 @@ public class StudentExamRepositoryTests
         _mockOralEhrContext.Setup(x => x.PracticeBewes).Returns(practiceBewes.Object);
         _mockOralEhrContext.Setup(x => x.PracticeDMFT_DMFSs).Returns(practiceDMFT_DMFSs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeAPIs).Returns(practiceAPIs.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults)
-            .Returns(practicePatientExaminationResults.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(practicePatientExaminationResults.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
 
         // Act
         var result = await _studentExamRepository.GetPracticeBeweByCardId(patientExaminationCard.Id);
@@ -1255,24 +1162,21 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
 
         var practiceRiskFactorAssessment = new PracticeRiskFactorAssessment();
-        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw",
-            19, "test", "test", "test", "test", 2);
+        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw", 19, "test", "test", "test", "test", 2);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
         practiceAPI.AddComment("test");
         practiceBleeding.AddComment("test");
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id)
         {
             API = practiceAPI,
             Bleeding = practiceBleeding
         };
 
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
         var patientExaminationCard = new PracticePatientExaminationCard(exam.Id, "studentId");
 
@@ -1311,8 +1215,7 @@ public class StudentExamRepositoryTests
             .AsQueryable()
             .BuildMockDbSet();
 
-        var practicePatientExaminationResults = new List<PracticePatientExaminationResult>
-                { practicePatientExaminationResult }
+        var practicePatientExaminationResults = new List<PracticePatientExaminationResult> { practicePatientExaminationResult }
             .AsQueryable()
             .BuildMockDbSet();
 
@@ -1326,10 +1229,8 @@ public class StudentExamRepositoryTests
         _mockOralEhrContext.Setup(x => x.PracticeBewes).Returns(practiceBewes.Object);
         _mockOralEhrContext.Setup(x => x.PracticeDMFT_DMFSs).Returns(practiceDMFT_DMFSs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeAPIs).Returns(practiceAPIs.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults)
-            .Returns(practicePatientExaminationResults.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(practicePatientExaminationResults.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
 
         // Act
         var result = await _studentExamRepository.GetPracticeBeweByCardId(Guid.NewGuid());
@@ -1344,8 +1245,7 @@ public class StudentExamRepositoryTests
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
         var studentId = "studentId";
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
@@ -1354,24 +1254,20 @@ public class StudentExamRepositoryTests
             .AsQueryable()
             .BuildMockDbSet();
 
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
 
         // Act
         await _studentExamRepository.AddPracticePatientExaminationCard(practicePatientExaminationCard);
 
         // Assert
-        _mockOralEhrContext.Verify(
-            x => x.PracticePatientExaminationCards.AddAsync(practicePatientExaminationCard, CancellationToken.None),
-            Times.Once);
+        _mockOralEhrContext.Verify(x => x.PracticePatientExaminationCards.AddAsync(practicePatientExaminationCard, CancellationToken.None), Times.Once);
     }
 
     [Fact]
     public async Task AddPracticePatient_ShouldAddPatient()
     {
         // Arrange
-        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw",
-            19, "test", "test", "test", "test", 2);
+        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw", 19, "test", "test", "test", "test", 2);
 
         var practicePatients = new List<PracticePatient>()
             .AsQueryable()
@@ -1383,8 +1279,7 @@ public class StudentExamRepositoryTests
         await _studentExamRepository.AddPracticePatient(practicePatient);
 
         // Assert
-        _mockOralEhrContext.Verify(x => x.PracticePatients.AddAsync(practicePatient, CancellationToken.None),
-            Times.Once);
+        _mockOralEhrContext.Verify(x => x.PracticePatients.AddAsync(practicePatient, CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -1403,8 +1298,7 @@ public class StudentExamRepositoryTests
         await _studentExamRepository.AddPracticeRiskFactorAssessment(riskFactorAssessment);
 
         // Assert
-        _mockOralEhrContext.Verify(
-            x => x.PracticeRiskFactorAssessments.AddAsync(riskFactorAssessment, CancellationToken.None), Times.Once);
+        _mockOralEhrContext.Verify(x => x.PracticeRiskFactorAssessments.AddAsync(riskFactorAssessment, CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -1492,23 +1386,19 @@ public class StudentExamRepositoryTests
         var api = new PracticeAPI(22, 10, 10);
         var bleeding = new PracticeBleeding(22, 10, 10);
 
-        var practicePatientExaminationResult =
-            new PracticePatientExaminationResult(bewe.Id, dmftDmfs.Id, api.Id, bleeding.Id);
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(bewe.Id, dmftDmfs.Id, api.Id, bleeding.Id);
 
         var practicePatientExaminationResults = new List<PracticePatientExaminationResult>()
             .AsQueryable()
             .BuildMockDbSet();
 
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults)
-            .Returns(practicePatientExaminationResults.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(practicePatientExaminationResults.Object);
 
         // Act
         await _studentExamRepository.AddPracticePatientExaminationResult(practicePatientExaminationResult);
 
         // Assert
-        _mockOralEhrContext.Verify(
-            x => x.PracticePatientExaminationResults.AddAsync(practicePatientExaminationResult, CancellationToken.None),
-            Times.Once);
+        _mockOralEhrContext.Verify(x => x.PracticePatientExaminationResults.AddAsync(practicePatientExaminationResult, CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -1518,19 +1408,16 @@ public class StudentExamRepositoryTests
         var studentId = "studentId";
         var groupId = Guid.NewGuid();
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
 
 
-        var practicePatientExaminationCards = new List<PracticePatientExaminationCard>
-                { practicePatientExaminationCard }
+        var practicePatientExaminationCards = new List<PracticePatientExaminationCard> { practicePatientExaminationCard }
             .AsQueryable()
             .BuildMockDbSet();
 
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
 
         // Act
         var result = await _studentExamRepository.CheckIfStudentHasAlreadyTakenTheExam(exam.Id, studentId);
@@ -1546,8 +1433,7 @@ public class StudentExamRepositoryTests
         var studentId = "studentId";
         var groupId = Guid.NewGuid();
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
 
@@ -1555,8 +1441,7 @@ public class StudentExamRepositoryTests
             .AsQueryable()
             .BuildMockDbSet();
 
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
 
         // Act
         var result = await _studentExamRepository.CheckIfStudentHasAlreadyTakenTheExam(exam.Id, "studentId2");
@@ -1569,31 +1454,26 @@ public class StudentExamRepositoryTests
     public async Task GetPracticePatientExaminationCardByExamIdAndStudentId_ShouldReturnPatientExaminationCardDto()
     {
         // Arrange
-        var teacher =
-            new ApplicationUser("teacher@test.com", "TeacherFirstName", "TeacherLastName", "12345678", "hello");
-        var student =
-            new ApplicationUser("student@test.com", "StudentFirstName", "StudentLastName", "12345678", "hello");
+        var teacher = new ApplicationUser("teacher@test.com", "TeacherFirstName", "TeacherLastName", "12345678", "hello");
+        var student = new ApplicationUser("student@test.com", "StudentFirstName", "StudentLastName", "12345678", "hello");
         var group = new Group(teacher.Id, "groupName");
 
-        var studentGroup = new StudentGroup(group.Id, student.Id);
+        var studentGroup = new StudentGroup(group.Id, student.Id.ToString());
 
         studentGroup.Student = student;
 
         group.StudentGroups.Add(studentGroup);
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, group.Id);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
 
         var practiceRiskFactorAssessment = new PracticeRiskFactorAssessment();
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
 
-        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw",
-            19, "test", "test", "test", "test", 2);
+        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw", 19, "test", "test", "test", "test", 2);
 
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, student.Id);
@@ -1605,40 +1485,25 @@ public class StudentExamRepositoryTests
 
         exam.PracticePatientExaminationCards.Add(practicePatientExaminationCard);
 
-        var practicePatientExaminationCards = new List<PracticePatientExaminationCard>
-                { practicePatientExaminationCard }
+        var practicePatientExaminationCards = new List<PracticePatientExaminationCard> { practicePatientExaminationCard }
             .AsQueryable()
             .BuildMockDbSet();
 
-        _mockOralEhrContext.Setup(x => x.PracticePatients)
-            .Returns(new List<PracticePatient> { practicePatient }.AsQueryable().BuildMockDbSet().Object);
-        _mockOralEhrContext.Setup(x => x.PracticeRiskFactorAssessments).Returns(
-            new List<PracticeRiskFactorAssessment> { practiceRiskFactorAssessment }.AsQueryable().BuildMockDbSet()
-                .Object);
-        _mockOralEhrContext.Setup(x => x.PracticeBewes)
-            .Returns(new List<PracticeBewe> { practiceBewe }.AsQueryable().BuildMockDbSet().Object);
-        _mockOralEhrContext.Setup(x => x.PracticeDMFT_DMFSs).Returns(new List<PracticeDMFT_DMFS> { practiceDMFT_DMFS }
-            .AsQueryable().BuildMockDbSet().Object);
-        _mockOralEhrContext.Setup(x => x.PracticeAPIs)
-            .Returns(new List<PracticeAPI> { practiceAPI }.AsQueryable().BuildMockDbSet().Object);
-        _mockOralEhrContext.Setup(x => x.PracticeBleedings).Returns(new List<PracticeBleeding> { practiceBleeding }
-            .AsQueryable().BuildMockDbSet().Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(
-            new List<PracticePatientExaminationResult> { practicePatientExaminationResult }.AsQueryable()
-                .BuildMockDbSet().Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatients).Returns(new List<PracticePatient> { practicePatient }.AsQueryable().BuildMockDbSet().Object);
+        _mockOralEhrContext.Setup(x => x.PracticeRiskFactorAssessments).Returns(new List<PracticeRiskFactorAssessment> { practiceRiskFactorAssessment }.AsQueryable().BuildMockDbSet().Object);
+        _mockOralEhrContext.Setup(x => x.PracticeBewes).Returns(new List<PracticeBewe> { practiceBewe }.AsQueryable().BuildMockDbSet().Object);
+        _mockOralEhrContext.Setup(x => x.PracticeDMFT_DMFSs).Returns(new List<PracticeDMFT_DMFS> { practiceDMFT_DMFS }.AsQueryable().BuildMockDbSet().Object);
+        _mockOralEhrContext.Setup(x => x.PracticeAPIs).Returns(new List<PracticeAPI> { practiceAPI }.AsQueryable().BuildMockDbSet().Object);
+        _mockOralEhrContext.Setup(x => x.PracticeBleedings).Returns(new List<PracticeBleeding> { practiceBleeding }.AsQueryable().BuildMockDbSet().Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(new List<PracticePatientExaminationResult> { practicePatientExaminationResult }.AsQueryable().BuildMockDbSet().Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
         _mockOralEhrContext.Setup(x => x.Exams).Returns(new List<Exam> { exam }.AsQueryable().BuildMockDbSet().Object);
-        _mockOralEhrContext.Setup(x => x.Users)
-            .Returns(new List<ApplicationUser> { student, teacher }.AsQueryable().BuildMockDbSet().Object);
-        _mockOralEhrContext.Setup(x => x.Groups)
-            .Returns(new List<Group> { group }.AsQueryable().BuildMockDbSet().Object);
-        _mockOralEhrContext.Setup(x => x.StudentGroups)
-            .Returns(new List<StudentGroup> { studentGroup }.AsQueryable().BuildMockDbSet().Object);
+        _mockOralEhrContext.Setup(x => x.Users).Returns(new List<ApplicationUser> { student, teacher }.AsQueryable().BuildMockDbSet().Object);
+        _mockOralEhrContext.Setup(x => x.Groups).Returns(new List<Group> { group }.AsQueryable().BuildMockDbSet().Object);
+        _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(new List<StudentGroup> { studentGroup }.AsQueryable().BuildMockDbSet().Object);
 
         // Act
-        var result =
-            await _studentExamRepository.GetPracticePatientExaminationCardByExamIdAndStudentId(exam.Id, student.Id);
+        var result = await _studentExamRepository.GetPracticePatientExaminationCardByExamIdAndStudentId(exam.Id, student.Id);
 
         // Assert
         Assert.NotNull(result);
@@ -1651,8 +1516,7 @@ public class StudentExamRepositoryTests
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
         var studentId = "studentId";
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
@@ -1661,12 +1525,10 @@ public class StudentExamRepositoryTests
             .AsQueryable()
             .BuildMockDbSet();
 
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
 
         // Act
-        var result =
-            await _studentExamRepository.GetPracticePatientExaminationCardByExamIdAndStudentId(exam.Id, "studentId2");
+        var result = await _studentExamRepository.GetPracticePatientExaminationCardByExamIdAndStudentId(exam.Id, "studentId2");
 
         // Assert
         Assert.Null(result);
@@ -1679,17 +1541,14 @@ public class StudentExamRepositoryTests
         var groupId = Guid.NewGuid();
 
         var practiceRiskFactorAssessment = new PracticeRiskFactorAssessment();
-        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw",
-            19, "test", "test", "test", "test", 2);
+        var practicePatient = new PracticePatient("test", "test", "testpatient@test.com", Gender.Male, "test", "warsaw", 19, "test", "test", "test", "test", 2);
         var practiceBewe = new PracticeBewe(22);
         var practiceDMFT_DMFS = new PracticeDMFT_DMFS(22, 22);
         var practiceAPI = new PracticeAPI(22, 10, 10);
         var practiceBleeding = new PracticeBleeding(22, 10, 10);
-        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id,
-            practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
+        var practicePatientExaminationResult = new PracticePatientExaminationResult(practiceBewe.Id, practiceDMFT_DMFS.Id, practiceAPI.Id, practiceBleeding.Id);
 
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
         var patientExaminationCard = new PracticePatientExaminationCard(exam.Id, "studentId")
         {
@@ -1711,32 +1570,31 @@ public class StudentExamRepositoryTests
             .BuildMockDbSet();
 
         var practiceRiskFactorAssessments = new List<PracticeRiskFactorAssessment> { practiceRiskFactorAssessment }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         var practiceBewes = new List<PracticeBewe> { practiceBewe }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         var practiceDMFT_DMFSs = new List<PracticeDMFT_DMFS> { practiceDMFT_DMFS }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         var practiceAPIs = new List<PracticeAPI> { practiceAPI }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         var practiceBleedings = new List<PracticeBleeding> { practiceBleeding }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
-        var practicePatientExaminationResults = new List<PracticePatientExaminationResult>
-                { practicePatientExaminationResult }
-            .AsQueryable()
+        var practicePatientExaminationResults = new List<PracticePatientExaminationResult> { practicePatientExaminationResult }
+        .AsQueryable()
             .BuildMockDbSet();
 
         var practicePatientExaminationCards = new List<PracticePatientExaminationCard> { patientExaminationCard }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Exams).Returns(exams.Object);
@@ -1746,10 +1604,8 @@ public class StudentExamRepositoryTests
         _mockOralEhrContext.Setup(x => x.PracticeDMFT_DMFSs).Returns(practiceDMFT_DMFSs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeAPIs).Returns(practiceAPIs.Object);
         _mockOralEhrContext.Setup(x => x.PracticeBleedings).Returns(practiceBleedings.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults)
-            .Returns(practicePatientExaminationResults.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationResults).Returns(practicePatientExaminationResults.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
 
         // Act
         await _studentExamRepository.DeleteExam(exam.Id);
@@ -1757,8 +1613,7 @@ public class StudentExamRepositoryTests
         // Assert
         _mockOralEhrContext.Verify(x => x.Exams.Remove(exam), Times.Once);
         _mockOralEhrContext.Verify(x => x.PracticePatients.Remove(It.IsAny<PracticePatient>()), Times.Once);
-        _mockOralEhrContext.Verify(
-            x => x.PracticeRiskFactorAssessments.Remove(It.IsAny<PracticeRiskFactorAssessment>()), Times.Once);
+        _mockOralEhrContext.Verify(x => x.PracticeRiskFactorAssessments.Remove(It.IsAny<PracticeRiskFactorAssessment>()), Times.Once);
         _mockOralEhrContext.Verify(x => x.PracticeBewes.Remove(It.IsAny<PracticeBewe>()), Times.Once);
         _mockOralEhrContext.Verify(x => x.PracticeDMFT_DMFSs.Remove(It.IsAny<PracticeDMFT_DMFS>()), Times.Once);
         _mockOralEhrContext.Verify(x => x.PracticeAPIs.Remove(It.IsAny<PracticeAPI>()), Times.Once);
@@ -1775,15 +1630,14 @@ public class StudentExamRepositoryTests
         var group = new Group(groupId.ToString(), "Group 1");
 
         var student1 = new ApplicationUser("test@test.com", "Test", "User", studentId, "comment");
-        var studentGroup1 = new StudentGroup(groupId, student1.Id)
+        var studentGroup1 = new StudentGroup(groupId, student1.Id.ToString())
         {
             Student = student1
         };
 
         group.StudentGroups.Add(studentGroup1);
 
-        var exam1 = new Exam(DateTime.UtcNow.AddDays(1), "title", "description", TimeOnly.Parse("15:00"),
-            TimeOnly.Parse("18:00"), TimeSpan.MaxValue, 20, groupId)
+        var exam1 = new Exam(DateTime.UtcNow.AddDays(1), "title", "description", TimeOnly.Parse("15:00"), TimeOnly.Parse("18:00"), TimeSpan.MaxValue, 20, groupId)
         {
             Group = group
         };
@@ -1829,15 +1683,14 @@ public class StudentExamRepositoryTests
         var group = new Group(groupId.ToString(), "Group 1");
 
         var student1 = new ApplicationUser("test@test.com", "Test", "User", studentId, "comment");
-        var studentGroup1 = new StudentGroup(groupId, student1.Id)
+        var studentGroup1 = new StudentGroup(groupId, student1.Id.ToString())
         {
             Student = student1
         };
 
         group.StudentGroups.Add(studentGroup1);
 
-        var exam1 = new Exam(DateTime.UtcNow.AddDays(1), "title", "description", TimeOnly.Parse("15:00"),
-            TimeOnly.Parse("18:00"), TimeSpan.MaxValue, 20, groupId)
+        var exam1 = new Exam(DateTime.UtcNow.AddDays(1), "title", "description", TimeOnly.Parse("15:00"), TimeOnly.Parse("18:00"), TimeSpan.MaxValue, 20, groupId)
         {
             Group = group
         };
@@ -1847,12 +1700,12 @@ public class StudentExamRepositoryTests
             .BuildMockDbSet();
 
         var exams = new List<Exam> { exam1 }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var students = new List<ApplicationUser> { student1 }
-            .AsQueryable()
-            .BuildMockDbSet();
+        .AsQueryable()
+        .BuildMockDbSet();
 
         var groups = new List<Group> { group }
             .AsQueryable()
@@ -1876,8 +1729,7 @@ public class StudentExamRepositoryTests
     public async Task PublishExam_ShouldAddExamToContextAndReturnExamDto()
     {
         // Arrange
-        var exam = new Exam(DateTime.Now, "Test Exam", "Description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 30, Guid.NewGuid());
+        var exam = new Exam(DateTime.Now, "Test Exam", "Description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, Guid.NewGuid());
 
         var exams = new List<Exam>()
             .AsQueryable()
@@ -1898,53 +1750,50 @@ public class StudentExamRepositoryTests
     [Fact]
     public async Task GetStudentExamResults_ShouldReturnListOfStudentExamResultResponseDto()
     {
-        // Arrange
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, Guid.NewGuid());
+      // Arrange
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, Guid.NewGuid());
 
         var group = new Group("teacherId", "groupName");
 
         var student = new ApplicationUser("test@test.com", "Test", "User", "123456789", "comment");
-        var studentGroup = new StudentGroup(group.Id, student.Id);
+        var studentGroup = new StudentGroup(group.Id,student.Id);
         group.StudentGroups.Add(studentGroup);
 
         exam.Group = group;
         studentGroup.Group = group;
 
         exam.MarksAsGraded();
-
+        
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, student.Id);
 
         exam.PracticePatientExaminationCards.Add(practicePatientExaminationCard);
 
         practicePatientExaminationCard.SetStudentMark(90);
         practicePatientExaminationCard.SetStudent(student);
-
-        var practicePatientExaminationCards = new List<PracticePatientExaminationCard>
-                { practicePatientExaminationCard }
+        
+        var practicePatientExaminationCards = new List<PracticePatientExaminationCard> { practicePatientExaminationCard }
             .AsQueryable()
             .BuildMockDbSet();
 
         var exams = new List<Exam> { exam }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         var students = new List<ApplicationUser> { student }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         var groups = new List<Group> { group }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         var studentGroups = new List<StudentGroup> { studentGroup }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Exams).Returns(exams.Object);
         _mockOralEhrContext.Setup(x => x.Users).Returns(students.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
         _mockOralEhrContext.Setup(x => x.Groups).Returns(groups.Object);
         _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
 
@@ -1963,8 +1812,7 @@ public class StudentExamRepositoryTests
     public async Task GetStudentExamResults_ShouldReturnEmptyList()
     {
         // Arrange
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, Guid.NewGuid());
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, Guid.NewGuid());
 
         var group = new Group("teacherId", "groupName");
 
@@ -1985,31 +1833,29 @@ public class StudentExamRepositoryTests
         practicePatientExaminationCard.SetStudentMark(90);
         practicePatientExaminationCard.SetStudent(student);
 
-        var practicePatientExaminationCards = new List<PracticePatientExaminationCard>
-                { practicePatientExaminationCard }
+        var practicePatientExaminationCards = new List<PracticePatientExaminationCard> { practicePatientExaminationCard }
             .AsQueryable()
             .BuildMockDbSet();
 
         var exams = new List<Exam> { exam }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         var students = new List<ApplicationUser> { student }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         var groups = new List<Group> { group }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         var studentGroups = new List<StudentGroup> { studentGroup }
-            .AsQueryable()
+        .AsQueryable()
             .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Exams).Returns(exams.Object);
         _mockOralEhrContext.Setup(x => x.Users).Returns(students.Object);
-        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards)
-            .Returns(practicePatientExaminationCards.Object);
+        _mockOralEhrContext.Setup(x => x.PracticePatientExaminationCards).Returns(practicePatientExaminationCards.Object);
         _mockOralEhrContext.Setup(x => x.Groups).Returns(groups.Object);
         _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
 
@@ -2021,4 +1867,5 @@ public class StudentExamRepositoryTests
         Assert.IsType<List<StudentExamResultResponseDto>>(result);
         Assert.Empty(result);
     }
+
 }

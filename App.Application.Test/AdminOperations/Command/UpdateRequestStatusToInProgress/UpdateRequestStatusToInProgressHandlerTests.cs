@@ -1,5 +1,4 @@
 ﻿using App.Application.AdminOperations.Command.UpdateRequestStatusToInProgress;
-using App.Domain.Models.Enums;
 using App.Domain.Models.Users;
 using Moq;
 
@@ -30,7 +29,7 @@ public class UpdateRequestStatusToInProgressHandlerTests : TestHelper
 
         // Assert
         Assert.True(result.IsSuccessful);
-        Assert.Equal(RequestStatus.In_Progress, userRequest.RequestStatus);
+        Assert.Equal(Domain.Models.Enums.RequestStatus.In_Progress, userRequest.RequestStatus);
     }
 
     [Fact]

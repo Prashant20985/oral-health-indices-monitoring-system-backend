@@ -7,8 +7,8 @@ namespace App.Application.Test.PatientExaminationCardOperations.Command.DeletePa
 
 public class DeletePatientExaminationCardHandlerTests : TestHelper
 {
-    private readonly DeletePatientExaminationCardCommand command;
     private readonly DeletePatientExaminationCardHandler handler;
+    private readonly DeletePatientExaminationCardCommand command;
 
     public DeletePatientExaminationCardHandlerTests()
     {

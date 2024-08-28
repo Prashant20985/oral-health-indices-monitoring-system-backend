@@ -1,17 +1,17 @@
-﻿using System.Net;
-using System.Text.Json;
-using App.API.Middleware;
+﻿using App.API.Middleware;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System.Net;
+using System.Text.Json;
 
 namespace App.API.Test.Middleware;
 
 public class ExceptionMiddlewareTests
 {
     private readonly DefaultHttpContext httpContext;
-    private readonly Mock<ILogger<ExceptionMiddleware>> loggerMock;
     private readonly MemoryStream responseStream;
+    private readonly Mock<ILogger<ExceptionMiddleware>> loggerMock;
 
     public ExceptionMiddlewareTests()
     {
@@ -26,7 +26,7 @@ public class ExceptionMiddlewareTests
     {
         // Arrange
         var exceptionMessage = "An error occurred.";
-        var nextMiddleware = new RequestDelegate(context => throw new Exception(exceptionMessage));
+        var nextMiddleware = new RequestDelegate((context) => throw new Exception(exceptionMessage));
 
         var middleware = new ExceptionMiddleware(nextMiddleware, loggerMock.Object);
 
@@ -59,7 +59,7 @@ public class ExceptionMiddlewareTests
     public async Task InvokeAsync_NoExceptionThrown_ShouldNotHandleException()
     {
         // Arrange
-        var nextMiddleware = new RequestDelegate(context => Task.CompletedTask);
+        var nextMiddleware = new RequestDelegate((context) => Task.CompletedTask);
 
         var middleware = new ExceptionMiddleware(nextMiddleware, loggerMock.Object);
 

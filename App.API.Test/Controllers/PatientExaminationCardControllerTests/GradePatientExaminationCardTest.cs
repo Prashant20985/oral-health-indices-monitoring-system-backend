@@ -32,8 +32,7 @@ public class GradePatientExaminationCardTest
             .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
         // Act
-        var result =
-            await _patientExaminationCardController.GradePatientExaminationCard(patientExaminationCard.Id, totalScore);
+        var result = await _patientExaminationCardController.GradePatientExaminationCard(patientExaminationCard.Id, totalScore);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);

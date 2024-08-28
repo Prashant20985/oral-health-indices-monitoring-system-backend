@@ -7,8 +7,8 @@ namespace App.Application.Test.PatientExaminationCardOperations.Command.CommentA
 
 public class CommentAPIFormHandlerTests : TestHelper
 {
-    private readonly CommentAPIFormCommnand command;
     private readonly CommentAPIFormHandler handler;
+    private readonly CommentAPIFormCommnand command;
 
     public CommentAPIFormHandlerTests()
     {

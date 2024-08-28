@@ -1,17 +1,17 @@
-﻿using System.Security.Claims;
-using App.Infrastructure.ContextAccessor;
+﻿using App.Infrastructure.ContextAccessor;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
+using System.Security.Claims;
 
 namespace App.Infrastructure.Test.ContextAccessor;
 
 public class HttpContextAccessorServiceTests
 {
     private readonly Mock<IHttpContextAccessor> httpContextAccessorMock;
-    private readonly HttpContextAccessorService httpContextAccessorService;
-    private readonly Mock<HttpContext> httpContextMock;
     private readonly Mock<HttpRequest> httpRequestMock;
+    private readonly Mock<HttpContext> httpContextMock;
+    private readonly HttpContextAccessorService httpContextAccessorService;
 
     public HttpContextAccessorServiceTests()
     {
@@ -72,7 +72,7 @@ public class HttpContextAccessorServiceTests
 
         userMock.Setup(u => u.Identity).Returns(new ClaimsIdentity(new Claim[]
         {
-            new(ClaimTypes.Name, userName)
+            new Claim(ClaimTypes.Name, userName)
         }));
 
         httpContextAccessorMock.Setup(a => a.HttpContext)

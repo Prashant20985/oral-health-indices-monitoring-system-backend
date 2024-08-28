@@ -24,13 +24,13 @@ public class LoginHandlerTests : TestHelper
         var applicationRole = new ApplicationRole { Name = "Admin" };
 
         var applicationUser = new ApplicationUser(
-            "test@example.com",
-            "John",
-            "Doe",
-            "12345678",
-            "xyz")
+            email: "test@example.com",
+            firstName: "John",
+            lastName: "Doe",
+            phoneNumber: "12345678",
+            guestUserComment: "xyz")
         {
-            ApplicationUserRoles = new List<ApplicationUserRole> { new() { ApplicationRole = applicationRole } }
+            ApplicationUserRoles = new List<ApplicationUserRole> { new ApplicationUserRole { ApplicationRole = applicationRole } }
         };
 
         userRepositoryMock.Setup(u => u.GetUserByUserNameOrEmail(credentials.Email, CancellationToken.None))
@@ -67,10 +67,10 @@ public class LoginHandlerTests : TestHelper
         };
 
         var applicationUser = new ApplicationUser("test@example.com",
-            "John",
-            "Doe",
-            "12345678",
-            "xyz");
+             "John",
+             "Doe",
+             "12345678",
+             "xyz");
 
         userRepositoryMock.Setup(u => u.GetUserByUserNameOrEmail(credentials.Email, CancellationToken.None))
             .ReturnsAsync(applicationUser);

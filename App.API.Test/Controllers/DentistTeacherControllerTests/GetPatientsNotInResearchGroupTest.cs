@@ -1,11 +1,11 @@
-﻿using System.Security.Claims;
-using App.Application.Core;
+﻿using App.Application.Core;
 using App.Application.DentistTeacherOperations.Query.PatientsNotInResearchGroups;
 using App.Domain.DTOs.ResearchGroupDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Security.Claims;
 
 namespace App.API.Test.Controllers.DentistTeacherControllerTests;
 
@@ -39,7 +39,7 @@ public class GetPatientsNotInResearchGroupTest
                 LastName = "Doe",
                 Email = "john.doe@test.com"
             },
-            new()
+             new()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Jane",
@@ -55,8 +55,7 @@ public class GetPatientsNotInResearchGroupTest
         };
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<FetchPatientsNotInResearchGroupsQuery>(), default))
-            .ReturnsAsync(
-                OperationResult<PaginatedResearchGroupPatientResponseDto>.Success(patientsNotInResearchGroup));
+            .ReturnsAsync(OperationResult<PaginatedResearchGroupPatientResponseDto>.Success(patientsNotInResearchGroup));
 
         _dentistTeacherController.ControllerContext = new ControllerContext
         {

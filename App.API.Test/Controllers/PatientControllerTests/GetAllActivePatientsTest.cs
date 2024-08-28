@@ -28,8 +28,7 @@ public class GetAllActivePatientsTest
         // Arrange
         var expectedPatients = new List<PatientResponseDto>
         {
-            new()
-            {
+            new PatientResponseDto {
                 Id = Guid.NewGuid(),
                 FirstName = "John",
                 LastName = "Doe",
@@ -44,8 +43,7 @@ public class GetAllActivePatientsTest
                 Location = "Location",
                 Age = 20
             },
-            new()
-            {
+            new PatientResponseDto {
                 Id = Guid.NewGuid(),
                 FirstName = "Jane",
                 LastName = "Doe",
@@ -62,7 +60,7 @@ public class GetAllActivePatientsTest
             }
         };
 
-        var paginatedPatientResponseDto = new PaginatedPatientResponseDto
+        PaginatedPatientResponseDto paginatedPatientResponseDto = new PaginatedPatientResponseDto
         {
             Patients = expectedPatients,
             TotalPatientsCount = expectedPatients.Count
@@ -86,7 +84,7 @@ public class GetAllActivePatientsTest
         // Arrange
         _mediator.Setup(x => x.Send(It.IsAny<FetchAllActivePatientsQuery>(), default))
             .ReturnsAsync(OperationResult<PaginatedPatientResponseDto>
-                .Failure("Failed to fetch patients"));
+            .Failure("Failed to fetch patients"));
 
         // Act
         var result = await _patientcontroller.FetchAllActivePatients("John", "john.doe@example");

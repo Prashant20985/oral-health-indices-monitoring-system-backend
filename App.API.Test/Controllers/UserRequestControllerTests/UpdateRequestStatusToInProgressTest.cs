@@ -30,7 +30,7 @@ public class UpdateRequestStatusToInProgressTest
             RequestTitle = "test",
             Description = "test",
             DateSubmitted = DateTime.Now,
-            RequestStatus = "test"
+            RequestStatus = "test",
         };
 
         _mediator.Setup(m => m.Send(It.IsAny<UpdateRequestStatusToInProgressCommand>(), default))
@@ -54,7 +54,7 @@ public class UpdateRequestStatusToInProgressTest
             RequestTitle = "test",
             Description = "test",
             DateSubmitted = DateTime.Now,
-            RequestStatus = "test"
+            RequestStatus = "test",
         };
 
         _mediator.Setup(m => m.Send(It.IsAny<UpdateRequestStatusToInProgressCommand>(), default))
