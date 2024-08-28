@@ -17,10 +17,7 @@ public class PatientRepositoryTests
     public PatientRepositoryTests()
     {
         _mockOralEhrContext = new Mock<OralEhrContext>();
-        var mapperConfig = new MapperConfiguration(cfg =>
-        {
-            cfg.CreateMap<Patient, PatientResponseDto>();
-        });
+        var mapperConfig = new MapperConfiguration(cfg => { cfg.CreateMap<Patient, PatientResponseDto>(); });
         var mapper = mapperConfig.CreateMapper();
         _patientRepository = new PatientRepository(_mockOralEhrContext.Object, mapper);
     }
@@ -29,12 +26,14 @@ public class PatientRepositoryTests
     public async Task GetPatientById_WhenPatientExists_ShouldReturnPatient()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
-        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1", "test1", "test1", "test1", 1, "test1");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
+        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1",
+            "test1", "test1", "test1", 1, "test1");
 
         var patients = new List<Patient> { patient1, patient2 }
-        .AsQueryable()
-        .BuildMockDbSet();
+            .AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
 
@@ -54,12 +53,14 @@ public class PatientRepositoryTests
     public async Task GetPatientById_WhenPatientDoesNotExist_ShouldReturnNull()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
-        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1", "test1", "test1", "test1", 1, "test1");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
+        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1",
+            "test1", "test1", "test1", 1, "test1");
 
         var patients = new List<Patient> { patient1, patient2 }
-        .AsQueryable()
-        .BuildMockDbSet();
+            .AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
 
@@ -74,12 +75,14 @@ public class PatientRepositoryTests
     public async Task GetPatientByEmail_WhenPatientExists_ShouldReturnPatient()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
-        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1", "test1", "test1", "test1", 1, "test1");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
+        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1",
+            "test1", "test1", "test1", 1, "test1");
 
         var patients = new List<Patient> { patient1, patient2 }
-        .AsQueryable()
-        .BuildMockDbSet();
+            .AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
 
@@ -97,12 +100,14 @@ public class PatientRepositoryTests
     public async Task GetPatientByEmail_WhenPatientDoesNotExist_ShouldReturnNull()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
-        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1", "test1", "test1", "test1", 1, "test1");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
+        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1",
+            "test1", "test1", "test1", 1, "test1");
 
         var patients = new List<Patient> { patient1, patient2 }
-        .AsQueryable()
-        .BuildMockDbSet();
+            .AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
 
@@ -117,12 +122,14 @@ public class PatientRepositoryTests
     public void GetAllActivePatients_WhenPatientsExist_ShouldReturnAllActivePatients()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
-        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1", "test1", "test1", "test1", 1, "test1");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
+        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1",
+            "test1", "test1", "test1", 1, "test1");
 
         var patients = new List<Patient> { patient1, patient2 }
-        .AsQueryable()
-        .BuildMockDbSet();
+            .AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
 
@@ -144,8 +151,7 @@ public class PatientRepositoryTests
     {
         // Arrange
         var patients = new List<Patient>()
-            .AsQueryable().
-            BuildMockDbSet();
+            .AsQueryable().BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
 
@@ -162,16 +168,19 @@ public class PatientRepositoryTests
     public void GetAllArchivedPatients_WhenPatientsExist_ShouldReturnAllArchivedPatients()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
-        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1", "test1", "test1", "test1", 1, "test1");
-        var patient3 = new Patient("test2", "test2", "test2@test.com", Gender.Male, "test2", "test2", 19, "test2", "test2", "test2", "test2", 1, "test2");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
+        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1",
+            "test1", "test1", "test1", 1, "test1");
+        var patient3 = new Patient("test2", "test2", "test2@test.com", Gender.Male, "test2", "test2", 19, "test2",
+            "test2", "test2", "test2", 1, "test2");
 
         patient1.ArchivePatient("test");
         patient2.ArchivePatient("test1");
 
         var patients = new List<Patient> { patient1, patient2, patient3 }
-        .AsQueryable()
-        .BuildMockDbSet();
+            .AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
 
@@ -192,14 +201,16 @@ public class PatientRepositoryTests
     public void GetAllArchivedPatients_WhenNoPatientsExist_ShouldReturnEmptyList()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
-        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1", "test1", "test1", "test1", 1, "test1");
-        var patient3 = new Patient("test2", "test2", "test2@test.com", Gender.Male, "test2", "test2", 19, "test2", "test2", "test2", "test2", 1, "test2");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
+        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1",
+            "test1", "test1", "test1", 1, "test1");
+        var patient3 = new Patient("test2", "test2", "test2@test.com", Gender.Male, "test2", "test2", 19, "test2",
+            "test2", "test2", "test2", 1, "test2");
 
 
         var patients = new List<Patient>()
-            .AsQueryable().
-            BuildMockDbSet();
+            .AsQueryable().BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
 
@@ -216,11 +227,11 @@ public class PatientRepositoryTests
     public async Task CreatePatient_WhenPatientIsCreated_ShouldCreatePatient()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
 
         var patients = new List<Patient> { patient1 }
-            .AsQueryable().
-            BuildMockDbSet();
+            .AsQueryable().BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
 
@@ -235,11 +246,11 @@ public class PatientRepositoryTests
     public async Task DeletePatient_WhenPatientIsDeleted_ShouldDeletePatient()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
 
         var patients = new List<Patient> { patient1 }
-            .AsQueryable().
-            BuildMockDbSet();
+            .AsQueryable().BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
 
@@ -254,11 +265,11 @@ public class PatientRepositoryTests
     public async Task GetPatientDetails_ShoudlReturn_PatientResponseDto()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
 
         var patients = new List<Patient> { patient1 }
-            .AsQueryable().
-            BuildMockDbSet();
+            .AsQueryable().BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
 
@@ -278,11 +289,11 @@ public class PatientRepositoryTests
     public async Task GetPatientDetails_WhenPatientDoesNotExist_ShouldReturnNull()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
 
         var patients = new List<Patient> { patient1 }
-            .AsQueryable().
-            BuildMockDbSet();
+            .AsQueryable().BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Patients).Returns(patients.Object);
 

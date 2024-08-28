@@ -1,14 +1,13 @@
 ﻿using App.Application.AdminOperations.Query.ActiveApplicationUsersList;
 using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
-using MockQueryable.Moq;
+using MockQueryable.EntityFrameworkCore;
 using Moq;
 
 namespace App.Application.Test.AdminOperations.Query.ActiveApplicationUsersList;
 
 public class FetchActiveApplicationUsersHandlerTests : TestHelper
 {
-
     [Fact]
     public async Task Handle_ValidRequest_ReturnsOperationResultWithActiveUsers()
     {
@@ -32,16 +31,20 @@ public class FetchActiveApplicationUsersHandlerTests : TestHelper
             TotalUsersCount = 1
         };
 
-        userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery("testUser")).Returns(users.AsQueryable().BuildMock());
+        userRepositoryMock.Setup(u => u.GetActiveApplicationUsersQuery("testUser"))
+            .Returns(users.AsQueryable().BuildMock());
 
         queryFilterMock.Setup(filter =>
-                filter.ApplyFilters(It.IsAny<IQueryable<ApplicationUserResponseDto>>(), It.IsAny<ApplicationUserPaginationAndSearchParams>(), CancellationToken.None))
-            .ReturnsAsync((IQueryable<ApplicationUserResponseDto> query, ApplicationUserPaginationAndSearchParams param, CancellationToken ct) =>
+                filter.ApplyFilters(It.IsAny<IQueryable<ApplicationUserResponseDto>>(),
+                    It.IsAny<ApplicationUserPaginationAndSearchParams>(), CancellationToken.None))
+            .ReturnsAsync((IQueryable<ApplicationUserResponseDto> query, ApplicationUserPaginationAndSearchParams param,
+                CancellationToken ct) =>
             {
                 return filteredUsers;
             });
 
-        var query = new FetchActiveApplicationUsersListQuery(new ApplicationUserPaginationAndSearchParams { SearchTerm = "Bruce" }, "testUser");
+        var query = new FetchActiveApplicationUsersListQuery(
+            new ApplicationUserPaginationAndSearchParams { SearchTerm = "Bruce" }, "testUser");
         var handler = new FetchActiveApplicationUsersListHandler(userRepositoryMock.Object, queryFilterMock.Object);
 
         // Act 

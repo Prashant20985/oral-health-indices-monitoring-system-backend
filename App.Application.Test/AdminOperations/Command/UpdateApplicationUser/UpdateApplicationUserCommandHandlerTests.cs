@@ -8,13 +8,14 @@ namespace App.Application.Test.AdminOperations.Command.UpdateApplicationUser;
 
 public class UpdateApplicationUserCommandHandlerTests : TestHelper
 {
-    private readonly UpdateApplicationUserRequestDto updateApplicationUserDto;
+    private readonly ApplicationUser applicationUser;
     private readonly UpdateApplicationUserCommand command;
     private readonly UpdateApplicationUserCommandHandler handler;
-    private readonly ApplicationUser applicationUser;
+    private readonly UpdateApplicationUserRequestDto updateApplicationUserDto;
+
     public UpdateApplicationUserCommandHandlerTests()
     {
-        updateApplicationUserDto = new UpdateApplicationUserRequestDto()
+        updateApplicationUserDto = new UpdateApplicationUserRequestDto
         {
             FirstName = "Test",
             LastName = "User",
@@ -23,11 +24,11 @@ public class UpdateApplicationUserCommandHandlerTests : TestHelper
         };
 
         applicationUser = new ApplicationUser(
-            email: "test@example.com",
-            firstName: "John",
-            lastName: "Doe",
-            phoneNumber: "12345678",
-            guestUserComment: "xyz");
+            "test@example.com",
+            "John",
+            "Doe",
+            "12345678",
+            "xyz");
 
         command = new UpdateApplicationUserCommand(applicationUser.UserName, updateApplicationUserDto);
         handler = new UpdateApplicationUserCommandHandler(userRepositoryMock.Object);

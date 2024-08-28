@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Moq;
 
 namespace App.Application.Test.AccountOperations.Command.ChangePassword;
+
 public class ChangePasswordHandlerTests : TestHelper
 {
     [Fact]
@@ -19,15 +20,16 @@ public class ChangePasswordHandlerTests : TestHelper
         };
 
         var applicationUser = new ApplicationUser("test@example.com",
-        "John",
-        "Doe",
-        "12345678",
-        "xyz");
+            "John",
+            "Doe",
+            "12345678",
+            "xyz");
 
         userRepositoryMock.Setup(u => u.GetUserByUserNameOrEmail(changePasswordDto.Email, CancellationToken.None))
-                .ReturnsAsync(applicationUser);
+            .ReturnsAsync(applicationUser);
 
-        userRepositoryMock.Setup(u => u.ChangePassword(applicationUser, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword))
+        userRepositoryMock.Setup(u =>
+                u.ChangePassword(applicationUser, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword))
             .ReturnsAsync(IdentityResult.Success);
 
         var changePasswordCommand = new ChangePasswordCommand(changePasswordDto);
@@ -40,6 +42,7 @@ public class ChangePasswordHandlerTests : TestHelper
         Assert.True(result.IsSuccessful);
         Assert.NotNull(result);
     }
+
     [Fact]
     public async Task Handle_InavlidUser_FailureResult()
     {
@@ -120,7 +123,8 @@ public class ChangePasswordHandlerTests : TestHelper
         userRepositoryMock.Setup(u => u.GetUserByUserNameOrEmail(changePasswordDto.Email, CancellationToken.None))
             .ReturnsAsync(applicationUser);
 
-        userRepositoryMock.Setup(u => u.ChangePassword(applicationUser, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword))
+        userRepositoryMock.Setup(u =>
+                u.ChangePassword(applicationUser, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword))
             .ReturnsAsync(IdentityResult.Failed(error));
 
         var changePasswordCommand = new ChangePasswordCommand(changePasswordDto);

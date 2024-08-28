@@ -1,4 +1,5 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.DentistTeacherOperations.Query.StudentsSupervised;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
 using App.Domain.Models.Users;
@@ -6,7 +7,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.DentistTeacherControllerTests;
 
@@ -35,33 +35,33 @@ public class GetStudentsSupervisedTest
 
         var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, "Dentist_Teacher_Researcher"),
-            new Claim(ClaimTypes.Name, "Dentist_Teacher_Examiner"),
+            new(ClaimTypes.NameIdentifier, "Dentist_Teacher_Researcher"),
+            new(ClaimTypes.Name, "Dentist_Teacher_Examiner")
         }, "mock"));
 
         var studentsUnderSupervision = new List<StudentResponseDto>
         {
-            new StudentResponseDto
+            new()
             {
                 Id = student.Id,
                 Email = student.Email,
                 FirstName = student.FirstName,
-                LastName = student.LastName,
+                LastName = student.LastName
             }
         };
 
         var paginatedStudentResponse = new PaginatedStudentResponseDto
         {
             Students = studentsUnderSupervision,
-            TotalStudents = studentsUnderSupervision.Count,
+            TotalStudents = studentsUnderSupervision.Count
         };
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<FetchStudentsSupervisedQuery>(), default))
             .ReturnsAsync(OperationResult<PaginatedStudentResponseDto>.Success(paginatedStudentResponse));
 
-        _dentistTeacherController.ControllerContext = new ControllerContext()
+        _dentistTeacherController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = user }
+            HttpContext = new DefaultHttpContext { User = user }
         };
 
         // Act
@@ -85,31 +85,31 @@ public class GetStudentsSupervisedTest
 
         var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, "Dentist_Teacher_Researcher"),
-            new Claim(ClaimTypes.Name, "Dentist_Teacher_Examiner"),
+            new(ClaimTypes.NameIdentifier, "Dentist_Teacher_Researcher"),
+            new(ClaimTypes.Name, "Dentist_Teacher_Examiner")
         }, "mock"));
 
         var studentsUnderSupervision = new List<StudentResponseDto>
         {
-            new StudentResponseDto
+            new()
             {
                 Id = student.Id,
                 Email = student.Email,
                 FirstName = student.FirstName,
-                LastName = student.LastName,
+                LastName = student.LastName
             }
         };
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<FetchStudentsSupervisedQuery>(), default))
             .ReturnsAsync(OperationResult<PaginatedStudentResponseDto>.Failure("No students under supervision"));
 
-        _dentistTeacherController.ControllerContext = new ControllerContext()
+        _dentistTeacherController.ControllerContext = new ControllerContext
         {
-            HttpContext = new DefaultHttpContext() { User = user }
+            HttpContext = new DefaultHttpContext { User = user }
         };
 
         // Act
-        var result = await _dentistTeacherController.GetStudentsSupervised(null, null, 0, 20);
+        var result = await _dentistTeacherController.GetStudentsSupervised(null, null);
 
         // Assert
         Assert.NotNull(result);

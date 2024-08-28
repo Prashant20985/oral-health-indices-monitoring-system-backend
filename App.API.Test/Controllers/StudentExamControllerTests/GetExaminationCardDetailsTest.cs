@@ -25,7 +25,8 @@ public class GetExaminationCardDetailsTest
     {
         // Arrange
         var group1Id = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group1Id);
+        var exam = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, group1Id);
 
         var student1Id = Guid.NewGuid().ToString();
 
@@ -34,8 +35,7 @@ public class GetExaminationCardDetailsTest
 
         var expectedExaminationCardDetails = new PracticePatientExaminationCardDto
         {
-            Id = practicePatientExaminationCard.Id,
-
+            Id = practicePatientExaminationCard.Id
         };
 
         _mediator.Setup(m => m.Send(It.IsAny<FetchPracticePatientExaminationCardDetailsQuery>(), default))
@@ -67,5 +67,4 @@ public class GetExaminationCardDetailsTest
         var error = Assert.IsType<BadRequestObjectResult>(badRequestResult.Result);
         Assert.Equal("Examination card not found.", error.Value);
     }
-
 }

@@ -18,7 +18,8 @@ public class ExamEligibilityHandlerTests : TestHelper
     public async Task Handle_WhenStudentHasAlreadyTakenTheExam_ShouldReturnFalse()
     {
         // Arrange
-        studentExamRepositoryMock.Setup(x => x.CheckIfStudentHasAlreadyTakenTheExam(It.IsAny<Guid>(), It.IsAny<string>()))
+        studentExamRepositoryMock
+            .Setup(x => x.CheckIfStudentHasAlreadyTakenTheExam(It.IsAny<Guid>(), It.IsAny<string>()))
             .ReturnsAsync(true);
 
         // Act
@@ -33,7 +34,8 @@ public class ExamEligibilityHandlerTests : TestHelper
     public async Task Handle_WhenStudentHasNotTakenTheExam_ShouldReturnTrue()
     {
         // Arrange
-        studentExamRepositoryMock.Setup(x => x.CheckIfStudentHasAlreadyTakenTheExam(It.IsAny<Guid>(), It.IsAny<string>()))
+        studentExamRepositoryMock
+            .Setup(x => x.CheckIfStudentHasAlreadyTakenTheExam(It.IsAny<Guid>(), It.IsAny<string>()))
             .ReturnsAsync(false);
 
         // Act

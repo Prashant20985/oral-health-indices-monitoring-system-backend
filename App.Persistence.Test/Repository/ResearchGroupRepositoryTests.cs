@@ -23,7 +23,7 @@ public class ResearchGroupRepositoryTests
                 cfg.CreateMap<ResearchGroup, ResearchGroupResponseDto>();
                 cfg.CreateMap<Patient, ResearchGroupPatientResponseDto>();
             }
-         );
+        );
         var mapper = mapperConfig.CreateMapper();
         _researchGroupRepository = new ResearchGroupRepository(_mockOralEhrContext.Object, mapper);
     }
@@ -78,9 +78,12 @@ public class ResearchGroupRepositoryTests
     public void GetAllPatientsNotInAnyResearchGroup_WhenCalled_ReturnsAllPatientsNotInAnyResearchGroup()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
-        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1", "test1", "test1", "test1", 1, "test1");
-        var patient3 = new Patient("test2", "test2", "test2@test.com", Gender.Male, "test2", "test2", 19, "test2", "test2", "test2", "test2", 1, "test2");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
+        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1",
+            "test1", "test1", "test1", 1, "test1");
+        var patient3 = new Patient("test2", "test2", "test2@test.com", Gender.Male, "test2", "test2", 19, "test2",
+            "test2", "test2", "test2", 1, "test2");
 
         patient3.ResearchGroupId = Guid.NewGuid();
 
@@ -110,9 +113,12 @@ public class ResearchGroupRepositoryTests
     public void GetAllPatientsNotInAnyResearchGroup_WhenCalled_ReturnsEmptyList()
     {
         // Arrange
-        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test", "test", "test", 1, "test");
-        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1", "test1", "test1", "test1", 1, "test1");
-        var patient3 = new Patient("test2", "test2", "test2@test.com", Gender.Male, "test2", "test2", 19, "test2", "test2", "test2", "test2", 1, "test2");
+        var patient1 = new Patient("test", "test", "test@test.com", Gender.Male, "test", "test", 19, "test", "test",
+            "test", "test", 1, "test");
+        var patient2 = new Patient("test1", "test1", "test1@test.com", Gender.Male, "test1", "test1", 19, "test1",
+            "test1", "test1", "test1", 1, "test1");
+        var patient3 = new Patient("test2", "test2", "test2@test.com", Gender.Male, "test2", "test2", 19, "test2",
+            "test2", "test2", "test2", 1, "test2");
 
         patient1.ResearchGroupId = Guid.NewGuid();
         patient2.ResearchGroupId = Guid.NewGuid();
@@ -147,12 +153,12 @@ public class ResearchGroupRepositoryTests
         var researchGroup2 = new ResearchGroup("TestGroup2", "TestDescription2", "TestDoctorId2");
 
         var mockResearchGroups = new List<ResearchGroup>
-        {
-            researchGroup,
-            researchGroup1,
-            researchGroup2
-        }.AsQueryable()
-        .BuildMockDbSet();
+            {
+                researchGroup,
+                researchGroup1,
+                researchGroup2
+            }.AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.ResearchGroups)
             .Returns(mockResearchGroups.Object);
@@ -176,12 +182,12 @@ public class ResearchGroupRepositoryTests
         var researchGroup2 = new ResearchGroup("TestGroup2", "TestDescription2", "TestDoctorId2");
 
         var mockResearchGroups = new List<ResearchGroup>
-        {
-            researchGroup,
-            researchGroup1,
-            researchGroup2
-        }.AsQueryable()
-        .BuildMockDbSet();
+            {
+                researchGroup,
+                researchGroup1,
+                researchGroup2
+            }.AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.ResearchGroups)
             .Returns(mockResearchGroups.Object);
@@ -202,12 +208,12 @@ public class ResearchGroupRepositoryTests
         var researchGroup2 = new ResearchGroup("TestGroup2", "TestDescription2", "TestDoctorId2");
 
         var mockResearchGroups = new List<ResearchGroup>
-        {
-            researchGroup,
-            researchGroup1,
-            researchGroup2
-        }.AsQueryable()
-        .BuildMockDbSet();
+            {
+                researchGroup,
+                researchGroup1,
+                researchGroup2
+            }.AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.ResearchGroups)
             .Returns(mockResearchGroups.Object);
@@ -231,12 +237,12 @@ public class ResearchGroupRepositoryTests
         var researchGroup2 = new ResearchGroup("TestGroup2", "TestDescription2", "TestDoctorId2");
 
         var mockResearchGroups = new List<ResearchGroup>
-        {
-            researchGroup,
-            researchGroup1,
-            researchGroup2
-        }.AsQueryable()
-        .BuildMockDbSet();
+            {
+                researchGroup,
+                researchGroup1,
+                researchGroup2
+            }.AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.ResearchGroups)
             .Returns(mockResearchGroups.Object);
@@ -257,12 +263,12 @@ public class ResearchGroupRepositoryTests
         var researchGroup2 = new ResearchGroup("TestGroup2", "TestDescription2", "TestDoctorId2");
 
         var mockResearchGroups = new List<ResearchGroup>
-        {
-            researchGroup,
-            researchGroup1,
-            researchGroup2
-        }.AsQueryable()
-        .BuildMockDbSet();
+            {
+                researchGroup,
+                researchGroup1,
+                researchGroup2
+            }.AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.ResearchGroups)
             .Returns(mockResearchGroups.Object);
@@ -286,12 +292,12 @@ public class ResearchGroupRepositoryTests
         var researchGroup2 = new ResearchGroup("TestGroup2", "TestDescription2", "TestDoctorId2");
 
         var mockResearchGroups = new List<ResearchGroup>
-        {
-            researchGroup,
-            researchGroup1,
-            researchGroup2
-        }.AsQueryable()
-        .BuildMockDbSet();
+            {
+                researchGroup,
+                researchGroup1,
+                researchGroup2
+            }.AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.ResearchGroups)
             .Returns(mockResearchGroups.Object);
@@ -310,10 +316,10 @@ public class ResearchGroupRepositoryTests
         var researchGroup = new ResearchGroup("TestGroup", "TestDescription", "TestDoctorId");
 
         var researchGroups = new List<ResearchGroup>
-        {
-            researchGroup
-        }.AsQueryable()
-        .BuildMockDbSet();
+            {
+                researchGroup
+            }.AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.ResearchGroups)
             .Returns(researchGroups.Object);
@@ -332,10 +338,10 @@ public class ResearchGroupRepositoryTests
         var researchGroup = new ResearchGroup("TestGroup", "TestDescription", "TestDoctorId");
 
         var researchGroups = new List<ResearchGroup>
-        {
-            researchGroup
-        }.AsQueryable()
-        .BuildMockDbSet();
+            {
+                researchGroup
+            }.AsQueryable()
+            .BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.ResearchGroups)
             .Returns(researchGroups.Object);

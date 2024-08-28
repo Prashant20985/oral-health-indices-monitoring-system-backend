@@ -25,7 +25,8 @@ public class GradeExaminationCardTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, groupId);
         var studentId = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
@@ -33,7 +34,7 @@ public class GradeExaminationCardTest
         var studentMark = 20;
 
         _mediator.Setup(x => x.Send(It.IsAny<GradePracticeExaminationCardCommand>(), default))
-                 .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
+            .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
         // Act
         var result = await _studentExamController.GradeExaminationCard(practicePatientExaminationCard.Id, studentMark);
@@ -48,7 +49,8 @@ public class GradeExaminationCardTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, groupId);
         var studentId = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(exam.Id, studentId);
@@ -56,7 +58,7 @@ public class GradeExaminationCardTest
         var studentMark = 20;
 
         _mediator.Setup(x => x.Send(It.IsAny<GradePracticeExaminationCardCommand>(), default))
-                 .ReturnsAsync(OperationResult<Unit>.Failure("Patient Examination form not found"));
+            .ReturnsAsync(OperationResult<Unit>.Failure("Patient Examination form not found"));
 
         // Act
         var result = await _studentExamController.GradeExaminationCard(Guid.NewGuid(), studentMark);
@@ -71,7 +73,8 @@ public class GradeExaminationCardTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, groupId);
         var studentId = Guid.NewGuid().ToString();
 
         var practicePatientExaminationCard = new PracticePatientExaminationCard(Guid.NewGuid(), studentId);
@@ -79,7 +82,7 @@ public class GradeExaminationCardTest
         var studentMark = 20;
 
         _mediator.Setup(x => x.Send(It.IsAny<GradePracticeExaminationCardCommand>(), default))
-                 .ReturnsAsync(OperationResult<Unit>.Failure("Exam not Found"));
+            .ReturnsAsync(OperationResult<Unit>.Failure("Exam not Found"));
 
         // Act
         var result = await _studentExamController.GradeExaminationCard(practicePatientExaminationCard.Id, studentMark);

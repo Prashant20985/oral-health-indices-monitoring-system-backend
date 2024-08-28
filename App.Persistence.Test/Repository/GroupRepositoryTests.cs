@@ -14,8 +14,8 @@ namespace App.Persistence.Test.Repository;
 
 public class GroupRepositoryTests
 {
-    private readonly Mock<OralEhrContext> _mockOralEhrContext;
     private readonly GroupRepository _groupRepository;
+    private readonly Mock<OralEhrContext> _mockOralEhrContext;
 
     public GroupRepositoryTests()
     {
@@ -24,7 +24,7 @@ public class GroupRepositoryTests
         {
             cfg.CreateMap<ApplicationUser, StudentResponseDto>()
                 .ForMember(x => x.Groups, o => o.MapFrom(s => s.StudentGroups
-                .Select(x => x.Group.GroupName).ToList()));
+                    .Select(x => x.Group.GroupName).ToList()));
             cfg.CreateMap<Exam, ExamDto>();
         });
         var mapper = mapperConfig.CreateMapper();
@@ -114,8 +114,7 @@ public class GroupRepositoryTests
     {
         // Arrange
         var group = new Group(Guid.NewGuid().ToString(), "Group");
-        var groups = new List<Group> { }
-            .AsQueryable().BuildMockDbSet();
+        var groups = new List<Group>().AsQueryable().BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.Groups).Returns(groups.Object);
 
@@ -151,7 +150,7 @@ public class GroupRepositoryTests
         var studentGroup2 = new StudentGroup(Guid.NewGuid(), Guid.NewGuid().ToString());
 
         var studentGroups = new List<StudentGroup> { studentGroup1, studentGroup2 }
-        .AsQueryable().BuildMockDbSet();
+            .AsQueryable().BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
 
@@ -188,8 +187,7 @@ public class GroupRepositoryTests
     {
         // Arrange
         var studentGroup = new StudentGroup(Guid.NewGuid(), Guid.NewGuid().ToString());
-        var studentGroups = new List<StudentGroup> { }
-            .AsQueryable().BuildMockDbSet();
+        var studentGroups = new List<StudentGroup>().AsQueryable().BuildMockDbSet();
 
         _mockOralEhrContext.Setup(x => x.StudentGroups).Returns(studentGroups.Object);
 
@@ -203,7 +201,6 @@ public class GroupRepositoryTests
     [Fact]
     public void RemoveStudentFromGroup_StateUnderTest_ExpectedBehavior()
     {
-
         // Arrange
         var studentGroup = new StudentGroup(Guid.NewGuid(), Guid.NewGuid().ToString());
         var studentGroups = new List<StudentGroup> { studentGroup }
@@ -226,16 +223,16 @@ public class GroupRepositoryTests
 
         var applicationUserRoles = new List<ApplicationUserRole>
         {
-            new ApplicationUserRole { ApplicationRole =  new ApplicationRole { Name = "Student"}}
+            new() { ApplicationRole = new ApplicationRole { Name = "Student" } }
         };
 
         var student1 = new ApplicationUser("test@test.com", "Test", "User", "7418552", "comment")
-        { ApplicationUserRoles = applicationUserRoles };
+            { ApplicationUserRoles = applicationUserRoles };
 
-        student1.StudentGroups.Add(new StudentGroup(groupId, student1.Id.ToString()));
+        student1.StudentGroups.Add(new StudentGroup(groupId, student1.Id));
 
         var student2 = new ApplicationUser("test2@test.com", "Test2", "User", "85277441", "comment")
-        { ApplicationUserRoles = applicationUserRoles };
+            { ApplicationUserRoles = applicationUserRoles };
 
         var users = new List<ApplicationUser> { student1, student2 };
 
@@ -291,8 +288,8 @@ public class GroupRepositoryTests
         var student1 = new ApplicationUser("test@test.com", "Test", "User", "7418552", "comment");
         var student2 = new ApplicationUser("test2@test.com", "Test2", "User", "85277441", "comment");
 
-        var studentGroup1 = new StudentGroup(group.Id, student1.Id.ToString());
-        var studentGroup2 = new StudentGroup(group.Id, student2.Id.ToString());
+        var studentGroup1 = new StudentGroup(group.Id, student1.Id);
+        var studentGroup2 = new StudentGroup(group.Id, student2.Id);
 
         studentGroup1.Student = student1;
         studentGroup2.Student = student2;
@@ -328,7 +325,7 @@ public class GroupRepositoryTests
         var group = new Group(Guid.NewGuid().ToString(), "Group 1");
 
         var student1 = new ApplicationUser("test@test.com", "Test", "User", "7418552", "comment");
-        var studentGroup1 = new StudentGroup(group.Id, student1.Id.ToString());
+        var studentGroup1 = new StudentGroup(group.Id, student1.Id);
 
         studentGroup1.Student = student1;
 
@@ -353,7 +350,8 @@ public class GroupRepositoryTests
     }
 
     [Fact]
-    public async Task GetGroupDetailsWithExamsListByGroupIdAndStudentId_ShouldReturnStudentGroupWithExamsListResponseDto()
+    public async Task
+        GetGroupDetailsWithExamsListByGroupIdAndStudentId_ShouldReturnStudentGroupWithExamsListResponseDto()
     {
         // Arrange
         var student = new ApplicationUser("test@test.com", "Test", "User", "7418552", "comment");
@@ -362,8 +360,10 @@ public class GroupRepositoryTests
         var group = new Group(teacher.Id, "Group 1");
         group.Teacher = teacher;
 
-        var exam1 = new Exam(DateTime.Now, "test", "test", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
-        var exam2 = new Exam(DateTime.Now, "test", "test", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group.Id);
+        var exam1 = new Exam(DateTime.Now, "test", "test", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20,
+            group.Id);
+        var exam2 = new Exam(DateTime.Now, "test", "test", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20,
+            group.Id);
 
         exam1.Group = group;
         exam2.Group = group;
@@ -428,7 +428,8 @@ public class GroupRepositoryTests
         _mockOralEhrContext.Setup(x => x.Users).Returns(mockUsers.Object);
 
         // Act
-        var result = await _groupRepository.GetGroupDetailsWithExamsListByGroupIdAndStudentId(invalidGroupId, studentId);
+        var result =
+            await _groupRepository.GetGroupDetailsWithExamsListByGroupIdAndStudentId(invalidGroupId, studentId);
 
         // Assert
         Assert.Null(result);
@@ -446,8 +447,10 @@ public class GroupRepositoryTests
         group1.Teacher = teacher;
         group2.Teacher = teacher;
 
-        var exam1 = new Exam(DateTime.Now, "Exam 1", "Description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, group1.Id);
-        var exam2 = new Exam(DateTime.Now, "Exam 2", "Description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 30, group2.Id);
+        var exam1 = new Exam(DateTime.Now, "Exam 1", "Description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 30, group1.Id);
+        var exam2 = new Exam(DateTime.Now, "Exam 2", "Description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 30, group2.Id);
 
         var studentGroup1 = new StudentGroup(group1.Id, studentId);
         var studentGroup2 = new StudentGroup(group2.Id, studentId);

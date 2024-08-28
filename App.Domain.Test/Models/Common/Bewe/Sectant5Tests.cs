@@ -103,5 +103,4 @@ public class Sectant5Tests
         // Assert
         Assert.Equal(12, maxValue);
     }
-
 }

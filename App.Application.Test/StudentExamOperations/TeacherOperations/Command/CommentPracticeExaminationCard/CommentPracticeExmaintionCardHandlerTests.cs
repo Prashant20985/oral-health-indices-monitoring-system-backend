@@ -7,8 +7,8 @@ namespace App.Application.Test.StudentExamOperations.TeacherOperations.Command.C
 
 public class CommentPracticeExmaintionCardHandlerTests : TestHelper
 {
-    private readonly CommentPracticeExmaintionCardHandler handler;
     private readonly CommentPracticeExaminationCardCommand command;
+    private readonly CommentPracticeExmaintionCardHandler handler;
 
     public CommentPracticeExmaintionCardHandlerTests()
     {

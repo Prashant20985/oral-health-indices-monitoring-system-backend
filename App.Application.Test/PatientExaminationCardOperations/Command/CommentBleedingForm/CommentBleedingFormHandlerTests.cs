@@ -7,8 +7,8 @@ namespace App.Application.Test.PatientExaminationCardOperations.Command.CommentB
 
 public class CommentBleedingFormHandlerTests : TestHelper
 {
-    private readonly CommentBleedingFormHandler handler;
     private readonly CommentBleedingFormCommand command;
+    private readonly CommentBleedingFormHandler handler;
 
     public CommentBleedingFormHandlerTests()
     {

@@ -27,25 +27,27 @@ public class GetExamsListTest
         var group1Id = Guid.NewGuid();
         var group2Id = Guid.NewGuid();
 
-        var exam1 = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group1Id);
-        var exam2 = new Exam(DateTime.Now, "Exam2", "Description2", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, group1Id);
+        var exam1 = new Exam(DateTime.Now, "Exam1", "Description1", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, group1Id);
+        var exam2 = new Exam(DateTime.Now, "Exam2", "Description2", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, group1Id);
 
         var expectedExamsList = new List<ExamDto>
         {
-            new ExamDto
+            new()
             {
-               Id = exam1.Id,
-               DateOfExamination = exam1.DateOfExamination,
-               ExamTitle = exam1.ExamTitle,
-               Description = exam1.Description,
-               PublishDate = exam1.PublishDate,
-               StartTime = exam1.StartTime,
-               EndTime = exam1.EndTime,
-               DurationInterval = exam1.DurationInterval,
-               MaxMark = exam1.MaxMark,
-               ExamStatus = exam1.ExamStatus.ToString()
+                Id = exam1.Id,
+                DateOfExamination = exam1.DateOfExamination,
+                ExamTitle = exam1.ExamTitle,
+                Description = exam1.Description,
+                PublishDate = exam1.PublishDate,
+                StartTime = exam1.StartTime,
+                EndTime = exam1.EndTime,
+                DurationInterval = exam1.DurationInterval,
+                MaxMark = exam1.MaxMark,
+                ExamStatus = exam1.ExamStatus.ToString()
             },
-            new ExamDto
+            new()
             {
                 Id = exam2.Id,
                 DateOfExamination = exam2.DateOfExamination,

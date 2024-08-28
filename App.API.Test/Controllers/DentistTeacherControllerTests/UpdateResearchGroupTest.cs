@@ -1,11 +1,11 @@
-﻿using App.Application.Core;
+﻿using System.Security.Claims;
+using App.Application.Core;
 using App.Application.DentistTeacherOperations.Command.UpdateResearchGroup;
 using App.Domain.DTOs.ResearchGroupDtos.Request;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Security.Claims;
 
 namespace App.API.Test.Controllers.DentistTeacherControllerTests;
 
@@ -33,7 +33,7 @@ public class UpdateResearchGroupTest
         var expectedGroup = new CreateUpdateResearchGroupRequestDto
         {
             GroupName = "Group 1",
-            Description = "Description 1",
+            Description = "Description 1"
         };
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<UpdateResearchGroupCommand>(), default))
@@ -63,7 +63,7 @@ public class UpdateResearchGroupTest
         var expectedGroup = new CreateUpdateResearchGroupRequestDto
         {
             GroupName = "Group 1",
-            Description = "Description 1",
+            Description = "Description 1"
         };
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<UpdateResearchGroupCommand>(), default))

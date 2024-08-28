@@ -55,7 +55,8 @@ public class CreatePatientHandlerTests : TestHelper
     {
         // Arrange
         patientRepositoryMock.Setup(repo => repo.GetPatientByEmail(It.IsAny<string>()))
-            .ReturnsAsync(new Patient("test", "test", "test@123", Gender.Male, "test", "test", 12, "test", "test", "test", "test", 2, "doctor123"));
+            .ReturnsAsync(new Patient("test", "test", "test@123", Gender.Male, "test", "test", 12, "test", "test",
+                "test", "test", 2, "doctor123"));
 
         // Act
         var result = await handler.Handle(command, CancellationToken.None);
@@ -68,5 +69,4 @@ public class CreatePatientHandlerTests : TestHelper
         patientRepositoryMock.Verify(repo => repo.GetPatientByEmail(command.CreatePatient.Email), Times.Once);
         patientRepositoryMock.Verify(repo => repo.CreatePatient(It.IsAny<Patient>()), Times.Never);
     }
-
 }

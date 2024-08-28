@@ -8,8 +8,8 @@ namespace App.Application.Test.StudentExamOperations.TeacherOperations.Command.U
 
 public class UpdateExamHandlerTests : TestHelper
 {
-    private readonly UpdateExamHandler handler;
     private readonly UpdateExamCommand command;
+    private readonly UpdateExamHandler handler;
 
     public UpdateExamHandlerTests()
     {
@@ -32,7 +32,8 @@ public class UpdateExamHandlerTests : TestHelper
     public async Task Handle_WhenExamExists_ShouldReturnSuccessResult()
     {
         // Arrange
-        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, Guid.NewGuid());
+        var exam = new Exam(DateTime.Now, "title", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
+            TimeSpan.MaxValue, 20, Guid.NewGuid());
 
         studentExamRepositoryMock.Setup(x => x.GetExamById(It.IsAny<Guid>()))
             .ReturnsAsync(exam);
@@ -59,5 +60,4 @@ public class UpdateExamHandlerTests : TestHelper
         Assert.False(result.IsSuccessful);
         Assert.Equal("Exam not found", result.ErrorMessage);
     }
-
 }

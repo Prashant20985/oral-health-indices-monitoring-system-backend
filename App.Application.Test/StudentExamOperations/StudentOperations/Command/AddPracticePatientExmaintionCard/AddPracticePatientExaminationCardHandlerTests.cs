@@ -10,8 +10,8 @@ namespace App.Application.Test.StudentExamOperations.StudentOperations.Command.A
 
 public class AddPracticePatientExaminationCardHandlerTests : TestHelper
 {
-    private readonly AddPracticePatientExaminationCardHandler handler;
     private readonly AddPracticePatientExaminationCardCommand command;
+    private readonly AddPracticePatientExaminationCardHandler handler;
 
     public AddPracticePatientExaminationCardHandlerTests()
     {
@@ -34,25 +34,26 @@ public class AddPracticePatientExaminationCardHandlerTests : TestHelper
         var practiceBeweDto = new PracticeBeweDto();
         var practiceApiDto = new PracticeAPIDto
         {
-            APIResult = 22,
+            APIResult = 22
         };
         var practiceApiBleedingDto = new PracticeBleedingDto
         {
-            BleedingResult = 22,
+            BleedingResult = 22
         };
         var practiceDmftDmfsDto = new PracticeDMFT_DMFSDto();
 
         var summary = new SummaryRequestDto();
 
         handler = new AddPracticePatientExaminationCardHandler(studentExamRepositoryMock.Object);
-        command = new AddPracticePatientExaminationCardCommand(Guid.NewGuid(), "studentId", new PracticePatientExaminationCardInputModel(
-            patientDto,
-            summary,
-            riskFactorAssesmentModel,
-            practiceApiDto,
-            practiceApiBleedingDto,
-            practiceBeweDto,
-            practiceDmftDmfsDto
+        command = new AddPracticePatientExaminationCardCommand(Guid.NewGuid(), "studentId",
+            new PracticePatientExaminationCardInputModel(
+                patientDto,
+                summary,
+                riskFactorAssesmentModel,
+                practiceApiDto,
+                practiceApiBleedingDto,
+                practiceBeweDto,
+                practiceDmftDmfsDto
             ));
     }
 
@@ -78,7 +79,8 @@ public class AddPracticePatientExaminationCardHandlerTests : TestHelper
         var examId = Guid.NewGuid();
         var studentId = Guid.NewGuid();
 
-        var exam = new Exam(DateTime.Now, "Title", "Description", new TimeOnly(10, 0), new TimeOnly(11, 0), TimeSpan.FromMinutes(60), 100, Guid.NewGuid());
+        var exam = new Exam(DateTime.Now, "Title", "Description", new TimeOnly(10, 0), new TimeOnly(11, 0),
+            TimeSpan.FromMinutes(60), 100, Guid.NewGuid());
 
         studentExamRepositoryMock.Setup(x => x.GetExamById(It.IsAny<Guid>()))
             .ReturnsAsync(exam);
@@ -101,7 +103,8 @@ public class AddPracticePatientExaminationCardHandlerTests : TestHelper
         var examId = Guid.NewGuid();
         var studentId = Guid.NewGuid();
 
-        var exam = new Exam(DateTime.Now, "Title", "Description", new TimeOnly(10, 0), new TimeOnly(11, 0), TimeSpan.FromMinutes(60), 100, Guid.NewGuid());
+        var exam = new Exam(DateTime.Now, "Title", "Description", new TimeOnly(10, 0), new TimeOnly(11, 0),
+            TimeSpan.FromMinutes(60), 100, Guid.NewGuid());
 
         studentExamRepositoryMock.Setup(x => x.GetExamById(It.IsAny<Guid>()))
             .ReturnsAsync(exam);
@@ -124,7 +127,8 @@ public class AddPracticePatientExaminationCardHandlerTests : TestHelper
         studentExamRepositoryMock.Setup(x => x.AddPracticeBewe(It.IsAny<PracticeBewe>()))
             .Returns(Task.CompletedTask);
 
-        studentExamRepositoryMock.Setup(x => x.AddPracticePatientExaminationCard(It.IsAny<PracticePatientExaminationCard>()))
+        studentExamRepositoryMock
+            .Setup(x => x.AddPracticePatientExaminationCard(It.IsAny<PracticePatientExaminationCard>()))
             .Returns(Task.CompletedTask);
 
         studentExamRepositoryMock.Setup(x => x.GetPracticePatientExaminationCardById(It.IsAny<Guid>()))
