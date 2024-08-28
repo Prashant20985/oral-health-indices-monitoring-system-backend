@@ -5,7 +5,6 @@ using MediatR;
 using Moq;
 
 namespace App.Application.Test.AccountOperations.Command.ResetPasswordUrlEmailRequest;
-
 public class ResetPasswordUrlEmailRequestHandlerTests : TestHelper
 {
     [Fact]
@@ -15,7 +14,7 @@ public class ResetPasswordUrlEmailRequestHandlerTests : TestHelper
         var user = new ApplicationUser("test@example.com", "John", "Doe", "12345678", "xyz");
 
         userRepositoryMock.Setup(u => u.GetUserByUserNameOrEmail(user.Email, CancellationToken.None))
-            .ReturnsAsync(user);
+                .ReturnsAsync(user);
 
         userRepositoryMock.Setup(u => u.GenerateResetPasswordToken(user))
             .ReturnsAsync("reset_token");
@@ -28,9 +27,7 @@ public class ResetPasswordUrlEmailRequestHandlerTests : TestHelper
             userRepositoryMock.Object);
 
         // Act
-        var result =
-            await resetPasswordUrlEmailRequestHandler.Handle(resetPasswordUrlEmailRequestCommand,
-                CancellationToken.None);
+        var result = await resetPasswordUrlEmailRequestHandler.Handle(resetPasswordUrlEmailRequestCommand, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsSuccessful);
@@ -57,9 +54,7 @@ public class ResetPasswordUrlEmailRequestHandlerTests : TestHelper
             userRepositoryMock.Object);
 
         // Act
-        var result =
-            await resetPasswordUrlEmailRequestHandler.Handle(resetPasswordUrlEmailRequestCommand,
-                CancellationToken.None);
+        var result = await resetPasswordUrlEmailRequestHandler.Handle(resetPasswordUrlEmailRequestCommand, CancellationToken.None);
 
         // Assert
         Assert.False(result.IsSuccessful);

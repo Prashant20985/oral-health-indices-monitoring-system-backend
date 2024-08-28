@@ -25,12 +25,11 @@ public class MarkAsGradedTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
 
         _mediator.Setup(x => x.Send(It.IsAny<MarkAsGradedCommand>(), default))
-            .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
+                 .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
         // Act
         var result = await _studentExamController.MarkAsGraded(exam.Id);
@@ -45,11 +44,10 @@ public class MarkAsGradedTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
         _mediator.Setup(x => x.Send(It.IsAny<MarkAsGradedCommand>(), default))
-            .ReturnsAsync(OperationResult<Unit>.Failure("Exam not found"));
+                 .ReturnsAsync(OperationResult<Unit>.Failure("Exam not found"));
 
         // Act
         var result = await _studentExamController.MarkAsGraded(Guid.NewGuid());

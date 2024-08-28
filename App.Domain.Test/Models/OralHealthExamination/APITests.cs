@@ -3,6 +3,7 @@ using App.Domain.Models.OralHealthExamination;
 
 namespace App.Domain.Test.Models.OralHealthExamination;
 
+
 public class APITests
 {
     [Fact]
@@ -26,14 +27,10 @@ public class APITests
         // Arrange
         var assessmentModel = new APIBleedingAssessmentModel
         {
-            Quadrant1 = new Quadrant
-                { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant2 = new Quadrant
-                { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant3 = new Quadrant
-                { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant4 = new Quadrant
-                { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" }
+            Quadrant1 = new Quadrant { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant2 = new Quadrant { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant3 = new Quadrant { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant4 = new Quadrant { Value1 = "+", Value2 = "+", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" }
         };
         var api = new API();
         api.SetAssessmentModel(assessmentModel);
@@ -53,14 +50,10 @@ public class APITests
         // Arrange
         var assessmentModel = new APIBleedingAssessmentModel
         {
-            Quadrant1 = new Quadrant
-                { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant2 = new Quadrant
-                { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant3 = new Quadrant
-                { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant4 = new Quadrant
-                { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" }
+            Quadrant1 = new Quadrant { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant2 = new Quadrant { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant3 = new Quadrant { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant4 = new Quadrant { Value1 = "-", Value2 = "-", Value3 = "-", Value4 = "", Value5 = "", Value6 = "", Value7 = "" }
         };
         var api = new API();
         api.SetAssessmentModel(assessmentModel);
@@ -80,14 +73,10 @@ public class APITests
         // Arrange
         var assessmentModel = new APIBleedingAssessmentModel
         {
-            Quadrant1 = new Quadrant
-                { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant2 = new Quadrant
-                { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant3 = new Quadrant
-                { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
-            Quadrant4 = new Quadrant
-                { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" }
+            Quadrant1 = new Quadrant { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant2 = new Quadrant { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant3 = new Quadrant { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" },
+            Quadrant4 = new Quadrant { Value1 = "+", Value2 = "-", Value3 = "+", Value4 = "", Value5 = "", Value6 = "", Value7 = "" }
         };
         var api = new API();
         api.SetAssessmentModel(assessmentModel);

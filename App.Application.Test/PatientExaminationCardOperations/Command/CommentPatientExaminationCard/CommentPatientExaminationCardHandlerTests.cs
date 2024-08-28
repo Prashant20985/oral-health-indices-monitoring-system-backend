@@ -3,12 +3,13 @@ using App.Domain.Models.OralHealthExamination;
 using MediatR;
 using Moq;
 
+
 namespace App.Application.Test.PatientExaminationCardOperations.Command.CommentPatientExaminationCard;
 
 public class CommentPatientExaminationCardHandlerTests : TestHelper
 {
-    private readonly CommentPatientExaminationCardCommand command;
     private readonly CommentPatientExaminationCardHandler handler;
+    private readonly CommentPatientExaminationCardCommand command;
 
     public CommentPatientExaminationCardHandlerTests()
     {

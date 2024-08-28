@@ -5,44 +5,45 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
-namespace App.API.Test.Controllers.AdminControllerTests;
-
-public class DeleteUserTest
+namespace App.API.Test.Controllers.AdminControllerTests
 {
-    private readonly TestableAdminController _adminController;
-    private readonly Mock<IMediator> _mediatorMock;
-
-    public DeleteUserTest()
+    public class DeleteUserTest
     {
-        _mediatorMock = new Mock<IMediator>();
-        _adminController = new TestableAdminController();
-        _adminController.ExposeSetMediator(_mediatorMock.Object);
-    }
+        private readonly TestableAdminController _adminController;
+        private readonly Mock<IMediator> _mediatorMock;
 
-    [Fact]
-    public async Task DeleteUser_Returns_OkResult()
-    {
-        //Arrange
-        var user = new ApplicationUserResponseDto
+        public DeleteUserTest()
         {
-            FirstName = "Test",
-            LastName = "Test",
-            Email = "test@test.com",
-            UserType = "RegularUser",
-            Role = "Admin",
-            UserName = "test",
-            PhoneNumber = "123456789",
-            IsAccountActive = false,
-            DeleteUserComment = "test"
-        };
+            _mediatorMock = new Mock<IMediator>();
+            _adminController = new TestableAdminController();
+            _adminController.ExposeSetMediator(_mediatorMock.Object);
+        }
 
-        _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteApplicationUserCommand>(), default))
-            .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
+        [Fact]
+        public async Task DeleteUser_Returns_OkResult()
+        {
+            //Arrange
+            var user = new ApplicationUserResponseDto
+            {
+                FirstName = "Test",
+                LastName = "Test",
+                Email = "test@test.com",
+                UserType = "RegularUser",
+                Role = "Admin",
+                UserName = "test",
+                PhoneNumber = "123456789",
+                IsAccountActive = false,
+                DeleteUserComment = "test"
+            };
 
-        // Act
-        var result = await _adminController.DeleteUser(user.UserName, user.DeleteUserComment);
+            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteApplicationUserCommand>(), default))
+                .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
-        // Assert
-        Assert.IsType<OkObjectResult>(result);
+            // Act
+            var result = await _adminController.DeleteUser(user.UserName, user.DeleteUserComment);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result);
+        }
     }
 }

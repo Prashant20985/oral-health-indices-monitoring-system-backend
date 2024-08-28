@@ -2,59 +2,61 @@
 using App.Domain.DTOs.ExamDtos.Response;
 using Moq;
 
-namespace App.Application.Test.StudentExamOperations.TeacherOperations.Query.ExaminationCardsList;
-
-public class FetchPracticePatientExaminationCardsByExamIdHandlerTests : TestHelper
+namespace App.Application.Test.StudentExamOperations.TeacherOperations.Query.ExaminationCardsList
 {
-    private readonly FetchPracticePatientExaminationCardsByExamIdHandler _handler;
-    private readonly FetchPracticePatientExaminationCardsByExamIdQuery _query;
-
-    public FetchPracticePatientExaminationCardsByExamIdHandlerTests()
+    public class FetchPracticePatientExaminationCardsByExamIdHandlerTests : TestHelper
     {
-        _handler = new FetchPracticePatientExaminationCardsByExamIdHandler(studentExamRepositoryMock.Object);
-        _query = new FetchPracticePatientExaminationCardsByExamIdQuery(Guid.NewGuid());
-    }
+        private readonly FetchPracticePatientExaminationCardsByExamIdHandler _handler;
+        private readonly FetchPracticePatientExaminationCardsByExamIdQuery _query;
 
-    [Fact]
-    public async Task Handle_WhenExamExists_ShouldReturnExamDetails()
-    {
-        // Arrange
-        var practicePatientExaminationCards = new List<PracticePatientExaminationCardDto>
+        public FetchPracticePatientExaminationCardsByExamIdHandlerTests()
         {
-            new()
+            _handler = new FetchPracticePatientExaminationCardsByExamIdHandler(studentExamRepositoryMock.Object);
+            _query = new FetchPracticePatientExaminationCardsByExamIdQuery(Guid.NewGuid());
+        }
+
+        [Fact]
+        public async Task Handle_WhenExamExists_ShouldReturnExamDetails()
+        {
+            // Arrange
+            var practicePatientExaminationCards = new List<PracticePatientExaminationCardDto>
             {
-                Id = Guid.NewGuid()
-            },
-            new()
-            {
-                Id = Guid.NewGuid()
-            }
-        };
+                new PracticePatientExaminationCardDto
+                {
+                    Id = Guid.NewGuid(),
+                },
+                new PracticePatientExaminationCardDto
+                {
+                    Id = Guid.NewGuid(),
+                }
+            };
 
-        studentExamRepositoryMock.Setup(x => x.GetPracticePatientExaminationCardsByExamId(It.IsAny<Guid>()))
-            .ReturnsAsync(practicePatientExaminationCards);
+            studentExamRepositoryMock.Setup(x => x.GetPracticePatientExaminationCardsByExamId(It.IsAny<Guid>()))
+                .ReturnsAsync(practicePatientExaminationCards);
 
-        // Act
-        var result = await _handler.Handle(_query, CancellationToken.None);
+            // Act
+            var result = await _handler.Handle(_query, CancellationToken.None);
 
-        // Assert
-        Assert.True(result.IsSuccessful);
-        Assert.NotNull(result.ResultValue);
-        Assert.Equal(practicePatientExaminationCards.Count, result.ResultValue.Count);
-    }
+            // Assert
+            Assert.True(result.IsSuccessful);
+            Assert.NotNull(result.ResultValue);
+            Assert.Equal(practicePatientExaminationCards.Count, result.ResultValue.Count);
+        }
 
-    [Fact]
-    public async Task Handle_WhenExamDoesNotExist_ShouldReturnNull()
-    {
-        // Arrange
-        studentExamRepositoryMock.Setup(x => x.GetPracticePatientExaminationCardsByExamId(It.IsAny<Guid>()))
-            .ReturnsAsync(value: null);
+        [Fact]
+        public async Task Handle_WhenExamDoesNotExist_ShouldReturnNull()
+        {
+            // Arrange
+            studentExamRepositoryMock.Setup(x => x.GetPracticePatientExaminationCardsByExamId(It.IsAny<Guid>()))
+                .ReturnsAsync(value: null);
 
-        // Act
-        var result = await _handler.Handle(_query, CancellationToken.None);
+            // Act
+            var result = await _handler.Handle(_query, CancellationToken.None);
 
-        // Assert
-        Assert.True(result.IsSuccessful);
-        Assert.Null(result.ResultValue);
+            // Assert
+            Assert.True(result.IsSuccessful);
+            Assert.Null(result.ResultValue);
+        }
+
     }
 }

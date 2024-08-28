@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using App.Application.Core;
+﻿using App.Application.Core;
 using App.Application.PatientOperations.Command.CreatePatient;
 using App.Domain.DTOs.PatientDtos.Request;
 using App.Domain.Models.Enums;
@@ -7,13 +6,14 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Security.Claims;
 
 namespace App.API.Test.Controllers.PatientControllerTests;
 
 public class CreatePatientTest
 {
-    private readonly Mock<IMediator> _mediatorMock;
     private readonly TestablePatientController _patientController;
+    private readonly Mock<IMediator> _mediatorMock;
 
     public CreatePatientTest()
     {
@@ -53,7 +53,7 @@ public class CreatePatientTest
         };
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<CreatePatientCommand>(), default))
-            .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
+           .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
         _patientController.ControllerContext = new ControllerContext
         {

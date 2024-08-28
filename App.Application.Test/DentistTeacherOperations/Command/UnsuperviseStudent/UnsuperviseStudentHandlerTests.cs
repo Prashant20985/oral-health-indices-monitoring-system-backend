@@ -22,8 +22,7 @@ public class UnsuperviseStudentHandlerTests : TestHelper
 
         var supervise = new Supervise(command.DoctorId, command.StudentId);
 
-        superviseRepositoryMock
-            .Setup(repo => repo.GetSuperviseByDoctorIdAndStudentId(command.DoctorId, command.StudentId))
+        superviseRepositoryMock.Setup(repo => repo.GetSuperviseByDoctorIdAndStudentId(command.DoctorId, command.StudentId))
             .ReturnsAsync(supervise);
 
         // Act
@@ -32,8 +31,7 @@ public class UnsuperviseStudentHandlerTests : TestHelper
         // Assert
         Assert.True(result.IsSuccessful);
         Assert.Equal(Unit.Value, result.ResultValue);
-        superviseRepositoryMock.Verify(
-            repo => repo.GetSuperviseByDoctorIdAndStudentId(command.DoctorId, command.StudentId), Times.Once);
+        superviseRepositoryMock.Verify(repo => repo.GetSuperviseByDoctorIdAndStudentId(command.DoctorId, command.StudentId), Times.Once);
         superviseRepositoryMock.Verify(repo => repo.RemoveSupervise(supervise), Times.Once);
     }
 
@@ -43,8 +41,7 @@ public class UnsuperviseStudentHandlerTests : TestHelper
         // Arrange
         var command = new UnsuperviseStudentCommand("DoctorId", "StudentId");
 
-        superviseRepositoryMock
-            .Setup(repo => repo.GetSuperviseByDoctorIdAndStudentId(command.DoctorId, command.StudentId))
+        superviseRepositoryMock.Setup(repo => repo.GetSuperviseByDoctorIdAndStudentId(command.DoctorId, command.StudentId))
             .ReturnsAsync(value: null);
 
         // Act
@@ -53,8 +50,8 @@ public class UnsuperviseStudentHandlerTests : TestHelper
         // Assert
         Assert.False(result.IsSuccessful);
         Assert.Equal("Student not in supervison", result.ErrorMessage);
-        superviseRepositoryMock.Verify(
-            repo => repo.GetSuperviseByDoctorIdAndStudentId(command.DoctorId, command.StudentId), Times.Once);
+        superviseRepositoryMock.Verify(repo => repo.GetSuperviseByDoctorIdAndStudentId(command.DoctorId, command.StudentId), Times.Once);
         superviseRepositoryMock.Verify(repo => repo.RemoveSupervise(It.IsAny<Supervise>()), Times.Never);
     }
+
 }

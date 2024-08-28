@@ -22,8 +22,7 @@ public class DeletePatientHandlerTests : TestHelper
     {
         // Arrange
         patientRepositoryMock.Setup(repo => repo.GetPatientById(It.IsAny<Guid>()))
-            .ReturnsAsync(new Patient("test", "test", "test@123", Gender.Male, "test", "test", 12, "test", "test",
-                "test", "test", 2, "doctor123"));
+            .ReturnsAsync(new Patient("test", "test", "test@123", Gender.Male, "test", "test", 12, "test", "test", "test", "test", 2, "doctor123"));
 
 
         // Act

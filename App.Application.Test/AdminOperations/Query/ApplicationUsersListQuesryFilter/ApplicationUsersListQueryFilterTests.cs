@@ -1,6 +1,6 @@
 ﻿using App.Application.AdminOperations.Query.ApplicationUsersListQueryFilter;
 using App.Domain.DTOs.ApplicationUserDtos.Response;
-using MockQueryable.EntityFrameworkCore;
+using MockQueryable.Moq;
 
 namespace App.Application.Test.AdminOperations.Query.ApplicationUsersListQuesryFilter;
 
@@ -10,26 +10,27 @@ public class ApplicationUsersListQueryFilterTests
     private readonly IQueryable<ApplicationUserResponseDto> _response;
 
 
+
     public ApplicationUsersListQueryFilterTests()
     {
         _quesryFilter = new ApplicationUsersListQueryFilter();
         _response = new List<ApplicationUserResponseDto>
         {
-            new()
+            new ApplicationUserResponseDto
             {
                 UserName = "batman",
                 FirstName = "Bruce",
                 Role = "Admin",
                 UserType = "RegularUser"
             },
-            new()
+            new ApplicationUserResponseDto
             {
                 UserName = "superman",
                 FirstName = "Clark",
                 Role = "Student",
                 UserType = "RegularUser"
             },
-            new()
+            new ApplicationUserResponseDto
             {
                 UserName = "spiderman",
                 FirstName = "Peter",

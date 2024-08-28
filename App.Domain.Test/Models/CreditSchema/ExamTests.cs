@@ -20,8 +20,7 @@ public class ExamTests
         var groupId = Guid.NewGuid();
 
         // Act
-        var exam = new Exam(dateOfExamination, examTitle, description, startTime, endTime, durationInterval, maxMark,
-            groupId);
+        var exam = new Exam(dateOfExamination, examTitle, description, startTime, endTime, durationInterval, maxMark, groupId);
 
         // Assert
         Assert.NotEqual(Guid.Empty, exam.Id);
@@ -43,7 +42,7 @@ public class ExamTests
     {
         // Arrange
         var exam = new Exam(DateTime.Now, "Final Exam", "Final exam description", new TimeOnly(9, 0),
-            new TimeOnly(12, 0), new TimeSpan(3, 0, 0), 100, Guid.NewGuid());
+                            new TimeOnly(12, 0), new TimeSpan(3, 0, 0), 100, Guid.NewGuid());
 
         // Act
         exam.MarksAsGraded();
@@ -57,7 +56,7 @@ public class ExamTests
     {
         // Arrange
         var exam = new Exam(DateTime.Now, "Final Exam", "Final exam description", new TimeOnly(9, 0),
-            new TimeOnly(12, 0), new TimeSpan(3, 0, 0), 100, Guid.NewGuid());
+                            new TimeOnly(12, 0), new TimeSpan(3, 0, 0), 100, Guid.NewGuid());
         var updateExamDto = new UpdateExamDto
         {
             DateOfExamination = DateTime.Now.AddDays(1),

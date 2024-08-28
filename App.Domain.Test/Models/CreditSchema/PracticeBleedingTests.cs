@@ -9,9 +9,9 @@ public class PracticeBleedingTests
     public void Constructor_ShouldInitializeProperties()
     {
         // Arrange
-        var bleedingResult = 90;
-        var maxilla = 45;
-        var mandible = 45;
+        int bleedingResult = 90;
+        int maxilla = 45;
+        int mandible = 45;
 
         // Act
         var practiceBleeding = new PracticeBleeding(bleedingResult, maxilla, mandible);
@@ -31,7 +31,7 @@ public class PracticeBleedingTests
     {
         // Arrange
         var practiceBleeding = new PracticeBleeding(90, 45, 45);
-        var comment = "This is a test comment.";
+        string comment = "This is a test comment.";
 
         // Act
         practiceBleeding.AddComment(comment);
@@ -53,4 +53,5 @@ public class PracticeBleedingTests
         // Assert
         Assert.Equal(assessmentModel, practiceBleeding.AssessmentModel);
     }
+
 }

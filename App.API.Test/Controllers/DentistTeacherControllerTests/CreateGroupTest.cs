@@ -1,10 +1,10 @@
-﻿using System.Security.Claims;
-using App.Application.Core;
+﻿using App.Application.Core;
 using App.Application.DentistTeacherOperations.Command.CreateGroup;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Security.Claims;
 
 namespace App.API.Test.Controllers.DentistTeacherControllerTests;
 
@@ -32,7 +32,7 @@ public class CreateGroupTest
         var groupName = "TestGroup";
 
         _mediatorMock.Setup(m => m.Send(It.IsAny<CreateGroupCommand>(), default))
-            .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
+           .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
 
         _dentistTeacherController.ControllerContext = new ControllerContext
         {

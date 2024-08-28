@@ -7,8 +7,8 @@ namespace App.Application.Test.StudentExamOperations.TeacherOperations.Command.C
 
 public class CommentDMFT_DMFSFormHandlerTests : TestHelper
 {
-    private readonly CommentDMFT_DMFSFormCommand command;
     private readonly CommentDMFT_DMFSFormHandler handler;
+    private readonly CommentDMFT_DMFSFormCommand command;
 
     public CommentDMFT_DMFSFormHandlerTests()
     {

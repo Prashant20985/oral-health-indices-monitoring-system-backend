@@ -1,7 +1,7 @@
 ﻿using App.Application.AdminOperations.Query.UserRequests;
 using App.Domain.DTOs.UserRequestDtos.Response;
 using App.Domain.Models.Enums;
-using MockQueryable.EntityFrameworkCore;
+using MockQueryable.Moq;
 
 namespace App.Application.Test.AdminOperations.Query.UserRequests;
 
@@ -19,7 +19,7 @@ public class UserRequestHandlerTests : TestHelper
 
         var userRequests = new List<UserRequestResponseDto>
         {
-            new()
+            new UserRequestResponseDto
             {
                 Id = Guid.NewGuid(),
                 UserName = "User 1",
@@ -28,7 +28,7 @@ public class UserRequestHandlerTests : TestHelper
                 RequestStatus = RequestStatus.Submitted.ToString(),
                 DateSubmitted = DateTime.Now
             },
-            new()
+            new UserRequestResponseDto
             {
                 Id = Guid.NewGuid(),
                 UserName = "User 1",

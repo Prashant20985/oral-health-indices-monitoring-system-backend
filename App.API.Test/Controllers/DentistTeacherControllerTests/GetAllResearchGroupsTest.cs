@@ -1,11 +1,11 @@
-﻿using System.Security.Claims;
-using App.Application.Core;
+﻿using App.Application.Core;
 using App.Application.DentistTeacherOperations.Query.ResearchGroups;
 using App.Domain.DTOs.ResearchGroupDtos.Response;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Security.Claims;
 
 namespace App.API.Test.Controllers.DentistTeacherControllerTests;
 
@@ -32,11 +32,11 @@ public class GetAllResearchGroupsTest
 
         var expectedGroups = new List<ResearchGroupResponseDto>
         {
-            new()
+            new ResearchGroupResponseDto
             {
                 GroupName = "Group 1",
                 Description = "Description 1",
-                CreatedBy = "Dentist_Teacher_Researcher"
+                CreatedBy = "Dentist_Teacher_Researcher",
             }
         };
 

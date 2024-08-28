@@ -21,7 +21,7 @@ public class UpcomingExamsHandlerTests : TestHelper
         // Arrange
         var exams = new List<ExamDto>
         {
-            new()
+            new ExamDto
             {
                 Id = Guid.NewGuid(),
                 DateOfExamination = DateTime.Now.AddDays(1),

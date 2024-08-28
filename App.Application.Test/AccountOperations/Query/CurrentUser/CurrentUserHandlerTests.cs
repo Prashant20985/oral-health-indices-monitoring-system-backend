@@ -4,7 +4,6 @@ using App.Domain.Models.Users;
 using Moq;
 
 namespace App.Application.Test.AccountOperations.Query.CurrentUser;
-
 public class CurrentUserHandlerTests : TestHelper
 {
     [Fact]

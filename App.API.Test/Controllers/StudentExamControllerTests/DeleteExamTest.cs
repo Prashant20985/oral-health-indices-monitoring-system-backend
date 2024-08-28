@@ -25,8 +25,7 @@ public class DeleteExamTest
     {
         // Arrange
         var groupId = Guid.NewGuid();
-        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue,
-            TimeSpan.MaxValue, 20, groupId);
+        var exam = new Exam(DateTime.Now, "exam", "description", TimeOnly.MinValue, TimeOnly.MaxValue, TimeSpan.MaxValue, 20, groupId);
 
         _mediator.Setup(x => x.Send(It.IsAny<DeleteExamCommand>(), default))
             .ReturnsAsync(OperationResult<Unit>.Success(Unit.Value));
