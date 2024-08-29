@@ -11,23 +11,23 @@ public class RiskFactorAssessmentModelValidator : AbstractValidator<RiskFactorAs
     // Predefined questions
     private readonly List<string> PredefinedQuestions =
     [
-        "Fluoride exposure",
-        "Consumption of sweetened products and beverages",
-        "Systematic Dental Care",
-        "Systemic diseases",
-        "Eating disorders",
-        "Complex Pharmacotherapy",
-        "Alcohol/Nicotine",
-        "New carious lesions in the last 36 months",
-        "Visible Plaque",
-        "Teeth extraction due to caries in the last 36 months",
-        "Abnormal Tooth Morphology",
-        "1 or more proximal restorations",
-        "Exposed root surfaces",
-        "Overhanging fills, no contact points",
-        "Fixed Orthodontic Braces",
-        "Xerostomy",
-        "Caries risk factor assessment"
+        "Fluoride exposure / Ekspozycja na fluor",
+        "Consumption of sweetened products and beverages / Spożycie słodzonych produktów i napojów",
+        "Regular Dental Care / Regularna opieka stomatologiczna",
+        "Systemic diseases / Choroby ogólnoustrojowe",
+        "Eating disorders / Zaburzenia odżywiania",
+        "Complex Pharmacotherapy / Złożona farmakoterapia",
+        "Alcohol/Nicotine / Alkohol/Nikotyna",
+        "New carious lesions in the last 36 months / Nowe ogniska próchnicy w ciągu ostatnich 36 mies.",
+        "Visible Plaque / Widoczna płytka nazębna",
+        "Teeth extraction due to caries in the last 36 months / Ekstrakcja zębów z powodu próchnicy w ciągu ostatnich 36 mies.",
+        "Abnormal Tooth Morphology / Nietypowa morfologia zębów",
+        "1 or more fillings on proximal surfaces / 1 lub więcej wypełnień na powierzchniach stycznych",
+        "Exposed root surfaces / Eksponowane powierzchnie korzeni",
+        "Overhanging fillings, no proximal contact point / Nawisające wypełnienia, brak punktów stycznych",
+        "Fixed braces / Stały aparat ortodontyczny",
+        "Xerostomia / Kserostomia",
+        "Caries Risk Assessment / OCENA RYZYKA PRÓCHNICY"
     ];
 
 
