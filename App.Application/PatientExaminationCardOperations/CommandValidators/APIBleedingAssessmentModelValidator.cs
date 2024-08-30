@@ -98,7 +98,7 @@ public class APIBleedingQuadrant1Validator : AbstractValidator<Quadrant>
     /// <param name="value">The value to validate</param>
     /// <returns>True if the value is '+' or '-', otherwise false</returns>
     private bool BePlusOrMinusOrEmpty(string value) =>
-        value == "+" || value == "-" || string.IsNullOrEmpty(value);
+        value == "+" || value == "-" || value == "x" || string.IsNullOrEmpty(value);
 }
 
 /// <summary>
@@ -160,7 +160,7 @@ public class APIBleedingQuadrant2Validator : AbstractValidator<Quadrant>
     /// <param name="value">The value to validate</param>
     /// <returns>True if the value is '+' or '-', otherwise false</returns>
     private bool BePlusOrMinusOrEmpty(string value) =>
-        value == "+" || value == "-" || string.IsNullOrEmpty(value);
+        value == "+" || value == "-" || value == "x" || string.IsNullOrEmpty(value);
 }
 
 /// <summary>
@@ -222,7 +222,7 @@ public class APIBleedingQuadrant3Validator : AbstractValidator<Quadrant>
     /// <param name="value">The value to validate</param>
     /// <returns>True if the value is '+' or '-', otherwise false</returns>
     private bool BePlusOrMinusOrEmpty(string value) =>
-        value == "+" || value == "-" || string.IsNullOrEmpty(value);
+        value == "+" || value == "-" || value == "x" || string.IsNullOrEmpty(value);
 }
 
 /// <summary>
@@ -284,5 +284,5 @@ public class APIBleedingQuadrant4Validator : AbstractValidator<Quadrant>
     /// <param name="value">The value to validate</param>
     /// <returns>True if the value is '+' or '-', otherwise false</returns>
     private bool BePlusOrMinusOrEmpty(string value) =>
-        value == "+" || value == "-" || value == "";
+        value == "+" || value == "-" || value == "x" || string.IsNullOrEmpty(value);
 }
