@@ -58,7 +58,7 @@ public class EmailTemplatePathProvider : IEmailTemplatePathProvider
     /// <returns>The resource name of the email template.</returns>
     private static string GetTemplateResourceName(EmailType emailType)
     {
-        string resourceBaseName = "App.Infrastructure.Email.EmailTemplates"; // Adjust this namespace as needed
+        string resourceBaseName = "App.Infrastructure.Email.EmailTemplates";
         return emailType switch
         {
             EmailType.Registration => $"{resourceBaseName}.registration_successfull.html",

@@ -2,7 +2,7 @@
 using App.Application.Interfaces;
 using App.Domain.Models.Enums;
 using App.Infrastructure.Configuration;
-using MailKit.Net.Smtp;
+using App.Infrastructure.Email.SmtpClient;
 using MediatR;
 using Microsoft.Extensions.Options;
 using MimeKit;
@@ -13,10 +13,12 @@ namespace App.Infrastructure.Email;
 /// Service for sending emails using the configured email settings.
 /// </summary>
 public class EmailService(IOptions<EmailSettings> emailSettings,
-    IEmailTemplatePathProvider emailTemplatePathProvider) : IEmailService
+    IEmailTemplatePathProvider emailTemplatePathProvider,
+    ISmtpClientWrapper smtpClient) : IEmailService
 {
     private readonly EmailSettings _emailSettings = emailSettings.Value;
     private readonly IEmailTemplatePathProvider _emailTemplatePathProvider = emailTemplatePathProvider;
+    private readonly ISmtpClientWrapper _smtpClient = smtpClient;
 
     /// <summary>
     /// Sends an email asynchronously.
@@ -75,11 +77,10 @@ public class EmailService(IOptions<EmailSettings> emailSettings,
             mail.Body = body.ToMessageBody();
 
             // Connect to the SMTP server and send the email
-            using var smtp = new SmtpClient();
-            await smtp.ConnectAsync(_emailSettings.Host, _emailSettings.Port);
-            await smtp.AuthenticateAsync(_emailSettings.UserName, _emailSettings.Password);
-            await smtp.SendAsync(mail);
-            await smtp.DisconnectAsync(true);
+            await _smtpClient.ConnectAsync(_emailSettings.Host, _emailSettings.Port);
+            await _smtpClient.AuthenticateAsync(_emailSettings.UserName, _emailSettings.Password);
+            await _smtpClient.SendAsync(mail);
+            await _smtpClient.DisconnectAsync(true);
 
             // Indicate the successful email sending as a completed task result
             return OperationResult<Unit>.Success(Unit.Value);
