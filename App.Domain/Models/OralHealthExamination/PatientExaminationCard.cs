@@ -100,7 +100,7 @@ public class PatientExaminationCard
     /// <summary>
     /// Gets the ID of the student associated with the examination card.
     /// </summary>
-    public string? StudentId { get; private set; }
+    public string StudentId { get; private set; }
 
     /// <summary>
     /// Gets or sets the student associated with the examination card.
