@@ -9,6 +9,7 @@ using App.Domain.UnitOfWork;
 using App.Infrastructure.Configuration;
 using App.Infrastructure.ContextAccessor;
 using App.Infrastructure.Email;
+using App.Infrastructure.Email.SmtpClient;
 using App.Infrastructure.GeneratePassword;
 using App.Infrastructure.ReadCsv;
 using App.Persistence.Contexts;
@@ -113,6 +114,9 @@ public static class ApplicationExtension
 
         // Add a transient dependency for IEmailService with the implementation of EmailService.
         services.AddTransient<IEmailService, EmailService>();
+
+        // Add a transient dependency for ISmtpClient with the implementation of SmtpClientWrapper.
+        services.AddTransient<ISmtpClientWrapper, SmtpClientWrapper>();
 
         // Add a transient for IHttpContextAccessorService with implimentation of HttpContextAccessorService.
         services.AddTransient<IHttpContextAccessorService, HttpContextAccessorService>();
